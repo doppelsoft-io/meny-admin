@@ -4,6 +4,7 @@ import 'package:meny/src/presentation/menus/items/update_items/update_menu_item_
 import 'package:meny/src/presentation/menus/menu_preview/menu_preview_screen.dart';
 import 'package:meny/src/presentation/menus/menus/update_menus/update_menus_sheet.dart';
 import 'package:meny/src/presentation/sheet_args.dart';
+import 'package:meny/src/screens/screens.dart';
 
 class CustomRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -13,6 +14,16 @@ class CustomRouter {
           settings: const RouteSettings(name: '/'),
           builder: (_) => const Scaffold(),
         );
+      case SplashScreen.routeName:
+        return SplashScreen.route();
+      case AppScreen.routeName:
+        return AppScreen.route();
+      case OnboardingScreen.routeName:
+        return OnboardingScreen.route();
+      case SignupScreen.routeName:
+        return SignupScreen.route();
+      case LoginScreen.routeName:
+        return LoginScreen.route();
       case UpdateMenusSheet.routeName:
         return UpdateMenusSheet.route(settings.arguments as SheetArgs);
       case UpdateCategorySheet.routeName:

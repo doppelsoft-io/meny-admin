@@ -6,6 +6,7 @@ import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/menus/menus.dart';
 import 'package:meny/src/data/models/resources/i_resource_model.dart';
 import 'package:meny/src/data/repositories/i_resources_repository.dart';
+import 'package:meny/src/extensions/extensions.dart';
 
 class ResourcesRepository<T extends IResourceModel>
     extends IResourcesRepository<T> {
@@ -42,22 +43,28 @@ class ResourcesRepository<T extends IResourceModel>
         );
 
   @override
-  Stream<List<T>> getAll() {
+  Stream<List<T>> getAll({required String storeId}) {
     if (T == IResourceModel) {
       return Stream.error('Failed to provide T');
     }
 
     return firebaseFirestore
+        .storesDocument(storeId: storeId)
         .collection(path)
         .snapshots()
         .map((doc) => doc.docs.map((snap) => fromSnapshot(snap)).toList());
   }
 
   @override
-  Future<Either<Failure, T>> create({required T resource}) async {
+  Future<Either<Failure, T>> create({
+    required String storeId,
+    required T resource,
+  }) async {
     try {
-      final document =
-          await firebaseFirestore.collection(path).add(resource.toJson());
+      final document = await firebaseFirestore
+          .storesDocument(storeId: storeId)
+          .collection(path)
+          .add(resource.toJson());
       final snapshot = await document.get();
       return right(fromSnapshot(snapshot));
     } catch (e) {
@@ -69,9 +76,13 @@ class ResourcesRepository<T extends IResourceModel>
   }
 
   @override
-  Future<Either<Failure, bool>> update({required T resource}) async {
+  Future<Either<Failure, bool>> update({
+    required String storeId,
+    required T resource,
+  }) async {
     try {
       await firebaseFirestore
+          .storesDocument(storeId: storeId)
           .collection(path)
           .doc(resource.id)
           .set(resource.toJson(), SetOptions(merge: true));
@@ -86,9 +97,16 @@ class ResourcesRepository<T extends IResourceModel>
   }
 
   @override
-  Future<Either<Failure, bool>> delete({required T resource}) async {
+  Future<Either<Failure, bool>> delete({
+    required String storeId,
+    required T resource,
+  }) async {
     try {
-      await firebaseFirestore.collection(path).doc(resource.id).delete();
+      await firebaseFirestore
+          .storesDocument(storeId: storeId)
+          .collection(path)
+          .doc(resource.id)
+          .delete();
       return right(true);
     } catch (e) {
       return left(Failure(

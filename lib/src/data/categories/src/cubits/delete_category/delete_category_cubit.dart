@@ -4,18 +4,23 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meny/locator.dart';
 import 'package:meny/src/constants/callables.dart';
-import 'package:meny/src/constants/paths.dart';
 import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menus/menus.dart';
+import 'package:meny/src/data/stores/services/services.dart';
+import 'package:meny/src/extensions/extensions.dart';
 
 part 'delete_category_state.dart';
 
 class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
   final FirebaseFirestore _firebaseFirestore;
+  final StoreCacheService _storeCacheService;
+
   DeleteCategoryCubit({
     FirebaseFirestore? firebaseFirestore,
+    StoreCacheService? storeCacheService,
   })  : _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
+        _storeCacheService = storeCacheService ?? Locator.instance(),
         super(DeleteCategoryState.initial());
 
   void delete({
@@ -29,9 +34,12 @@ class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
 
     try {
       final batch = _firebaseFirestore.batch();
-      final menuItemRef =
-          _firebaseFirestore.collection(Paths.categories).doc(category.id);
-      batch.delete(menuItemRef);
+      final storeId = await _storeCacheService.get('storeId');
+      final categoryRef = _firebaseFirestore.categoryEntitiesDocument(
+        storeId: storeId,
+        categoryId: category.id!,
+      );
+      batch.delete(categoryRef);
 
       final menuFutures = List.generate(
         menus.length,
@@ -41,22 +49,24 @@ class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
             categoryIds: List.from(menu.categoryIds)..remove(category.id),
           );
 
-          final menuRef =
-              _firebaseFirestore.collection(Paths.menus).doc(menu.id);
+          final menuRef = _firebaseFirestore.menuEntitiesDocument(
+            storeId: storeId,
+            menuId: menu.id!,
+          );
           batch.update(menuRef, updatedMenu.toJson());
 
-          final categoryRef = _firebaseFirestore
-              .collection(Paths.menus)
-              .doc(menu.id)
-              .collection(Paths.categories)
-              .doc(category.id);
+          final categoryRef = _firebaseFirestore.compiledCategoriesDocument(
+            storeId: storeId,
+            menuId: menu.id!,
+            categoryId: category.id!,
+          );
+
           final categoryDoc = await categoryRef.get();
+
           if (categoryDoc.exists) {
             final recursiveDelete = FirebaseFunctions.instance
                 .httpsCallable(Callables.recursiveDelete);
-            final path =
-                '${Paths.menus}/${menu.id}/${Paths.categories}/${category.id}';
-            return await recursiveDelete({'path': path});
+            return await recursiveDelete({'path': categoryRef.path});
           }
         },
       );

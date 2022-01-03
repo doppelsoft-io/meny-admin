@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:meny/src/constants/paths.dart';
+import 'package:meny/locator.dart';
 import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
+import 'package:meny/src/extensions/extensions.dart';
 
 class CategoryDoesNotExistException implements Exception {}
 
@@ -13,13 +14,17 @@ class CompiledMenuRepository {
 
   CompiledMenuRepository({
     FirebaseFirestore? firebaseFirestore,
-  }) : _firebaseFirestore = firebaseFirestore ?? FirebaseFirestore.instance;
+  }) : _firebaseFirestore = firebaseFirestore ?? Locator.instance();
 
-  Stream<List<CategoryModel>> getCategoriesForMenu({required String menuId}) {
+  Stream<List<CategoryModel>> getCategoriesForMenu({
+    required String storeId,
+    required String menuId,
+  }) {
     return _firebaseFirestore
-        .collection(Paths.menus)
-        .doc(menuId)
-        .collection(Paths.categories)
+        .compiledCategoriesCollection(
+          storeId: storeId,
+          menuId: menuId,
+        )
         .orderBy('position')
         .snapshots()
         .map((snap) =>
@@ -27,15 +32,16 @@ class CompiledMenuRepository {
   }
 
   Stream<List<MenuItemModel>> getItemsForCategory({
+    required String storeId,
     required String menuId,
     required String categoryId,
   }) {
     return _firebaseFirestore
-        .collection(Paths.menus)
-        .doc(menuId)
-        .collection(Paths.categories)
-        .doc(categoryId)
-        .collection(Paths.menuItems)
+        .compiledMenuItemsCollection(
+          storeId: storeId,
+          menuId: menuId,
+          categoryId: categoryId,
+        )
         .orderBy('position')
         .snapshots()
         .map((snap) =>
@@ -43,15 +49,17 @@ class CompiledMenuRepository {
   }
 
   Future<CategoryModel> getCategory({
+    required String storeId,
     required String menuId,
     required String categoryId,
   }) async {
     try {
       final snap = await _firebaseFirestore
-          .collection(Paths.menus)
-          .doc(menuId)
-          .collection(Paths.categories)
-          .doc(categoryId)
+          .compiledCategoriesDocument(
+            storeId: storeId,
+            menuId: menuId,
+            categoryId: categoryId,
+          )
           .get();
       if (snap.exists) {
         return CategoryModel.fromSnapshot(snap);
@@ -66,15 +74,17 @@ class CompiledMenuRepository {
   }
 
   Future<void> updateCategory({
+    required String storeId,
     required String menuId,
     required CategoryModel category,
   }) async {
     try {
-      await FirebaseFirestore.instance
-          .collection(Paths.menus)
-          .doc(menuId)
-          .collection(Paths.categories)
-          .doc(category.id)
+      await _firebaseFirestore
+          .compiledCategoriesDocument(
+            storeId: storeId,
+            menuId: menuId,
+            categoryId: category.id!,
+          )
           .set(category.toJson(), SetOptions(merge: true));
     } catch (err) {
       throw Failure(message: 'Error updating category');
@@ -82,18 +92,19 @@ class CompiledMenuRepository {
   }
 
   Future<MenuItemModel> getMenuItem({
+    required String storeId,
     required String menuId,
     required String categoryId,
     required String menuItemId,
   }) async {
     try {
       final snap = await _firebaseFirestore
-          .collection(Paths.menus)
-          .doc(menuId)
-          .collection(Paths.categories)
-          .doc(categoryId)
-          .collection(Paths.menuItems)
-          .doc(menuItemId)
+          .compiledMenuItemsDocument(
+            storeId: storeId,
+            menuId: menuId,
+            categoryId: categoryId,
+            itemId: menuItemId,
+          )
           .get();
       if (snap.exists) {
         return MenuItemModel.fromSnapshot(snap);
@@ -108,18 +119,19 @@ class CompiledMenuRepository {
   }
 
   Future<void> updateMenuItem({
+    required String storeId,
     required String menuId,
     required String categoryId,
     required MenuItemModel item,
   }) async {
     try {
       await _firebaseFirestore
-          .collection(Paths.menus)
-          .doc(menuId)
-          .collection(Paths.categories)
-          .doc(categoryId)
-          .collection(Paths.menuItems)
-          .doc(item.id)
+          .compiledMenuItemsDocument(
+            storeId: storeId,
+            menuId: menuId,
+            categoryId: categoryId,
+            itemId: item.id!,
+          )
           .set(item.toJson(), SetOptions(merge: true));
     } catch (err) {
       throw Failure(message: 'Error updating item');

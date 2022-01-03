@@ -6,15 +6,20 @@ import 'package:meny/locator.dart';
 import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
+import 'package:meny/src/data/stores/services/services.dart';
 
 part 'compiled_menu_item_state.dart';
 
 class CompiledMenuItemCubit extends Cubit<CompiledMenuItemState> {
   final CompiledMenuRepository _compiledMenuRepository;
+  final StoreCacheService _storeCacheService;
   late StreamSubscription _subscription;
+
   CompiledMenuItemCubit({
     CompiledMenuRepository? compiledMenuRepository,
+    StoreCacheService? storeCacheService,
   })  : _compiledMenuRepository = compiledMenuRepository ?? Locator.instance(),
+        _storeCacheService = storeCacheService ?? Locator.instance(),
         super(CompiledMenuItemState.initial());
 
   @override
@@ -28,8 +33,13 @@ class CompiledMenuItemCubit extends Cubit<CompiledMenuItemState> {
     required String categoryId,
   }) async {
     try {
+      final storeId = await _storeCacheService.get('storeId');
       _subscription = _compiledMenuRepository
-          .getItemsForCategory(menuId: menuId, categoryId: categoryId)
+          .getItemsForCategory(
+        storeId: storeId,
+        menuId: menuId,
+        categoryId: categoryId,
+      )
           .listen((items) {
         emit(
           state.copyWith(

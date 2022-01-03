@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:meny/locator.dart';
 import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
+import 'package:meny/src/data/stores/services/services.dart';
+import 'package:meny/src/extensions/extensions.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 import 'package:meny/src/presentation/sheet_args.dart';
 import 'package:meny/src/services/services.dart';
@@ -20,9 +23,8 @@ class UpdateMenuItemSheet extends HookWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider<EditMenuItemCubit>(
-              create: (context) => EditMenuItemCubit(
-                menuItemRepository: MenuItemRepository(),
-              )..loadItem(args.resource as MenuItemEntity),
+              create: (context) => EditMenuItemCubit()
+                ..loadItem(args.resource as MenuItemEntity),
             ),
             BlocProvider<DeleteMenuItemCubit>(
               create: (context) => DeleteMenuItemCubit(),
@@ -33,7 +35,8 @@ class UpdateMenuItemSheet extends HookWidget {
               if (state.item != null) {
                 final item = state.item!;
                 return BlocProvider<MenuItemCategoriesCubit>(
-                  create: (context) => MenuItemCategoriesCubit(menuItem: item),
+                  create: (context) =>
+                      MenuItemCategoriesCubit(menuItem: item)..load(),
                   child: UpdateMenuItemSheet(resource: item),
                 );
               } else {
@@ -167,16 +170,17 @@ class UpdateMenuItemSheet extends HookWidget {
                           child: ElevatedButton(
                             onPressed: () {
                               final now = DateTime.now();
-                              context
-                                  .read<EditMenuItemCubit>()
-                                  .update(resource.copyWith(
+                              context.read<EditMenuItemCubit>()
+                                ..update(
+                                  resource.copyWith(
                                     name: nameController.text,
                                     price:
                                         double.tryParse(priceController.text) ??
                                             0.0,
                                     description: descriptionController.text,
                                     updatedAt: now,
-                                  ));
+                                  ),
+                                );
                             },
                             child: const Text('Save'),
                           ),
@@ -192,6 +196,7 @@ class UpdateMenuItemSheet extends HookWidget {
                             controller: nameController,
                             autofocus: true,
                             showCursor: true,
+                            autocorrect: false,
                             cursorWidth: 3,
                             cursorHeight: Theme.of(context)
                                 .inputDecorationTheme
@@ -211,6 +216,7 @@ class UpdateMenuItemSheet extends HookWidget {
                             controller: descriptionController,
                             showCursor: true,
                             cursorWidth: 3,
+                            autocorrect: false,
                             cursorHeight: Theme.of(context)
                                 .inputDecorationTheme
                                 .labelStyle!
@@ -255,9 +261,12 @@ class UpdateMenuItemSheet extends HookWidget {
                           TagSelector<CategoryEntity>(
                             initialItems: menuItemCategoriesState.categories,
                             fetchSuggestions: () async {
+                              final storeId =
+                                  await Locator.instance<StoreCacheService>()
+                                      .get('storeId');
                               final categories = await FirebaseFirestore
                                   .instance
-                                  .collection('categories')
+                                  .categoryEntitiesCollection(storeId: storeId)
                                   .get();
                               return categories.docs
                                   .map((e) => CategoryEntity.fromSnapshot(e))

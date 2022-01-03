@@ -6,6 +6,7 @@ import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/menus/menus.dart';
+import 'package:meny/src/data/stores/stores.dart';
 
 part 'view_menu_state.dart';
 
@@ -14,16 +15,19 @@ class ViewMenuCubit extends Cubit<ViewMenuState> {
   final CompiledMenuRepository _compiledMenuRepository;
   final CategoryRepository _categoryRepository;
   final MenuItemRepository _menuItemRepository;
+  final StoreCacheService _storeCacheService;
 
   ViewMenuCubit({
     MenuRepository? menuRepository,
     CompiledMenuRepository? compiledMenuRepository,
     CategoryRepository? categoryRepository,
     MenuItemRepository? menuItemRepository,
+    StoreCacheService? storeCacheService,
   })  : _menuRepository = menuRepository ?? Locator.instance(),
         _compiledMenuRepository = compiledMenuRepository ?? Locator.instance(),
         _categoryRepository = categoryRepository ?? Locator.instance(),
         _menuItemRepository = menuItemRepository ?? Locator.instance(),
+        _storeCacheService = storeCacheService ?? Locator.instance(),
         super(ViewMenuState.initial());
 
   Future<void> _compileMenuItems({
@@ -33,14 +37,17 @@ class ViewMenuCubit extends Cubit<ViewMenuState> {
     required String categoryId,
     required String menuItemId,
   }) async {
+    final storeId = await _storeCacheService.get('storeId');
     try {
       final menuItemModel = (await _compiledMenuRepository.getMenuItem(
+        storeId: storeId,
         menuId: menuId,
         menuItemId: menuItemId,
         categoryId: categoryId,
       ))
           .mergeWithEntity(menuItemEntity);
       await _compiledMenuRepository.updateMenuItem(
+        storeId: storeId,
         menuId: menuId,
         categoryId: categoryId,
         item: menuItemModel,
@@ -49,6 +56,7 @@ class ViewMenuCubit extends Cubit<ViewMenuState> {
       final menuItemModel = MenuItemModel.fromEntity(menuItemEntity);
 
       await _compiledMenuRepository.updateMenuItem(
+        storeId: storeId,
         menuId: menuId,
         categoryId: categoryId,
         item: menuItemModel,
@@ -62,21 +70,30 @@ class ViewMenuCubit extends Cubit<ViewMenuState> {
 
   void compile({required String menuId}) async {
     try {
-      final menuEntity = await _menuRepository.get(id: menuId);
+      final storeId = await _storeCacheService.get('storeId');
+      final menuEntity = await _menuRepository.get(
+        storeId: storeId,
+        id: menuId,
+      );
       final categoryIds =
           menuEntity.categoryIds.where((e) => e.isNotEmpty).toList();
       final categories = List.generate(
         categoryIds.length,
         (index) async {
           final categoryId = categoryIds[index];
-          final categoryEntity = await _categoryRepository.get(id: categoryId);
+          final categoryEntity = await _categoryRepository.get(
+            storeId: storeId,
+            id: categoryId,
+          );
           try {
             final categoryModel = (await _compiledMenuRepository.getCategory(
+              storeId: storeId,
               menuId: menuId,
               categoryId: categoryId,
             ))
                 .mergeWithEntity(categoryEntity);
             await _compiledMenuRepository.updateCategory(
+              storeId: storeId,
               menuId: menuId,
               category: categoryModel,
             );
@@ -87,8 +104,10 @@ class ViewMenuCubit extends Cubit<ViewMenuState> {
               menuItemIds.length,
               (index) async {
                 final menuItemId = menuItemIds[index];
-                final menuItemEntity =
-                    await _menuItemRepository.get(id: menuItemId);
+                final menuItemEntity = await _menuItemRepository.get(
+                  storeId: storeId,
+                  id: menuItemId,
+                );
 
                 await _compileMenuItems(
                   index: index,
@@ -104,6 +123,7 @@ class ViewMenuCubit extends Cubit<ViewMenuState> {
             final categoryModel = CategoryModel.fromEntity(categoryEntity);
 
             await _compiledMenuRepository.updateCategory(
+              storeId: storeId,
               menuId: menuId,
               category: categoryModel,
             );
@@ -115,8 +135,10 @@ class ViewMenuCubit extends Cubit<ViewMenuState> {
               menuItemIds.length,
               (index) async {
                 final menuItemId = menuItemIds[index];
-                final menuItemEntity =
-                    await _menuItemRepository.get(id: menuItemId);
+                final menuItemEntity = await _menuItemRepository.get(
+                  storeId: storeId,
+                  id: menuItemId,
+                );
 
                 await _compileMenuItems(
                   index: index,

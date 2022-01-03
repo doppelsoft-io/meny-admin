@@ -34,7 +34,6 @@ class ResourceTable<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ResourcesCubit, ResourcesState>(
       builder: (context, state) {
-        print("state $state");
         switch (state.runtimeType) {
           case ResourcesFailure:
             final _state = state as ResourcesFailure;

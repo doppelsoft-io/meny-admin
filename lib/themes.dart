@@ -15,7 +15,13 @@ class Themes {
     bodyText2: GoogleFonts.hind(textStyle: defaultTextTheme.bodyText2),
     caption: GoogleFonts.hind(textStyle: defaultTextTheme.caption),
     overline: GoogleFonts.hind(textStyle: defaultTextTheme.overline),
-    button: GoogleFonts.hind(textStyle: defaultTextTheme.button),
+    // button: GoogleFonts.hind(textStyle: defaultTextTheme.button),
+  );
+
+  static BoxShadow boxShadow = BoxShadow(
+    color: Colors.grey[100]!,
+    offset: const Offset(0, 2),
+    blurRadius: 4.0,
   );
 
   static TextStyle textStyle = GoogleFonts.baloo();
@@ -30,12 +36,12 @@ class Themes {
       primaryVariant: Colors.greenAccent,
       secondary: Colors.white,
       secondaryVariant: Colors.white,
-      surface: primaryColor,
+      surface: Colors.white,
       background: Colors.white,
       error: Colors.red,
       onPrimary: Colors.white,
       onSecondary: Colors.black,
-      onSurface: Colors.white,
+      onSurface: primaryColor,
       onBackground: Colors.white,
       onError: Colors.white,
       brightness: Brightness.dark,
@@ -51,17 +57,9 @@ class Themes {
     //     color: Colors.black,
     //   ),
     // ),
-    // appBarTheme: AppBarTheme(
-    //   elevation: 1,
-    //   toolbarTextStyle: TextStyle(
-    //     color: Colors.black,
-    //   ),
-    //   titleTextStyle: TextStyle(
-    //     color: Colors.black,
-    //     fontSize: 24.0,
-    //     fontWeight: FontWeight.w500,
-    //   ),
-    // ),
+    appBarTheme: _light.appBarTheme.copyWith(
+      elevation: 1,
+    ),
     // bottomAppBarColor: Colors.red,
     // bottomAppBarTheme: BottomAppBarTheme(
     //   color: Colors.red,
@@ -109,12 +107,13 @@ class Themes {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        // padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        // visualDensity: VisualDensity.adaptivePlatformDensity,
         shape: MaterialStateProperty.resolveWith<RoundedRectangleBorder>(
-          (states) => RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(2),
-          ),
+          (states) {
+            return RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(2),
+            );
+          },
         ),
       ),
     ),
@@ -162,6 +161,7 @@ class Themes {
       ),
       unselectedLabelTextStyle: secondaryTextStyle.copyWith(
         color: Colors.grey[700],
+        fontWeight: FontWeight.w700,
       ),
     ),
     scaffoldBackgroundColor: Colors.white,
@@ -179,8 +179,9 @@ class Themes {
       labelColor: Colors.black,
       labelStyle: secondaryTextStyle.copyWith(fontWeight: FontWeight.w700),
       labelPadding: const EdgeInsets.symmetric(horizontal: 25),
-      unselectedLabelColor: Colors.grey[600],
-      unselectedLabelStyle: secondaryTextStyle,
+      // unselectedLabelColor: Colors.grey[600],
+      unselectedLabelStyle:
+          secondaryTextStyle.copyWith(fontWeight: FontWeight.w700),
     ),
   );
 }

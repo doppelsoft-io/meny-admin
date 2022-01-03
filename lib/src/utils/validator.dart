@@ -1,3 +1,5 @@
+/// Credit to: https://github.com/bizz84/input_validation_demo_flutter/blob/master/lib/main.dart
+///
 import 'package:flutter/services.dart';
 
 abstract class StringValidator {
@@ -60,4 +62,17 @@ class DecimalNumberSubmitValidator implements StringValidator {
       return false;
     }
   }
+}
+
+class EmailEditingRegexValidator extends RegexValidator {
+  EmailEditingRegexValidator()
+      : super(
+            regexSource:
+                "^[a-zA-Z0-9_.+-]*(@([a-zA-Z0-9-]*(\\.[a-zA-Z0-9-]*)?)?)?\$");
+}
+
+class EmailSubmitRegexValidator extends RegexValidator {
+  EmailSubmitRegexValidator()
+      : super(
+            regexSource: "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+\$)");
 }

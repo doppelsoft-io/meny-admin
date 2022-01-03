@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:meny/app.dart';
 import 'package:meny/locator.dart';
 import 'package:meny/src/enums/enums.dart';
+import 'package:meny/src/services/services.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 void main() async {
@@ -26,6 +27,7 @@ void main() async {
   FirebaseAuth.instance.useEmulator('http://localhost:9099');
 
   await Locator.setup();
+  await HiveService.configure();
 
   runApp(App(environment: Environment.development));
 }

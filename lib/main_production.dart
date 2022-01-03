@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:meny/app.dart';
 import 'package:meny/locator.dart';
 import 'package:meny/src/enums/enums.dart';
+import 'package:meny/src/services/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   await Locator.setup();
+  await HiveService.configure();
 
   runApp(App(environment: Environment.production));
 }

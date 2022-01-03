@@ -17,34 +17,37 @@ class MenusPagePersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          centerTitle: false,
-          title: PageTitle(title: title),
-          titleSpacing: Spacing.pageSpacing,
-          actions: [
-            Center(
-              child: PageActionButton(
-                title: 'New',
-                onPressed: onNewPressed,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+      ),
+      padding: EdgeInsets.symmetric(horizontal: Spacing.pageSpacing),
+      height: maxExtent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              PageTitle(title: title),
+              Center(
+                child: PageActionButton(
+                  title: 'New',
+                  onPressed: onNewPressed,
+                ),
               ),
-            ),
-            const SizedBox(width: Spacing.pageSpacing),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 
   @override
-  double get maxExtent => kToolbarHeight;
+  double get maxExtent => 64;
 
   @override
-  double get minExtent => kToolbarHeight;
+  double get minExtent => 64;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>

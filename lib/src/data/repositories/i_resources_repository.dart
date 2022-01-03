@@ -11,8 +11,17 @@ abstract class IResourcesRepository<T> {
     required this.firebaseFirestore,
   });
 
-  Stream<List<T>> getAll();
-  Future<Either<Failure, T>> create({required T resource});
-  Future<Either<Failure, bool>> update({required T resource});
-  Future<Either<Failure, bool>> delete({required T resource});
+  Stream<List<T>> getAll({required String storeId});
+  Future<Either<Failure, T>> create({
+    required String storeId,
+    required T resource,
+  });
+  Future<Either<Failure, bool>> update({
+    required String storeId,
+    required T resource,
+  });
+  Future<Either<Failure, bool>> delete({
+    required String storeId,
+    required T resource,
+  });
 }

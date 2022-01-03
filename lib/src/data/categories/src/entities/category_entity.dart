@@ -72,6 +72,7 @@ class CategoryEntity extends IResourceModel {
   List<Object?> get props => [
         id,
         name,
+        itemIds,
         createdAt,
         updatedAt,
       ];
