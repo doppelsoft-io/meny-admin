@@ -1,40 +1,21 @@
 part of 'edit_category_cubit.dart';
 
-class EditCategoryState extends Equatable {
-  final CategoryEntity? category;
-  final EditResourceStatus status;
-  final Failure? failure;
+@freezed
+class EditCategoryState with _$EditCategoryState {
+  const factory EditCategoryState.initial({
+    required CategoryModel category,
+  }) = _Initial;
 
-  const EditCategoryState({
-    required this.category,
-    required this.status,
-    required this.failure,
-  });
+  const factory EditCategoryState.updating({
+    required CategoryModel category,
+  }) = _Updating;
 
-  @override
-  List<Object?> get props => [category, status, failure];
+  const factory EditCategoryState.success({
+    required CategoryModel category,
+  }) = _Success;
 
-  bool get isSuccess => status == EditResourceStatus.success;
-  bool get isError => status == EditResourceStatus.error;
-  bool get isUpdating => status == EditResourceStatus.updating;
-
-  factory EditCategoryState.initial() {
-    return const EditCategoryState(
-      category: null,
-      failure: null,
-      status: EditResourceStatus.initial,
-    );
-  }
-
-  EditCategoryState copyWith({
-    CategoryEntity? category,
-    EditResourceStatus? status,
-    Failure? failure,
-  }) {
-    return EditCategoryState(
-      category: category ?? this.category,
-      status: status ?? this.status,
-      failure: failure,
-    );
-  }
+  const factory EditCategoryState.error({
+    required CategoryModel category,
+    required Exception exception,
+  }) = _Error;
 }

@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/locator.dart';
 import 'package:meny/src/data/categories/categories.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/enums/enums.dart';
 import 'package:meny/src/data/stores/services/services.dart';
 
+part 'edit_category_cubit.freezed.dart';
 part 'edit_category_state.dart';
 
 class EditCategoryCubit extends Cubit<EditCategoryState> {
@@ -17,9 +16,9 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
     StoreCacheService? storeCacheService,
   })  : _categoryRepository = categoryRepository ?? Locator.instance(),
         _storeCacheService = storeCacheService ?? Locator.instance(),
-        super(EditCategoryState.initial());
+        super(EditCategoryState.initial(category: CategoryModel.empty()));
 
-  void loadCategory(CategoryEntity category) async {
+  void loadCategory(CategoryModel category) async {
     if (category.id != null && category.id!.isNotEmpty) {
       emit(state.copyWith(category: category));
     } else {
@@ -29,28 +28,28 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
         resource: category,
       );
       failureOrCategory.fold(
-        (failure) => emit(state.copyWith(failure: failure)),
-        (category) => emit(state.copyWith(category: category, failure: null)),
+        (failure) => emit(EditCategoryState.error(
+          category: category,
+          exception: failure,
+        )),
+        (category) => emit(EditCategoryState.initial(category: category)),
       );
     }
   }
 
-  void update(CategoryEntity item) async {
-    emit(state.copyWith(status: EditResourceStatus.updating));
+  void update(CategoryModel item) async {
+    emit(EditCategoryState.updating(category: state.category));
     final storeId = await _storeCacheService.get('storeId');
     final failureOrUpdate = await _categoryRepository.update(
       storeId: storeId,
       resource: item,
     );
     failureOrUpdate.fold(
-      (failure) => emit(state.copyWith(
-        failure: failure,
-        status: EditResourceStatus.error,
+      (failure) => emit(EditCategoryState.error(
+        category: state.category,
+        exception: failure,
       )),
-      (update) => emit(state.copyWith(
-        status: EditResourceStatus.success,
-        failure: null,
-      )),
+      (update) => emit(EditCategoryState.success(category: state.category)),
     );
   }
 }
