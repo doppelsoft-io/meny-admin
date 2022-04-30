@@ -20,6 +20,8 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CategoryModel {
+// ignore: invalid_annotation_target
+  @JsonKey(ignore: true)
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -38,7 +40,7 @@ abstract class $CategoryModelCopyWith<$Res> {
           CategoryModel value, $Res Function(CategoryModel) then) =
       _$CategoryModelCopyWithImpl<$Res>;
   $Res call(
-      {String? id,
+      {@JsonKey(ignore: true) String? id,
       String name,
       DateTime? createdAt,
       DateTime? updatedAt,
@@ -95,7 +97,7 @@ abstract class _$CategoryModelCopyWith<$Res>
       __$CategoryModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? id,
+      {@JsonKey(ignore: true) String? id,
       String name,
       DateTime? createdAt,
       DateTime? updatedAt,
@@ -151,7 +153,7 @@ class __$CategoryModelCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$_CategoryModel extends _CategoryModel {
   const _$_CategoryModel(
-      {this.id,
+      {@JsonKey(ignore: true) this.id,
       required this.name,
       this.createdAt,
       this.updatedAt,
@@ -161,7 +163,9 @@ class _$_CategoryModel extends _CategoryModel {
   factory _$_CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$$_CategoryModelFromJson(json);
 
+// ignore: invalid_annotation_target
   @override
+  @JsonKey(ignore: true)
   final String? id;
   @override
   final String name;
@@ -212,7 +216,7 @@ class _$_CategoryModel extends _CategoryModel {
 
 abstract class _CategoryModel extends CategoryModel {
   const factory _CategoryModel(
-      {final String? id,
+      {@JsonKey(ignore: true) final String? id,
       required final String name,
       final DateTime? createdAt,
       final DateTime? updatedAt,
@@ -222,7 +226,8 @@ abstract class _CategoryModel extends CategoryModel {
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
       _$_CategoryModel.fromJson;
 
-  @override
+  @override // ignore: invalid_annotation_target
+  @JsonKey(ignore: true)
   String? get id => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;

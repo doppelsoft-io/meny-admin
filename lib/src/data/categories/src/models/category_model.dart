@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meny/src/data/categories/src/entities/category_entity.dart';
 
 part 'category_model.freezed.dart';
 part 'category_model.g.dart';
@@ -10,7 +9,8 @@ class CategoryModel with _$CategoryModel {
   // ignore: invalid_annotation_target
   @JsonSerializable(explicitToJson: true)
   const factory CategoryModel({
-    String? id,
+    // ignore: invalid_annotation_target
+    @JsonKey(ignore: true) String? id,
     required String name,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -39,7 +39,7 @@ class CategoryModel with _$CategoryModel {
     );
   }
 
-  factory CategoryModel.fromEntity(CategoryEntity entity) {
+  factory CategoryModel.fromEntity(CategoryModel entity) {
     return CategoryModel(
       id: entity.id,
       name: entity.name,
@@ -54,7 +54,7 @@ class CategoryModel with _$CategoryModel {
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$CategoryModelFromJson(json);
 
-  // CategoryModel mergeWithEntity(CategoryEntity entity) {
+  // CategoryModel mergeWithEntity(CategoryModel entity) {
   //   return CategoryModel(
   //     id: entity.id,
   //     name: entity.name,

@@ -8,7 +8,6 @@ part of 'category_model.dart';
 
 _$_CategoryModel _$$_CategoryModelFromJson(Map<String, dynamic> json) =>
     _$_CategoryModel(
-      id: json['id'] as String?,
       name: json['name'] as String,
       createdAt: json['createdAt'] == null
           ? null
@@ -21,7 +20,6 @@ _$_CategoryModel _$$_CategoryModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_CategoryModelToJson(_$_CategoryModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
