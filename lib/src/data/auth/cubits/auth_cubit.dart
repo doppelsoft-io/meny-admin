@@ -12,7 +12,6 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepository _authRepository;
-  final UserRepository _userRepository;
   final FirebaseAuth _firebaseAuth;
   final StoreCacheService _storeCacheService;
 
@@ -24,11 +23,9 @@ class AuthCubit extends Cubit<AuthState> {
     FirebaseAuth? firebaseAuth,
     StoreCacheService? storeCacheService,
   })  : _authRepository = authRepository ?? Locator.instance(),
-        _userRepository = userRepository ?? Locator.instance(),
         _firebaseAuth = firebaseAuth ?? Locator.instance(),
         _storeCacheService = storeCacheService ?? Locator.instance(),
         super(AuthState.initial()) {
-    print("MEE: AUTH STATE CHANGE AuthCubit");
     _authSubscription?.cancel();
     _authSubscription = _firebaseAuth.authStateChanges().listen((user) {
       if (user != null) {
@@ -44,7 +41,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void userChanged(UserModel user) async {
-    print("MEE: userChanged $user ${user.isAnonymous}");
     await Future.delayed(Duration.zero);
 
     if (user.isAnonymous) {
