@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meny/src/data/menu_items/menu_items.dart';
 
 part 'menu_item_model.freezed.dart';
 part 'menu_item_model.g.dart';
@@ -10,7 +9,8 @@ class MenuItemModel with _$MenuItemModel {
   // ignore: invalid_annotation_target
   @JsonSerializable(explicitToJson: true)
   const factory MenuItemModel({
-    String? id,
+    // ignore: invalid_annotation_target
+    @JsonKey(ignore: true) String? id,
     required String name,
     required double price,
     DateTime? createdAt,
@@ -18,6 +18,8 @@ class MenuItemModel with _$MenuItemModel {
     required String description,
     required int position,
   }) = _MenuItemModel;
+
+  const MenuItemModel._();
 
   factory MenuItemModel.fromSnapshot(DocumentSnapshot snap) {
     try {
@@ -41,7 +43,7 @@ class MenuItemModel with _$MenuItemModel {
     );
   }
 
-  factory MenuItemModel.fromEntity(MenuItemEntity entity) {
+  factory MenuItemModel.fromEntity(MenuItemModel entity) {
     return MenuItemModel(
       id: entity.id,
       name: entity.name,
@@ -56,7 +58,8 @@ class MenuItemModel with _$MenuItemModel {
   factory MenuItemModel.fromJson(Map<String, dynamic> json) =>
       _$MenuItemModelFromJson(json);
 
-  // MenuItemModel mergeWithEntity(MenuItemEntity item) {
+  String toFriendlyString() => 'menu item';
+  // MenuItemModel mergeWithEntity(MenuItemModel item) {
   //   return MenuItemModel(
   //     id: item.id,
   //     name: item.name,

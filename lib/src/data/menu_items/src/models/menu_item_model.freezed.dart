@@ -20,6 +20,8 @@ MenuItemModel _$MenuItemModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MenuItemModel {
+// ignore: invalid_annotation_target
+  @JsonKey(ignore: true)
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
@@ -40,7 +42,7 @@ abstract class $MenuItemModelCopyWith<$Res> {
           MenuItemModel value, $Res Function(MenuItemModel) then) =
       _$MenuItemModelCopyWithImpl<$Res>;
   $Res call(
-      {String? id,
+      {@JsonKey(ignore: true) String? id,
       String name,
       double price,
       DateTime? createdAt,
@@ -109,7 +111,7 @@ abstract class _$MenuItemModelCopyWith<$Res>
       __$MenuItemModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? id,
+      {@JsonKey(ignore: true) String? id,
       String name,
       double price,
       DateTime? createdAt,
@@ -175,20 +177,23 @@ class __$MenuItemModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_MenuItemModel implements _MenuItemModel {
+class _$_MenuItemModel extends _MenuItemModel {
   const _$_MenuItemModel(
-      {this.id,
+      {@JsonKey(ignore: true) this.id,
       required this.name,
       required this.price,
       this.createdAt,
       this.updatedAt,
       required this.description,
-      required this.position});
+      required this.position})
+      : super._();
 
   factory _$_MenuItemModel.fromJson(Map<String, dynamic> json) =>
       _$$_MenuItemModelFromJson(json);
 
+// ignore: invalid_annotation_target
   @override
+  @JsonKey(ignore: true)
   final String? id;
   @override
   final String name;
@@ -246,20 +251,22 @@ class _$_MenuItemModel implements _MenuItemModel {
   }
 }
 
-abstract class _MenuItemModel implements MenuItemModel {
+abstract class _MenuItemModel extends MenuItemModel {
   const factory _MenuItemModel(
-      {final String? id,
+      {@JsonKey(ignore: true) final String? id,
       required final String name,
       required final double price,
       final DateTime? createdAt,
       final DateTime? updatedAt,
       required final String description,
       required final int position}) = _$_MenuItemModel;
+  const _MenuItemModel._() : super._();
 
   factory _MenuItemModel.fromJson(Map<String, dynamic> json) =
       _$_MenuItemModel.fromJson;
 
-  @override
+  @override // ignore: invalid_annotation_target
+  @JsonKey(ignore: true)
   String? get id => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
