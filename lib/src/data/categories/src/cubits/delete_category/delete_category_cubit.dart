@@ -1,102 +1,63 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/locator.dart';
-import 'package:meny/src/constants/callables.dart';
+import 'package:meny/src/constants/paths.dart';
 import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menus/menus.dart';
-import 'package:meny/src/data/stores/services/services.dart';
+import 'package:meny/src/data/stores/cubits/cubits.dart';
 import 'package:meny/src/extensions/extensions.dart';
 
+part 'delete_category_cubit.freezed.dart';
 part 'delete_category_state.dart';
 
 class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
-  final FirebaseFirestore _firebaseFirestore;
-  final StoreCacheService _storeCacheService;
-
   DeleteCategoryCubit({
+    required StoreCubit storeCubit,
     FirebaseFirestore? firebaseFirestore,
-    StoreCacheService? storeCacheService,
-  })  : _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
-        _storeCacheService = storeCacheService ?? Locator.instance(),
+  })  : _storeCubit = storeCubit,
+        _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
         super(DeleteCategoryState.initial());
 
+  final FirebaseFirestore _firebaseFirestore;
+  final StoreCubit _storeCubit;
+
   void delete({
-    required CategoryEntity category,
-    required List<MenuEntity> menus,
+    required CategoryModel category,
+    required List<MenuModel> menus,
   }) async {
-    emit(state.copyWith(
-      status: DeleteCategoryStatus.deleting,
-      failure: null,
-    ));
+    emit(DeleteCategoryState.deleting());
 
     try {
       final batch = _firebaseFirestore.batch();
-      final storeId = await _storeCacheService.get('storeId');
+      final storeId = _storeCubit.state.store!.id!;
       final categoryRef = _firebaseFirestore.categoryEntitiesDocument(
         storeId: storeId,
         categoryId: category.id!,
       );
       batch.delete(categoryRef);
 
-      final menuFutures = List.generate(
-        menus.length,
-        (index) async {
-          final menu = menus[index];
-          final updatedMenu = menu.copyWith(
-            categoryIds: List.from(menu.categoryIds)..remove(category.id),
-          );
+      /// Delete menu_categories associated with category
+      for (final menu in menus) {
+        final docId = '${menu.id}-${category.id}';
 
-          final menuRef = _firebaseFirestore.menuEntitiesDocument(
-            storeId: storeId,
-            menuId: menu.id!,
-          );
-          batch.update(menuRef, updatedMenu.toJson());
+        final menuCategoryRef = _firebaseFirestore
+            .collection(Paths.stores)
+            .doc(storeId)
+            .collection(Paths.menuCategories)
+            .doc(docId);
 
-          final categoryRef = _firebaseFirestore.compiledCategoriesDocument(
-            storeId: storeId,
-            menuId: menu.id!,
-            categoryId: category.id!,
-          );
-
-          final categoryDoc = await categoryRef.get();
-
-          if (categoryDoc.exists) {
-            final recursiveDelete = FirebaseFunctions.instance
-                .httpsCallable(Callables.recursiveDelete);
-            return await recursiveDelete({'path': categoryRef.path});
-          }
-        },
-      );
-
-      await Future.wait(menuFutures);
+        batch.delete(menuCategoryRef);
+      }
 
       await batch.commit();
 
-      emit(
-        state.copyWith(
-          status: DeleteCategoryStatus.success,
-          failure: null,
-        ),
-      );
-    } on FirebaseFunctionsException catch (_) {
-      emit(
-        state.copyWith(
-          status: DeleteCategoryStatus.error,
-          failure: Failure(
-            message: 'Deleting category failed.',
-          ),
-        ),
-      );
+      emit(DeleteCategoryState.success());
     } catch (err) {
       emit(
-        state.copyWith(
-          status: DeleteCategoryStatus.error,
-          failure: Failure(
-            message: 'Deleting category failed.',
-          ),
+        DeleteCategoryState.error(
+          exception: Failure(message: 'Failed to delete category'),
         ),
       );
     }
