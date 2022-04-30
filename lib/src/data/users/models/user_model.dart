@@ -1,24 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'user_model.freezed.dart';
 part 'user_model.g.dart';
 
-@JsonSerializable(explicitToJson: true)
-class UserModel extends Equatable {
-  @JsonKey(ignore: true)
-  final String? id;
-  final String email;
-  final bool isAnonymous;
-  const UserModel({
-    this.id,
-    required this.email,
-    required this.isAnonymous,
-  });
+@freezed
+class UserModel with _$UserModel {
+  // ignore: invalid_annotation_target
+  @JsonSerializable(explicitToJson: true)
+  const factory UserModel({
+    String? id,
+    required String email,
+    required bool isAnonymous,
+  }) = _UserModel;
 
-  @override
-  List<Object?> get props => [id, email, isAnonymous];
+  const UserModel._();
 
   factory UserModel.empty() {
     return UserModel(
@@ -48,18 +45,4 @@ class UserModel extends Equatable {
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserModelToJson(this);
-
-  UserModel copyWith({
-    String? id,
-    String? email,
-    bool? isAnonymous,
-  }) {
-    return UserModel(
-      id: id ?? this.id,
-      email: email ?? this.email,
-      isAnonymous: isAnonymous ?? this.isAnonymous,
-    );
-  }
 }
