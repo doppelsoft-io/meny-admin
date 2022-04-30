@@ -1,4 +1,4 @@
-class Failure {
+class Failure implements Exception {
   final int? code;
   final String message;
   final String shortMessage;
