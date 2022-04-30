@@ -23,6 +23,8 @@ dependencies:
   flutter_bloc: null
   flutter_hooks: ^0.17.0
   font_awesome_flutter: ^9.2.0
+  freezed: ^2.0.2
+  freezed_annotation: ^2.0.1
   get_it: ^7.2.0
   google_fonts: ^2.1.1
   hive_flutter: ^1.1.0
