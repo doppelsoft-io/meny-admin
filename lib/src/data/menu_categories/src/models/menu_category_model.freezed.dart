@@ -21,7 +21,7 @@ MenuCategoryModel _$MenuCategoryModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MenuCategoryModel {
   String get menuId => throw _privateConstructorUsedError;
-  String get categoryid => throw _privateConstructorUsedError;
+  String get categoryId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $MenuCategoryModelCopyWith<$Res> {
   factory $MenuCategoryModelCopyWith(
           MenuCategoryModel value, $Res Function(MenuCategoryModel) then) =
       _$MenuCategoryModelCopyWithImpl<$Res>;
-  $Res call({String menuId, String categoryid});
+  $Res call({String menuId, String categoryId});
 }
 
 /// @nodoc
@@ -49,16 +49,16 @@ class _$MenuCategoryModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? menuId = freezed,
-    Object? categoryid = freezed,
+    Object? categoryId = freezed,
   }) {
     return _then(_value.copyWith(
       menuId: menuId == freezed
           ? _value.menuId
           : menuId // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryid: categoryid == freezed
-          ? _value.categoryid
-          : categoryid // ignore: cast_nullable_to_non_nullable
+      categoryId: categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -71,7 +71,7 @@ abstract class _$MenuCategoryModelCopyWith<$Res>
           _MenuCategoryModel value, $Res Function(_MenuCategoryModel) then) =
       __$MenuCategoryModelCopyWithImpl<$Res>;
   @override
-  $Res call({String menuId, String categoryid});
+  $Res call({String menuId, String categoryId});
 }
 
 /// @nodoc
@@ -88,16 +88,16 @@ class __$MenuCategoryModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? menuId = freezed,
-    Object? categoryid = freezed,
+    Object? categoryId = freezed,
   }) {
     return _then(_MenuCategoryModel(
       menuId: menuId == freezed
           ? _value.menuId
           : menuId // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryid: categoryid == freezed
-          ? _value.categoryid
-          : categoryid // ignore: cast_nullable_to_non_nullable
+      categoryId: categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -106,7 +106,7 @@ class __$MenuCategoryModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MenuCategoryModel implements _MenuCategoryModel {
-  _$_MenuCategoryModel({required this.menuId, required this.categoryid});
+  _$_MenuCategoryModel({required this.menuId, required this.categoryId});
 
   factory _$_MenuCategoryModel.fromJson(Map<String, dynamic> json) =>
       _$$_MenuCategoryModelFromJson(json);
@@ -114,11 +114,11 @@ class _$_MenuCategoryModel implements _MenuCategoryModel {
   @override
   final String menuId;
   @override
-  final String categoryid;
+  final String categoryId;
 
   @override
   String toString() {
-    return 'MenuCategoryModel(menuId: $menuId, categoryid: $categoryid)';
+    return 'MenuCategoryModel(menuId: $menuId, categoryId: $categoryId)';
   }
 
   @override
@@ -128,7 +128,7 @@ class _$_MenuCategoryModel implements _MenuCategoryModel {
             other is _MenuCategoryModel &&
             const DeepCollectionEquality().equals(other.menuId, menuId) &&
             const DeepCollectionEquality()
-                .equals(other.categoryid, categoryid));
+                .equals(other.categoryId, categoryId));
   }
 
   @JsonKey(ignore: true)
@@ -136,7 +136,7 @@ class _$_MenuCategoryModel implements _MenuCategoryModel {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(menuId),
-      const DeepCollectionEquality().hash(categoryid));
+      const DeepCollectionEquality().hash(categoryId));
 
   @JsonKey(ignore: true)
   @override
@@ -152,7 +152,7 @@ class _$_MenuCategoryModel implements _MenuCategoryModel {
 abstract class _MenuCategoryModel implements MenuCategoryModel {
   factory _MenuCategoryModel(
       {required final String menuId,
-      required final String categoryid}) = _$_MenuCategoryModel;
+      required final String categoryId}) = _$_MenuCategoryModel;
 
   factory _MenuCategoryModel.fromJson(Map<String, dynamic> json) =
       _$_MenuCategoryModel.fromJson;
@@ -160,7 +160,7 @@ abstract class _MenuCategoryModel implements MenuCategoryModel {
   @override
   String get menuId => throw _privateConstructorUsedError;
   @override
-  String get categoryid => throw _privateConstructorUsedError;
+  String get categoryId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$MenuCategoryModelCopyWith<_MenuCategoryModel> get copyWith =>

@@ -8,7 +8,7 @@ part 'menu_category_model.g.dart';
 class MenuCategoryModel with _$MenuCategoryModel {
   factory MenuCategoryModel({
     required String menuId,
-    required String categoryid,
+    required String categoryId,
   }) = _MenuCategoryModel;
 
   factory MenuCategoryModel.fromJson(Map<String, dynamic> json) =>
@@ -17,7 +17,7 @@ class MenuCategoryModel with _$MenuCategoryModel {
   factory MenuCategoryModel.empty() {
     return MenuCategoryModel(
       menuId: '',
-      categoryid: '',
+      categoryId: '',
     );
   }
 
