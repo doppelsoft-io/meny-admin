@@ -7,7 +7,6 @@ import 'package:meny/src/data/users/users.dart';
 import 'package:meny/src/services/services.dart';
 
 class AuthRepository {
-  final FirebaseFirestore _firebaseFirestore;
   final FirebaseAuth _firebaseAuth;
   final LoggerService _loggerService;
 
@@ -15,8 +14,7 @@ class AuthRepository {
     FirebaseFirestore? firebaseFirestore,
     FirebaseAuth? firebaseAuth,
     required LoggerService loggerService,
-  })  : _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
-        _firebaseAuth = firebaseAuth ?? Locator.instance(),
+  })  : _firebaseAuth = firebaseAuth ?? Locator.instance(),
         _loggerService = loggerService;
 
   Future<UserModel> getCurrentUser() async {
