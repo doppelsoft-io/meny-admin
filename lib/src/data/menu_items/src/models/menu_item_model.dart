@@ -1,29 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
 
+part 'menu_item_model.freezed.dart';
 part 'menu_item_model.g.dart';
 
-@JsonSerializable(explicitToJson: true)
-class MenuItemModel extends MenuItemEntity {
-  final int position;
-
-  const MenuItemModel({
+@freezed
+class MenuItemModel with _$MenuItemModel {
+  // ignore: invalid_annotation_target
+  @JsonSerializable(explicitToJson: true)
+  const factory MenuItemModel({
     String? id,
     required String name,
     required double price,
     DateTime? createdAt,
     DateTime? updatedAt,
     required String description,
-    required this.position,
-  }) : super(
-          id: id,
-          name: name,
-          price: price,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-          description: description,
-        );
+    required int position,
+  }) = _MenuItemModel;
 
   factory MenuItemModel.fromSnapshot(DocumentSnapshot snap) {
     try {
@@ -62,50 +56,16 @@ class MenuItemModel extends MenuItemEntity {
   factory MenuItemModel.fromJson(Map<String, dynamic> json) =>
       _$MenuItemModelFromJson(json);
 
-  @override
-  Map<String, dynamic> toJson() => _$MenuItemModelToJson(this);
+  // MenuItemModel mergeWithEntity(MenuItemEntity item) {
+  //   return MenuItemModel(
+  //     id: item.id,
+  //     name: item.name,
+  //     price: item.price,
+  //     createdAt: item.createdAt,
+  //     updatedAt: item.updatedAt,
+  //     description: item.description,
+  //     position: position,
+  //   );
+  // }
 
-  @override
-  MenuItemModel copyWith({
-    String? id,
-    String? name,
-    double? price,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? description,
-    int? position,
-  }) {
-    return MenuItemModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      price: price ?? this.price,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      description: description ?? this.description,
-      position: position ?? this.position,
-    );
-  }
-
-  MenuItemModel mergeWithEntity(MenuItemEntity item) {
-    return MenuItemModel(
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      createdAt: item.createdAt,
-      updatedAt: item.updatedAt,
-      description: item.description,
-      position: position,
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-        id,
-        name,
-        price,
-        createdAt,
-        updatedAt,
-        description,
-        position,
-      ];
 }
