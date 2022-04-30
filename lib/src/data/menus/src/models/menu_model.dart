@@ -9,7 +9,8 @@ class MenuModel with _$MenuModel {
   // ignore: invalid_annotation_target
   @JsonSerializable(explicitToJson: true)
   const factory MenuModel({
-    String? id,
+    // ignore: invalid_annotation_target
+    @JsonKey(ignore: true) String? id,
     required String name,
     String? description,
     DateTime? createdAt,
@@ -27,7 +28,7 @@ class MenuModel with _$MenuModel {
     );
   }
 
-  // factory MenuModel.fromEntity(MenuEntity entity) {
+  // factory MenuModel.fromEntity(MenuModel entity) {
   //   return MenuModel(
   //     id: entity.id,
   //     name: entity.name,

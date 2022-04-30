@@ -7,7 +7,6 @@ part of 'menu_model.dart';
 // **************************************************************************
 
 _$_MenuModel _$$_MenuModelFromJson(Map<String, dynamic> json) => _$_MenuModel(
-      id: json['id'] as String?,
       name: json['name'] as String,
       description: json['description'] as String?,
       createdAt: json['createdAt'] == null
@@ -20,7 +19,6 @@ _$_MenuModel _$$_MenuModelFromJson(Map<String, dynamic> json) => _$_MenuModel(
 
 Map<String, dynamic> _$$_MenuModelToJson(_$_MenuModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
       'description': instance.description,
       'createdAt': instance.createdAt?.toIso8601String(),

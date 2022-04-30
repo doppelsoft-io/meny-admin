@@ -20,6 +20,8 @@ MenuModel _$MenuModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MenuModel {
+// ignore: invalid_annotation_target
+  @JsonKey(ignore: true)
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
@@ -37,7 +39,7 @@ abstract class $MenuModelCopyWith<$Res> {
   factory $MenuModelCopyWith(MenuModel value, $Res Function(MenuModel) then) =
       _$MenuModelCopyWithImpl<$Res>;
   $Res call(
-      {String? id,
+      {@JsonKey(ignore: true) String? id,
       String name,
       String? description,
       DateTime? createdAt,
@@ -92,7 +94,7 @@ abstract class _$MenuModelCopyWith<$Res> implements $MenuModelCopyWith<$Res> {
       __$MenuModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? id,
+      {@JsonKey(ignore: true) String? id,
       String name,
       String? description,
       DateTime? createdAt,
@@ -146,7 +148,7 @@ class __$MenuModelCopyWithImpl<$Res> extends _$MenuModelCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$_MenuModel extends _MenuModel {
   const _$_MenuModel(
-      {this.id,
+      {@JsonKey(ignore: true) this.id,
       required this.name,
       this.description,
       this.createdAt,
@@ -156,7 +158,9 @@ class _$_MenuModel extends _MenuModel {
   factory _$_MenuModel.fromJson(Map<String, dynamic> json) =>
       _$$_MenuModelFromJson(json);
 
+// ignore: invalid_annotation_target
   @override
+  @JsonKey(ignore: true)
   final String? id;
   @override
   final String name;
@@ -208,7 +212,7 @@ class _$_MenuModel extends _MenuModel {
 
 abstract class _MenuModel extends MenuModel {
   const factory _MenuModel(
-      {final String? id,
+      {@JsonKey(ignore: true) final String? id,
       required final String name,
       final String? description,
       final DateTime? createdAt,
@@ -218,7 +222,8 @@ abstract class _MenuModel extends MenuModel {
   factory _MenuModel.fromJson(Map<String, dynamic> json) =
       _$_MenuModel.fromJson;
 
-  @override
+  @override // ignore: invalid_annotation_target
+  @JsonKey(ignore: true)
   String? get id => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
