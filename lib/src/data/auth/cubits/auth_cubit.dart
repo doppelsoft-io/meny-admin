@@ -40,7 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
     return super.close();
   }
 
-  void userChanged(UserModel user) async {
+  Future<void> userChanged(UserModel user) async {
     await Future.delayed(Duration.zero);
 
     if (user.isAnonymous) {
@@ -56,7 +56,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void appStarted() async {
+  Future<void> appStarted() async {
     UserModel currentUser;
     currentUser = await _authRepository.getCurrentUser();
     if (currentUser == UserModel.empty()) {
@@ -76,6 +76,9 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logout() async {
+    /// Remove storeId from cache
+    await _storeCacheService.remove('storeId');
+
     await Future.wait([
       /// Logout
       _authRepository.logout(),
@@ -83,8 +86,5 @@ class AuthCubit extends Cubit<AuthState> {
       /// Then login anonymously
       _authRepository.loginAnonymously(),
     ]);
-
-    /// Remove storeId from cache
-    _storeCacheService.remove('storeId');
   }
 }

@@ -28,7 +28,7 @@ class _MenusCategoriesTabState extends State<MenusCategoriesTab> {
   @override
   void initState() {
     final storeCubit = context.read<StoreCubit>();
-    final storeId = storeCubit.state.store!.id!;
+    final storeId = storeCubit.state.store.id!;
     context.read<ResourcesCubit>().load(storeId: storeId);
 
     super.initState();
@@ -39,7 +39,7 @@ class _MenusCategoriesTabState extends State<MenusCategoriesTab> {
     return BlocListener<StoreCubit, StoreState>(
       listenWhen: (prev, curr) => prev.store != curr.store,
       listener: (context, state) =>
-          context.read<ResourcesCubit>()..load(storeId: state.store!.id!),
+          context.read<ResourcesCubit>()..load(storeId: state.store.id!),
       child: NestedScrollView(
         headerSliverBuilder: (context, innerBoxScrolled) {
           return [

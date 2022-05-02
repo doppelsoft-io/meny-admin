@@ -5,7 +5,6 @@ import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/auth/auth.dart';
 import 'package:meny/src/data/signup/signup.dart';
 import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/screens/screens.dart';
 import 'package:meny/src/services/services.dart';
 import 'package:meny/src/utils/utils.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -58,6 +57,7 @@ class SignupScreen extends HookWidget {
         ..text = updatePassword.text
         ..selection =
             TextSelection.collapsed(offset: passwordController.text.length);
+      return null;
     }, [
       updateStoreName,
       updateEmail,
@@ -154,6 +154,7 @@ class SignupScreen extends HookWidget {
                             ? null
                             : 'Email is invalid';
                       }
+                      return null;
                     },
                   ),
                   SizedBox(height: Spacing.textFieldVerticalSpacing),
@@ -185,18 +186,15 @@ class SignupScreen extends HookWidget {
                                   if (isValid) {
                                     final store =
                                         context.read<StoreCubit>().state.store;
-                                    if (store != null) {
-                                      context.read<SignupCubit>()
-                                        ..handleSignUp(
-                                          store: store.copyWith(
-                                            name:
-                                                storeNameController.text.trim(),
-                                          ),
-                                          email: emailController.text.trim(),
-                                          password:
-                                              passwordController.text.trim(),
-                                        );
-                                    }
+                                    context.read<SignupCubit>()
+                                      ..handleSignUp(
+                                        store: store.copyWith(
+                                          name: storeNameController.text.trim(),
+                                        ),
+                                        email: emailController.text.trim(),
+                                        password:
+                                            passwordController.text.trim(),
+                                      );
                                   }
                                 },
                           child: state.isSigninIn

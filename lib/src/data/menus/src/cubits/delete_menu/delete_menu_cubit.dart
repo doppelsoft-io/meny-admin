@@ -31,7 +31,7 @@ class DeleteMenuCubit extends Cubit<DeleteMenuState> {
     emit(DeleteMenuState.deleting());
 
     try {
-      final storeId = _storeCubit.state.store!.id!;
+      final storeId = _storeCubit.state.store.id!;
       final batch = _firebaseFirestore.batch();
       final menuRef = _firebaseFirestore.menuEntitiesDocument(
         storeId: storeId,

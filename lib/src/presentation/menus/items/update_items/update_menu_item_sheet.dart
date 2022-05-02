@@ -250,7 +250,7 @@ class _UpdateMenuItemSheet extends HookWidget {
                             initialItems: categoryMenuItemsState.categories,
                             fetchSuggestions: () {
                               final storeId =
-                                  context.read<StoreCubit>().state.store!.id!;
+                                  context.read<StoreCubit>().state.store.id!;
 
                               return Locator.instance<CategoryRepository>()
                                   .getAll(storeId: storeId)

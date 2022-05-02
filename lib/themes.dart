@@ -33,7 +33,7 @@ class Themes {
   static ThemeData defaultTheme = _light.copyWith(
     colorScheme: ColorScheme(
       primary: primaryColor,
-      primaryVariant: Colors.greenAccent,
+      primaryVariant: primaryColor,
       secondary: Colors.white,
       secondaryVariant: Colors.white,
       surface: Colors.white,

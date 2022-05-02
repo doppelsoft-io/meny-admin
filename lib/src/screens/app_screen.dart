@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meny/src/constants/analytics.dart';
 import 'package:meny/src/data/auth/auth.dart';
+import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/stores/cubits/cubits.dart';
 import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/presentation/customer/customers_page.dart';
@@ -44,39 +45,36 @@ class _AppScreen extends HookWidget {
         return BlocConsumer<StoreCubit, StoreState>(
           listenWhen: (prev, curr) => prev.store != curr.store,
           listener: (context, storeState) {
-            if (storeState.failure != null) {
-              DialogService.showErrorDialog(
-                context: context,
-                failure: storeState.failure!,
-              );
-            }
+            storeState.maybeWhen(
+              error: (store, exception) {
+                DialogService.showErrorDialog(
+                  context: context,
+                  failure: Failure(message: exception.toString()),
+                );
+              },
+              orElse: () {},
+            );
           },
           builder: (context, storeState) {
-            switch (storeState.status) {
-              case StoreStatus.initial:
-                return Scaffold(
-                  body: LoadingDisplay(
-                    alignment: Alignment.center,
-                  ),
-                );
-              case StoreStatus.error:
-                return Scaffold(
-                  body: ErrorDisplay(
-                    failure: storeState.failure!,
-                  ),
-                );
-              case StoreStatus.loaded:
+            return storeState.maybeWhen(
+              loading: (_) => Scaffold(
+                body: LoadingDisplay(
+                  alignment: Alignment.center,
+                ),
+              ),
+              error: (_, exception) => Scaffold(
+                body: ErrorDisplay(
+                  failure: Failure(message: exception.toString()),
+                ),
+              ),
+              loaded: (store) {
                 const pages = {
                   0: MenusPage(),
                   1: OrdersPage(),
                   2: LocationsPage(),
                   3: StoreHoursPage(),
-                  // 4: MessagingPage(),
                   4: CustomersPage(),
                 };
-
-                final store = storeState.store!;
-
                 return Scaffold(
                   appBar: AppBar(
                     elevation: 1,
@@ -189,7 +187,9 @@ class _AppScreen extends HookWidget {
                   //             .toList(),
                   //       ),
                 );
-            }
+              },
+              orElse: () => SizedBox.shrink(),
+            );
           },
         );
       },

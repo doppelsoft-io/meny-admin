@@ -1,42 +1,17 @@
 part of 'store_cubit.dart';
 
-enum StoreStatus {
-  initial,
-  loaded,
-  error,
-}
+@freezed
+class StoreState with _$StoreState {
+  const factory StoreState.loading({
+    required StoreModel store,
+  }) = _Loading;
 
-class StoreState extends Equatable {
-  final StoreStatus status;
-  final StoreModel? store;
-  final Failure? failure;
+  const factory StoreState.loaded({
+    required StoreModel store,
+  }) = _Loaded;
 
-  const StoreState({
-    required this.status,
-    required this.store,
-    required this.failure,
-  });
-
-  @override
-  List<Object?> get props => [status, store, failure];
-
-  factory StoreState.initial() {
-    return StoreState(
-      status: StoreStatus.initial,
-      store: null,
-      failure: null,
-    );
-  }
-
-  StoreState copyWith({
-    StoreStatus? status,
-    StoreModel? store,
-    Failure? failure,
-  }) {
-    return StoreState(
-      status: status ?? this.status,
-      store: store ?? this.store,
-      failure: failure,
-    );
-  }
+  const factory StoreState.error({
+    required StoreModel store,
+    required Exception exception,
+  }) = _Error;
 }

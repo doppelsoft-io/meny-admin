@@ -33,7 +33,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
   }
 
   Future<void> load({required String categoryId}) async {
-    final storeId = _storeCubit.state.store!.id!;
+    final storeId = _storeCubit.state.store.id!;
     final menus = await _menuRepository.getAll(storeId: storeId).first;
 
     _subscription = _menuCategoryRepository
@@ -71,7 +71,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
         menus: state.menus,
       ));
 
-      final storeId = _storeCubit.state.store!.id!;
+      final storeId = _storeCubit.state.store.id!;
       await _menuCategoryRepository.create(
         storeId: storeId,
         menuId: menu.id!,
@@ -106,7 +106,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
         menus: state.menus,
       ));
 
-      final storeId = _storeCubit.state.store!.id!;
+      final storeId = _storeCubit.state.store.id!;
       await _menuCategoryRepository.remove(
         storeId: storeId,
         menuId: menu.id!,

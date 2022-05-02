@@ -36,7 +36,7 @@ class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
 
     try {
       final batch = _firebaseFirestore.batch();
-      final storeId = _storeCubit.state.store!.id!;
+      final storeId = _storeCubit.state.store.id!;
       final categoryRef = _firebaseFirestore.categoryEntitiesDocument(
         storeId: storeId,
         categoryId: category.id!,

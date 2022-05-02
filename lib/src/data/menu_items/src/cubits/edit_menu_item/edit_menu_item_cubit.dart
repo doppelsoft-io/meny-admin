@@ -26,7 +26,7 @@ class EditMenuItemCubit extends Cubit<EditMenuItemState> {
       await Future.delayed(Duration(milliseconds: 300));
       emit(EditMenuItemState.loaded(item: item));
     } else {
-      final storeId = _storeCubit.state.store!.id!;
+      final storeId = _storeCubit.state.store.id!;
       final failureOrItem = await _menuItemRepository.create(
         storeId: storeId,
         resource: item,
@@ -40,7 +40,7 @@ class EditMenuItemCubit extends Cubit<EditMenuItemState> {
 
   Future<void> update(MenuItemModel item) async {
     emit(EditMenuItemState.updating(item: item));
-    final storeId = _storeCubit.state.store!.id!;
+    final storeId = _storeCubit.state.store.id!;
     final failureOrUpdate = await _menuItemRepository.update(
       storeId: storeId,
       resource: item,

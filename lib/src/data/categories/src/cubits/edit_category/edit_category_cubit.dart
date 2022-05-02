@@ -24,7 +24,7 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
       await Future.delayed(Duration(milliseconds: 300));
       emit(EditCategoryState.loaded(category: category));
     } else {
-      final storeId = _storeCubit.state.store!.id!;
+      final storeId = _storeCubit.state.store.id!;
 
       final failureOrCategory = await _categoryRepository.create(
         storeId: storeId,
@@ -44,7 +44,7 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
   Future<void> update(CategoryModel item) async {
     emit(EditCategoryState.updating(category: state.category));
 
-    final storeId = _storeCubit.state.store!.id!;
+    final storeId = _storeCubit.state.store.id!;
 
     final failureOrUpdate = await _categoryRepository.update(
       storeId: storeId,
