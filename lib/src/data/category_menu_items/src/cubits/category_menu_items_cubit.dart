@@ -33,7 +33,7 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
     super.close();
   }
 
-  void load({required String menuItemId}) async {
+  Future<void> load({required String menuItemId}) async {
     final storeId = _storeCubit.state.store!.id!;
     final categories = await _categoryRepository.getAll(storeId: storeId).first;
 

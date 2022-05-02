@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny/src/data/menus/menus.dart';
-import 'package:meny/src/presentation/menus/menu_preview/widgets/widgets.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {

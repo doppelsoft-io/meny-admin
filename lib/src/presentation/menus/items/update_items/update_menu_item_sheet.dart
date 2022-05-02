@@ -104,9 +104,12 @@ class _UpdateMenuItemSheet extends HookWidget {
               );
             },
             loaded: (item) {
-              nameController..text = item.name;
-              descriptionController..text = item.description;
-              priceController..text = item.price.toString();
+              _setInitialValues(
+                context,
+                nameController,
+                descriptionController,
+                priceController,
+              );
               context.read<CategoryMenuItemsCubit>().load(menuItemId: item.id!);
             },
             orElse: () {},
@@ -316,10 +319,19 @@ class _UpdateMenuItemSheet extends HookWidget {
     );
   }
 
-  void _setValues(BuildContext context) {
-    final state = context.watch<EditMenuItemCubit>().state;
+  void _setInitialValues(
+    BuildContext context,
+    TextEditingController nameController,
+    TextEditingController descriptionController,
+    TextEditingController priceController,
+  ) {
+    final state = context.read<EditMenuItemCubit>().state;
     state.maybeWhen(
-      loaded: (item) {},
+      loaded: (item) {
+        nameController..text = item.name;
+        descriptionController..text = item.description;
+        priceController..text = item.price.toString();
+      },
       orElse: () {},
     );
   }
