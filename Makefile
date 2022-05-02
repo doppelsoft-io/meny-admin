@@ -10,9 +10,11 @@ clean: ## Cleans Flutter project.
 	flutter pub get
 
 build: ## Generate codegen files once.
+	flutter pub get
 	flutter pub run build_runner build --delete-conflicting-outputs
 
 watch: ## Generate codegen files and watch for changes.
+	flutter pub get
 	flutter pub run build_runner watch --delete-conflicting-outputs
 
 lint: ## Runs `flutter analyze`.

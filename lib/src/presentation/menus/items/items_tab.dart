@@ -11,8 +11,12 @@ import 'package:meny/src/presentation/resources/cubit/resources_cubit.dart';
 import 'package:meny/src/services/services.dart';
 
 class CustomTableCell extends StatelessWidget {
+  const CustomTableCell({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
   final Widget child;
-  const CustomTableCell({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

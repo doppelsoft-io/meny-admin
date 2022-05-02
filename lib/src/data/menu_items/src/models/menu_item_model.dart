@@ -23,7 +23,7 @@ class MenuItemModel with _$MenuItemModel {
 
   factory MenuItemModel.fromSnapshot(DocumentSnapshot snap) {
     try {
-      final data = snap.data();
+      final data = snap.data()!;
       final json = data as Map<String, dynamic>;
       return MenuItemModel.fromJson(json).copyWith(id: snap.id);
     } catch (e) {

@@ -7,37 +7,21 @@ enum CompiledMenuStatus {
   error,
 }
 
-class CompiledMenuState extends Equatable {
-  final CompiledMenuStatus status;
-  final MenuModel? menu;
-  final Failure? failure;
+typedef CategoryMenuItemMap = Tuple2<CategoryModel, List<MenuItemModel>>;
+typedef MenuResponse = Tuple2<MenuModel, List<CategoryMenuItemMap>>;
 
-  const CompiledMenuState({
-    required this.status,
-    required this.menu,
-    required this.failure,
-  });
+@freezed
+class CompiledMenuState with _$CompiledMenuState {
+  const factory CompiledMenuState.loading({
+    required MenuResponse response,
+  }) = _Loading;
 
-  @override
-  List<Object?> get props => [status, menu, failure];
+  const factory CompiledMenuState.loaded({
+    required MenuResponse response,
+  }) = _Loaded;
 
-  factory CompiledMenuState.initial() {
-    return const CompiledMenuState(
-      menu: null,
-      status: CompiledMenuStatus.initial,
-      failure: null,
-    );
-  }
-
-  CompiledMenuState copyWith({
-    CompiledMenuStatus? status,
-    MenuModel? menu,
-    Failure? failure,
-  }) {
-    return CompiledMenuState(
-      status: status ?? this.status,
-      menu: menu ?? this.menu,
-      failure: failure,
-    );
-  }
+  const factory CompiledMenuState.error({
+    required MenuResponse response,
+    required Exception exception,
+  }) = _Error;
 }

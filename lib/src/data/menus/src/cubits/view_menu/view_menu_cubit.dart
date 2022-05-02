@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:meny/locator.dart';
 import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
-import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/menus/menus.dart';
 import 'package:meny/src/data/stores/stores.dart';
@@ -11,12 +10,6 @@ import 'package:meny/src/data/stores/stores.dart';
 part 'view_menu_state.dart';
 
 class ViewMenuCubit extends Cubit<ViewMenuState> {
-  final MenuRepository _menuRepository;
-  final CompiledMenuRepository _compiledMenuRepository;
-  final CategoryRepository _categoryRepository;
-  final MenuItemRepository _menuItemRepository;
-  final StoreCacheService _storeCacheService;
-
   ViewMenuCubit({
     MenuRepository? menuRepository,
     CompiledMenuRepository? compiledMenuRepository,
@@ -29,6 +22,12 @@ class ViewMenuCubit extends Cubit<ViewMenuState> {
         _menuItemRepository = menuItemRepository ?? Locator.instance(),
         _storeCacheService = storeCacheService ?? Locator.instance(),
         super(ViewMenuState.initial());
+
+  final MenuRepository _menuRepository;
+  final CompiledMenuRepository _compiledMenuRepository;
+  final CategoryRepository _categoryRepository;
+  final MenuItemRepository _menuItemRepository;
+  final StoreCacheService _storeCacheService;
 
   Future<void> _compileMenuItems({
     required int index,
@@ -68,7 +67,7 @@ class ViewMenuCubit extends Cubit<ViewMenuState> {
     // }
   }
 
-  void compile({required String menuId}) async {
+  Future<void> compile({required String menuId}) async {
     try {
       // final storeId = await _storeCacheService.get('storeId');
       // final menuEntity = await _menuRepository.get(

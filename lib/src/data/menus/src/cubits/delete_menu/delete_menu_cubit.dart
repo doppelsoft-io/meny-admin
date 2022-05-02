@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/locator.dart';
 import 'package:meny/src/constants/paths.dart';
@@ -10,14 +9,10 @@ import 'package:meny/src/data/menus/menus.dart';
 import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/extensions/extensions.dart';
 
-part 'delete_menu_state.dart';
 part 'delete_menu_cubit.freezed.dart';
+part 'delete_menu_state.dart';
 
 class DeleteMenuCubit extends Cubit<DeleteMenuState> {
-  final FirebaseFirestore _firebaseFirestore;
-  final StoreCubit _storeCubit;
-  final MenuCategoryRepository _menuCategoryRepository;
-
   DeleteMenuCubit({
     required StoreCubit storeCubit,
     FirebaseFirestore? firebaseFirestore,
@@ -26,6 +21,10 @@ class DeleteMenuCubit extends Cubit<DeleteMenuState> {
         _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
         _menuCategoryRepository = menuCategoryRepository ?? Locator.instance(),
         super(const DeleteMenuState.initial());
+
+  final FirebaseFirestore _firebaseFirestore;
+  final StoreCubit _storeCubit;
+  final MenuCategoryRepository _menuCategoryRepository;
 
   Future<void> delete({required MenuModel menu}) async {
     emit(const DeleteMenuState.deleting());

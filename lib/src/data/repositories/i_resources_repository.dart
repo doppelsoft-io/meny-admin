@@ -3,13 +3,13 @@ import 'package:dartz/dartz.dart';
 import 'package:meny/src/data/core/failures.dart';
 
 abstract class IResourcesRepository<T> {
-  String path;
-  FirebaseFirestore firebaseFirestore;
-
   IResourcesRepository({
     required this.path,
     required this.firebaseFirestore,
   });
+
+  String path;
+  FirebaseFirestore firebaseFirestore;
 
   Stream<List<T>> getAll({required String storeId});
   Future<Either<Failure, T>> create({

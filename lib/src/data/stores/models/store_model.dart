@@ -30,7 +30,7 @@ class StoreModel with _$StoreModel {
 
   factory StoreModel.fromSnapshot(DocumentSnapshot snap) {
     try {
-      final data = snap.data();
+      final data = snap.data()!;
       final json = data as Map<String, dynamic>;
       return StoreModel.fromJson(json).copyWith(id: snap.id);
     } catch (e) {

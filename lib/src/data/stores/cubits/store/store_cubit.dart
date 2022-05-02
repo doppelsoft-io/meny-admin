@@ -12,13 +12,6 @@ part 'store_cubit.freezed.dart';
 part 'store_state.dart';
 
 class StoreCubit extends Cubit<StoreState> {
-  final StoreRepository _storeRepository;
-  final StoreCacheService _storeCacheService;
-  final FirebaseAuth _firebaseAuth;
-
-  StreamSubscription? _authSubscription;
-  StreamSubscription? _storeSubscription;
-
   StoreCubit({
     StoreRepository? storeRepository,
     StoreCacheService? storeCacheService,
@@ -36,6 +29,13 @@ class StoreCubit extends Cubit<StoreState> {
     });
   }
 
+  final StoreRepository _storeRepository;
+  final StoreCacheService _storeCacheService;
+  final FirebaseAuth _firebaseAuth;
+
+  StreamSubscription? _authSubscription;
+  StreamSubscription? _storeSubscription;
+
   @override
   Future<void> close() {
     _authSubscription?.cancel();
@@ -49,13 +49,13 @@ class StoreCubit extends Cubit<StoreState> {
         _storeRepository.stream(storeId: store.id!).listen(setStore);
   }
 
-  void setStore(StoreModel store) async {
-    assert(store.id != null && store.id!.isNotEmpty);
+  Future<void> setStore(StoreModel store) async {
+    assert(store.id != null && store.id!.isNotEmpty, 'store.id is empty');
     await _storeCacheService.save(store.id!);
     emit(state.copyWith(store: store));
   }
 
-  void loadStoreForUser({required UserModel user}) async {
+  Future<void> loadStoreForUser({required UserModel user}) async {
     if (user == UserModel.empty()) {
       emit(
         StoreState.error(
@@ -68,30 +68,34 @@ class StoreCubit extends Cubit<StoreState> {
       final failureOrStore =
           await _storeRepository.createEmptyStoreForUser(userId: user.id!);
 
-      emit(failureOrStore.fold(
-        (failure) => StoreState.error(
-          store: state.store,
-          exception: failure,
+      emit(
+        failureOrStore.fold(
+          (failure) => StoreState.error(
+            store: state.store,
+            exception: failure,
+          ),
+          (store) {
+            watchStore(store);
+            return StoreState.loaded(store: store);
+          },
         ),
-        (store) {
-          watchStore(store);
-          return StoreState.loaded(store: store);
-        },
-      ),);
+      );
     } else {
       final failureOrStore =
           await _storeRepository.getStoresForUser(userId: user.id!);
 
-      emit(failureOrStore.fold(
-        (failure) => StoreState.error(
-          store: state.store,
-          exception: failure,
+      emit(
+        failureOrStore.fold(
+          (failure) => StoreState.error(
+            store: state.store,
+            exception: failure,
+          ),
+          (stores) {
+            watchStore(stores.first);
+            return StoreState.loaded(store: stores.first);
+          },
         ),
-        (stores) {
-          watchStore(stores.first);
-          return StoreState.loaded(store: stores.first);
-        },
-      ),);
+      );
     }
   }
 }

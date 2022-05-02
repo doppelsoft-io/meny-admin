@@ -22,6 +22,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: null
   flutter_hooks: ^0.17.0
+  flutter_reorderable_list: ^1.2.0
   font_awesome_flutter: ^9.2.0
   freezed: ^2.0.2
   freezed_annotation: ^2.0.1

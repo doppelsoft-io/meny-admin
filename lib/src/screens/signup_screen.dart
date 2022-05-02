@@ -10,6 +10,8 @@ import 'package:meny/src/utils/utils.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class SignupScreen extends HookWidget {
+  const SignupScreen({Key? key}) : super(key: key);
+
   static const String routeName = '/signup';
 
   static Route route() {
@@ -24,8 +26,6 @@ class SignupScreen extends HookWidget {
       },
     );
   }
-
-  const SignupScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +68,7 @@ class SignupScreen extends HookWidget {
       listenWhen: (prev, curr) =>
           curr.result != null && curr.status == SignupStatus.done,
       listener: (context, state) {
-        final result = state.result!;
-        result.fold(
+        state.result!.fold(
           (failure) =>
               DialogService.showErrorDialog(context: context, failure: failure),
           (result) {
@@ -80,7 +79,8 @@ class SignupScreen extends HookWidget {
             Navigator.of(context).pop();
 
             ToastService.showNotification(
-                const Text('Your sign up was successful!'),);
+              const Text('Your sign up was successful!'),
+            );
           },
         );
       },

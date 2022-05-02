@@ -270,14 +270,14 @@ class _UpdateCategorySheet extends HookWidget {
 }
 
 class _DeleteCategoryButton extends StatelessWidget {
-  final CategoryModel category;
-  final List<MenuModel> menus;
-
   const _DeleteCategoryButton({
     Key? key,
     required this.category,
     required this.menus,
   }) : super(key: key);
+
+  final CategoryModel category;
+  final List<MenuModel> menus;
 
   Future<bool> showConfirmationDialog({
     required BuildContext context,

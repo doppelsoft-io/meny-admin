@@ -8,7 +8,6 @@ class CategoryMenuItemException implements Exception {
   const CategoryMenuItemException({String? message})
       : message = message ?? 'Something went wrong';
 
-  /// Error message.
   final String? message;
 
   @override

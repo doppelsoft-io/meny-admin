@@ -309,15 +309,14 @@ class _UpdateMenuItemSheet extends HookWidget {
     TextEditingController descriptionController,
     TextEditingController priceController,
   ) {
-    final state = context.read<EditMenuItemCubit>().state;
-    state.maybeWhen(
-      loaded: (item) {
-        nameController.text = item.name;
-        descriptionController.text = item.description;
-        priceController.text = item.price.toString();
-      },
-      orElse: () {},
-    );
+    context.read<EditMenuItemCubit>().state.maybeWhen(
+          loaded: (item) {
+            nameController.text = item.name;
+            descriptionController.text = item.description;
+            priceController.text = item.price.toString();
+          },
+          orElse: () {},
+        );
   }
 
   Future<bool> _onWillPop({
@@ -359,12 +358,12 @@ class _UpdateMenuItemSheet extends HookWidget {
 }
 
 class _DeleteMenuItemButton extends StatelessWidget {
-  final MenuItemModel item;
-
   const _DeleteMenuItemButton({
     Key? key,
     required this.item,
   }) : super(key: key);
+
+  final MenuItemModel item;
 
   void showConfirmationDialog({
     required BuildContext context,

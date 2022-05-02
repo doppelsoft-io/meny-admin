@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 abstract class IResourceModel extends Equatable {
-  final String? id;
   const IResourceModel({
     this.id,
   });
+
+  final String? id;
 
   Map<String, dynamic> toJson();
   String toFriendlyString();

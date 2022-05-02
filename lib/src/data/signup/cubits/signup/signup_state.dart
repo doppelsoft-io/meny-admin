@@ -7,12 +7,6 @@ enum SignupStatus {
 }
 
 class SignupState extends Equatable {
-  final SignupStatus status;
-  final StoreModel? store;
-  final String email;
-  final String password;
-  final Either<Failure, bool>? result;
-
   const SignupState({
     required this.status,
     required this.store,
@@ -20,6 +14,12 @@ class SignupState extends Equatable {
     required this.password,
     required this.result,
   });
+
+  final SignupStatus status;
+  final StoreModel? store;
+  final String email;
+  final String password;
+  final Either<Failure, bool>? result;
 
   @override
   List<Object?> get props => [status, store, email, password, result];

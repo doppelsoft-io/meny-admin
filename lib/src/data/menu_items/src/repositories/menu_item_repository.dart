@@ -8,7 +8,6 @@ import 'package:meny/src/extensions/extensions.dart';
 import 'package:meny/src/services/services.dart';
 
 class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
-  final LoggerService _loggerService;
   MenuItemRepository({
     String? path,
     FirebaseFirestore? firebaseFirestore,
@@ -18,6 +17,8 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
           path: path ?? Paths.menuItems,
           firebaseFirestore: firebaseFirestore ?? FirebaseFirestore.instance,
         );
+
+  final LoggerService _loggerService;
 
   Future<MenuItemModel> get({
     required String storeId,
@@ -40,8 +41,10 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
         .menuItemEntitiesCollection(storeId: storeId)
         .orderBy('createdAt', descending: true)
         .snapshots()
-        .map((doc) =>
-            doc.docs.map((snap) => MenuItemModel.fromSnapshot(snap)).toList(),);
+        .map(
+          (doc) =>
+              doc.docs.map((snap) => MenuItemModel.fromSnapshot(snap)).toList(),
+        );
   }
 
   @override
@@ -57,10 +60,12 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
       return right(MenuItemModel.fromSnapshot(snapshot));
     } catch (err) {
       _loggerService.log('(create): ${err.toString()}');
-      return left(Failure(
-        message:
-            'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
-      ),);
+      return left(
+        Failure(
+          message:
+              'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
+        ),
+      );
     }
   }
 
@@ -76,11 +81,13 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
       return right(true);
     } catch (err) {
       _loggerService.log('(update): ${err.toString()}');
-      return left(Failure(
-        message:
-            'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
-        shortMessage: 'Update failed.',
-      ),);
+      return left(
+        Failure(
+          message:
+              'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
+          shortMessage: 'Update failed.',
+        ),
+      );
     }
   }
 
@@ -96,11 +103,13 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
       return right(true);
     } catch (err) {
       _loggerService.log('(delete): ${err.toString()}');
-      return left(Failure(
-        message:
-            'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
-        shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
-      ),);
+      return left(
+        Failure(
+          message:
+              'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
+          shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
+        ),
+      );
     }
   }
 }

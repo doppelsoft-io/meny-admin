@@ -8,8 +8,6 @@ import 'package:meny/src/extensions/extensions.dart';
 import 'package:meny/src/services/services.dart';
 
 class MenuRepository extends IResourcesRepository<MenuModel> {
-  final LoggerService _loggerService;
-
   MenuRepository({
     required String path,
     required FirebaseFirestore firebaseFirestore,
@@ -19,6 +17,8 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
           path: path,
           firebaseFirestore: firebaseFirestore,
         );
+
+  final LoggerService _loggerService;
 
   Future<MenuModel> get({
     required String storeId,
@@ -41,8 +41,10 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
         .menuEntitiesCollection(storeId: storeId)
         .orderBy('createdAt', descending: true)
         .snapshots()
-        .map((doc) =>
-            doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList(),);
+        .map(
+          (doc) =>
+              doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList(),
+        );
   }
 
   Stream<List<MenuModel>> getMenusForCategory({
@@ -55,8 +57,10 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
         .where('categoryIds', arrayContains: category.id)
         .orderBy('updatedAt', descending: true)
         .snapshots()
-        .map((doc) =>
-            doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList(),);
+        .map(
+          (doc) =>
+              doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList(),
+        );
   }
 
   @override
@@ -72,10 +76,12 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
       return right(MenuModel.fromSnapshot(snapshot));
     } catch (err) {
       _loggerService.log('(create): ${err.toString()}');
-      return left(Failure(
-        message:
-            'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
-      ),);
+      return left(
+        Failure(
+          message:
+              'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
+        ),
+      );
     }
   }
 
@@ -91,11 +97,13 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
       return right(true);
     } catch (err) {
       _loggerService.log('(update): ${err.toString()}');
-      return left(Failure(
-        message:
-            'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
-        shortMessage: 'Update failed.',
-      ),);
+      return left(
+        Failure(
+          message:
+              'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
+          shortMessage: 'Update failed.',
+        ),
+      );
     }
   }
 
@@ -111,11 +119,13 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
       return right(true);
     } catch (err) {
       _loggerService.log('(delete): ${err.toString()}');
-      return left(Failure(
-        message:
-            'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
-        shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
-      ),);
+      return left(
+        Failure(
+          message:
+              'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
+          shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
+        ),
+      );
     }
   }
 }

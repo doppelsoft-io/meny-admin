@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
-import 'package:meny/src/data/compiled_menus/src/cubits/reorder_compiled_menu_item/reorder_compiled_menu_item_cubit.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 import 'package:meny/src/services/services.dart';
 
 class CompiledMenuItemBuilder extends StatelessWidget {
-  final String menuId;
-  final String categoryId;
-
   const CompiledMenuItemBuilder({
     Key? key,
     required this.menuId,
     required this.categoryId,
   }) : super(key: key);
+
+  final String menuId;
+  final String categoryId;
 
   @override
   Widget build(BuildContext context) {

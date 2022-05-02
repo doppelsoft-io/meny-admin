@@ -26,19 +26,9 @@ class MenuModel with _$MenuModel {
     );
   }
 
-  // factory MenuModel.fromEntity(MenuModel entity) {
-  //   return MenuModel(
-  //     id: entity.id,
-  //     name: entity.name,
-  //     description: entity,
-  //     createdAt: entity.createdAt,
-  //     updatedAt: entity.updatedAt,
-  //   );
-  // }
-
   factory MenuModel.fromSnapshot(DocumentSnapshot snap) {
     try {
-      final data = snap.data();
+      final data = snap.data()!;
       final json = data as Map<String, dynamic>;
 
       return MenuModel.fromJson(json).copyWith(id: snap.id);
@@ -47,8 +37,8 @@ class MenuModel with _$MenuModel {
     }
   }
 
-  String toFriendlyString() => 'menu';
-
   factory MenuModel.fromJson(Map<String, dynamic> json) =>
       _$MenuModelFromJson(json);
+
+  String toFriendlyString() => 'menu';
 }

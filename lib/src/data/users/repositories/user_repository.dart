@@ -5,12 +5,11 @@ import 'package:meny/src/data/users/models/models.dart';
 import 'package:meny/src/extensions/extensions.dart';
 
 class UserRepository {
-  final FirebaseFirestore _firebaseFirestore;
-
   UserRepository({
     FirebaseFirestore? firebaseFirestore,
   }) : _firebaseFirestore = firebaseFirestore ?? Locator.instance();
-  //
+
+  final FirebaseFirestore _firebaseFirestore;
 
   Future<UserModel> create({required UserModel user}) async {
     try {

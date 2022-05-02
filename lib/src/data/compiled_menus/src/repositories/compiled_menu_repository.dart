@@ -10,11 +10,11 @@ class CategoryDoesNotExistException implements Exception {}
 class MenuItemDoesNotExistException implements Exception {}
 
 class CompiledMenuRepository {
-  final FirebaseFirestore _firebaseFirestore;
-
   CompiledMenuRepository({
     FirebaseFirestore? firebaseFirestore,
   }) : _firebaseFirestore = firebaseFirestore ?? Locator.instance();
+
+  final FirebaseFirestore _firebaseFirestore;
 
   Stream<List<CategoryModel>> getCategoriesForMenu({
     required String storeId,
@@ -27,8 +27,10 @@ class CompiledMenuRepository {
         )
         .orderBy('position')
         .snapshots()
-        .map((snap) =>
-            snap.docs.map((doc) => CategoryModel.fromSnapshot(doc)).toList(),);
+        .map(
+          (snap) =>
+              snap.docs.map((doc) => CategoryModel.fromSnapshot(doc)).toList(),
+        );
   }
 
   Stream<List<MenuItemModel>> getItemsForCategory({
@@ -44,8 +46,10 @@ class CompiledMenuRepository {
         )
         .orderBy('position')
         .snapshots()
-        .map((snap) =>
-            snap.docs.map((doc) => MenuItemModel.fromSnapshot(doc)).toList(),);
+        .map(
+          (snap) =>
+              snap.docs.map((doc) => MenuItemModel.fromSnapshot(doc)).toList(),
+        );
   }
 
   Future<CategoryModel> getCategory({

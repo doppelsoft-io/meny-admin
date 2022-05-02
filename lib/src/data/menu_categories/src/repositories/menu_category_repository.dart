@@ -4,36 +4,28 @@ import 'package:meny/src/constants/paths.dart';
 import 'package:meny/src/data/menu_categories/menu_categories.dart';
 
 class MenuCategoryException implements Exception {
-  final String message;
+  const MenuCategoryException({String? message})
+      : message = message ?? 'Something went wrong';
 
-  const MenuCategoryException({this.message = 'Something went wrong'});
+  final String? message;
+
+  @override
+  String toString() => message!;
 }
 
 class CreateMenuCategoryException extends MenuCategoryException {
-  @override
-  final String message;
-
-  const CreateMenuCategoryException({
-    this.message = 'Failed to link category with menu.',
-  });
+  const CreateMenuCategoryException({String? message})
+      : super(message: message ?? 'Failed to link category with menu.');
 }
 
 class RemoveMenuCategoryException extends MenuCategoryException {
-  @override
-  final String message;
-
-  const RemoveMenuCategoryException({
-    this.message = 'Failed to remove category from menu.',
-  });
+  const RemoveMenuCategoryException({String? message})
+      : super(message: message ?? 'Failed to remove category from menu.');
 }
 
 class GetMenuCategoriesException extends MenuCategoryException {
-  @override
-  final String message;
-
-  const GetMenuCategoriesException({
-    this.message = 'Failed to get menu categories',
-  });
+  const GetMenuCategoriesException({String? message})
+      : super(message: message ?? 'Failed to get menu categories');
 }
 
 class MenuCategoryRepository {
@@ -69,9 +61,11 @@ class MenuCategoryRepository {
           .collection(Paths.menuCategories)
           .where('menuId', isEqualTo: menuId)
           .snapshots()
-          .map((doc) => doc.docs
-              .map((snap) => MenuCategoryModel.fromSnapshot(snap))
-              .toList(),);
+          .map(
+            (doc) => doc.docs
+                .map((snap) => MenuCategoryModel.fromSnapshot(snap))
+                .toList(),
+          );
     } catch (err) {
       throw const GetMenuCategoriesException();
     }
@@ -102,9 +96,11 @@ class MenuCategoryRepository {
           .collection(Paths.menuCategories)
           .where('categoryId', isEqualTo: categoryId)
           .snapshots()
-          .map((doc) => doc.docs
-              .map((snap) => MenuCategoryModel.fromSnapshot(snap))
-              .toList(),);
+          .map(
+            (doc) => doc.docs
+                .map((snap) => MenuCategoryModel.fromSnapshot(snap))
+                .toList(),
+          );
     } catch (err) {
       throw const GetMenuCategoriesException();
     }

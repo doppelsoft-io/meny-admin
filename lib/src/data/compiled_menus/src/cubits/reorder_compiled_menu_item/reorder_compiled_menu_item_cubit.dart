@@ -9,9 +9,6 @@ import 'package:meny/src/data/stores/services/services.dart';
 part 'reorder_compiled_menu_item_state.dart';
 
 class ReorderCompiledMenuItemCubit extends Cubit<ReorderCompiledMenuItemState> {
-  final CompiledMenuRepository _compiledMenuRepository;
-  final StoreCacheService _storeCacheService;
-
   ReorderCompiledMenuItemCubit({
     CompiledMenuRepository? compiledMenuRepository,
     StoreCacheService? storeCacheService,
@@ -19,7 +16,10 @@ class ReorderCompiledMenuItemCubit extends Cubit<ReorderCompiledMenuItemState> {
         _storeCacheService = storeCacheService ?? Locator.instance(),
         super(ReorderCompiledMenuItemState.initial());
 
-  void reorder({
+  final CompiledMenuRepository _compiledMenuRepository;
+  final StoreCacheService _storeCacheService;
+
+  Future<void> reorder({
     required String menuId,
     required String categoryId,
     required List<MenuItemModel> items,
@@ -32,7 +32,7 @@ class ReorderCompiledMenuItemCubit extends Cubit<ReorderCompiledMenuItemState> {
         items.length,
         (index) async {
           final item = items[index];
-          return await _compiledMenuRepository.updateMenuItem(
+          return _compiledMenuRepository.updateMenuItem(
             storeId: storeId,
             menuId: menuId,
             categoryId: categoryId,
@@ -41,14 +41,18 @@ class ReorderCompiledMenuItemCubit extends Cubit<ReorderCompiledMenuItemState> {
         },
       );
       await Future.wait(futures);
-      emit(state.copyWith(
-        status: ReorderCompiledMenuItemStatus.success,
-      ),);
+      emit(
+        state.copyWith(
+          status: ReorderCompiledMenuItemStatus.success,
+        ),
+      );
     } catch (err) {
-      emit(state.copyWith(
-        status: ReorderCompiledMenuItemStatus.error,
-        failure: const Failure(message: 'Reordering items failed'),
-      ),);
+      emit(
+        state.copyWith(
+          status: ReorderCompiledMenuItemStatus.error,
+          failure: const Failure(message: 'Reordering items failed'),
+        ),
+      );
     }
   }
 }

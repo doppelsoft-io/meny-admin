@@ -8,18 +8,11 @@ enum CompiledCategoryStatus {
 }
 
 class CompiledCategoryState extends Equatable {
-  final CompiledCategoryStatus status;
-  final List<CategoryModel>? categories;
-  final Failure? failure;
-
   const CompiledCategoryState({
     required this.status,
     required this.categories,
     required this.failure,
   });
-
-  @override
-  List<Object?> get props => [status, categories, failure];
 
   factory CompiledCategoryState.initial() {
     return const CompiledCategoryState(
@@ -28,6 +21,10 @@ class CompiledCategoryState extends Equatable {
       failure: null,
     );
   }
+
+  final CompiledCategoryStatus status;
+  final List<CategoryModel>? categories;
+  final Failure? failure;
 
   CompiledCategoryState copyWith({
     CompiledCategoryStatus? status,
@@ -40,4 +37,7 @@ class CompiledCategoryState extends Equatable {
       failure: failure,
     );
   }
+
+  @override
+  List<Object?> get props => [status, categories, failure];
 }

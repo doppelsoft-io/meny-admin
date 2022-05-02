@@ -92,6 +92,7 @@ class LoginScreen extends HookWidget {
                   ),
                   const SizedBox(height: Spacing.textFieldVerticalSpacing * 2),
                   TextFormField(
+                    autocorrect: false,
                     controller: emailController,
                     decoration: const InputDecoration(
                       label: Text('Email'),

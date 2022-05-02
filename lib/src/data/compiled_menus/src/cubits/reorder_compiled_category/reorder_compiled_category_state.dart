@@ -8,16 +8,10 @@ enum ReorderCompiledCategoryStatus {
 }
 
 class ReorderCompiledCategoryState extends Equatable {
-  final ReorderCompiledCategoryStatus status;
-  final Failure? failure;
-
   const ReorderCompiledCategoryState({
     required this.status,
     required this.failure,
   });
-
-  @override
-  List<Object?> get props => [status, failure];
 
   factory ReorderCompiledCategoryState.initial() {
     return const ReorderCompiledCategoryState(
@@ -25,6 +19,9 @@ class ReorderCompiledCategoryState extends Equatable {
       status: ReorderCompiledCategoryStatus.initial,
     );
   }
+
+  final ReorderCompiledCategoryStatus status;
+  final Failure? failure;
 
   ReorderCompiledCategoryState copyWith({
     ReorderCompiledCategoryStatus? status,
@@ -35,4 +32,7 @@ class ReorderCompiledCategoryState extends Equatable {
       failure: failure,
     );
   }
+
+  @override
+  List<Object?> get props => [status, failure];
 }

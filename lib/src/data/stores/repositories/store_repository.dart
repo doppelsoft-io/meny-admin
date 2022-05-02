@@ -7,14 +7,14 @@ import 'package:meny/src/extensions/extensions.dart';
 import 'package:meny/src/services/services.dart';
 
 class StoreRepository {
-  final FirebaseFirestore _firebaseFirestore;
-  final LoggerService _loggerService;
-
   StoreRepository({
     FirebaseFirestore? firebaseFirestore,
     required LoggerService loggerService,
   })  : _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
         _loggerService = loggerService;
+
+  final FirebaseFirestore _firebaseFirestore;
+  final LoggerService _loggerService;
 
   Stream<StoreModel> stream({
     required String storeId,
