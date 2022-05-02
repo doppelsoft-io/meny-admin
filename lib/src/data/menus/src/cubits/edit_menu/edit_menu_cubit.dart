@@ -26,7 +26,7 @@ class EditMenuCubit extends Cubit<EditMenuState> {
       final storeId = _storeCubit.state.store.id!;
       final failureOrMenu = await _menuRepository.create(
         storeId: storeId,
-        resource: menu,
+        resource: menu.copyWith(createdAt: DateTime.now()),
       );
       emit(
         failureOrMenu.fold(

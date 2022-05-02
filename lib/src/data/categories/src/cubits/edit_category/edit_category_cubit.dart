@@ -28,7 +28,7 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
 
       final failureOrCategory = await _categoryRepository.create(
         storeId: storeId,
-        resource: category,
+        resource: category.copyWith(createdAt: DateTime.now()),
       );
 
       emit(
