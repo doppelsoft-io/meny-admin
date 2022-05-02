@@ -19,6 +19,8 @@ import 'package:meny/tabs.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class AppScreen extends StatelessWidget {
+  const AppScreen({Key? key}) : super(key: key);
+
   static const String routeName = '/app';
 
   static Route route() {
@@ -26,8 +28,6 @@ class AppScreen extends StatelessWidget {
       builder: (_) => _AppScreen(),
     );
   }
-
-  const AppScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,8 @@ class _AppScreen extends HookWidget {
                           onPressed: () {
                             context.read<AuthCubit>().logout();
                             ToastService.showNotification(
-                                const Text('Logged out!'),);
+                              const Text('Logged out!'),
+                            );
                           },
                           icon: const FaIcon(FontAwesomeIcons.signOutAlt),
                         ),

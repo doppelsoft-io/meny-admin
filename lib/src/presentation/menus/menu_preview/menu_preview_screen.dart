@@ -6,9 +6,9 @@ import 'package:meny/src/data/menus/menus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final String title;
-
   const _MenuPreviewHeaderDelegate({required this.title});
+
+  final String title;
 
   @override
   Widget build(

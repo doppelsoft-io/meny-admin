@@ -9,9 +9,6 @@ class ScaffoldBuilder extends StatelessWidget {
     required this.body,
   }) : super(key: key);
 
-  final AppBar appBar;
-  final Widget body;
-
   factory ScaffoldBuilder.error({required Exception exception}) {
     return ScaffoldBuilder(
       appBar: AppBar(
@@ -37,6 +34,9 @@ class ScaffoldBuilder extends StatelessWidget {
       body: const Center(child: CircularProgressIndicator()),
     );
   }
+
+  final AppBar appBar;
+  final Widget body;
 
   @override
   Widget build(BuildContext context) {

@@ -4,12 +4,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/login/login.dart';
 import 'package:meny/src/screens/signup_screen.dart';
-import 'package:meny/src/services/dialog_service.dart';
 import 'package:meny/src/services/services.dart';
 import 'package:meny/src/utils/utils.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class LoginScreen extends HookWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
   static const String routeName = '/login';
 
   static Route route() {
@@ -22,8 +23,6 @@ class LoginScreen extends HookWidget {
       },
     );
   }
-
-  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +52,7 @@ class LoginScreen extends HookWidget {
       listenWhen: (prev, curr) =>
           curr.result != null && curr.status == LoginStatus.done,
       listener: (context, state) {
-        final result = state.result!;
-        result.fold(
+        state.result!.fold(
           (failure) => DialogService.showErrorDialog(
             context: context,
             failure: failure,

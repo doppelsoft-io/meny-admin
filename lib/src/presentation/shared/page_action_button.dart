@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class PageActionButton extends StatelessWidget {
-  final String title;
-  final String? mobileTitle;
-  final Function() onPressed;
-
   const PageActionButton({
     Key? key,
     required this.title,
     this.mobileTitle,
     required this.onPressed,
   }) : super(key: key);
+
+  final String title;
+  final String? mobileTitle;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {

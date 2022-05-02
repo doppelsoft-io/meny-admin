@@ -37,7 +37,9 @@ class ValidatorInputFormatter implements TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     final oldValueValid = editingValidator.isValid(oldValue.text);
     final newValueValid = editingValidator.isValid(newValue.text);
     if (oldValueValid && !newValueValid) {
@@ -67,12 +69,14 @@ class DecimalNumberSubmitValidator implements StringValidator {
 class EmailEditingRegexValidator extends RegexValidator {
   EmailEditingRegexValidator()
       : super(
-            regexSource:
-                '^[a-zA-Z0-9_.+-]*(@([a-zA-Z0-9-]*(\\.[a-zA-Z0-9-]*)?)?)?\$',);
+          regexSource:
+              '^[a-zA-Z0-9_.+-]*(@([a-zA-Z0-9-]*(\\.[a-zA-Z0-9-]*)?)?)?\$',
+        );
 }
 
 class EmailSubmitRegexValidator extends RegexValidator {
   EmailSubmitRegexValidator()
       : super(
-            regexSource: '(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+\$)',);
+          regexSource: '(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+\$)',
+        );
 }

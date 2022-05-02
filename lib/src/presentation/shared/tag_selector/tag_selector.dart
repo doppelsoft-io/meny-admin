@@ -2,44 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class TextFieldConfiguration {
-  final InputDecoration? decoration;
-
   const TextFieldConfiguration({
     this.decoration = const InputDecoration(),
   });
+
+  final InputDecoration? decoration;
 }
 
 class SuggestionConfiguration {
-  final String title;
-
   const SuggestionConfiguration({
     required this.title,
   });
+
+  final String title;
 }
 
 class TagConfiguration {
-  final String title;
-  final bool removable;
-  final Color? color;
-
   const TagConfiguration({
     required this.title,
     required this.removable,
     this.color,
   });
+
+  final String title;
+  final bool removable;
+  final Color? color;
 }
 
 class TagSelector<T> extends HookWidget {
-  final List<T> initialItems;
-  final Future<List<T>> Function() fetchSuggestions;
-  final Function(BuildContext, T) onSelect;
-  final Function(BuildContext, T) onRemove;
-  final Widget Function(BuildContext) emptyBuilder;
-  final SuggestionConfiguration Function(BuildContext, T)
-      suggestionConfigurationBuilder;
-  final TagConfiguration Function(BuildContext, T) tagConfigurationBuilder;
-  final TextFieldConfiguration? textFieldConfiguration;
-
   const TagSelector({
     Key? key,
     required this.initialItems,
@@ -51,6 +41,16 @@ class TagSelector<T> extends HookWidget {
     required this.emptyBuilder,
     this.textFieldConfiguration,
   }) : super(key: key);
+
+  final List<T> initialItems;
+  final Future<List<T>> Function() fetchSuggestions;
+  final Function(BuildContext, T) onSelect;
+  final Function(BuildContext, T) onRemove;
+  final Widget Function(BuildContext) emptyBuilder;
+  final SuggestionConfiguration Function(BuildContext, T)
+      suggestionConfigurationBuilder;
+  final TagConfiguration Function(BuildContext, T) tagConfigurationBuilder;
+  final TextFieldConfiguration? textFieldConfiguration;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +133,7 @@ class TagSelector<T> extends HookWidget {
                     future: fetchSuggestions(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        final data = (snapshot.data as List<T>)
+                        final data = (snapshot.data!)
                             .where((e) => !initialItems.contains(e))
                             .toList();
 
@@ -153,7 +153,8 @@ class TagSelector<T> extends HookWidget {
 
                               return ListTile(
                                 contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 20,),
+                                  horizontal: 20,
+                                ),
                                 onTap: () {
                                   onSelect(context, item);
                                   isOpen.value = false;

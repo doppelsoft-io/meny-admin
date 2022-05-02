@@ -106,9 +106,7 @@ class _MenusMenusTabState extends State<MenusMenusTab> {
                         TextButton(
                           style: ButtonStyle(
                             alignment: Alignment.center,
-                            padding: MaterialStateProperty.all(
-                              const EdgeInsets.all(0),
-                            ),
+                            padding: MaterialStateProperty.all(EdgeInsets.zero),
                           ),
                           child: const Text('Preview'),
                           onPressed: () => ActionService.run(

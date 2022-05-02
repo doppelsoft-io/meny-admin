@@ -1,11 +1,11 @@
 import 'dart:developer' as developer;
 
 class LoggerService {
-  final String? prepend;
-
   const LoggerService({
     this.prepend,
   });
+
+  final String? prepend;
 
   void log(String message) {
     final buffer = StringBuffer();
