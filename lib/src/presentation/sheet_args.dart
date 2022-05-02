@@ -1,10 +1,8 @@
-import 'package:meny/src/data/models/resources/i_resource_model.dart';
-
-class SheetArgs<T extends IResourceModel> {
-  final IResourceModel resource;
+class SheetArgs<T> {
+  final T resource;
   final bool? isNew;
 
-  IResourceModel get model => resource as T;
+  T get model => resource;
 
   SheetArgs({
     required this.resource,

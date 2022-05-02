@@ -19,7 +19,7 @@ class EditMenuCubit extends Cubit<EditMenuState> {
         _storeCacheService = storeCacheService ?? Locator.instance(),
         super(EditMenuState.initial());
 
-  void loadMenu({required MenuEntity menu}) async {
+  void loadMenu({required MenuModel menu}) async {
     if (menu.id != null && menu.id!.isNotEmpty) {
       emit(state.copyWith(menu: menu));
     } else {
@@ -35,7 +35,7 @@ class EditMenuCubit extends Cubit<EditMenuState> {
     }
   }
 
-  void update(MenuEntity item) async {
+  void update(MenuModel item) async {
     emit(state.copyWith(status: EditResourceStatus.updating));
     final storeId = await _storeCacheService.get('storeId');
     final failureOrUpdate = await _menuRepository.update(

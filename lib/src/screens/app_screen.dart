@@ -1,11 +1,9 @@
-import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meny/locator.dart';
 import 'package:meny/src/constants/analytics.dart';
 import 'package:meny/src/data/auth/auth.dart';
-import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/stores/cubits/cubits.dart';
 import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/presentation/customer/customers_page.dart';
@@ -19,38 +17,30 @@ import 'package:meny/src/services/services.dart';
 import 'package:meny/tabs.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-class AppScreen extends StatefulWidget {
+class AppScreen extends StatelessWidget {
   static const String routeName = '/app';
 
   static Route route() {
     return MaterialPageRoute(
-      builder: (_) => AppScreen(),
+      builder: (_) => _AppScreen(),
     );
   }
 
   const AppScreen({Key? key}) : super(key: key);
 
   @override
-  _AppScreenState createState() => _AppScreenState();
+  Widget build(BuildContext context) {
+    throw UnimplementedError();
+  }
 }
 
-class _AppScreenState extends State<AppScreen> {
-  int _selectedIndex = 0;
-
-  @override
-  void initState() {
-    // final authBloc = context.read<AuthCubit>();
-    // final user = authBloc.state.user!;
-
-    // context.read<StoreCubit>().loadStoreForUser(user: user);
-    super.initState();
-  }
-
+class _AppScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final _selectedIndex = useState<int>(0);
+
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, authState) {
-        print("authState $authState");
         return BlocConsumer<StoreCubit, StoreState>(
           listenWhen: (prev, curr) => prev.store != curr.store,
           listener: (context, storeState) {
@@ -115,14 +105,14 @@ class _AppScreenState extends State<AppScreen> {
                     ],
                   ),
                   body: ScreenTypeLayout(
-                    mobile: pages[_selectedIndex]!,
+                    mobile: pages[_selectedIndex.value]!,
                     tablet: Row(
                       children: [
                         NavigationRail(
                           labelType: NavigationRailLabelType.all,
-                          selectedIndex: _selectedIndex,
+                          selectedIndex: _selectedIndex.value,
                           onDestinationSelected: (value) => ActionService.run(
-                            () => setState(() => _selectedIndex = value),
+                            () => _selectedIndex.value = value,
                             () => AnalyticsService.track(
                               message: Analytics.tabTapped,
                               params: {
@@ -145,16 +135,16 @@ class _AppScreenState extends State<AppScreen> {
                           color: Colors.grey[200],
                           thickness: 7,
                         ),
-                        Expanded(child: pages[_selectedIndex]!),
+                        Expanded(child: pages[_selectedIndex.value]!),
                       ],
                     ),
                     desktop: Row(
                       children: [
                         NavigationRail(
                           extended: true,
-                          selectedIndex: _selectedIndex,
+                          selectedIndex: _selectedIndex.value,
                           onDestinationSelected: (value) => ActionService.run(
-                            () => setState(() => _selectedIndex = value),
+                            () => _selectedIndex.value = value,
                             () => AnalyticsService.track(
                               message: Analytics.tabTapped,
                               params: {
@@ -177,7 +167,7 @@ class _AppScreenState extends State<AppScreen> {
                           color: Colors.grey[200],
                           thickness: 7,
                         ),
-                        Expanded(child: pages[_selectedIndex]!),
+                        Expanded(child: pages[_selectedIndex.value]!),
                       ],
                     ),
                   ),
@@ -208,11 +198,11 @@ class _AppScreenState extends State<AppScreen> {
 }
 
 
-// class MenuEntity extends IMenuEntity {
+// class MenuModel extends IMenuEntity {
 //   final String name;
 //   final double price;
 //
-//   const MenuEntity({
+//   const MenuModel({
 //     required this.name,
 //     required this.price,
 //   });
@@ -236,7 +226,7 @@ class _AppScreenState extends State<AppScreen> {
 //
 // class ModifierGroup {
 //   final String title;
-//   final List<MenuEntity> choices;
+//   final List<MenuModel> choices;
 //   final ModifierGroupStipulations stipulations;
 //
 //   const ModifierGroup({
@@ -286,11 +276,11 @@ class _AppScreenState extends State<AppScreen> {
 //             maxSameSelectionsAllowed: 1,
 //           ),
 //           choices: [
-//             MenuEntity(
+//             MenuModel(
 //               name: 'Large (16 oz)',
 //               price: 1.00,
 //             ),
-//             MenuEntity(
+//             MenuModel(
 //               name: 'Small (12 oz)',
 //               price: 1.00,
 //             ),
@@ -304,11 +294,11 @@ class _AppScreenState extends State<AppScreen> {
 //             maxSameSelectionsAllowed: 1,
 //           ),
 //           choices: [
-//             MenuEntity(
+//             MenuModel(
 //               name: 'Hot',
 //               price: 0.0,
 //             ),
-//             MenuEntity(
+//             MenuModel(
 //               name: 'Iced',
 //               price: 0.0,
 //             ),
@@ -322,11 +312,11 @@ class _AppScreenState extends State<AppScreen> {
 //             maxSameSelectionsAllowed: 1,
 //           ),
 //           choices: [
-//             MenuEntity(
+//             MenuModel(
 //               name: 'Hot',
 //               price: 0.0,
 //             ),
-//             MenuEntity(
+//             MenuModel(
 //               name: 'Iced',
 //               price: 0.0,
 //             ),

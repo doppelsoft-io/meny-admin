@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meny/locator.dart';
 import 'package:meny/src/constants/analytics.dart';
 import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/menus/menus.dart';
@@ -16,7 +17,9 @@ class MenusMenusTab extends StatefulWidget {
 
   static page() {
     return BlocProvider<ResourcesCubit>(
-      create: (context) => ResourcesCubit<MenuEntity>.use(),
+      create: (context) => ResourcesCubit(
+        iResourcesRepository: Locator.instance<MenuRepository>(),
+      ),
       child: const MenusMenusTab(),
     );
   }
@@ -28,7 +31,6 @@ class MenusMenusTab extends StatefulWidget {
 class _MenusMenusTabState extends State<MenusMenusTab> {
   @override
   void initState() {
-    print("INIT");
     final storeCubit = context.read<StoreCubit>();
     final storeId = storeCubit.state.store!.id!;
     context.read<ResourcesCubit>().load(storeId: storeId);
@@ -40,10 +42,8 @@ class _MenusMenusTabState extends State<MenusMenusTab> {
   Widget build(BuildContext context) {
     return BlocListener<StoreCubit, StoreState>(
       listenWhen: (prev, curr) => prev.store != curr.store,
-      listener: (context, state) {
-        print("YOO $state");
-        context.read<ResourcesCubit>()..load(storeId: state.store!.id!);
-      },
+      listener: (context, state) =>
+          context.read<ResourcesCubit>().load(storeId: state.store!.id!),
       child: NestedScrollView(
         headerSliverBuilder: (context, innerBoxScrolled) {
           return [
@@ -54,7 +54,7 @@ class _MenusMenusTabState extends State<MenusMenusTab> {
                 onNewPressed: () => ActionService.run(
                   () => UpdateMenusSheet.open(
                     context: context,
-                    menu: MenuEntity.empty(),
+                    menu: MenuModel.empty(),
                   ),
                   () => AnalyticsService.track(
                     message: Analytics.menusTabNewTapped,
@@ -66,7 +66,7 @@ class _MenusMenusTabState extends State<MenusMenusTab> {
         },
         body: Padding(
           padding: const EdgeInsets.all(Spacing.pageSpacing),
-          child: ResourceTable<MenuEntity>(
+          child: ResourceTable<MenuModel>(
             columnNames: const ['Name', 'Last Updated', 'Actions'],
             dataColumnBuilder: (_, column) => DataColumn(label: Text(column)),
             emptyRowBuilder: (context) {

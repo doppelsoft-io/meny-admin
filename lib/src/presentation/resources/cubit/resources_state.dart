@@ -1,7 +1,7 @@
 part of 'resources_cubit.dart';
 
 abstract class ResourcesState extends Equatable {
-  final List<IResourceModel> resources;
+  final List<dynamic> resources;
   const ResourcesState({this.resources = const []});
 
   @override
@@ -14,7 +14,7 @@ class ResourcesLoading extends ResourcesState {}
 
 class ResourcesLoaded extends ResourcesState {
   @override
-  final List<IResourceModel> resources;
+  final List<dynamic> resources;
 
   const ResourcesLoaded(this.resources);
 

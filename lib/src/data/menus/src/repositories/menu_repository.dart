@@ -7,7 +7,7 @@ import 'package:meny/src/data/repositories/i_resources_repository.dart';
 import 'package:meny/src/extensions/extensions.dart';
 import 'package:meny/src/services/services.dart';
 
-class MenuRepository extends IResourcesRepository<MenuEntity> {
+class MenuRepository extends IResourcesRepository<MenuModel> {
   final LoggerService _loggerService;
 
   MenuRepository({
@@ -20,7 +20,7 @@ class MenuRepository extends IResourcesRepository<MenuEntity> {
           firebaseFirestore: firebaseFirestore,
         );
 
-  Future<MenuEntity> get({
+  Future<MenuModel> get({
     required String storeId,
     required String id,
   }) async {
@@ -28,7 +28,7 @@ class MenuRepository extends IResourcesRepository<MenuEntity> {
       final snap = await firebaseFirestore
           .menuEntitiesDocument(storeId: storeId, menuId: id)
           .get();
-      return MenuEntity.fromSnapshot(snap);
+      return MenuModel.fromSnapshot(snap);
     } catch (err) {
       _loggerService.log('(get): ${err.toString()}');
       throw Failure(message: 'Failed to retrieve menu');
@@ -36,18 +36,18 @@ class MenuRepository extends IResourcesRepository<MenuEntity> {
   }
 
   @override
-  Stream<List<MenuEntity>> getAll({required String storeId}) {
+  Stream<List<MenuModel>> getAll({required String storeId}) {
     return firebaseFirestore
         .menuEntitiesCollection(storeId: storeId)
         .orderBy('createdAt', descending: true)
         .snapshots()
         .map((doc) =>
-            doc.docs.map((snap) => MenuEntity.fromSnapshot(snap)).toList());
+            doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList());
   }
 
-  Stream<List<MenuEntity>> getMenusForCategory({
+  Stream<List<MenuModel>> getMenusForCategory({
     required String storeId,
-    required CategoryEntity category,
+    required CategoryModel category,
   }) {
     if (category.id == null) return Stream.fromIterable([]);
     return firebaseFirestore
@@ -56,20 +56,20 @@ class MenuRepository extends IResourcesRepository<MenuEntity> {
         .orderBy('updatedAt', descending: true)
         .snapshots()
         .map((doc) =>
-            doc.docs.map((snap) => MenuEntity.fromSnapshot(snap)).toList());
+            doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList());
   }
 
   @override
-  Future<Either<Failure, MenuEntity>> create({
+  Future<Either<Failure, MenuModel>> create({
     required String storeId,
-    required MenuEntity resource,
+    required MenuModel resource,
   }) async {
     try {
       final document = await firebaseFirestore
           .menuEntitiesCollection(storeId: storeId)
           .add(resource.toJson());
       final snapshot = await document.get();
-      return right(MenuEntity.fromSnapshot(snapshot));
+      return right(MenuModel.fromSnapshot(snapshot));
     } catch (err) {
       _loggerService.log('(create): ${err.toString()}');
       return left(Failure(
@@ -82,7 +82,7 @@ class MenuRepository extends IResourcesRepository<MenuEntity> {
   @override
   Future<Either<Failure, bool>> update({
     required String storeId,
-    required MenuEntity resource,
+    required MenuModel resource,
   }) async {
     try {
       await firebaseFirestore
@@ -102,7 +102,7 @@ class MenuRepository extends IResourcesRepository<MenuEntity> {
   @override
   Future<Either<Failure, bool>> delete({
     required String storeId,
-    required MenuEntity resource,
+    required MenuModel resource,
   }) async {
     try {
       await firebaseFirestore

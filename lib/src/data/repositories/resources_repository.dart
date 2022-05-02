@@ -19,14 +19,14 @@ class ResourcesRepository<T extends IResourceModel>
     }
 
     switch (T) {
-      case MenuEntity:
-        return MenuEntity.fromSnapshot(snap) as T;
+      case MenuModel:
+        return MenuModel.fromSnapshot(snap) as T;
       case MenuModel:
         return MenuModel.fromSnapshot(snap) as T;
       case CategoryModel:
         return CategoryModel.fromSnapshot(snap) as T;
-      case CategoryEntity:
-        return CategoryEntity.fromSnapshot(snap) as T;
+      case CategoryModel:
+        return CategoryModel.fromSnapshot(snap) as T;
       case MenuItemModel:
         return MenuItemModel.fromSnapshot(snap) as T;
       default:

@@ -5,7 +5,7 @@ import 'package:meny/src/constants/analytics.dart';
 import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/presentation/menus/categories/update_categories/update_categories_sheet.dart';
+import 'package:meny/src/presentation/menus/categories/update_categories/update_category_sheet.dart';
 import 'package:meny/src/presentation/menus/widgets/widgets.dart';
 import 'package:meny/src/presentation/resources/cubit/resources_cubit.dart';
 import 'package:meny/src/services/services.dart';
@@ -15,7 +15,7 @@ class MenusCategoriesTab extends StatefulWidget {
 
   static page() {
     return BlocProvider<ResourcesCubit>(
-      create: (context) => ResourcesCubit<CategoryEntity>.use(),
+      create: (context) => ResourcesCubit<CategoryModel>.use(),
       child: const MenusCategoriesTab(),
     );
   }
@@ -50,7 +50,7 @@ class _MenusCategoriesTabState extends State<MenusCategoriesTab> {
                 onNewPressed: () => ActionService.run(
                   () => UpdateCategorySheet.open(
                     context: context,
-                    resource: CategoryEntity.empty(),
+                    resource: CategoryModel.empty(),
                   ),
                   () => AnalyticsService.track(
                     message: Analytics.categoriesTabNewTapped,
@@ -62,7 +62,7 @@ class _MenusCategoriesTabState extends State<MenusCategoriesTab> {
         },
         body: Padding(
           padding: const EdgeInsets.all(Spacing.pageSpacing),
-          child: ResourceTable<CategoryEntity>(
+          child: ResourceTable<CategoryModel>(
             columnNames: const ['Name', 'Last Updated'],
             dataColumnBuilder: (_, column) => DataColumn(label: Text(column)),
             emptyRowBuilder: (context) {

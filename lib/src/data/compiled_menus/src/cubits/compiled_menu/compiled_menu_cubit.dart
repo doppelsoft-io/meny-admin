@@ -18,17 +18,17 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
         _storeCacheService = storeCacheService ?? Locator.instance(),
         super(CompiledMenuState.initial());
 
-  void load({required MenuEntity menu}) async {
+  void load({required MenuModel menu}) async {
     try {
       final storeId = await _storeCacheService.get('storeId');
       final menuEntity = await _menuRepository.get(
         storeId: storeId,
         id: menu.id!,
       );
-      emit(state.copyWith(
-        menu: menuEntity,
-        status: CompiledMenuStatus.success,
-      ));
+      // emit(state.copyWith(
+      //   menu: menuEntity,
+      //   status: CompiledMenuStatus.success,
+      // ));
     } on Failure catch (failure) {
       emit(state.copyWith(
         failure: failure,

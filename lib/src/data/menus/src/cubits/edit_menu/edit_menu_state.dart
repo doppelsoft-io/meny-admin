@@ -1,7 +1,7 @@
 part of 'edit_menu_cubit.dart';
 
 class EditMenuState extends Equatable {
-  final MenuEntity? menu;
+  final MenuModel? menu;
   final EditResourceStatus status;
   final Failure? failure;
 
@@ -27,7 +27,7 @@ class EditMenuState extends Equatable {
   }
 
   EditMenuState copyWith({
-    MenuEntity? menu,
+    MenuModel? menu,
     EditResourceStatus? status,
     Failure? failure,
   }) {

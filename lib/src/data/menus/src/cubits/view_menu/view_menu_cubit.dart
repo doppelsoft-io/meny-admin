@@ -32,133 +32,133 @@ class ViewMenuCubit extends Cubit<ViewMenuState> {
 
   Future<void> _compileMenuItems({
     required int index,
-    required MenuItemEntity menuItemEntity,
+    required MenuItemModel menuItemEntity,
     required String menuId,
     required String categoryId,
     required String menuItemId,
   }) async {
     final storeId = await _storeCacheService.get('storeId');
-    try {
-      final menuItemModel = (await _compiledMenuRepository.getMenuItem(
-        storeId: storeId,
-        menuId: menuId,
-        menuItemId: menuItemId,
-        categoryId: categoryId,
-      ))
-          .mergeWithEntity(menuItemEntity);
-      await _compiledMenuRepository.updateMenuItem(
-        storeId: storeId,
-        menuId: menuId,
-        categoryId: categoryId,
-        item: menuItemModel,
-      );
-    } on MenuItemDoesNotExistException catch (_) {
-      final menuItemModel = MenuItemModel.fromEntity(menuItemEntity);
+    // try {
+    //   final menuItemModel = (await _compiledMenuRepository.getMenuItem(
+    //     storeId: storeId,
+    //     menuId: menuId,
+    //     menuItemId: menuItemId,
+    //     categoryId: categoryId,
+    //   ))
+    //       .mergeWithEntity(menuItemEntity);
+    //   await _compiledMenuRepository.updateMenuItem(
+    //     storeId: storeId,
+    //     menuId: menuId,
+    //     categoryId: categoryId,
+    //     item: menuItemModel,
+    //   );
+    // } on MenuItemDoesNotExistException catch (_) {
+    //   final menuItemModel = MenuItemModel.fromEntity(menuItemEntity);
 
-      await _compiledMenuRepository.updateMenuItem(
-        storeId: storeId,
-        menuId: menuId,
-        categoryId: categoryId,
-        item: menuItemModel,
-      );
-    } on Failure catch (_) {
-      rethrow;
-    } catch (err) {
-      throw Failure(message: 'Something went wrong');
-    }
+    //   await _compiledMenuRepository.updateMenuItem(
+    //     storeId: storeId,
+    //     menuId: menuId,
+    //     categoryId: categoryId,
+    //     item: menuItemModel,
+    //   );
+    // } on Failure catch (_) {
+    //   rethrow;
+    // } catch (err) {
+    //   throw Failure(message: 'Something went wrong');
+    // }
   }
 
   void compile({required String menuId}) async {
     try {
-      final storeId = await _storeCacheService.get('storeId');
-      final menuEntity = await _menuRepository.get(
-        storeId: storeId,
-        id: menuId,
-      );
-      final categoryIds =
-          menuEntity.categoryIds.where((e) => e.isNotEmpty).toList();
-      final categories = List.generate(
-        categoryIds.length,
-        (index) async {
-          final categoryId = categoryIds[index];
-          final categoryEntity = await _categoryRepository.get(
-            storeId: storeId,
-            id: categoryId,
-          );
-          try {
-            final categoryModel = (await _compiledMenuRepository.getCategory(
-              storeId: storeId,
-              menuId: menuId,
-              categoryId: categoryId,
-            ))
-                .mergeWithEntity(categoryEntity);
-            await _compiledMenuRepository.updateCategory(
-              storeId: storeId,
-              menuId: menuId,
-              category: categoryModel,
-            );
-            final menuItemIds =
-                (categoryModel.itemIds).where((e) => e.isNotEmpty).toList();
+      // final storeId = await _storeCacheService.get('storeId');
+      // final menuEntity = await _menuRepository.get(
+      //   storeId: storeId,
+      //   id: menuId,
+      // );
+      // final categoryIds =
+      //     menuEntity.categoryIds.where((e) => e.isNotEmpty).toList();
+      // final categories = List.generate(
+      //   categoryIds.length,
+      //   (index) async {
+      //     final categoryId = categoryIds[index];
+      //     final categoryEntity = await _categoryRepository.get(
+      //       storeId: storeId,
+      //       id: categoryId,
+      //     );
+      //     try {
+      //       final categoryModel = (await _compiledMenuRepository.getCategory(
+      //         storeId: storeId,
+      //         menuId: menuId,
+      //         categoryId: categoryId,
+      //       ))
+      //           .mergeWithEntity(categoryEntity);
+      //       await _compiledMenuRepository.updateCategory(
+      //         storeId: storeId,
+      //         menuId: menuId,
+      //         category: categoryModel,
+      //       );
+      //       final menuItemIds =
+      //           (categoryModel.itemIds).where((e) => e.isNotEmpty).toList();
 
-            final menuItems = List.generate(
-              menuItemIds.length,
-              (index) async {
-                final menuItemId = menuItemIds[index];
-                final menuItemEntity = await _menuItemRepository.get(
-                  storeId: storeId,
-                  id: menuItemId,
-                );
+      //       final menuItems = List.generate(
+      //         menuItemIds.length,
+      //         (index) async {
+      //           final menuItemId = menuItemIds[index];
+      //           final menuItemEntity = await _menuItemRepository.get(
+      //             storeId: storeId,
+      //             id: menuItemId,
+      //           );
 
-                await _compileMenuItems(
-                  index: index,
-                  menuItemEntity: menuItemEntity,
-                  menuId: menuId,
-                  categoryId: categoryId,
-                  menuItemId: menuItemId,
-                );
-              },
-            );
-            await Future.wait(menuItems);
-          } on CategoryDoesNotExistException catch (_) {
-            final categoryModel = CategoryModel.fromEntity(categoryEntity);
+      //           await _compileMenuItems(
+      //             index: index,
+      //             menuItemEntity: menuItemEntity,
+      //             menuId: menuId,
+      //             categoryId: categoryId,
+      //             menuItemId: menuItemId,
+      //           );
+      //         },
+      //       );
+      //       await Future.wait(menuItems);
+      //     } on CategoryDoesNotExistException catch (_) {
+      //       final categoryModel = CategoryModel.fromEntity(categoryEntity);
 
-            await _compiledMenuRepository.updateCategory(
-              storeId: storeId,
-              menuId: menuId,
-              category: categoryModel,
-            );
+      //       await _compiledMenuRepository.updateCategory(
+      //         storeId: storeId,
+      //         menuId: menuId,
+      //         category: categoryModel,
+      //       );
 
-            final menuItemIds =
-                (categoryModel.itemIds).where((e) => e.isNotEmpty).toList();
+      //       final menuItemIds =
+      //           (categoryModel.itemIds).where((e) => e.isNotEmpty).toList();
 
-            final menuItems = List.generate(
-              menuItemIds.length,
-              (index) async {
-                final menuItemId = menuItemIds[index];
-                final menuItemEntity = await _menuItemRepository.get(
-                  storeId: storeId,
-                  id: menuItemId,
-                );
+      //       final menuItems = List.generate(
+      //         menuItemIds.length,
+      //         (index) async {
+      //           final menuItemId = menuItemIds[index];
+      //           final menuItemEntity = await _menuItemRepository.get(
+      //             storeId: storeId,
+      //             id: menuItemId,
+      //           );
 
-                await _compileMenuItems(
-                  index: index,
-                  menuItemEntity: menuItemEntity,
-                  menuId: menuId,
-                  categoryId: categoryId,
-                  menuItemId: menuItemId,
-                );
-              },
-            );
-            await Future.wait(menuItems);
-          } on Failure catch (_) {
-            rethrow;
-          } catch (err) {
-            throw Failure(message: 'Something went wrong');
-          }
-        },
-      );
+      //           await _compileMenuItems(
+      //             index: index,
+      //             menuItemEntity: menuItemEntity,
+      //             menuId: menuId,
+      //             categoryId: categoryId,
+      //             menuItemId: menuItemId,
+      //           );
+      //         },
+      //       );
+      //       await Future.wait(menuItems);
+      //     } on Failure catch (_) {
+      //       rethrow;
+      //     } catch (err) {
+      //       throw Failure(message: 'Something went wrong');
+      //     }
+      //   },
+      // );
 
-      await Future.wait(categories);
+      // await Future.wait(categories);
     } catch (err) {
       emit(state.copyWith());
     }

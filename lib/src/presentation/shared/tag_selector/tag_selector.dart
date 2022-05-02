@@ -171,10 +171,14 @@ class TagSelector<T> extends HookWidget {
                           },
                         );
                       } else {
-                        return const Center(
+                        return Center(
                           child: Padding(
-                            padding: EdgeInsets.all(12.0),
-                            child: CircularProgressIndicator(),
+                            padding: EdgeInsets.all(18.0),
+                            child: SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator(),
+                            ),
                           ),
                         );
                       }

@@ -2,9 +2,13 @@ part of 'edit_category_cubit.dart';
 
 @freezed
 class EditCategoryState with _$EditCategoryState {
-  const factory EditCategoryState.initial({
+  const factory EditCategoryState.loading({
     required CategoryModel category,
   }) = _Initial;
+
+  const factory EditCategoryState.loaded({
+    required CategoryModel category,
+  }) = _Loaded;
 
   const factory EditCategoryState.updating({
     required CategoryModel category,

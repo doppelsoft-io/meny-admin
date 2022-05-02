@@ -8,7 +8,7 @@ import 'package:meny/src/services/services.dart';
 import 'package:meny/src/constants/spacing.dart';
 
 class UpdateMenusSheet extends HookWidget {
-  final MenuEntity menu;
+  final MenuModel menu;
 
   const UpdateMenusSheet({
     Key? key,
@@ -25,7 +25,7 @@ class UpdateMenusSheet extends HookWidget {
           providers: [
             BlocProvider<EditMenuCubit>(
               create: (context) =>
-                  EditMenuCubit()..loadMenu(menu: args.resource as MenuEntity),
+                  EditMenuCubit()..loadMenu(menu: args.resource as MenuModel),
             ),
             BlocProvider<DeleteMenuCubit>(
               create: (context) => DeleteMenuCubit(),
@@ -69,7 +69,7 @@ class UpdateMenusSheet extends HookWidget {
 
   static open({
     required BuildContext context,
-    required MenuEntity menu,
+    required MenuModel menu,
   }) {
     return Navigator.of(context).pushNamed(
       UpdateMenusSheet.routeName,
@@ -190,7 +190,7 @@ class UpdateMenusSheet extends HookWidget {
 }
 
 class _DeleteMenuButton extends StatelessWidget {
-  final MenuEntity menu;
+  final MenuModel menu;
 
   const _DeleteMenuButton({
     Key? key,
@@ -199,7 +199,7 @@ class _DeleteMenuButton extends StatelessWidget {
 
   void showConfirmationDialog({
     required BuildContext context,
-    required MenuEntity menu,
+    required MenuModel menu,
   }) {
     showDialog(
       context: context,

@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:meny/src/constants/paths.dart';
 import 'package:meny/src/data/auth/auth.dart';
 import 'package:meny/src/data/categories/categories.dart';
+import 'package:meny/src/data/category_menu_items/category_menu_items.dart';
 import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny/src/data/menu_categories/menu_categories.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
@@ -56,6 +57,10 @@ class Locator {
       firebaseFirestore: instance(),
     ));
     instance.registerSingleton<MenuCategoryRepository>(MenuCategoryRepository(
+      firebaseFirestore: instance(),
+    ));
+    instance.registerSingleton<CategoryMenuItemsRepository>(
+        CategoryMenuItemsRepository(
       firebaseFirestore: instance(),
     ));
   }

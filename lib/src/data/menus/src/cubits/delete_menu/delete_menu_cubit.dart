@@ -20,7 +20,7 @@ class DeleteMenuCubit extends Cubit<DeleteMenuState> {
         _storeCacheService = storeCacheService ?? Locator.instance(),
         super(DeleteMenuState.initial());
 
-  void delete({required MenuEntity menu}) async {
+  void delete({required MenuModel menu}) async {
     emit(state.copyWith(
       status: DeleteMenuStatus.deleting,
       failure: null,

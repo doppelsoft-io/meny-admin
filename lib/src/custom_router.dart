@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meny/src/presentation/menus/categories/update_categories/update_categories_sheet.dart';
+import 'package:meny/src/presentation/menus/categories/update_categories/update_category_sheet.dart';
 import 'package:meny/src/presentation/menus/items/update_items/update_menu_item_sheet.dart';
 import 'package:meny/src/presentation/menus/menu_preview/menu_preview_screen.dart';
 import 'package:meny/src/presentation/menus/menus/update_menus/update_menus_sheet.dart';

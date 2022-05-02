@@ -65,7 +65,7 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class MenuPreviewScreenArgs {
-  final MenuEntity menu;
+  final MenuModel menu;
 
   const MenuPreviewScreenArgs({required this.menu});
 }
@@ -105,7 +105,8 @@ class _MenuPreviewScreenState extends State<MenuPreviewScreen> {
               title: const Text('Menu Preview'),
             ),
             body: BlocProvider<CompiledMenuCubit>(
-              create: (context) => CompiledMenuCubit()..load(menu: menu),
+              // create: (context) => CompiledMenuCubit()..load(menu: menu),
+              create: (context) => CompiledMenuCubit(),
               child: CustomScrollView(
                 slivers: [
                   SliverPersistentHeader(
@@ -114,9 +115,9 @@ class _MenuPreviewScreenState extends State<MenuPreviewScreen> {
                       title: widget.args.menu.name,
                     ),
                   ),
-                  SliverToBoxAdapter(
-                    child: CompiledMenuBuilder(menu: menu),
-                  ),
+                  // SliverToBoxAdapter(
+                  //   child: CompiledMenuBuilder(menu: menu),
+                  // ),
                 ],
               ),
             ),

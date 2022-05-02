@@ -9,7 +9,7 @@ enum CompiledMenuStatus {
 
 class CompiledMenuState extends Equatable {
   final CompiledMenuStatus status;
-  final MenuEntity? menu;
+  final MenuModel? menu;
   final Failure? failure;
 
   const CompiledMenuState({
@@ -31,7 +31,7 @@ class CompiledMenuState extends Equatable {
 
   CompiledMenuState copyWith({
     CompiledMenuStatus? status,
-    MenuEntity? menu,
+    MenuModel? menu,
     Failure? failure,
   }) {
     return CompiledMenuState(

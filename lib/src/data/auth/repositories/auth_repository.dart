@@ -38,7 +38,6 @@ class AuthRepository {
 
       if (credential.user != null) {
         final user = UserModel.fromFirebaseAuthUser(credential.user!);
-        print("anonymous user $user");
         return user;
       } else {
         return UserModel.empty();

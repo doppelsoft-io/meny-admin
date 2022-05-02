@@ -30,7 +30,7 @@ class MenusItemsTab extends StatefulWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ResourcesCubit>(
-          create: (context) => ResourcesCubit<MenuItemEntity>.use(),
+          create: (context) => ResourcesCubit<MenuItemModel>.use(),
         ),
       ],
       child: const MenusItemsTab(),
@@ -67,7 +67,7 @@ class _MenusItemsTabState extends State<MenusItemsTab> {
                 onNewPressed: () => ActionService.run(
                   () => UpdateMenuItemSheet.open(
                     context: context,
-                    resource: MenuItemEntity.empty(),
+                    resource: MenuItemModel.empty(),
                   ),
                   () => AnalyticsService.track(
                     message: Analytics.itemsTabNewTapped,
@@ -79,7 +79,7 @@ class _MenusItemsTabState extends State<MenusItemsTab> {
         },
         body: Padding(
           padding: const EdgeInsets.all(Spacing.pageSpacing),
-          child: ResourceTable<MenuItemEntity>(
+          child: ResourceTable<MenuItemModel>(
             columnNames: const ['Name', 'Price', 'Last Updated'],
             dataColumnBuilder: (_, column) => DataColumn(
               label: Text(column),

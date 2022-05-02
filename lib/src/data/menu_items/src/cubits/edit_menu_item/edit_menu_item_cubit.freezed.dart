@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'edit_category_cubit.dart';
+part of 'edit_menu_item_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,40 +15,39 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$EditCategoryState {
-  CategoryModel get category => throw _privateConstructorUsedError;
+mixin _$EditMenuItemState {
+  MenuItemModel get item => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CategoryModel category) loading,
-    required TResult Function(CategoryModel category) loaded,
-    required TResult Function(CategoryModel category) updating,
-    required TResult Function(CategoryModel category) success,
-    required TResult Function(CategoryModel category, Exception exception)
-        error,
+    required TResult Function(MenuItemModel item) loading,
+    required TResult Function(MenuItemModel item) loaded,
+    required TResult Function(MenuItemModel item) updating,
+    required TResult Function(MenuItemModel item) success,
+    required TResult Function(MenuItemModel item, Exception exception) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -57,7 +56,7 @@ mixin _$EditCategoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -66,7 +65,7 @@ mixin _$EditCategoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -76,150 +75,149 @@ mixin _$EditCategoryState {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $EditCategoryStateCopyWith<EditCategoryState> get copyWith =>
+  $EditMenuItemStateCopyWith<EditMenuItemState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $EditCategoryStateCopyWith<$Res> {
-  factory $EditCategoryStateCopyWith(
-          EditCategoryState value, $Res Function(EditCategoryState) then) =
-      _$EditCategoryStateCopyWithImpl<$Res>;
-  $Res call({CategoryModel category});
+abstract class $EditMenuItemStateCopyWith<$Res> {
+  factory $EditMenuItemStateCopyWith(
+          EditMenuItemState value, $Res Function(EditMenuItemState) then) =
+      _$EditMenuItemStateCopyWithImpl<$Res>;
+  $Res call({MenuItemModel item});
 
-  $CategoryModelCopyWith<$Res> get category;
+  $MenuItemModelCopyWith<$Res> get item;
 }
 
 /// @nodoc
-class _$EditCategoryStateCopyWithImpl<$Res>
-    implements $EditCategoryStateCopyWith<$Res> {
-  _$EditCategoryStateCopyWithImpl(this._value, this._then);
+class _$EditMenuItemStateCopyWithImpl<$Res>
+    implements $EditMenuItemStateCopyWith<$Res> {
+  _$EditMenuItemStateCopyWithImpl(this._value, this._then);
 
-  final EditCategoryState _value;
+  final EditMenuItemState _value;
   // ignore: unused_field
-  final $Res Function(EditCategoryState) _then;
+  final $Res Function(EditMenuItemState) _then;
 
   @override
   $Res call({
-    Object? category = freezed,
+    Object? item = freezed,
   }) {
     return _then(_value.copyWith(
-      category: category == freezed
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
+      item: item == freezed
+          ? _value.item
+          : item // ignore: cast_nullable_to_non_nullable
+              as MenuItemModel,
     ));
   }
 
   @override
-  $CategoryModelCopyWith<$Res> get category {
-    return $CategoryModelCopyWith<$Res>(_value.category, (value) {
-      return _then(_value.copyWith(category: value));
+  $MenuItemModelCopyWith<$Res> get item {
+    return $MenuItemModelCopyWith<$Res>(_value.item, (value) {
+      return _then(_value.copyWith(item: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res>
-    implements $EditCategoryStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$LoadingCopyWith<$Res>
+    implements $EditMenuItemStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
+      __$LoadingCopyWithImpl<$Res>;
   @override
-  $Res call({CategoryModel category});
+  $Res call({MenuItemModel item});
 
   @override
-  $CategoryModelCopyWith<$Res> get category;
+  $MenuItemModelCopyWith<$Res> get item;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$LoadingCopyWithImpl<$Res> extends _$EditMenuItemStateCopyWithImpl<$Res>
+    implements _$LoadingCopyWith<$Res> {
+  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
+      : super(_value, (v) => _then(v as _Loading));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _Loading get _value => super._value as _Loading;
 
   @override
   $Res call({
-    Object? category = freezed,
+    Object? item = freezed,
   }) {
-    return _then(_Initial(
-      category: category == freezed
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
+    return _then(_Loading(
+      item: item == freezed
+          ? _value.item
+          : item // ignore: cast_nullable_to_non_nullable
+              as MenuItemModel,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial({required this.category});
+class _$_Loading implements _Loading {
+  const _$_Loading({required this.item});
 
   @override
-  final CategoryModel category;
+  final MenuItemModel item;
 
   @override
   String toString() {
-    return 'EditCategoryState.loading(category: $category)';
+    return 'EditMenuItemState.loading(item: $item)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            const DeepCollectionEquality().equals(other.category, category));
+            other is _Loading &&
+            const DeepCollectionEquality().equals(other.item, item));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(category));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(item));
 
   @JsonKey(ignore: true)
   @override
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith =>
+      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CategoryModel category) loading,
-    required TResult Function(CategoryModel category) loaded,
-    required TResult Function(CategoryModel category) updating,
-    required TResult Function(CategoryModel category) success,
-    required TResult Function(CategoryModel category, Exception exception)
-        error,
+    required TResult Function(MenuItemModel item) loading,
+    required TResult Function(MenuItemModel item) loaded,
+    required TResult Function(MenuItemModel item) updating,
+    required TResult Function(MenuItemModel item) success,
+    required TResult Function(MenuItemModel item, Exception exception) error,
   }) {
-    return loading(category);
+    return loading(item);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
   }) {
-    return loading?.call(category);
+    return loading?.call(item);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(category);
+      return loading(item);
     }
     return orElse();
   }
@@ -227,7 +225,7 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -239,7 +237,7 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -251,7 +249,7 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -265,31 +263,31 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements EditCategoryState {
-  const factory _Initial({required final CategoryModel category}) = _$_Initial;
+abstract class _Loading implements EditMenuItemState {
+  const factory _Loading({required final MenuItemModel item}) = _$_Loading;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  MenuItemModel get item => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$InitialCopyWith<_Initial> get copyWith =>
+  _$LoadingCopyWith<_Loading> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$LoadedCopyWith<$Res>
-    implements $EditCategoryStateCopyWith<$Res> {
+    implements $EditMenuItemStateCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
   @override
-  $Res call({CategoryModel category});
+  $Res call({MenuItemModel item});
 
   @override
-  $CategoryModelCopyWith<$Res> get category;
+  $MenuItemModelCopyWith<$Res> get item;
 }
 
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
+class __$LoadedCopyWithImpl<$Res> extends _$EditMenuItemStateCopyWithImpl<$Res>
     implements _$LoadedCopyWith<$Res> {
   __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
       : super(_value, (v) => _then(v as _Loaded));
@@ -299,13 +297,13 @@ class __$LoadedCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? category = freezed,
+    Object? item = freezed,
   }) {
     return _then(_Loaded(
-      category: category == freezed
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
+      item: item == freezed
+          ? _value.item
+          : item // ignore: cast_nullable_to_non_nullable
+              as MenuItemModel,
     ));
   }
 }
@@ -313,14 +311,14 @@ class __$LoadedCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded({required this.category});
+  const _$_Loaded({required this.item});
 
   @override
-  final CategoryModel category;
+  final MenuItemModel item;
 
   @override
   String toString() {
-    return 'EditCategoryState.loaded(category: $category)';
+    return 'EditMenuItemState.loaded(item: $item)';
   }
 
   @override
@@ -328,12 +326,12 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Loaded &&
-            const DeepCollectionEquality().equals(other.category, category));
+            const DeepCollectionEquality().equals(other.item, item));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(category));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(item));
 
   @JsonKey(ignore: true)
   @override
@@ -343,40 +341,39 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CategoryModel category) loading,
-    required TResult Function(CategoryModel category) loaded,
-    required TResult Function(CategoryModel category) updating,
-    required TResult Function(CategoryModel category) success,
-    required TResult Function(CategoryModel category, Exception exception)
-        error,
+    required TResult Function(MenuItemModel item) loading,
+    required TResult Function(MenuItemModel item) loaded,
+    required TResult Function(MenuItemModel item) updating,
+    required TResult Function(MenuItemModel item) success,
+    required TResult Function(MenuItemModel item, Exception exception) error,
   }) {
-    return loaded(category);
+    return loaded(item);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
   }) {
-    return loaded?.call(category);
+    return loaded?.call(item);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(category);
+      return loaded(item);
     }
     return orElse();
   }
@@ -384,7 +381,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -396,7 +393,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -408,7 +405,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -422,11 +419,11 @@ class _$_Loaded implements _Loaded {
   }
 }
 
-abstract class _Loaded implements EditCategoryState {
-  const factory _Loaded({required final CategoryModel category}) = _$_Loaded;
+abstract class _Loaded implements EditMenuItemState {
+  const factory _Loaded({required final MenuItemModel item}) = _$_Loaded;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  MenuItemModel get item => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$LoadedCopyWith<_Loaded> get copyWith => throw _privateConstructorUsedError;
@@ -434,19 +431,19 @@ abstract class _Loaded implements EditCategoryState {
 
 /// @nodoc
 abstract class _$UpdatingCopyWith<$Res>
-    implements $EditCategoryStateCopyWith<$Res> {
+    implements $EditMenuItemStateCopyWith<$Res> {
   factory _$UpdatingCopyWith(_Updating value, $Res Function(_Updating) then) =
       __$UpdatingCopyWithImpl<$Res>;
   @override
-  $Res call({CategoryModel category});
+  $Res call({MenuItemModel item});
 
   @override
-  $CategoryModelCopyWith<$Res> get category;
+  $MenuItemModelCopyWith<$Res> get item;
 }
 
 /// @nodoc
 class __$UpdatingCopyWithImpl<$Res>
-    extends _$EditCategoryStateCopyWithImpl<$Res>
+    extends _$EditMenuItemStateCopyWithImpl<$Res>
     implements _$UpdatingCopyWith<$Res> {
   __$UpdatingCopyWithImpl(_Updating _value, $Res Function(_Updating) _then)
       : super(_value, (v) => _then(v as _Updating));
@@ -456,13 +453,13 @@ class __$UpdatingCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? category = freezed,
+    Object? item = freezed,
   }) {
     return _then(_Updating(
-      category: category == freezed
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
+      item: item == freezed
+          ? _value.item
+          : item // ignore: cast_nullable_to_non_nullable
+              as MenuItemModel,
     ));
   }
 }
@@ -470,14 +467,14 @@ class __$UpdatingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Updating implements _Updating {
-  const _$_Updating({required this.category});
+  const _$_Updating({required this.item});
 
   @override
-  final CategoryModel category;
+  final MenuItemModel item;
 
   @override
   String toString() {
-    return 'EditCategoryState.updating(category: $category)';
+    return 'EditMenuItemState.updating(item: $item)';
   }
 
   @override
@@ -485,12 +482,12 @@ class _$_Updating implements _Updating {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Updating &&
-            const DeepCollectionEquality().equals(other.category, category));
+            const DeepCollectionEquality().equals(other.item, item));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(category));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(item));
 
   @JsonKey(ignore: true)
   @override
@@ -500,40 +497,39 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CategoryModel category) loading,
-    required TResult Function(CategoryModel category) loaded,
-    required TResult Function(CategoryModel category) updating,
-    required TResult Function(CategoryModel category) success,
-    required TResult Function(CategoryModel category, Exception exception)
-        error,
+    required TResult Function(MenuItemModel item) loading,
+    required TResult Function(MenuItemModel item) loaded,
+    required TResult Function(MenuItemModel item) updating,
+    required TResult Function(MenuItemModel item) success,
+    required TResult Function(MenuItemModel item, Exception exception) error,
   }) {
-    return updating(category);
+    return updating(item);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
   }) {
-    return updating?.call(category);
+    return updating?.call(item);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
     required TResult orElse(),
   }) {
     if (updating != null) {
-      return updating(category);
+      return updating(item);
     }
     return orElse();
   }
@@ -541,7 +537,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -553,7 +549,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -565,7 +561,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -579,12 +575,11 @@ class _$_Updating implements _Updating {
   }
 }
 
-abstract class _Updating implements EditCategoryState {
-  const factory _Updating({required final CategoryModel category}) =
-      _$_Updating;
+abstract class _Updating implements EditMenuItemState {
+  const factory _Updating({required final MenuItemModel item}) = _$_Updating;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  MenuItemModel get item => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UpdatingCopyWith<_Updating> get copyWith =>
@@ -593,18 +588,18 @@ abstract class _Updating implements EditCategoryState {
 
 /// @nodoc
 abstract class _$SuccessCopyWith<$Res>
-    implements $EditCategoryStateCopyWith<$Res> {
+    implements $EditMenuItemStateCopyWith<$Res> {
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
       __$SuccessCopyWithImpl<$Res>;
   @override
-  $Res call({CategoryModel category});
+  $Res call({MenuItemModel item});
 
   @override
-  $CategoryModelCopyWith<$Res> get category;
+  $MenuItemModelCopyWith<$Res> get item;
 }
 
 /// @nodoc
-class __$SuccessCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
+class __$SuccessCopyWithImpl<$Res> extends _$EditMenuItemStateCopyWithImpl<$Res>
     implements _$SuccessCopyWith<$Res> {
   __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
       : super(_value, (v) => _then(v as _Success));
@@ -614,13 +609,13 @@ class __$SuccessCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? category = freezed,
+    Object? item = freezed,
   }) {
     return _then(_Success(
-      category: category == freezed
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
+      item: item == freezed
+          ? _value.item
+          : item // ignore: cast_nullable_to_non_nullable
+              as MenuItemModel,
     ));
   }
 }
@@ -628,14 +623,14 @@ class __$SuccessCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Success implements _Success {
-  const _$_Success({required this.category});
+  const _$_Success({required this.item});
 
   @override
-  final CategoryModel category;
+  final MenuItemModel item;
 
   @override
   String toString() {
-    return 'EditCategoryState.success(category: $category)';
+    return 'EditMenuItemState.success(item: $item)';
   }
 
   @override
@@ -643,12 +638,12 @@ class _$_Success implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Success &&
-            const DeepCollectionEquality().equals(other.category, category));
+            const DeepCollectionEquality().equals(other.item, item));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(category));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(item));
 
   @JsonKey(ignore: true)
   @override
@@ -658,40 +653,39 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CategoryModel category) loading,
-    required TResult Function(CategoryModel category) loaded,
-    required TResult Function(CategoryModel category) updating,
-    required TResult Function(CategoryModel category) success,
-    required TResult Function(CategoryModel category, Exception exception)
-        error,
+    required TResult Function(MenuItemModel item) loading,
+    required TResult Function(MenuItemModel item) loaded,
+    required TResult Function(MenuItemModel item) updating,
+    required TResult Function(MenuItemModel item) success,
+    required TResult Function(MenuItemModel item, Exception exception) error,
   }) {
-    return success(category);
+    return success(item);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
   }) {
-    return success?.call(category);
+    return success?.call(item);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(category);
+      return success(item);
     }
     return orElse();
   }
@@ -699,7 +693,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -711,7 +705,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -723,7 +717,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -737,11 +731,11 @@ class _$_Success implements _Success {
   }
 }
 
-abstract class _Success implements EditCategoryState {
-  const factory _Success({required final CategoryModel category}) = _$_Success;
+abstract class _Success implements EditMenuItemState {
+  const factory _Success({required final MenuItemModel item}) = _$_Success;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  MenuItemModel get item => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$SuccessCopyWith<_Success> get copyWith =>
@@ -750,18 +744,18 @@ abstract class _Success implements EditCategoryState {
 
 /// @nodoc
 abstract class _$ErrorCopyWith<$Res>
-    implements $EditCategoryStateCopyWith<$Res> {
+    implements $EditMenuItemStateCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
       __$ErrorCopyWithImpl<$Res>;
   @override
-  $Res call({CategoryModel category, Exception exception});
+  $Res call({MenuItemModel item, Exception exception});
 
   @override
-  $CategoryModelCopyWith<$Res> get category;
+  $MenuItemModelCopyWith<$Res> get item;
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
+class __$ErrorCopyWithImpl<$Res> extends _$EditMenuItemStateCopyWithImpl<$Res>
     implements _$ErrorCopyWith<$Res> {
   __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
       : super(_value, (v) => _then(v as _Error));
@@ -771,14 +765,14 @@ class __$ErrorCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? category = freezed,
+    Object? item = freezed,
     Object? exception = freezed,
   }) {
     return _then(_Error(
-      category: category == freezed
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
+      item: item == freezed
+          ? _value.item
+          : item // ignore: cast_nullable_to_non_nullable
+              as MenuItemModel,
       exception: exception == freezed
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
@@ -790,16 +784,16 @@ class __$ErrorCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error({required this.category, required this.exception});
+  const _$_Error({required this.item, required this.exception});
 
   @override
-  final CategoryModel category;
+  final MenuItemModel item;
   @override
   final Exception exception;
 
   @override
   String toString() {
-    return 'EditCategoryState.error(category: $category, exception: $exception)';
+    return 'EditMenuItemState.error(item: $item, exception: $exception)';
   }
 
   @override
@@ -807,14 +801,14 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Error &&
-            const DeepCollectionEquality().equals(other.category, category) &&
+            const DeepCollectionEquality().equals(other.item, item) &&
             const DeepCollectionEquality().equals(other.exception, exception));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(category),
+      const DeepCollectionEquality().hash(item),
       const DeepCollectionEquality().hash(exception));
 
   @JsonKey(ignore: true)
@@ -825,40 +819,39 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(CategoryModel category) loading,
-    required TResult Function(CategoryModel category) loaded,
-    required TResult Function(CategoryModel category) updating,
-    required TResult Function(CategoryModel category) success,
-    required TResult Function(CategoryModel category, Exception exception)
-        error,
+    required TResult Function(MenuItemModel item) loading,
+    required TResult Function(MenuItemModel item) loaded,
+    required TResult Function(MenuItemModel item) updating,
+    required TResult Function(MenuItemModel item) success,
+    required TResult Function(MenuItemModel item, Exception exception) error,
   }) {
-    return error(category, exception);
+    return error(item, exception);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
   }) {
-    return error?.call(category, exception);
+    return error?.call(item, exception);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryModel category)? loading,
-    TResult Function(CategoryModel category)? loaded,
-    TResult Function(CategoryModel category)? updating,
-    TResult Function(CategoryModel category)? success,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult Function(MenuItemModel item)? loading,
+    TResult Function(MenuItemModel item)? loaded,
+    TResult Function(MenuItemModel item)? updating,
+    TResult Function(MenuItemModel item)? success,
+    TResult Function(MenuItemModel item, Exception exception)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(category, exception);
+      return error(item, exception);
     }
     return orElse();
   }
@@ -866,7 +859,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -878,7 +871,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -890,7 +883,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -904,13 +897,13 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements EditCategoryState {
+abstract class _Error implements EditMenuItemState {
   const factory _Error(
-      {required final CategoryModel category,
+      {required final MenuItemModel item,
       required final Exception exception}) = _$_Error;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  MenuItemModel get item => throw _privateConstructorUsedError;
   Exception get exception => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

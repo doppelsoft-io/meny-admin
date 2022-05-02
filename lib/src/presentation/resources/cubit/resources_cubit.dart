@@ -13,7 +13,7 @@ import 'package:meny/src/data/stores/stores.dart';
 
 part 'resources_state.dart';
 
-class ResourcesCubit<M extends IResourceModel> extends Cubit<ResourcesState> {
+class ResourcesCubit<M> extends Cubit<ResourcesState> {
   final IResourcesRepository _iResourcesRepository;
   final StoreCacheService _storeCacheService;
   late StreamSubscription _indexSubscription;
@@ -41,11 +41,9 @@ class ResourcesCubit<M extends IResourceModel> extends Cubit<ResourcesState> {
 
   void load({required String storeId}) {
     // final storeId = await _storeCacheService.get('storeId');
-    print("loadStore $storeId");
     _indexSubscription =
         _iResourcesRepository.getAll(storeId: storeId).listen((resources) {
-      print("resources $resources");
-      emit(ResourcesLoaded(resources as List<IResourceModel>));
+      emit(ResourcesLoaded(resources as List<M>));
     })
           ..onError(
             (error) {
@@ -66,15 +64,15 @@ class ResourcesCubit<M extends IResourceModel> extends Cubit<ResourcesState> {
 
   factory ResourcesCubit.use() {
     switch (M) {
-      case MenuEntity:
+      case MenuModel:
         return ResourcesCubit(
           iResourcesRepository: Locator.instance<MenuRepository>(),
         );
-      case CategoryEntity:
+      case CategoryModel:
         return ResourcesCubit(
           iResourcesRepository: Locator.instance<CategoryRepository>(),
         );
-      case MenuItemEntity:
+      case MenuItemModel:
         return ResourcesCubit(
           iResourcesRepository: Locator.instance<MenuItemRepository>(),
         );

@@ -6,7 +6,7 @@ import 'package:meny/src/presentation/menus/menu_preview/widgets/widgets.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 
 class CompiledMenuBuilder extends StatelessWidget {
-  final MenuEntity menu;
+  final MenuModel menu;
 
   const CompiledMenuBuilder({
     Key? key,

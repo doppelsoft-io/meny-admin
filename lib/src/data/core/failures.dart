@@ -8,4 +8,7 @@ class Failure implements Exception {
     required this.message,
     shortMessage,
   }) : shortMessage = message;
+
+  @override
+  String toString() => message;
 }
