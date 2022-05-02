@@ -81,10 +81,12 @@ class _UpdateMenusSheet extends HookWidget {
                     Center(
                       child: ElevatedButton(
                         onPressed: () => context.read<EditMenuCubit>()
-                          ..update(editMenuState.menu.copyWith(
-                            name: controller.text,
-                            updatedAt: DateTime.now(),
-                          ),),
+                          ..update(
+                            editMenuState.menu.copyWith(
+                              name: controller.text,
+                              updatedAt: DateTime.now(),
+                            ),
+                          ),
                         child: const Text('Save'),
                       ),
                     ),
@@ -127,7 +129,7 @@ class _UpdateMenusSheet extends HookWidget {
     required MenuModel menu,
   }) {
     if (menu.name.isEmpty) {
-      return showDialog(
+      return showDialog<bool>(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -145,7 +147,7 @@ class _UpdateMenusSheet extends HookWidget {
           );
         },
       ).then((value) {
-        if (value) {
+        if (value != null && value) {
           context.read<DeleteMenuCubit>().delete(menu: menu);
           return Future.value(false);
         }
@@ -157,17 +159,17 @@ class _UpdateMenusSheet extends HookWidget {
 }
 
 class UpdateMenusSheet extends StatelessWidget {
-  final MenuModel menu;
-
   const UpdateMenusSheet({
     Key? key,
     required this.menu,
   }) : super(key: key);
 
+  final MenuModel menu;
+
   static const String routeName = '/updateMenusSheet';
 
-  static Route route(SheetArgs args) {
-    return MaterialPageRoute(
+  static Route route(SheetArgs? args) {
+    return MaterialPageRoute<Widget>(
       fullscreenDialog: true,
       builder: (context) {
         return MultiBlocProvider(
@@ -175,7 +177,7 @@ class UpdateMenusSheet extends StatelessWidget {
             BlocProvider<EditMenuCubit>(
               create: (context) => EditMenuCubit(
                 storeCubit: context.read<StoreCubit>(),
-              )..loadMenu(menu: args.resource as MenuModel),
+              )..loadMenu(menu: args!.resource as MenuModel),
             ),
             BlocProvider<DeleteMenuCubit>(
               create: (context) => DeleteMenuCubit(
@@ -219,7 +221,7 @@ class _DeleteMenuButton extends StatelessWidget {
     required BuildContext context,
     required MenuModel menu,
   }) {
-    showDialog(
+    showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -269,7 +271,9 @@ class _DeleteMenuButton extends StatelessWidget {
       builder: (context, deleteMenuState) {
         return OutlinedButton(
           onPressed: deleteMenuState.maybeWhen(
-            deleting: () {},
+            deleting: () {
+              return null;
+            },
             orElse: () => () => showConfirmationDialog(
                   context: context,
                   menu: menu,

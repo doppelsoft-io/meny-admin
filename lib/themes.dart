@@ -74,28 +74,28 @@ class Themes {
       fillColor: Colors.grey[100],
       filled: true,
       enabledBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(0)),
+        borderRadius: BorderRadius.zero,
         borderSide: BorderSide(
           width: 2,
           color: Colors.grey[100]!,
         ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(0)),
+        borderRadius: BorderRadius.zero,
         borderSide: BorderSide(
           width: 2,
           color: Colors.grey[200]!,
         ),
       ),
       disabledBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(0)),
+        borderRadius: BorderRadius.zero,
         borderSide: BorderSide(
           width: 2,
           color: Colors.grey[200]!,
         ),
       ),
       border: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(0)),
+        borderRadius: BorderRadius.zero,
         borderSide: BorderSide(
           width: 2,
           color: Colors.grey[200]!,

@@ -11,10 +11,6 @@ import 'package:meny/src/data/stores/services/services.dart';
 part 'compiled_category_state.dart';
 
 class CompiledCategoryCubit extends Cubit<CompiledCategoryState> {
-  final CompiledMenuRepository _compiledMenuRepository;
-  final StoreCacheService _storeCacheService;
-  late StreamSubscription _subscription;
-
   CompiledCategoryCubit({
     CompiledMenuRepository? compiledMenuRepository,
     StoreCacheService? storeCacheService,
@@ -22,13 +18,17 @@ class CompiledCategoryCubit extends Cubit<CompiledCategoryState> {
         _storeCacheService = storeCacheService ?? Locator.instance(),
         super(CompiledCategoryState.initial());
 
+  final CompiledMenuRepository _compiledMenuRepository;
+  final StoreCacheService _storeCacheService;
+  late StreamSubscription _subscription;
+
   @override
   Future<void> close() async {
     await _subscription.cancel();
     return super.close();
   }
 
-  void load({
+  Future<void> load({
     required String menuId,
   }) async {
     try {

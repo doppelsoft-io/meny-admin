@@ -8,7 +8,6 @@ import 'package:meny/src/extensions/extensions.dart';
 import 'package:meny/src/services/services.dart';
 
 class CategoryRepository extends IResourcesRepository<CategoryModel> {
-  final LoggerService _loggerService;
   CategoryRepository({
     required String path,
     required FirebaseFirestore firebaseFirestore,
@@ -18,6 +17,8 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
           path: path,
           firebaseFirestore: firebaseFirestore,
         );
+
+  final LoggerService _loggerService;
 
   Future<CategoryModel> get({
     required String storeId,
@@ -40,8 +41,10 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
         .categoryEntitiesCollection(storeId: storeId)
         .orderBy('createdAt', descending: true)
         .snapshots()
-        .map((doc) =>
-            doc.docs.map((snap) => CategoryModel.fromSnapshot(snap)).toList(),);
+        .map(
+          (doc) =>
+              doc.docs.map((snap) => CategoryModel.fromSnapshot(snap)).toList(),
+        );
   }
 
   @override
@@ -57,10 +60,12 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
       return right(CategoryModel.fromSnapshot(snapshot));
     } catch (err) {
       _loggerService.log('(create): ${err.toString()}');
-      return left(Failure(
-        message:
-            'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
-      ),);
+      return left(
+        Failure(
+          message:
+              'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
+        ),
+      );
     }
   }
 
@@ -76,11 +81,13 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
       return right(true);
     } catch (err) {
       _loggerService.log('(update): ${err.toString()}');
-      return left(Failure(
-        message:
-            'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
-        shortMessage: 'Update failed.',
-      ),);
+      return left(
+        Failure(
+          message:
+              'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
+          shortMessage: 'Update failed.',
+        ),
+      );
     }
   }
 
@@ -96,11 +103,13 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
       return right(true);
     } catch (err) {
       _loggerService.log('(delete): ${err.toString()}');
-      return left(Failure(
-        message:
-            'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
-        shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
-      ),);
+      return left(
+        Failure(
+          message:
+              'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
+          shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
+        ),
+      );
     }
   }
 
@@ -114,7 +123,9 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
         .where('itemIds', arrayContains: item.id)
         .orderBy('updatedAt', descending: true)
         .snapshots()
-        .map((doc) =>
-            doc.docs.map((snap) => CategoryModel.fromSnapshot(snap)).toList(),);
+        .map(
+          (doc) =>
+              doc.docs.map((snap) => CategoryModel.fromSnapshot(snap)).toList(),
+        );
   }
 }

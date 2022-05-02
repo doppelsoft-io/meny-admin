@@ -8,7 +8,7 @@ class DialogService {
     required BuildContext context,
     required Failure failure,
   }) {
-    showDialog(
+    showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(

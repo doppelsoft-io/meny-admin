@@ -13,7 +13,7 @@ class SignupScreen extends HookWidget {
   static const String routeName = '/signup';
 
   static Route route() {
-    return MaterialPageRoute(
+    return MaterialPageRoute<Widget>(
       builder: (context) {
         return BlocProvider<SignupCubit>(
           create: (context) => SignupCubit(
@@ -79,7 +79,8 @@ class SignupScreen extends HookWidget {
             /// Pop Login Screen
             Navigator.of(context).pop();
 
-            ToastService.showNotification(const Text('Your sign up was successful!'));
+            ToastService.showNotification(
+                const Text('Your sign up was successful!'),);
           },
         );
       },
@@ -89,12 +90,14 @@ class SignupScreen extends HookWidget {
             title: const Text('Signup'),
           ),
           body: SingleChildScrollView(
-            padding: EdgeInsets.all(getValueForScreenType<double>(
-              context: context,
-              mobile: Spacing.formPadding / 2,
-              tablet: Spacing.formPadding,
-              desktop: Spacing.formPadding,
-            ),),
+            padding: EdgeInsets.all(
+              getValueForScreenType<double>(
+                context: context,
+                mobile: Spacing.formPadding / 2,
+                tablet: Spacing.formPadding,
+                desktop: Spacing.formPadding,
+              ),
+            ),
             child: Form(
               key: signupFormKey.value,
               child: Column(
@@ -186,15 +189,15 @@ class SignupScreen extends HookWidget {
                                   if (isValid) {
                                     final store =
                                         context.read<StoreCubit>().state.store;
-                                    context.read<SignupCubit>()
-                                      .handleSignUp(
-                                        store: store.copyWith(
-                                          name: storeNameController.text.trim(),
-                                        ),
-                                        email: emailController.text.trim(),
-                                        password:
-                                            passwordController.text.trim(),
-                                      );
+                                    context.read<SignupCubit>().handleSignUp(
+                                          store: store.copyWith(
+                                            name:
+                                                storeNameController.text.trim(),
+                                          ),
+                                          email: emailController.text.trim(),
+                                          password:
+                                              passwordController.text.trim(),
+                                        );
                                   }
                                 },
                           child: state.isSigninIn

@@ -13,7 +13,7 @@ import 'package:meny/src/services/services.dart';
 class MenusCategoriesTab extends StatefulWidget {
   const MenusCategoriesTab({Key? key}) : super(key: key);
 
-  static BlocProvider<ResourcesCubit> page() {
+  static Widget page() {
     return BlocProvider<ResourcesCubit>(
       create: (context) => ResourcesCubit<CategoryModel>.use(),
       child: const MenusCategoriesTab(),

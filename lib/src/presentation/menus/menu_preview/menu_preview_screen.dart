@@ -74,7 +74,7 @@ class MenuPreviewScreen extends StatefulWidget {
   static const String routeName = '/menuPreviewScreen';
 
   static Route route(MenuPreviewScreenArgs args) {
-    return MaterialPageRoute(
+    return MaterialPageRoute<Widget>(
       builder: (context) => BlocProvider<ViewMenuCubit>(
         create: (context) => ViewMenuCubit()..compile(menuId: args.menu.id!),
         child: MenuPreviewScreen(args: args),

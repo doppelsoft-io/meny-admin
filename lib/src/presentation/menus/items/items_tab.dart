@@ -26,7 +26,7 @@ class CustomTableCell extends StatelessWidget {
 class MenusItemsTab extends StatefulWidget {
   const MenusItemsTab({Key? key}) : super(key: key);
 
-  static MultiBlocProvider page() {
+  static Widget page() {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ResourcesCubit>(

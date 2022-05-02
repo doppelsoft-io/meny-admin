@@ -77,7 +77,6 @@ class TagSelector<T> extends HookWidget {
           Stack(
             children: [
               Wrap(
-                crossAxisAlignment: WrapCrossAlignment.start,
                 runSpacing: 10,
                 spacing: 10,
                 children: initialItems.map(

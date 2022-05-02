@@ -13,7 +13,7 @@ class LoginScreen extends HookWidget {
   static const String routeName = '/login';
 
   static Route route() {
-    return MaterialPageRoute(
+    return MaterialPageRoute<Widget>(
       builder: (context) {
         return BlocProvider<LoginCubit>(
           create: (context) => LoginCubit(),
@@ -43,6 +43,7 @@ class LoginScreen extends HookWidget {
         ..text = updatePassword.text
         ..selection =
             TextSelection.collapsed(offset: passwordController.text.length);
+      return null;
     }, [
       updateEmail,
       updatePassword,
@@ -71,12 +72,14 @@ class LoginScreen extends HookWidget {
             title: const Text('Log In'),
           ),
           body: SingleChildScrollView(
-            padding: EdgeInsets.all(getValueForScreenType<double>(
-              context: context,
-              mobile: Spacing.formPadding / 2,
-              tablet: Spacing.formPadding,
-              desktop: Spacing.formPadding,
-            ),),
+            padding: EdgeInsets.all(
+              getValueForScreenType<double>(
+                context: context,
+                mobile: Spacing.formPadding / 2,
+                tablet: Spacing.formPadding,
+                desktop: Spacing.formPadding,
+              ),
+            ),
             child: Form(
               key: loginFormKey.value,
               child: Column(
@@ -112,6 +115,7 @@ class LoginScreen extends HookWidget {
                             ? null
                             : 'Email is invalid';
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: Spacing.textFieldVerticalSpacing),
@@ -144,11 +148,12 @@ class LoginScreen extends HookWidget {
                                       .value.currentState!
                                       .validate();
                                   if (isValid) {
-                                    context.read<LoginCubit>()
-                                      .loginWithCredentials(
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                      );
+                                    context
+                                        .read<LoginCubit>()
+                                        .loginWithCredentials(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                        );
                                   }
                                 },
                           child: state.isLoggingIn

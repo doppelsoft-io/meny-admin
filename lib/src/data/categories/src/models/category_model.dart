@@ -47,18 +47,8 @@ class CategoryModel with _$CategoryModel {
     );
   }
 
-  String toFriendlyString() => 'category';
-
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$CategoryModelFromJson(json);
 
-  // CategoryModel mergeWithEntity(CategoryModel entity) {
-  //   return CategoryModel(
-  //     id: entity.id,
-  //     name: entity.name,
-  //     createdAt: entity.createdAt,
-  //     updatedAt: entity.updatedAt,
-  //     position: position,
-  //   );
-  // }
+  String toFriendlyString() => 'category';
 }

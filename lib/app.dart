@@ -12,11 +12,12 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class App extends StatelessWidget {
-  final Environment environment;
   const App({
     Key? key,
     required this.environment,
   }) : super(key: key);
+
+  final Environment environment;
 
   @override
   Widget build(BuildContext context) {

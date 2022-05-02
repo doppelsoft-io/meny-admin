@@ -5,36 +5,29 @@ import 'package:meny/src/constants/paths.dart';
 import 'package:meny/src/data/category_menu_items/category_menu_items.dart';
 
 class CategoryMenuItemException implements Exception {
-  final String message;
+  const CategoryMenuItemException({String? message})
+      : message = message ?? 'Something went wrong';
 
-  const CategoryMenuItemException({this.message = 'Something went wrong'});
+  /// Error message.
+  final String? message;
+
+  @override
+  String toString() => message!;
 }
 
 class CreateCategoryMenuItemException extends CategoryMenuItemException {
-  @override
-  final String message;
-
-  const CreateCategoryMenuItemException({
-    this.message = 'Failed to link menu item to category.',
-  });
+  const CreateCategoryMenuItemException({String? message})
+      : super(message: message ?? 'Failed to link menu item to category.');
 }
 
 class RemoveCategoryMenuItemException extends CategoryMenuItemException {
-  @override
-  final String message;
-
-  const RemoveCategoryMenuItemException({
-    this.message = 'Failed to remove menu item from category.',
-  });
+  const RemoveCategoryMenuItemException({String? message})
+      : super(message: message ?? 'Failed to remove menu item from category.');
 }
 
 class GetCategoryMenuItemsException extends CategoryMenuItemException {
-  @override
-  final String message;
-
-  const GetCategoryMenuItemsException({
-    this.message = 'Failed to get category menu items',
-  });
+  const GetCategoryMenuItemsException({String? message})
+      : super(message: message ?? 'Failed to get category menu items');
 }
 
 class CategoryMenuItemsRepository {
@@ -70,9 +63,11 @@ class CategoryMenuItemsRepository {
           .collection(Paths.categoryMenuItems)
           .where('categoryId', isEqualTo: categoryId)
           .snapshots()
-          .map((doc) => doc.docs
-              .map((snap) => CategoryMenuItemModel.fromSnapshot(snap))
-              .toList(),);
+          .map(
+            (doc) => doc.docs
+                .map((snap) => CategoryMenuItemModel.fromSnapshot(snap))
+                .toList(),
+          );
     } catch (err) {
       throw const GetCategoryMenuItemsException();
     }
@@ -89,9 +84,11 @@ class CategoryMenuItemsRepository {
           .collection(Paths.categoryMenuItems)
           .where('menuItemId', isEqualTo: menuItemId)
           .snapshots()
-          .map((doc) => doc.docs
-              .map((snap) => CategoryMenuItemModel.fromSnapshot(snap))
-              .toList(),);
+          .map(
+            (doc) => doc.docs
+                .map((snap) => CategoryMenuItemModel.fromSnapshot(snap))
+                .toList(),
+          );
     } catch (err) {
       throw const GetCategoryMenuItemsException();
     }
@@ -118,13 +115,9 @@ class CategoryMenuItemsRepository {
 
       return categoryMenuItem;
     } on PlatformException catch (err) {
-      throw CreateCategoryMenuItemException(
-        message: err.message ?? 'Something went wrong',
-      );
+      throw CreateCategoryMenuItemException(message: err.message);
     } on FirebaseException catch (err) {
-      throw CreateCategoryMenuItemException(
-        message: err.message ?? 'Something went wrong',
-      );
+      throw CreateCategoryMenuItemException(message: err.message);
     } catch (_) {
       throw const CreateCategoryMenuItemException();
     }

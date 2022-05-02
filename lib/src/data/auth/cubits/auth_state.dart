@@ -8,16 +8,10 @@ enum AuthStatus {
 }
 
 class AuthState extends Equatable {
-  final UserModel? user;
-  final AuthStatus status;
-
   const AuthState({
     required this.user,
     required this.status,
   });
-
-  @override
-  List<Object?> get props => [user, status];
 
   factory AuthState.initial() {
     return AuthState(
@@ -25,6 +19,12 @@ class AuthState extends Equatable {
       status: AuthStatus.initial,
     );
   }
+
+  final UserModel? user;
+  final AuthStatus status;
+
+  @override
+  List<Object?> get props => [user, status];
 
   AuthState copyWith({
     UserModel? user,

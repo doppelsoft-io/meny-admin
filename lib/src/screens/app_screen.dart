@@ -22,7 +22,7 @@ class AppScreen extends StatelessWidget {
   static const String routeName = '/app';
 
   static Route route() {
-    return MaterialPageRoute(
+    return MaterialPageRoute<Widget>(
       builder: (_) => _AppScreen(),
     );
   }
@@ -87,7 +87,8 @@ class _AppScreen extends HookWidget {
                         IconButton(
                           onPressed: () {
                             context.read<AuthCubit>().logout();
-                            ToastService.showNotification(const Text('Logged out!'));
+                            ToastService.showNotification(
+                                const Text('Logged out!'),);
                           },
                           icon: const FaIcon(FontAwesomeIcons.signOutAlt),
                         ),

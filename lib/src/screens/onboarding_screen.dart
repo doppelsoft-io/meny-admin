@@ -4,7 +4,7 @@ class OnboardingScreen extends StatelessWidget {
   static const String routeName = '/onboarding';
 
   static Route route() {
-    return MaterialPageRoute(
+    return MaterialPageRoute<Widget>(
       builder: (_) => const OnboardingScreen(),
     );
   }

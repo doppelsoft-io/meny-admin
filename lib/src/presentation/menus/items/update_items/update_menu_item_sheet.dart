@@ -24,7 +24,7 @@ class UpdateMenuItemSheet extends StatelessWidget {
   static const String routeName = '/updateMenuItem';
 
   static Route route(SheetArgs args) {
-    return MaterialPageRoute(
+    return MaterialPageRoute<Widget>(
       fullscreenDialog: true,
       builder: (context) {
         return MultiBlocProvider(
@@ -85,7 +85,9 @@ class _UpdateMenuItemSheet extends HookWidget {
 
     final priceController = useTextEditingController();
 
-    useEffect(() {});
+    useEffect(() {
+      return null;
+    });
 
     return WillPopScope(
       onWillPop: () => _onWillPop(
@@ -156,17 +158,17 @@ class _UpdateMenuItemSheet extends HookWidget {
                           child: ElevatedButton(
                             onPressed: () {
                               final now = DateTime.now();
-                              context.read<EditMenuItemCubit>()
-                                .update(
-                                  item.copyWith(
-                                    name: nameController.text,
-                                    price:
-                                        double.tryParse(priceController.text) ??
-                                            0.0,
-                                    description: descriptionController.text,
-                                    updatedAt: now,
-                                  ),
-                                );
+                              context.read<EditMenuItemCubit>().update(
+                                    item.copyWith(
+                                      name: nameController.text,
+                                      price: double.tryParse(
+                                            priceController.text,
+                                          ) ??
+                                          0.0,
+                                      description: descriptionController.text,
+                                      updatedAt: now,
+                                    ),
+                                  );
                             },
                             child: const Text('Save'),
                           ),
@@ -324,7 +326,7 @@ class _UpdateMenuItemSheet extends HookWidget {
     required List<CategoryModel> categories,
   }) {
     if (item.name.isEmpty) {
-      return showDialog(
+      return showDialog<bool>(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -342,7 +344,7 @@ class _UpdateMenuItemSheet extends HookWidget {
           );
         },
       ).then((value) {
-        if (value) {
+        if (value != null && value) {
           context.read<DeleteMenuItemCubit>().delete(
                 item: item,
                 categories: categories,
@@ -369,7 +371,7 @@ class _DeleteMenuItemButton extends StatelessWidget {
     required MenuItemModel item,
     required List<CategoryModel> categories,
   }) {
-    showDialog(
+    showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -433,7 +435,9 @@ class _DeleteMenuItemButton extends StatelessWidget {
           builder: (context, categoryMenuItemsState) {
             return OutlinedButton(
               onPressed: deleteMenuItemState.maybeWhen(
-                deleting: () {},
+                deleting: () {
+                  return null;
+                },
                 orElse: () => () => showConfirmationDialog(
                       context: context,
                       item: item,

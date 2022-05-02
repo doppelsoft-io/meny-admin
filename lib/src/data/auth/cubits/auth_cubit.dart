@@ -11,12 +11,6 @@ import 'package:meny/src/data/users/users.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final AuthRepository _authRepository;
-  final FirebaseAuth _firebaseAuth;
-  final StoreCacheService _storeCacheService;
-
-  StreamSubscription? _authSubscription;
-
   AuthCubit({
     AuthRepository? authRepository,
     FirebaseAuth? firebaseAuth,
@@ -33,6 +27,12 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
+  final AuthRepository _authRepository;
+  final FirebaseAuth _firebaseAuth;
+  final StoreCacheService _storeCacheService;
+
+  StreamSubscription? _authSubscription;
+
   @override
   Future<void> close() {
     _authSubscription?.cancel();
@@ -43,15 +43,19 @@ class AuthCubit extends Cubit<AuthState> {
     await Future<void>.delayed(Duration.zero);
 
     if (user.isAnonymous) {
-      emit(state.copyWith(
-        status: AuthStatus.anonymous,
-        user: user,
-      ),);
+      emit(
+        state.copyWith(
+          status: AuthStatus.anonymous,
+          user: user,
+        ),
+      );
     } else {
-      emit(state.copyWith(
-        status: AuthStatus.authenticated,
-        user: user,
-      ),);
+      emit(
+        state.copyWith(
+          status: AuthStatus.authenticated,
+          user: user,
+        ),
+      );
     }
   }
 
@@ -62,15 +66,19 @@ class AuthCubit extends Cubit<AuthState> {
       currentUser = await _authRepository.loginAnonymously();
     }
     if (currentUser.isAnonymous) {
-      emit(state.copyWith(
-        status: AuthStatus.anonymous,
-        user: currentUser,
-      ),);
+      emit(
+        state.copyWith(
+          status: AuthStatus.anonymous,
+          user: currentUser,
+        ),
+      );
     } else {
-      emit(state.copyWith(
-        status: AuthStatus.authenticated,
-        user: currentUser,
-      ),);
+      emit(
+        state.copyWith(
+          status: AuthStatus.authenticated,
+          user: currentUser,
+        ),
+      );
     }
   }
 

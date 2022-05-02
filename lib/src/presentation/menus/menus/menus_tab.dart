@@ -15,7 +15,7 @@ import 'package:meny/src/services/services.dart';
 class MenusMenusTab extends StatefulWidget {
   const MenusMenusTab({Key? key}) : super(key: key);
 
-  static BlocProvider<ResourcesCubit> page() {
+  static Widget page() {
     return BlocProvider<ResourcesCubit>(
       create: (context) => ResourcesCubit(
         iResourcesRepository: Locator.instance<MenuRepository>(),

@@ -9,7 +9,7 @@ import 'package:meny/src/enums/enums.dart';
 import 'package:meny/src/services/services.dart';
 import 'package:universal_platform/universal_platform.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final localhost = UniversalPlatform.isAndroid ? '10.0.2.2' : 'localhost';

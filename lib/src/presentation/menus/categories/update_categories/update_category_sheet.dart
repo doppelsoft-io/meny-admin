@@ -21,8 +21,8 @@ class UpdateCategorySheet extends StatelessWidget {
 
   static const String routeName = '/updateCategorySheet';
 
-  static Route route(SheetArgs args) {
-    return MaterialPageRoute(
+  static Route route(SheetArgs? args) {
+    return MaterialPageRoute<Widget>(
       fullscreenDialog: true,
       builder: (_) {
         return MultiBlocProvider(
@@ -30,7 +30,7 @@ class UpdateCategorySheet extends StatelessWidget {
             BlocProvider<EditCategoryCubit>(
               create: (context) => EditCategoryCubit(
                 storeCubit: context.read<StoreCubit>(),
-              )..loadCategory(args.resource as CategoryModel),
+              )..loadCategory(args!.resource as CategoryModel),
             ),
             BlocProvider<DeleteCategoryCubit>(
               create: (context) => DeleteCategoryCubit(
@@ -237,7 +237,7 @@ class _UpdateCategorySheet extends HookWidget {
     required CategoryModel category,
   }) {
     if (category.name.isEmpty) {
-      return showDialog(
+      return showDialog<bool>(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -255,7 +255,7 @@ class _UpdateCategorySheet extends HookWidget {
           );
         },
       ).then((value) {
-        if (value) {
+        if (value != null && value) {
           context.read<DeleteCategoryCubit>().delete(
                 category: category,
                 menus: menus,
@@ -348,7 +348,9 @@ class _DeleteCategoryButton extends StatelessWidget {
       builder: (context, deleteCategoryState) {
         return OutlinedButton(
           onPressed: deleteCategoryState.maybeWhen(
-            deleting: () {},
+            deleting: () {
+              return null;
+            },
             orElse: () => () => showConfirmationDialog(
                   context: context,
                   category: category,
