@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/locator.dart';
 import 'package:meny/src/constants/paths.dart';
 import 'package:meny/src/data/categories/categories.dart';
+import 'package:meny/src/data/category_menu_items/category_menu_items.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menus/menus.dart';
 import 'package:meny/src/data/stores/cubits/cubits.dart';
@@ -16,14 +17,18 @@ class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
   DeleteCategoryCubit({
     required StoreCubit storeCubit,
     FirebaseFirestore? firebaseFirestore,
+    CategoryMenuItemsRepository? categoryMenuItemsRepository,
   })  : _storeCubit = storeCubit,
         _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
+        _categoryMenuItemsRepository =
+            categoryMenuItemsRepository ?? Locator.instance(),
         super(DeleteCategoryState.initial());
 
-  final FirebaseFirestore _firebaseFirestore;
   final StoreCubit _storeCubit;
+  final FirebaseFirestore _firebaseFirestore;
+  final CategoryMenuItemsRepository _categoryMenuItemsRepository;
 
-  void delete({
+  Future<void> delete({
     required CategoryModel category,
     required List<MenuModel> menus,
   }) async {
@@ -49,6 +54,24 @@ class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
             .doc(docId);
 
         batch.delete(menuCategoryRef);
+      }
+
+      /// Delete category_menu_items associated with category
+      final categoryMenuItems =
+          await _categoryMenuItemsRepository.getForCategory(
+        storeId: storeId,
+        categoryId: category.id!,
+      );
+
+      for (final categoryMenuItem in categoryMenuItems) {
+        final docId = '${category.id}-${categoryMenuItem.menuItemId}';
+        final categoryMenuItemRef = _firebaseFirestore
+            .collection(Paths.stores)
+            .doc(storeId)
+            .collection(Paths.categoryMenuItems)
+            .doc(docId);
+
+        batch.delete(categoryMenuItemRef);
       }
 
       await batch.commit();
