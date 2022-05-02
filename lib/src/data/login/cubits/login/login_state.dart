@@ -6,34 +6,13 @@ enum LoginStatus {
   done,
 }
 
-class LoginState extends Equatable {
-  final LoginStatus status;
-  final Either<Failure, UserModel>? result;
+@freezed
+class LoginState with _$LoginState {
+  const factory LoginState.initial() = _Initial;
 
-  const LoginState({
-    required this.status,
-    required this.result,
-  });
+  const factory LoginState.loggingIn() = _LoggingIn;
 
-  bool get isLoggingIn => status == LoginStatus.loggingIn;
-
-  @override
-  List<Object?> get props => [status, result];
-
-  factory LoginState.initial() {
-    return const LoginState(
-      status: LoginStatus.initial,
-      result: null,
-    );
-  }
-
-  LoginState copyWith({
-    LoginStatus? status,
-    Either<Failure, UserModel>? result,
-  }) {
-    return LoginState(
-      status: status ?? LoginStatus.initial,
-      result: result ?? this.result,
-    );
-  }
+  const factory LoginState.done({
+    required Either<Failure, UserModel> result,
+  }) = _Done;
 }

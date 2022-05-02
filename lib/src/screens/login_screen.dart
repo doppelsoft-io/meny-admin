@@ -49,19 +49,22 @@ class LoginScreen extends HookWidget {
     ]);
 
     return BlocConsumer<LoginCubit, LoginState>(
-      listenWhen: (prev, curr) =>
-          curr.result != null && curr.status == LoginStatus.done,
       listener: (context, state) {
-        state.result!.fold(
-          (failure) => DialogService.showErrorDialog(
-            context: context,
-            failure: failure,
-          ),
-          (user) {
-            /// Pop login screen
-            Navigator.of(context).pop();
-            ToastService.showNotification(const Text("You're logged in!"));
+        state.maybeWhen(
+          done: (result) {
+            result.fold(
+              (failure) => DialogService.showErrorDialog(
+                context: context,
+                failure: failure,
+              ),
+              (user) {
+                /// Pop login screen
+                Navigator.of(context).pop();
+                ToastService.showNotification(const Text("You're logged in!"));
+              },
+            );
           },
+          orElse: () {},
         );
       },
       builder: (context, state) {
@@ -154,16 +157,17 @@ class LoginScreen extends HookWidget {
                                         );
                                   }
                                 },
-                          child: state.isLoggingIn
-                              ? SizedBox(
-                                  height: 18,
-                                  width: 18,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.green.shade50,
-                                  ),
-                                )
-                              : const Text('Log In'),
+                          child: state.maybeWhen(
+                            loggingIn: () => SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.green.shade50,
+                              ),
+                            ),
+                            orElse: () => const Text('Log In'),
+                          ),
                         ),
                       ),
                     ],
