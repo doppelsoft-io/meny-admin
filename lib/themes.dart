@@ -21,7 +21,7 @@ class Themes {
   static BoxShadow boxShadow = BoxShadow(
     color: Colors.grey[100]!,
     offset: const Offset(0, 2),
-    blurRadius: 4.0,
+    blurRadius: 4,
   );
 
   static TextStyle textStyle = GoogleFonts.baloo();
@@ -33,9 +33,7 @@ class Themes {
   static ThemeData defaultTheme = _light.copyWith(
     colorScheme: ColorScheme(
       primary: primaryColor,
-      primaryVariant: primaryColor,
       secondary: Colors.white,
-      secondaryVariant: Colors.white,
       surface: Colors.white,
       background: Colors.white,
       error: Colors.red,
@@ -66,7 +64,6 @@ class Themes {
     // ),
     inputDecorationTheme: InputDecorationTheme(
       floatingLabelBehavior: FloatingLabelBehavior.always,
-      alignLabelWithHint: false,
       hintStyle: textTheme.bodyText1,
       labelStyle: textTheme.bodyText1!.copyWith(color: Colors.grey[800]),
       helperStyle: textTheme.bodyText1,
@@ -148,7 +145,7 @@ class Themes {
     navigationRailTheme: NavigationRailThemeData(
       backgroundColor: Colors.grey[100],
       selectedIconTheme: IconThemeData(
-        size: 28.0,
+        size: 28,
         color: primaryColor,
       ),
       selectedLabelTextStyle: secondaryTextStyle.copyWith(
@@ -156,7 +153,7 @@ class Themes {
         fontWeight: FontWeight.w700,
       ),
       unselectedIconTheme: IconThemeData(
-        size: 28.0,
+        size: 28,
         color: Colors.grey[700],
       ),
       unselectedLabelTextStyle: secondaryTextStyle.copyWith(

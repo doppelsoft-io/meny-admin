@@ -19,7 +19,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit({
     AuthRepository? authRepository,
-    UserRepository? userRepository,
     FirebaseAuth? firebaseAuth,
     StoreCacheService? storeCacheService,
   })  : _authRepository = authRepository ?? Locator.instance(),
@@ -41,18 +40,18 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> userChanged(UserModel user) async {
-    await Future.delayed(Duration.zero);
+    await Future<void>.delayed(Duration.zero);
 
     if (user.isAnonymous) {
       emit(state.copyWith(
         status: AuthStatus.anonymous,
         user: user,
-      ));
+      ),);
     } else {
       emit(state.copyWith(
         status: AuthStatus.authenticated,
         user: user,
-      ));
+      ),);
     }
   }
 
@@ -66,12 +65,12 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.copyWith(
         status: AuthStatus.anonymous,
         user: currentUser,
-      ));
+      ),);
     } else {
       emit(state.copyWith(
         status: AuthStatus.authenticated,
         user: currentUser,
-      ));
+      ),);
     }
   }
 

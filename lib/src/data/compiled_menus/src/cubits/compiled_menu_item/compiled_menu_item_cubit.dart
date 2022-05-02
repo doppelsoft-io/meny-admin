@@ -11,16 +11,16 @@ import 'package:meny/src/data/stores/services/services.dart';
 part 'compiled_menu_item_state.dart';
 
 class CompiledMenuItemCubit extends Cubit<CompiledMenuItemState> {
-  final CompiledMenuRepository _compiledMenuRepository;
-  final StoreCacheService _storeCacheService;
-  late StreamSubscription _subscription;
-
   CompiledMenuItemCubit({
     CompiledMenuRepository? compiledMenuRepository,
     StoreCacheService? storeCacheService,
   })  : _compiledMenuRepository = compiledMenuRepository ?? Locator.instance(),
         _storeCacheService = storeCacheService ?? Locator.instance(),
         super(CompiledMenuItemState.initial());
+
+  final CompiledMenuRepository _compiledMenuRepository;
+  final StoreCacheService _storeCacheService;
+  late StreamSubscription _subscription;
 
   @override
   Future<void> close() async {
@@ -48,17 +48,21 @@ class CompiledMenuItemCubit extends Cubit<CompiledMenuItemState> {
           ),
         );
       })
-        ..onError((err) {
-          emit(state.copyWith(
-            failure: Failure(message: err.toString()),
-            status: CompiledMenuItemStatus.error,
-          ));
+        ..onError((dynamic err) {
+          emit(
+            state.copyWith(
+              failure: Failure(message: err.toString()),
+              status: CompiledMenuItemStatus.error,
+            ),
+          );
         });
     } on Failure catch (failure) {
-      emit(state.copyWith(
-        failure: failure,
-        status: CompiledMenuItemStatus.error,
-      ));
+      emit(
+        state.copyWith(
+          failure: failure,
+          status: CompiledMenuItemStatus.error,
+        ),
+      );
     }
   }
 }

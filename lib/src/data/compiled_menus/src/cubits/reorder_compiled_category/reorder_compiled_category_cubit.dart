@@ -42,12 +42,12 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
 
       emit(state.copyWith(
         status: ReorderCompiledCategoryStatus.success,
-      ));
+      ),);
     } catch (err) {
       emit(state.copyWith(
         status: ReorderCompiledCategoryStatus.error,
-        failure: Failure(message: 'Reordering categories failed'),
-      ));
+        failure: const Failure(message: 'Reordering categories failed'),
+      ),);
     }
   }
 }

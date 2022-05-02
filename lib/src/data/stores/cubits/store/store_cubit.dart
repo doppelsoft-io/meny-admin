@@ -46,9 +46,7 @@ class StoreCubit extends Cubit<StoreState> {
   void watchStore(StoreModel store) {
     _storeSubscription?.cancel();
     _storeSubscription =
-        _storeRepository.stream(storeId: store.id!).listen((store) {
-      setStore(store);
-    });
+        _storeRepository.stream(storeId: store.id!).listen(setStore);
   }
 
   void setStore(StoreModel store) async {
@@ -62,7 +60,7 @@ class StoreCubit extends Cubit<StoreState> {
       emit(
         StoreState.error(
           store: state.store,
-          exception: Failure(message: 'User is null'),
+          exception: const Failure(message: 'User is null'),
         ),
       );
     }
@@ -79,7 +77,7 @@ class StoreCubit extends Cubit<StoreState> {
           watchStore(store);
           return StoreState.loaded(store: store);
         },
-      ));
+      ),);
     } else {
       final failureOrStore =
           await _storeRepository.getStoresForUser(userId: user.id!);
@@ -93,7 +91,7 @@ class StoreCubit extends Cubit<StoreState> {
           watchStore(stores.first);
           return StoreState.loaded(store: stores.first);
         },
-      ));
+      ),);
     }
   }
 }

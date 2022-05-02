@@ -33,7 +33,7 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
       emit(state.copyWith(
         failure: failure,
         status: CompiledMenuStatus.error,
-      ));
+      ),);
     }
   }
 }

@@ -12,5 +12,5 @@ void main() async {
   await Locator.setup();
   await HiveService.configure();
 
-  runApp(App(environment: Environment.production));
+  runApp(const App(environment: Environment.production));
 }

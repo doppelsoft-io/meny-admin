@@ -17,7 +17,7 @@ class CustomTableCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: child,
     );
   }
@@ -26,7 +26,7 @@ class CustomTableCell extends StatelessWidget {
 class MenusItemsTab extends StatefulWidget {
   const MenusItemsTab({Key? key}) : super(key: key);
 
-  static page() {
+  static MultiBlocProvider page() {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ResourcesCubit>(
@@ -84,7 +84,7 @@ class _MenusItemsTabState extends State<MenusItemsTab> {
             dataColumnBuilder: (_, column) => DataColumn(
               label: Text(column),
             ),
-            emptyRowBuilder: (context) => DataRow(
+            emptyRowBuilder: (context) => const DataRow(
               cells: [
                 DataCell(
                   Text(

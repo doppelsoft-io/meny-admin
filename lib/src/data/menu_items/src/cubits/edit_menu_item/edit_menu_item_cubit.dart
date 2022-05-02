@@ -15,7 +15,6 @@ class EditMenuItemCubit extends Cubit<EditMenuItemState> {
   EditMenuItemCubit({
     MenuItemRepository? menuItemRepository,
     required StoreCubit storeCubit,
-    StoreCacheService? storeCacheService,
   })  : _menuItemRepository = menuItemRepository ?? Locator.instance(),
         _storeCubit = storeCubit,
         super(EditMenuItemState.loading(item: MenuItemModel.empty()));
@@ -23,7 +22,7 @@ class EditMenuItemCubit extends Cubit<EditMenuItemState> {
   Future<void> loadItem(MenuItemModel item) async {
     if (item.id != null && item.id!.isNotEmpty) {
       /// Needed to trigger loaded event in listener
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future<void>.delayed(const Duration(milliseconds: 300));
       emit(EditMenuItemState.loaded(item: item));
     } else {
       final storeId = _storeCubit.state.store.id!;
@@ -31,10 +30,12 @@ class EditMenuItemCubit extends Cubit<EditMenuItemState> {
         storeId: storeId,
         resource: item,
       );
-      emit(failureOrItem.fold(
-        (failure) => EditMenuItemState.error(item: item, exception: failure),
-        (item) => EditMenuItemState.loaded(item: item),
-      ));
+      emit(
+        failureOrItem.fold(
+          (failure) => EditMenuItemState.error(item: item, exception: failure),
+          (item) => EditMenuItemState.loaded(item: item),
+        ),
+      );
     }
   }
 
@@ -45,9 +46,11 @@ class EditMenuItemCubit extends Cubit<EditMenuItemState> {
       storeId: storeId,
       resource: item,
     );
-    emit(failureOrUpdate.fold(
-      (failure) => EditMenuItemState.error(item: item, exception: failure),
-      (update) => EditMenuItemState.success(item: item),
-    ));
+    emit(
+      failureOrUpdate.fold(
+        (failure) => EditMenuItemState.error(item: item, exception: failure),
+        (update) => EditMenuItemState.success(item: item),
+      ),
+    );
   }
 }

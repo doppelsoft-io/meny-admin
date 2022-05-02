@@ -13,7 +13,7 @@ import 'package:meny/src/services/services.dart';
 class MenusCategoriesTab extends StatefulWidget {
   const MenusCategoriesTab({Key? key}) : super(key: key);
 
-  static page() {
+  static BlocProvider<ResourcesCubit> page() {
     return BlocProvider<ResourcesCubit>(
       create: (context) => ResourcesCubit<CategoryModel>.use(),
       child: const MenusCategoriesTab(),
@@ -66,7 +66,7 @@ class _MenusCategoriesTabState extends State<MenusCategoriesTab> {
             columnNames: const ['Name', 'Last Updated'],
             dataColumnBuilder: (_, column) => DataColumn(label: Text(column)),
             emptyRowBuilder: (context) {
-              return DataRow(
+              return const DataRow(
                 cells: [
                   DataCell(
                     Text(

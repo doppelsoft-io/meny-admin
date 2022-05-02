@@ -19,7 +19,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
   })  : _storeCubit = storeCubit,
         _menuCategoryRepository = menuCategoryRepository ?? Locator.instance(),
         _menuRepository = menuRepository ?? Locator.instance(),
-        super(MenuCategoriesState.initial());
+        super(const MenuCategoriesState.initial());
 
   final StoreCubit _storeCubit;
   final MenuCategoryRepository _menuCategoryRepository;
@@ -29,7 +29,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
   @override
   Future<void> close() async {
     await _subscription?.cancel();
-    super.close();
+    await super.close();
   }
 
   Future<void> load({required String categoryId}) async {
@@ -58,7 +58,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
     emit(state.copyWith(
       menus: menusAvailable,
       menuCategories: menuCategories,
-    ));
+    ),);
   }
 
   Future<void> createMenuCategory({
@@ -69,7 +69,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
       emit(MenuCategoriesState.adding(
         menuCategories: state.menuCategories,
         menus: state.menus,
-      ));
+      ),);
 
       final storeId = _storeCubit.state.store.id!;
       await _menuCategoryRepository.create(
@@ -81,18 +81,18 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
       emit(MenuCategoriesState.success(
         menuCategories: state.menuCategories,
         menus: state.menus,
-      ));
+      ),);
     } on CreateMenuCategoryException catch (err) {
       emit(MenuCategoriesState.error(
         menuCategories: state.menuCategories,
         menus: state.menus,
         exception: err,
-      ));
+      ),);
     } finally {
       emit(MenuCategoriesState.initial(
         menuCategories: state.menuCategories,
         menus: state.menus,
-      ));
+      ),);
     }
   }
 
@@ -104,7 +104,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
       emit(MenuCategoriesState.removing(
         menuCategories: state.menuCategories,
         menus: state.menus,
-      ));
+      ),);
 
       final storeId = _storeCubit.state.store.id!;
       await _menuCategoryRepository.remove(
@@ -116,18 +116,18 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
       emit(MenuCategoriesState.success(
         menuCategories: state.menuCategories,
         menus: state.menus,
-      ));
+      ),);
     } on CreateMenuCategoryException catch (err) {
       emit(MenuCategoriesState.error(
         menuCategories: state.menuCategories,
         menus: state.menus,
         exception: err,
-      ));
+      ),);
     } finally {
       emit(MenuCategoriesState.initial(
         menuCategories: state.menuCategories,
         menus: state.menus,
-      ));
+      ),);
     }
   }
 }

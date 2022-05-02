@@ -9,10 +9,10 @@ class MenusPage extends StatelessWidget {
   const MenusPage({Key? key}) : super(key: key);
 
   static final _tabs = [
-    Tab(text: 'Menus'),
-    Tab(text: 'Categories'),
-    Tab(text: 'Items'),
-    Tab(text: 'Modifiers'),
+    const Tab(text: 'Menus'),
+    const Tab(text: 'Categories'),
+    const Tab(text: 'Items'),
+    const Tab(text: 'Modifiers'),
   ];
 
   @override

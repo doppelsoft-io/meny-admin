@@ -28,7 +28,7 @@ class CompiledMenuRepository {
         .orderBy('position')
         .snapshots()
         .map((snap) =>
-            snap.docs.map((doc) => CategoryModel.fromSnapshot(doc)).toList());
+            snap.docs.map((doc) => CategoryModel.fromSnapshot(doc)).toList(),);
   }
 
   Stream<List<MenuItemModel>> getItemsForCategory({
@@ -45,7 +45,7 @@ class CompiledMenuRepository {
         .orderBy('position')
         .snapshots()
         .map((snap) =>
-            snap.docs.map((doc) => MenuItemModel.fromSnapshot(doc)).toList());
+            snap.docs.map((doc) => MenuItemModel.fromSnapshot(doc)).toList(),);
   }
 
   Future<CategoryModel> getCategory({
@@ -69,7 +69,7 @@ class CompiledMenuRepository {
     } on CategoryDoesNotExistException catch (_) {
       rethrow;
     } catch (err) {
-      throw Failure(message: 'Error fetching category');
+      throw const Failure(message: 'Error fetching category');
     }
   }
 
@@ -87,7 +87,7 @@ class CompiledMenuRepository {
           )
           .set(category.toJson(), SetOptions(merge: true));
     } catch (err) {
-      throw Failure(message: 'Error updating category');
+      throw const Failure(message: 'Error updating category');
     }
   }
 
@@ -114,7 +114,7 @@ class CompiledMenuRepository {
     } on MenuItemDoesNotExistException catch (_) {
       rethrow;
     } catch (err) {
-      throw Failure(message: 'Error fetching item');
+      throw const Failure(message: 'Error fetching item');
     }
   }
 
@@ -134,7 +134,7 @@ class CompiledMenuRepository {
           )
           .set(item.toJson(), SetOptions(merge: true));
     } catch (err) {
-      throw Failure(message: 'Error updating item');
+      throw const Failure(message: 'Error updating item');
     }
   }
 }

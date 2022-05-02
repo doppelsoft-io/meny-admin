@@ -10,6 +10,7 @@ class MenuCategoryException implements Exception {
 }
 
 class CreateMenuCategoryException extends MenuCategoryException {
+  @override
   final String message;
 
   const CreateMenuCategoryException({
@@ -18,6 +19,7 @@ class CreateMenuCategoryException extends MenuCategoryException {
 }
 
 class RemoveMenuCategoryException extends MenuCategoryException {
+  @override
   final String message;
 
   const RemoveMenuCategoryException({
@@ -26,6 +28,7 @@ class RemoveMenuCategoryException extends MenuCategoryException {
 }
 
 class GetMenuCategoriesException extends MenuCategoryException {
+  @override
   final String message;
 
   const GetMenuCategoriesException({
@@ -51,7 +54,7 @@ class MenuCategoryRepository {
         menuId: menuId,
       ).first;
     } catch (err) {
-      throw GetMenuCategoriesException();
+      throw const GetMenuCategoriesException();
     }
   }
 
@@ -68,9 +71,9 @@ class MenuCategoryRepository {
           .snapshots()
           .map((doc) => doc.docs
               .map((snap) => MenuCategoryModel.fromSnapshot(snap))
-              .toList());
+              .toList(),);
     } catch (err) {
-      throw GetMenuCategoriesException();
+      throw const GetMenuCategoriesException();
     }
   }
 
@@ -84,7 +87,7 @@ class MenuCategoryRepository {
         categoryId: categoryId,
       ).first;
     } catch (err) {
-      throw GetMenuCategoriesException();
+      throw const GetMenuCategoriesException();
     }
   }
 
@@ -101,9 +104,9 @@ class MenuCategoryRepository {
           .snapshots()
           .map((doc) => doc.docs
               .map((snap) => MenuCategoryModel.fromSnapshot(snap))
-              .toList());
+              .toList(),);
     } catch (err) {
-      throw GetMenuCategoriesException();
+      throw const GetMenuCategoriesException();
     }
   }
 
@@ -128,7 +131,7 @@ class MenuCategoryRepository {
 
       return menuCategory;
     } catch (_) {
-      throw CreateMenuCategoryException();
+      throw const CreateMenuCategoryException();
     }
   }
 
@@ -149,7 +152,7 @@ class MenuCategoryRepository {
 
       return true;
     } catch (_) {
-      throw RemoveMenuCategoryException();
+      throw const RemoveMenuCategoryException();
     }
   }
 }

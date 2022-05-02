@@ -18,7 +18,7 @@ class UserModel with _$UserModel {
   const UserModel._();
 
   factory UserModel.empty() {
-    return UserModel(
+    return const UserModel(
       id: '',
       email: '',
       isAnonymous: false,
@@ -27,8 +27,8 @@ class UserModel with _$UserModel {
 
   factory UserModel.fromSnapshot(DocumentSnapshot snap) {
     try {
-      final Object? data = snap.data();
-      final json = (data as Map<String, dynamic>);
+      final data = snap.data();
+      final json = data as Map<String, dynamic>;
       return UserModel.fromJson(json).copyWith(id: snap.id);
     } catch (e) {
       return UserModel.empty();

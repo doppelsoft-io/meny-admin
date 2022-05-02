@@ -24,7 +24,7 @@ class MenuItemModel with _$MenuItemModel {
   factory MenuItemModel.fromSnapshot(DocumentSnapshot snap) {
     try {
       final data = snap.data();
-      final json = (data as Map<String, dynamic>);
+      final json = data as Map<String, dynamic>;
       return MenuItemModel.fromJson(json).copyWith(id: snap.id);
     } catch (e) {
       return MenuItemModel.empty();
@@ -35,7 +35,7 @@ class MenuItemModel with _$MenuItemModel {
     final now = DateTime.now();
     return MenuItemModel(
       name: '',
-      price: 0.0,
+      price: 0,
       createdAt: now,
       updatedAt: now,
       description: '',

@@ -18,10 +18,10 @@ class MenusPagePersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
     bool overlapsContent,
   ) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
       ),
-      padding: EdgeInsets.symmetric(horizontal: Spacing.pageSpacing),
+      padding: const EdgeInsets.symmetric(horizontal: Spacing.pageSpacing),
       height: maxExtent,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,

@@ -40,7 +40,7 @@ class CompiledCategoryBuilder extends StatelessWidget {
                 listener: (context, state) {
                   if (state.status == ReorderCompiledCategoryStatus.success) {
                     ToastService.showNotification(
-                        const Text('Categories saved'));
+                        const Text('Categories saved'),);
                   }
                 },
                 child: ReorderableListView.builder(

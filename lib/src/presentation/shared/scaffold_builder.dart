@@ -16,7 +16,6 @@ class ScaffoldBuilder extends StatelessWidget {
     return ScaffoldBuilder(
       appBar: AppBar(
         elevation: 0,
-        automaticallyImplyLeading: true,
         centerTitle: false,
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
@@ -31,12 +30,11 @@ class ScaffoldBuilder extends StatelessWidget {
     return ScaffoldBuilder(
       appBar: AppBar(
         elevation: 0,
-        automaticallyImplyLeading: true,
         centerTitle: false,
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
       ),
-      body: Center(child: CircularProgressIndicator()),
+      body: const Center(child: CircularProgressIndicator()),
     );
   }
 

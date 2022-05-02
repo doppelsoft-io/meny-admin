@@ -48,7 +48,7 @@ class ResourcesCubit<M> extends Cubit<ResourcesState> {
           ..onError(
             (error) {
               emit(
-                ResourcesFailure(
+                const ResourcesFailure(
                   Failure(message: 'Something went wrong'),
                 ),
               );
@@ -58,8 +58,8 @@ class ResourcesCubit<M> extends Cubit<ResourcesState> {
 
   @override
   Future<void> close() async {
-    _indexSubscription.cancel();
-    super.close();
+    await _indexSubscription.cancel();
+    await super.close();
   }
 
   factory ResourcesCubit.use() {

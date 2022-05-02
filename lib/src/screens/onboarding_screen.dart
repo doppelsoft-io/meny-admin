@@ -5,7 +5,7 @@ class OnboardingScreen extends StatelessWidget {
 
   static Route route() {
     return MaterialPageRoute(
-      builder: (_) => OnboardingScreen(),
+      builder: (_) => const OnboardingScreen(),
     );
   }
 
@@ -15,7 +15,7 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Onboarding'),
+        title: const Text('Onboarding'),
       ),
     );
   }

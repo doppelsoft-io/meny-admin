@@ -17,7 +17,7 @@ class RegexValidator implements StringValidator {
     try {
       final regex = RegExp(regexSource);
       final matches = regex.allMatches(value);
-      for (Match match in matches) {
+      for (final Match match in matches) {
         if (match.start == 0 && match.end == value.length) {
           return true;
         }
@@ -49,7 +49,7 @@ class ValidatorInputFormatter implements TextInputFormatter {
 
 class DecimalNumberEditingRegexValidator extends RegexValidator {
   DecimalNumberEditingRegexValidator()
-      : super(regexSource: "^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$");
+      : super(regexSource: '^\$|^(0|([1-9][0-9]{0,3}))(\\.[0-9]{0,2})?\$');
 }
 
 class DecimalNumberSubmitValidator implements StringValidator {
@@ -68,11 +68,11 @@ class EmailEditingRegexValidator extends RegexValidator {
   EmailEditingRegexValidator()
       : super(
             regexSource:
-                "^[a-zA-Z0-9_.+-]*(@([a-zA-Z0-9-]*(\\.[a-zA-Z0-9-]*)?)?)?\$");
+                '^[a-zA-Z0-9_.+-]*(@([a-zA-Z0-9-]*(\\.[a-zA-Z0-9-]*)?)?)?\$',);
 }
 
 class EmailSubmitRegexValidator extends RegexValidator {
   EmailSubmitRegexValidator()
       : super(
-            regexSource: "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+\$)");
+            regexSource: '(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+\$)',);
 }

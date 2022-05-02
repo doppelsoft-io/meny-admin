@@ -12,7 +12,7 @@ class ResourcesRepository<T extends IResourceModel>
     extends IResourcesRepository<T> {
   T fromSnapshot(DocumentSnapshot snap) {
     if (T == IResourceModel) {
-      throw Failure(
+      throw const Failure(
         message: 'ResourcesRepository: T not provided',
         shortMessage: 'ResourcesRepository: T not provided',
       );
@@ -21,10 +21,6 @@ class ResourcesRepository<T extends IResourceModel>
     switch (T) {
       case MenuModel:
         return MenuModel.fromSnapshot(snap) as T;
-      case MenuModel:
-        return MenuModel.fromSnapshot(snap) as T;
-      case CategoryModel:
-        return CategoryModel.fromSnapshot(snap) as T;
       case CategoryModel:
         return CategoryModel.fromSnapshot(snap) as T;
       case MenuItemModel:
@@ -52,7 +48,7 @@ class ResourcesRepository<T extends IResourceModel>
         .storesDocument(storeId: storeId)
         .collection(path)
         .snapshots()
-        .map((doc) => doc.docs.map((snap) => fromSnapshot(snap)).toList());
+        .map((doc) => doc.docs.map(fromSnapshot).toList());
   }
 
   @override
@@ -70,8 +66,8 @@ class ResourcesRepository<T extends IResourceModel>
     } catch (e) {
       return left(Failure(
         message:
-            "We had an issue creating your ${T.runtimeType}. Please try again later.",
-      ));
+            'We had an issue creating your ${T.runtimeType}. Please try again later.',
+      ),);
     }
   }
 
@@ -92,7 +88,7 @@ class ResourcesRepository<T extends IResourceModel>
         message:
             'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
         shortMessage: 'Update failed.',
-      ));
+      ),);
     }
   }
 
@@ -113,7 +109,7 @@ class ResourcesRepository<T extends IResourceModel>
         message:
             'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
         shortMessage: 'Delete failed',
-      ));
+      ),);
     }
   }
 }

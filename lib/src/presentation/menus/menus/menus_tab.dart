@@ -15,7 +15,7 @@ import 'package:meny/src/services/services.dart';
 class MenusMenusTab extends StatefulWidget {
   const MenusMenusTab({Key? key}) : super(key: key);
 
-  static page() {
+  static BlocProvider<ResourcesCubit> page() {
     return BlocProvider<ResourcesCubit>(
       create: (context) => ResourcesCubit(
         iResourcesRepository: Locator.instance<MenuRepository>(),
@@ -70,7 +70,7 @@ class _MenusMenusTabState extends State<MenusMenusTab> {
             columnNames: const ['Name', 'Last Updated', 'Actions'],
             dataColumnBuilder: (_, column) => DataColumn(label: Text(column)),
             emptyRowBuilder: (context) {
-              return DataRow(
+              return const DataRow(
                 cells: [
                   DataCell(
                     Text(

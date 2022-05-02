@@ -1,10 +1,10 @@
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny/src/data/compiled_menus/src/cubits/reorder_compiled_menu_item/reorder_compiled_menu_item_cubit.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
-import 'package:core/core.dart';
 import 'package:meny/src/services/services.dart';
 
 class CompiledMenuItemBuilder extends StatelessWidget {

@@ -11,6 +11,7 @@ class CategoryMenuItemException implements Exception {
 }
 
 class CreateCategoryMenuItemException extends CategoryMenuItemException {
+  @override
   final String message;
 
   const CreateCategoryMenuItemException({
@@ -19,6 +20,7 @@ class CreateCategoryMenuItemException extends CategoryMenuItemException {
 }
 
 class RemoveCategoryMenuItemException extends CategoryMenuItemException {
+  @override
   final String message;
 
   const RemoveCategoryMenuItemException({
@@ -27,6 +29,7 @@ class RemoveCategoryMenuItemException extends CategoryMenuItemException {
 }
 
 class GetCategoryMenuItemsException extends CategoryMenuItemException {
+  @override
   final String message;
 
   const GetCategoryMenuItemsException({
@@ -69,9 +72,9 @@ class CategoryMenuItemsRepository {
           .snapshots()
           .map((doc) => doc.docs
               .map((snap) => CategoryMenuItemModel.fromSnapshot(snap))
-              .toList());
+              .toList(),);
     } catch (err) {
-      throw GetCategoryMenuItemsException();
+      throw const GetCategoryMenuItemsException();
     }
   }
 
@@ -88,9 +91,9 @@ class CategoryMenuItemsRepository {
           .snapshots()
           .map((doc) => doc.docs
               .map((snap) => CategoryMenuItemModel.fromSnapshot(snap))
-              .toList());
+              .toList(),);
     } catch (err) {
-      throw GetCategoryMenuItemsException();
+      throw const GetCategoryMenuItemsException();
     }
   }
 
@@ -123,7 +126,7 @@ class CategoryMenuItemsRepository {
         message: err.message ?? 'Something went wrong',
       );
     } catch (_) {
-      throw CreateCategoryMenuItemException();
+      throw const CreateCategoryMenuItemException();
     }
   }
 
@@ -144,7 +147,7 @@ class CategoryMenuItemsRepository {
 
       return true;
     } catch (_) {
-      throw RemoveCategoryMenuItemException();
+      throw const RemoveCategoryMenuItemException();
     }
   }
 }

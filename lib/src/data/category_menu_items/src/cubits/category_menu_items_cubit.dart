@@ -20,7 +20,7 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
         _categoryMenuItemsRepository =
             categoryMenuItemsRepository ?? Locator.instance(),
         _categoryRepository = categoryRepository ?? Locator.instance(),
-        super(CategoryMenuItemsState.initial());
+        super(const CategoryMenuItemsState.initial());
 
   final StoreCubit _storeCubit;
   final CategoryMenuItemsRepository _categoryMenuItemsRepository;
@@ -30,7 +30,7 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
   @override
   Future<void> close() async {
     await _subscription?.cancel();
-    super.close();
+    await super.close();
   }
 
   Future<void> load({required String menuItemId}) async {
@@ -63,7 +63,7 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
     emit(state.copyWith(
       categories: categoriesAvailable,
       categoryMenuItems: categoryMenuItems,
-    ));
+    ),);
   }
 
   Future<void> createCategoryMenuItem({
@@ -74,7 +74,7 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
       emit(CategoryMenuItemsState.adding(
         categoryMenuItems: state.categoryMenuItems,
         categories: state.categories,
-      ));
+      ),);
 
       final storeId = _storeCubit.state.store.id!;
 
@@ -87,18 +87,18 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
       emit(CategoryMenuItemsState.success(
         categoryMenuItems: state.categoryMenuItems,
         categories: state.categories,
-      ));
+      ),);
     } on CreateCategoryMenuItemException catch (err) {
       emit(CategoryMenuItemsState.error(
         categoryMenuItems: state.categoryMenuItems,
         categories: state.categories,
         exception: err,
-      ));
+      ),);
     } finally {
       emit(CategoryMenuItemsState.initial(
         categoryMenuItems: state.categoryMenuItems,
         categories: state.categories,
-      ));
+      ),);
     }
   }
 
@@ -110,7 +110,7 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
       emit(CategoryMenuItemsState.removing(
         categoryMenuItems: state.categoryMenuItems,
         categories: state.categories,
-      ));
+      ),);
 
       final storeId = _storeCubit.state.store.id!;
       await _categoryMenuItemsRepository.remove(
@@ -122,18 +122,18 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
       emit(CategoryMenuItemsState.success(
         categoryMenuItems: state.categoryMenuItems,
         categories: state.categories,
-      ));
+      ),);
     } on CreateCategoryMenuItemException catch (err) {
       emit(CategoryMenuItemsState.error(
         categoryMenuItems: state.categoryMenuItems,
         categories: state.categories,
         exception: err,
-      ));
+      ),);
     } finally {
       emit(CategoryMenuItemsState.initial(
         categoryMenuItems: state.categoryMenuItems,
         categories: state.categories,
-      ));
+      ),);
     }
   }
 }

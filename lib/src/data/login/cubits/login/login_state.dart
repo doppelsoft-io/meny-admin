@@ -21,7 +21,7 @@ class LoginState extends Equatable {
   List<Object?> get props => [status, result];
 
   factory LoginState.initial() {
-    return LoginState(
+    return const LoginState(
       status: LoginStatus.initial,
       result: null,
     );

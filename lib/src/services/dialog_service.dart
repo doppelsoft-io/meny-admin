@@ -17,8 +17,8 @@ class DialogService {
             color: Theme.of(context).errorColor,
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 24.0,
-                vertical: 12.0,
+                horizontal: 24,
+                vertical: 12,
               ),
               child: Text(
                 'Error',
@@ -32,12 +32,12 @@ class DialogService {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(
                   Theme.of(context).errorColor,
                 ),
               ),
+              child: const Text('OK'),
             ),
           ],
         );

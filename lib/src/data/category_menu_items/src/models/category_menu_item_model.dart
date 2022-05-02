@@ -23,8 +23,8 @@ class CategoryMenuItemModel with _$CategoryMenuItemModel {
 
   factory CategoryMenuItemModel.fromSnapshot(DocumentSnapshot snap) {
     try {
-      final Object? data = snap.data();
-      final json = (data as Map<String, dynamic>);
+      final data = snap.data();
+      final json = data as Map<String, dynamic>;
       return CategoryMenuItemModel.fromJson(json);
     } catch (e) {
       return CategoryMenuItemModel.empty();

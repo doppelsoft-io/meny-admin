@@ -24,10 +24,10 @@ void main() async {
 
   FirebaseFunctions.instance.useFunctionsEmulator(localhost, 5001);
 
-  FirebaseAuth.instance.useEmulator('http://localhost:9099');
+  await FirebaseAuth.instance.useEmulator('http://localhost:9099');
 
   await Locator.setup();
   await HiveService.configure();
 
-  runApp(App(environment: Environment.development));
+  runApp(const App(environment: Environment.development));
 }

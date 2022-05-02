@@ -19,7 +19,7 @@ class SignupScreen extends HookWidget {
           create: (context) => SignupCubit(
             authCubit: context.read<AuthCubit>(),
           ),
-          child: SignupScreen(),
+          child: const SignupScreen(),
         );
       },
     );
@@ -79,14 +79,14 @@ class SignupScreen extends HookWidget {
             /// Pop Login Screen
             Navigator.of(context).pop();
 
-            ToastService.showNotification(Text("Your sign up was successful!"));
+            ToastService.showNotification(const Text('Your sign up was successful!'));
           },
         );
       },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Signup'),
+            title: const Text('Signup'),
           ),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(getValueForScreenType<double>(
@@ -94,7 +94,7 @@ class SignupScreen extends HookWidget {
               mobile: Spacing.formPadding / 2,
               tablet: Spacing.formPadding,
               desktop: Spacing.formPadding,
-            )),
+            ),),
             child: Form(
               key: signupFormKey.value,
               child: Column(
@@ -104,11 +104,11 @@ class SignupScreen extends HookWidget {
                     style: Theme.of(context).textTheme.headline5,
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: Spacing.textFieldVerticalSpacing * 2),
+                  const SizedBox(height: Spacing.textFieldVerticalSpacing * 2),
                   TextFormField(
                     autovalidateMode: AutovalidateMode.always,
                     controller: storeNameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: Text('Business name'),
                       hintText: 'Add the name of your business',
                     ),
@@ -122,16 +122,16 @@ class SignupScreen extends HookWidget {
                     },
                     validator: (value) {
                       if (value == null) return null;
-                      if (value.length < 1) return null;
-                      return value.isNotEmpty && value.trim().length > 0
+                      if (value.isEmpty) return null;
+                      return value.isNotEmpty && value.trim().isNotEmpty
                           ? null
                           : 'You must provide a valid name';
                     },
                   ),
-                  SizedBox(height: Spacing.textFieldVerticalSpacing),
+                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
                   TextFormField(
                     controller: emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: Text('Email'),
                       hintText: 'Enter your email address',
                     ),
@@ -157,18 +157,18 @@ class SignupScreen extends HookWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: Spacing.textFieldVerticalSpacing),
+                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
                   TextFormField(
                     controller: passwordController,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                     textInputAction: TextInputAction.done,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: Text('Password'),
                       hintText: 'Enter a password',
                     ),
                   ),
-                  SizedBox(height: Spacing.textFieldVerticalSpacing),
+                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
                   Row(
                     children: [
                       Expanded(
@@ -187,7 +187,7 @@ class SignupScreen extends HookWidget {
                                     final store =
                                         context.read<StoreCubit>().state.store;
                                     context.read<SignupCubit>()
-                                      ..handleSignUp(
+                                      .handleSignUp(
                                         store: store.copyWith(
                                           name: storeNameController.text.trim(),
                                         ),
@@ -206,14 +206,14 @@ class SignupScreen extends HookWidget {
                                     color: Colors.green.shade50,
                                   ),
                                 )
-                              : Text('Sign Up'),
+                              : const Text('Sign Up'),
                         ),
                       ),
                     ],
                   ),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text('Already have an account?'),
+                    child: const Text('Already have an account?'),
                   ),
                 ],
               ),

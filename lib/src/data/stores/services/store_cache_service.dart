@@ -7,7 +7,7 @@ class StoreCacheService {
     try {
       await Hive.box(HiveService.storesBox).put('storeId', storeId);
     } catch (err) {
-      throw Failure(message: 'Failed to save store');
+      throw const Failure(message: 'Failed to save store');
     }
   }
 
@@ -15,7 +15,7 @@ class StoreCacheService {
     try {
       await Hive.box(HiveService.storesBox).delete(key);
     } catch (err) {
-      throw Failure(message: 'Failed to remove storeId');
+      throw const Failure(message: 'Failed to remove storeId');
     }
   }
 
@@ -24,7 +24,7 @@ class StoreCacheService {
       final id = await Hive.box(HiveService.storesBox).get(storeId) as String;
       return id;
     } catch (err) {
-      throw Failure(message: 'Failed to retrieve store');
+      throw const Failure(message: 'Failed to retrieve store');
     }
   }
 }

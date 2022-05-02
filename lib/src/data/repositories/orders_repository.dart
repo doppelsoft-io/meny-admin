@@ -4,7 +4,7 @@ import 'package:meny/src/data/models/orders/order_model.dart';
 
 class OrdersRepository {
   Future<Either<Failure, List>> get() {
-    return Future.delayed(const Duration(milliseconds: 300), () {
+    return Future<void>.delayed(const Duration(milliseconds: 300), () {
       return right([
         OrderModel(
           displayName: 'Jack Grossmann',

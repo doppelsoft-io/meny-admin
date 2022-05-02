@@ -57,7 +57,7 @@ class _AppScreen extends HookWidget {
           },
           builder: (context, storeState) {
             return storeState.maybeWhen(
-              loading: (_) => Scaffold(
+              loading: (_) => const Scaffold(
                 body: LoadingDisplay(
                   alignment: Alignment.center,
                 ),
@@ -87,9 +87,9 @@ class _AppScreen extends HookWidget {
                         IconButton(
                           onPressed: () {
                             context.read<AuthCubit>().logout();
-                            ToastService.showNotification(Text('Logged out!'));
+                            ToastService.showNotification(const Text('Logged out!'));
                           },
-                          icon: FaIcon(FontAwesomeIcons.signOutAlt),
+                          icon: const FaIcon(FontAwesomeIcons.signOutAlt),
                         ),
                       ] else ...[
                         TextButton(
@@ -97,7 +97,7 @@ class _AppScreen extends HookWidget {
                             Navigator.of(context)
                                 .pushNamed(LoginScreen.routeName);
                           },
-                          child: Text('Log in'),
+                          child: const Text('Log in'),
                         ),
                       ],
                     ],
@@ -188,7 +188,7 @@ class _AppScreen extends HookWidget {
                   //       ),
                 );
               },
-              orElse: () => SizedBox.shrink(),
+              orElse: () => const SizedBox.shrink(),
             );
           },
         );

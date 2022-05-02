@@ -46,7 +46,7 @@ class ResourceTable<T> extends StatelessWidget {
               showCheckboxColumn: false,
               columns: _state.resources.isEmpty
                   ? List.generate(1,
-                      (index) => dataColumnBuilder(context, columnNames[index]))
+                      (index) => dataColumnBuilder(context, columnNames[index]),)
                   : List.generate(
                       columnNames.length,
                       (index) {

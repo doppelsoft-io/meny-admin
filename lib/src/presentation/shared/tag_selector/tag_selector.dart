@@ -63,7 +63,6 @@ class TagSelector<T> extends HookWidget {
       /// So the drawer closes when you click outside the dropdown
       onTap: () => isOpen.value = false,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
@@ -78,9 +77,7 @@ class TagSelector<T> extends HookWidget {
           Stack(
             children: [
               Wrap(
-                alignment: WrapAlignment.start,
                 crossAxisAlignment: WrapCrossAlignment.start,
-                runAlignment: WrapAlignment.start,
                 runSpacing: 10,
                 spacing: 10,
                 children: initialItems.map(
@@ -90,14 +87,14 @@ class TagSelector<T> extends HookWidget {
 
                     return Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 6.0,
+                        horizontal: 12,
+                        vertical: 6,
                       ),
                       decoration: BoxDecoration(
                         color: tagConfiguration.color ??
                             Theme.of(context).primaryColor,
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(50.0)),
+                            const BorderRadius.all(Radius.circular(50)),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -112,14 +109,14 @@ class TagSelector<T> extends HookWidget {
                                       Theme.of(context).colorScheme.onPrimary,
                                 ),
                           ),
-                          const SizedBox(width: 8.0),
+                          const SizedBox(width: 8),
                           GestureDetector(
                             onTap: () {
                               onRemove(context, option);
                             },
                             child: Icon(
                               Icons.close,
-                              size: 20.0,
+                              size: 20,
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),
                           ),
@@ -157,7 +154,7 @@ class TagSelector<T> extends HookWidget {
 
                               return ListTile(
                                 contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0),
+                                    horizontal: 20,),
                                 onTap: () {
                                   onSelect(context, item);
                                   isOpen.value = false;
@@ -171,9 +168,9 @@ class TagSelector<T> extends HookWidget {
                           },
                         );
                       } else {
-                        return Center(
+                        return const Center(
                           child: Padding(
-                            padding: EdgeInsets.all(18.0),
+                            padding: EdgeInsets.all(18),
                             child: SizedBox(
                               width: 30,
                               height: 30,

@@ -21,7 +21,7 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
   Future<void> loadCategory(CategoryModel category) async {
     if (category.id != null && category.id!.isNotEmpty) {
       /// Needed to trigger loaded event in listener
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future<void>.delayed(const Duration(milliseconds: 300));
       emit(EditCategoryState.loaded(category: category));
     } else {
       final storeId = _storeCubit.state.store.id!;
@@ -31,13 +31,15 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
         resource: category,
       );
 
-      emit(failureOrCategory.fold(
-        (failure) => EditCategoryState.error(
-          category: category,
-          exception: failure,
+      emit(
+        failureOrCategory.fold(
+          (failure) => EditCategoryState.error(
+            category: category,
+            exception: failure,
+          ),
+          (category) => EditCategoryState.loaded(category: category),
         ),
-        (category) => EditCategoryState.loaded(category: category),
-      ));
+      );
     }
   }
 
@@ -51,12 +53,14 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
       resource: item,
     );
 
-    emit(failureOrUpdate.fold(
-      (failure) => EditCategoryState.error(
-        category: state.category,
-        exception: failure,
+    emit(
+      failureOrUpdate.fold(
+        (failure) => EditCategoryState.error(
+          category: state.category,
+          exception: failure,
+        ),
+        (update) => EditCategoryState.success(category: state.category),
       ),
-      (update) => EditCategoryState.success(category: state.category),
-    ));
+    );
   }
 }

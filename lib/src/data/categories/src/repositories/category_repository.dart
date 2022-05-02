@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/core/failures.dart';
-import 'package:dartz/dartz.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/repositories/i_resources_repository.dart';
 import 'package:meny/src/extensions/extensions.dart';
@@ -30,7 +30,7 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
       return CategoryModel.fromSnapshot(snap);
     } catch (err) {
       _loggerService.log('(get): ${err.toString()}');
-      throw Failure(message: 'Failed to retrieve category');
+      throw const Failure(message: 'Failed to retrieve category');
     }
   }
 
@@ -41,7 +41,7 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
         .orderBy('createdAt', descending: true)
         .snapshots()
         .map((doc) =>
-            doc.docs.map((snap) => CategoryModel.fromSnapshot(snap)).toList());
+            doc.docs.map((snap) => CategoryModel.fromSnapshot(snap)).toList(),);
   }
 
   @override
@@ -59,8 +59,8 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
       _loggerService.log('(create): ${err.toString()}');
       return left(Failure(
         message:
-            "We had an issue creating your ${resource.toFriendlyString()}. Please try again later.",
-      ));
+            'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
+      ),);
     }
   }
 
@@ -80,7 +80,7 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
         message:
             'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
         shortMessage: 'Update failed.',
-      ));
+      ),);
     }
   }
 
@@ -100,7 +100,7 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
         message:
             'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
         shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
-      ));
+      ),);
     }
   }
 
@@ -115,6 +115,6 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
         .orderBy('updatedAt', descending: true)
         .snapshots()
         .map((doc) =>
-            doc.docs.map((snap) => CategoryModel.fromSnapshot(snap)).toList());
+            doc.docs.map((snap) => CategoryModel.fromSnapshot(snap)).toList(),);
   }
 }

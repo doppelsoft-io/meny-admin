@@ -20,7 +20,7 @@ class EditMenuCubit extends Cubit<EditMenuState> {
 
   Future<void> loadMenu({required MenuModel menu}) async {
     if (menu.id != null && menu.id!.isNotEmpty) {
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future<void>.delayed(const Duration(milliseconds: 300));
       emit(EditMenuState.loaded(menu: menu));
     } else {
       final storeId = _storeCubit.state.store.id!;
@@ -28,10 +28,12 @@ class EditMenuCubit extends Cubit<EditMenuState> {
         storeId: storeId,
         resource: menu,
       );
-      emit(failureOrMenu.fold(
-        (failure) => EditMenuState.error(menu: menu, exception: failure),
-        (menu) => EditMenuState.loaded(menu: menu),
-      ));
+      emit(
+        failureOrMenu.fold(
+          (failure) => EditMenuState.error(menu: menu, exception: failure),
+          (menu) => EditMenuState.loaded(menu: menu),
+        ),
+      );
     }
   }
 
@@ -43,9 +45,11 @@ class EditMenuCubit extends Cubit<EditMenuState> {
       storeId: storeId,
       resource: item,
     );
-    emit(failureOrUpdate.fold(
-      (failure) => EditMenuState.error(menu: state.menu, exception: failure),
-      (update) => EditMenuState.success(menu: state.menu),
-    ));
+    emit(
+      failureOrUpdate.fold(
+        (failure) => EditMenuState.error(menu: state.menu, exception: failure),
+        (update) => EditMenuState.success(menu: state.menu),
+      ),
+    );
   }
 }

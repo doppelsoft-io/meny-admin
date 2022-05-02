@@ -23,8 +23,6 @@ class MenuModel with _$MenuModel {
     return const MenuModel(
       name: '',
       description: '',
-      createdAt: null,
-      updatedAt: null,
     );
   }
 
@@ -41,7 +39,7 @@ class MenuModel with _$MenuModel {
   factory MenuModel.fromSnapshot(DocumentSnapshot snap) {
     try {
       final data = snap.data();
-      final json = (data as Map<String, dynamic>);
+      final json = data as Map<String, dynamic>;
 
       return MenuModel.fromJson(json).copyWith(id: snap.id);
     } catch (err) {

@@ -19,11 +19,7 @@ class SignupCubit extends Cubit<SignupState> {
 
   SignupCubit({
     AuthRepository? authRepository,
-    UserRepository? userRepository,
-    StoreRepository? storeRepository,
-    StoreCacheService? storeCacheService,
     FirebaseFirestore? firebaseFirestore,
-    FirebaseAuth? firebaseAuth,
     required AuthCubit authCubit,
   })  : _authRepository = authRepository ?? Locator.instance(),
         _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
@@ -55,7 +51,7 @@ class SignupCubit extends Cubit<SignupState> {
 
       await batch.commit();
 
-      _authCubit.userChanged(createdUser);
+      await _authCubit.userChanged(createdUser);
 
       emit(state.copyWith(result: right(true)));
     } on Failure catch (failure) {

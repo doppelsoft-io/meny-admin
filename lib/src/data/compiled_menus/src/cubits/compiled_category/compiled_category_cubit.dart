@@ -39,22 +39,28 @@ class CompiledCategoryCubit extends Cubit<CompiledCategoryState> {
         menuId: menuId,
       )
           .listen((categories) {
-        emit(state.copyWith(
-          categories: categories,
-          status: CompiledCategoryStatus.success,
-        ));
+        emit(
+          state.copyWith(
+            categories: categories,
+            status: CompiledCategoryStatus.success,
+          ),
+        );
       })
-        ..onError((err) {
-          emit(state.copyWith(
-            failure: Failure(message: err.toString()),
-            status: CompiledCategoryStatus.error,
-          ));
+        ..onError((dynamic err) {
+          emit(
+            state.copyWith(
+              failure: Failure(message: err.toString()),
+              status: CompiledCategoryStatus.error,
+            ),
+          );
         });
     } on Failure catch (failure) {
-      emit(state.copyWith(
-        failure: failure,
-        status: CompiledCategoryStatus.error,
-      ));
+      emit(
+        state.copyWith(
+          failure: failure,
+          status: CompiledCategoryStatus.error,
+        ),
+      );
     }
   }
 }

@@ -31,7 +31,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
       return MenuModel.fromSnapshot(snap);
     } catch (err) {
       _loggerService.log('(get): ${err.toString()}');
-      throw Failure(message: 'Failed to retrieve menu');
+      throw const Failure(message: 'Failed to retrieve menu');
     }
   }
 
@@ -42,7 +42,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
         .orderBy('createdAt', descending: true)
         .snapshots()
         .map((doc) =>
-            doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList());
+            doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList(),);
   }
 
   Stream<List<MenuModel>> getMenusForCategory({
@@ -56,7 +56,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
         .orderBy('updatedAt', descending: true)
         .snapshots()
         .map((doc) =>
-            doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList());
+            doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList(),);
   }
 
   @override
@@ -74,8 +74,8 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
       _loggerService.log('(create): ${err.toString()}');
       return left(Failure(
         message:
-            "We had an issue creating your ${resource.toFriendlyString()}. Please try again later.",
-      ));
+            'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
+      ),);
     }
   }
 
@@ -95,7 +95,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
         message:
             'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
         shortMessage: 'Update failed.',
-      ));
+      ),);
     }
   }
 
@@ -115,7 +115,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
         message:
             'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
         shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
-      ));
+      ),);
     }
   }
 }

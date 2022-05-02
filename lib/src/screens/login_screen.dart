@@ -17,7 +17,7 @@ class LoginScreen extends HookWidget {
       builder: (context) {
         return BlocProvider<LoginCubit>(
           create: (context) => LoginCubit(),
-          child: LoginScreen(),
+          child: const LoginScreen(),
         );
       },
     );
@@ -61,14 +61,14 @@ class LoginScreen extends HookWidget {
           (user) {
             /// Pop login screen
             Navigator.of(context).pop();
-            ToastService.showNotification(Text("You're logged in!"));
+            ToastService.showNotification(const Text("You're logged in!"));
           },
         );
       },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Log In'),
+            title: const Text('Log In'),
           ),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(getValueForScreenType<double>(
@@ -76,7 +76,7 @@ class LoginScreen extends HookWidget {
               mobile: Spacing.formPadding / 2,
               tablet: Spacing.formPadding,
               desktop: Spacing.formPadding,
-            )),
+            ),),
             child: Form(
               key: loginFormKey.value,
               child: Column(
@@ -86,10 +86,10 @@ class LoginScreen extends HookWidget {
                     style: Theme.of(context).textTheme.headline5,
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: Spacing.textFieldVerticalSpacing * 2),
+                  const SizedBox(height: Spacing.textFieldVerticalSpacing * 2),
                   TextFormField(
                     controller: emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: Text('Email'),
                       hintText: 'Enter your email address',
                     ),
@@ -114,11 +114,11 @@ class LoginScreen extends HookWidget {
                       }
                     },
                   ),
-                  SizedBox(height: Spacing.textFieldVerticalSpacing),
+                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
                   TextFormField(
                     controller: passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: Text('Password'),
                       hintText: 'Enter your password',
                     ),
@@ -129,7 +129,7 @@ class LoginScreen extends HookWidget {
                       loginFormKey.value.currentState?.validate();
                     },
                   ),
-                  SizedBox(height: Spacing.textFieldVerticalSpacing),
+                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
                   Row(
                     children: [
                       Expanded(
@@ -145,7 +145,7 @@ class LoginScreen extends HookWidget {
                                       .validate();
                                   if (isValid) {
                                     context.read<LoginCubit>()
-                                      ..loginWithCredentials(
+                                      .loginWithCredentials(
                                         email: emailController.text,
                                         password: passwordController.text,
                                       );
@@ -160,7 +160,7 @@ class LoginScreen extends HookWidget {
                                     color: Colors.green.shade50,
                                   ),
                                 )
-                              : Text('Log In'),
+                              : const Text('Log In'),
                         ),
                       ),
                     ],
@@ -168,7 +168,7 @@ class LoginScreen extends HookWidget {
                   TextButton(
                     onPressed: () =>
                         Navigator.of(context).pushNamed(SignupScreen.routeName),
-                    child: Text('Don\'t have an account?'),
+                    child: const Text("Don't have an account?"),
                   ),
                 ],
               ),

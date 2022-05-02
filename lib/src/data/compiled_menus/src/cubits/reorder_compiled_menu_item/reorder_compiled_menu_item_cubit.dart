@@ -43,12 +43,12 @@ class ReorderCompiledMenuItemCubit extends Cubit<ReorderCompiledMenuItemState> {
       await Future.wait(futures);
       emit(state.copyWith(
         status: ReorderCompiledMenuItemStatus.success,
-      ));
+      ),);
     } catch (err) {
       emit(state.copyWith(
         status: ReorderCompiledMenuItemStatus.error,
-        failure: Failure(message: 'Reordering items failed'),
-      ));
+        failure: const Failure(message: 'Reordering items failed'),
+      ),);
     }
   }
 }

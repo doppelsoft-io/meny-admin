@@ -21,8 +21,8 @@ class CategoryModel with _$CategoryModel {
 
   factory CategoryModel.fromSnapshot(DocumentSnapshot snap) {
     try {
-      final Object? data = snap.data();
-      final json = (data as Map<String, dynamic>);
+      final data = snap.data();
+      final json = data as Map<String, dynamic>;
       return CategoryModel.fromJson(json).copyWith(id: snap.id);
     } catch (e) {
       return CategoryModel.empty();
@@ -30,11 +30,9 @@ class CategoryModel with _$CategoryModel {
   }
 
   factory CategoryModel.empty() {
-    return CategoryModel(
+    return const CategoryModel(
       id: '',
       name: '',
-      createdAt: null,
-      updatedAt: null,
       position: 0,
     );
   }

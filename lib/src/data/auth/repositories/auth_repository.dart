@@ -11,7 +11,6 @@ class AuthRepository {
   final LoggerService _loggerService;
 
   AuthRepository({
-    FirebaseFirestore? firebaseFirestore,
     FirebaseAuth? firebaseAuth,
     required LoggerService loggerService,
   })  : _firebaseAuth = firebaseAuth ?? Locator.instance(),
@@ -28,7 +27,7 @@ class AuthRepository {
       }
     } catch (err) {
       _loggerService.log('(getCurrentUser): ${err.toString()}');
-      throw Failure(message: 'Failed to fetch current user');
+      throw const Failure(message: 'Failed to fetch current user');
     }
   }
 
@@ -44,10 +43,10 @@ class AuthRepository {
       }
     } on PlatformException catch (err) {
       _loggerService.log('(loginAnonymously): ${err.message}');
-      throw Failure(message: 'Failed to login anonymously');
+      throw const Failure(message: 'Failed to login anonymously');
     } catch (err) {
       _loggerService.log('(loginAnonymously): ${err.toString()}');
-      throw Failure(message: 'Failed to login anonymously');
+      throw const Failure(message: 'Failed to login anonymously');
     }
   }
 
@@ -104,7 +103,7 @@ class AuthRepository {
       await _firebaseAuth.signOut();
     } catch (err) {
       _loggerService.log('(logout): ${err.toString()}');
-      throw Failure(message: 'Logout failed');
+      throw const Failure(message: 'Logout failed');
     }
   }
 }

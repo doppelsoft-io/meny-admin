@@ -35,11 +35,10 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
             Row(
               children: [
                 QrImage(
-                  data: "https://google.com",
-                  version: QrVersions.auto,
-                  size: 75.0,
+                  data: 'https://google.com',
+                  size: 75,
                 ),
-                const SizedBox(width: 12.0),
+                const SizedBox(width: 12),
                 ElevatedButton(
                   child: const Text('Publish'),
                   onPressed: () {},

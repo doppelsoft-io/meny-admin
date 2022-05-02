@@ -21,13 +21,13 @@ class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
     required StoreCubit storeCubit,
   })  : _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
         _storeCubit = storeCubit,
-        super(DeleteMenuItemState.initial());
+        super(const DeleteMenuItemState.initial());
 
   void delete({
     required MenuItemModel item,
     required List<CategoryModel> categories,
   }) async {
-    emit(DeleteMenuItemState.deleting());
+    emit(const DeleteMenuItemState.deleting());
     try {
       final storeId = _storeCubit.state.store.id!;
       final batch = _firebaseFirestore.batch();
@@ -50,15 +50,15 @@ class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
 
       await batch.commit();
 
-      emit(DeleteMenuItemState.success());
+      emit(const DeleteMenuItemState.success());
     } catch (err) {
       emit(
-        DeleteMenuItemState.error(
+        const DeleteMenuItemState.error(
           exception: Failure(message: 'Failed to delete item'),
         ),
       );
     } finally {
-      emit(DeleteMenuItemState.initial());
+      emit(const DeleteMenuItemState.initial());
     }
   }
 }

@@ -43,13 +43,13 @@ class UpdateCategorySheet extends StatelessWidget {
               ),
             ),
           ],
-          child: _UpdateCategorySheet(),
+          child: const _UpdateCategorySheet(),
         );
       },
     );
   }
 
-  static open({
+  static Future<Object?> open({
     required BuildContext context,
     required CategoryModel resource,
   }) {
@@ -97,7 +97,7 @@ class _UpdateCategorySheet extends HookWidget {
               context
                   .read<MenuCategoriesCubit>()
                   .load(categoryId: category.id!);
-              controller..text = category.name;
+              controller.text = category.name;
             },
             orElse: () {},
           );
@@ -113,7 +113,6 @@ class _UpdateCategorySheet extends HookWidget {
                   return Scaffold(
                     appBar: AppBar(
                       elevation: 0,
-                      automaticallyImplyLeading: true,
                       iconTheme: const IconThemeData(color: Colors.black),
                       backgroundColor: Colors.white,
                       title: const Text(
@@ -123,7 +122,7 @@ class _UpdateCategorySheet extends HookWidget {
                         ),
                       ),
                       bottom: PreferredSize(
-                        preferredSize: const Size.fromHeight(8.0),
+                        preferredSize: const Size.fromHeight(8),
                         child: Visibility(
                           visible: editCategoryState.maybeWhen(
                                 orElse: () => false,
@@ -143,7 +142,7 @@ class _UpdateCategorySheet extends HookWidget {
                             menus: menuCategoriesState.menus,
                           ),
                         ),
-                        const SizedBox(width: 12.0),
+                        const SizedBox(width: 12),
                         Center(
                           child: ElevatedButton(
                             onPressed: () =>
@@ -156,18 +155,17 @@ class _UpdateCategorySheet extends HookWidget {
                             child: const Text('Save'),
                           ),
                         ),
-                        const SizedBox(width: 24.0),
+                        const SizedBox(width: 24),
                       ],
                     ),
                     body: SingleChildScrollView(
-                      padding: const EdgeInsets.all(24.0),
+                      padding: const EdgeInsets.all(24),
                       child: Column(
                         children: [
                           TextFormField(
                             controller: controller,
                             autofocus: true,
                             showCursor: true,
-                            cursorWidth: 2,
                             decoration: const InputDecoration(
                               hintText: 'Enter a name',
                               labelText: 'Name',
@@ -176,7 +174,7 @@ class _UpdateCategorySheet extends HookWidget {
                                 .inputDecorationTheme
                                 .labelStyle,
                           ),
-                          const SizedBox(height: 24.0),
+                          const SizedBox(height: 24),
                           TagSelector<MenuModel>(
                             initialItems: menuCategoriesState.menus,
                             fetchSuggestions: () {
@@ -190,7 +188,7 @@ class _UpdateCategorySheet extends HookWidget {
                                 SuggestionConfiguration(title: menu.name),
                             emptyBuilder: (context) {
                               return const Padding(
-                                padding: EdgeInsets.all(20.0),
+                                padding: EdgeInsets.all(20),
                                 child: Text('No menus to select'),
                               );
                             },
@@ -298,18 +296,18 @@ class _DeleteCategoryButton extends StatelessWidget {
           actions: [
             OutlinedButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('NO'),
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
+              child: const Text('NO'),
             ),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('YES'),
               style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all(Theme.of(context).errorColor),
               ),
+              child: const Text('YES'),
             ),
           ],
         );
@@ -357,12 +355,12 @@ class _DeleteCategoryButton extends StatelessWidget {
                   menus: menus,
                 ),
           ),
+          style: OutlinedButton.styleFrom(
+            primary: Colors.grey[100],
+          ),
           child: Text(
             'Delete',
             style: TextStyle(color: Theme.of(context).errorColor),
-          ),
-          style: OutlinedButton.styleFrom(
-            primary: Colors.grey[100],
           ),
         );
       },

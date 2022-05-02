@@ -25,10 +25,10 @@ class DeleteMenuCubit extends Cubit<DeleteMenuState> {
   })  : _storeCubit = storeCubit,
         _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
         _menuCategoryRepository = menuCategoryRepository ?? Locator.instance(),
-        super(DeleteMenuState.initial());
+        super(const DeleteMenuState.initial());
 
   Future<void> delete({required MenuModel menu}) async {
-    emit(DeleteMenuState.deleting());
+    emit(const DeleteMenuState.deleting());
 
     try {
       final storeId = _storeCubit.state.store.id!;
@@ -58,15 +58,15 @@ class DeleteMenuCubit extends Cubit<DeleteMenuState> {
 
       await batch.commit();
 
-      emit(DeleteMenuState.success());
+      emit(const DeleteMenuState.success());
     } catch (err) {
       emit(
-        DeleteMenuState.error(
+        const DeleteMenuState.error(
           exception: Failure(message: 'Failed to delete menu'),
         ),
       );
     } finally {
-      emit(DeleteMenuState.initial());
+      emit(const DeleteMenuState.initial());
     }
   }
 }

@@ -24,15 +24,15 @@ class Locator {
     instance.registerSingleton<FirebaseFunctions>(FirebaseFunctions.instance);
     instance.registerSingleton<FirebaseAuth>(FirebaseAuth.instance);
     instance.registerSingleton<StoreCacheService>(StoreCacheService());
-    instance.registerSingleton<LoggerService>(LoggerService());
+    instance.registerSingleton<LoggerService>(const LoggerService());
     instance.registerSingleton<AuthRepository>(AuthRepository(
-      loggerService: LoggerService(prepend: 'AuthRepository'),
-    ));
+      loggerService: const LoggerService(prepend: 'AuthRepository'),
+    ),);
     instance.registerSingleton<UserRepository>(UserRepository());
 
     instance.registerSingleton<StoreRepository>(
       StoreRepository(
-        loggerService: LoggerService(prepend: 'StoreRepository'),
+        loggerService: const LoggerService(prepend: 'StoreRepository'),
       ),
     );
 
@@ -40,28 +40,28 @@ class Locator {
       MenuRepository(
         path: Paths.menus,
         firebaseFirestore: instance(),
-        loggerService: LoggerService(prepend: 'MenuRepository'),
+        loggerService: const LoggerService(prepend: 'MenuRepository'),
       ),
     );
     instance.registerSingleton<CategoryRepository>(CategoryRepository(
       path: Paths.categories,
       firebaseFirestore: instance(),
-      loggerService: LoggerService(prepend: 'CategoryRepository'),
-    ));
+      loggerService: const LoggerService(prepend: 'CategoryRepository'),
+    ),);
     instance.registerSingleton<MenuItemRepository>(MenuItemRepository(
       path: Paths.menuItems,
       firebaseFirestore: instance(),
-      loggerService: LoggerService(prepend: 'MenuItemRepository'),
-    ));
+      loggerService: const LoggerService(prepend: 'MenuItemRepository'),
+    ),);
     instance.registerSingleton<CompiledMenuRepository>(CompiledMenuRepository(
       firebaseFirestore: instance(),
-    ));
+    ),);
     instance.registerSingleton<MenuCategoryRepository>(MenuCategoryRepository(
       firebaseFirestore: instance(),
-    ));
+    ),);
     instance.registerSingleton<CategoryMenuItemsRepository>(
         CategoryMenuItemsRepository(
       firebaseFirestore: instance(),
-    ));
+    ),);
   }
 }

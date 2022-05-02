@@ -27,7 +27,7 @@ class SignupState extends Equatable {
   bool get isSigninIn => status == SignupStatus.signingIn;
 
   factory SignupState.initial() {
-    return SignupState(
+    return const SignupState(
       status: SignupStatus.initial,
       store: null,
       email: '',

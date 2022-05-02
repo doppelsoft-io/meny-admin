@@ -1,13 +1,13 @@
 class Failure implements Exception {
-  final int? code;
-  final String message;
-  final String shortMessage;
-
-  Failure({
+  const Failure({
     this.code,
     required this.message,
-    shortMessage,
-  }) : shortMessage = message;
+    this.shortMessage,
+  });
+
+  final int? code;
+  final String message;
+  final String? shortMessage;
 
   @override
   String toString() => message;

@@ -45,13 +45,13 @@ class UpdateMenuItemSheet extends StatelessWidget {
               ),
             ),
           ],
-          child: _UpdateMenuItemSheet(),
+          child: const _UpdateMenuItemSheet(),
         );
       },
     );
   }
 
-  static open({
+  static Future<Object?> open({
     required BuildContext context,
     required MenuItemModel resource,
   }) {
@@ -127,7 +127,6 @@ class _UpdateMenuItemSheet extends HookWidget {
                   return Scaffold(
                     appBar: AppBar(
                       elevation: 0,
-                      automaticallyImplyLeading: true,
                       iconTheme: const IconThemeData(color: Colors.black),
                       backgroundColor: Colors.white,
                       title: const Text(
@@ -137,7 +136,7 @@ class _UpdateMenuItemSheet extends HookWidget {
                         ),
                       ),
                       bottom: PreferredSize(
-                        preferredSize: const Size.fromHeight(8.0),
+                        preferredSize: const Size.fromHeight(8),
                         child: Visibility(
                           visible: editMenuItemState.maybeWhen(
                                 orElse: () => false,
@@ -152,13 +151,13 @@ class _UpdateMenuItemSheet extends HookWidget {
                       ),
                       actions: [
                         Center(child: _DeleteMenuItemButton(item: item)),
-                        const SizedBox(width: 12.0),
+                        const SizedBox(width: 12),
                         Center(
                           child: ElevatedButton(
                             onPressed: () {
                               final now = DateTime.now();
                               context.read<EditMenuItemCubit>()
-                                ..update(
+                                .update(
                                   item.copyWith(
                                     name: nameController.text,
                                     price:
@@ -172,7 +171,7 @@ class _UpdateMenuItemSheet extends HookWidget {
                             child: const Text('Save'),
                           ),
                         ),
-                        const SizedBox(width: 24.0),
+                        const SizedBox(width: 24),
                       ],
                     ),
                     body: SingleChildScrollView(
@@ -198,7 +197,7 @@ class _UpdateMenuItemSheet extends HookWidget {
                                 .labelStyle,
                             textInputAction: TextInputAction.next,
                           ),
-                          const SizedBox(height: 24.0),
+                          const SizedBox(height: 24),
                           TextFormField(
                             controller: descriptionController,
                             showCursor: true,
@@ -218,7 +217,7 @@ class _UpdateMenuItemSheet extends HookWidget {
                                 .labelStyle,
                             textInputAction: TextInputAction.next,
                           ),
-                          const SizedBox(height: 24.0),
+                          const SizedBox(height: 24),
                           TextFormField(
                             keyboardType: const TextInputType.numberWithOptions(
                               decimal: true,
@@ -245,7 +244,7 @@ class _UpdateMenuItemSheet extends HookWidget {
                                 .labelStyle,
                             textInputAction: TextInputAction.next,
                           ),
-                          const SizedBox(height: 24.0),
+                          const SizedBox(height: 24),
                           TagSelector<CategoryModel>(
                             initialItems: categoryMenuItemsState.categories,
                             fetchSuggestions: () {
@@ -259,7 +258,7 @@ class _UpdateMenuItemSheet extends HookWidget {
                             suggestionConfigurationBuilder: (_, category) =>
                                 SuggestionConfiguration(title: category.name),
                             emptyBuilder: (context) => const Padding(
-                              padding: EdgeInsets.all(20.0),
+                              padding: EdgeInsets.all(20),
                               child: Text('No categories'),
                             ),
                             onSelect: (context, category) {
@@ -311,9 +310,9 @@ class _UpdateMenuItemSheet extends HookWidget {
     final state = context.read<EditMenuItemCubit>().state;
     state.maybeWhen(
       loaded: (item) {
-        nameController..text = item.name;
-        descriptionController..text = item.description;
-        priceController..text = item.price.toString();
+        nameController.text = item.name;
+        descriptionController.text = item.description;
+        priceController.text = item.price.toString();
       },
       orElse: () {},
     );
@@ -382,18 +381,18 @@ class _DeleteMenuItemButton extends StatelessWidget {
           actions: [
             OutlinedButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('NO'),
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
+              child: const Text('NO'),
             ),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('YES'),
               style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all(Theme.of(context).errorColor),
               ),
+              child: const Text('YES'),
             ),
           ],
         );
@@ -441,12 +440,12 @@ class _DeleteMenuItemButton extends StatelessWidget {
                       categories: categoryMenuItemsState.categories,
                     ),
               ),
+              style: OutlinedButton.styleFrom(
+                primary: Colors.grey[100],
+              ),
               child: Text(
                 'Delete',
                 style: TextStyle(color: Theme.of(context).errorColor),
-              ),
-              style: OutlinedButton.styleFrom(
-                primary: Colors.grey[100],
               ),
             );
           },

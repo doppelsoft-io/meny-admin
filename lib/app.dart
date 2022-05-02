@@ -38,14 +38,13 @@ class App extends StatelessWidget {
             child: ResponsiveWrapper.builder(
               widget,
               maxWidth: 1600,
-              minWidth: 450,
               defaultScale: true,
               breakpoints: const [
                 ResponsiveBreakpoint.resize(450, name: MOBILE),
                 ResponsiveBreakpoint.autoScale(800, name: TABLET),
                 ResponsiveBreakpoint.autoScale(1200, name: TABLET),
                 ResponsiveBreakpoint.resize(1400, name: DESKTOP),
-                ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+                ResponsiveBreakpoint.autoScale(2460, name: '4K'),
               ],
               background: Container(
                 color: Colors.white,

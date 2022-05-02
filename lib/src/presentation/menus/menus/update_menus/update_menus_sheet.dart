@@ -28,7 +28,7 @@ class _UpdateMenusSheet extends HookWidget {
         listener: (context, editMenuState) {
           editMenuState.maybeWhen(
             loaded: (menu) {
-              controller..text = menu.name;
+              controller.text = menu.name;
             },
             success: (_) {
               ToastService.showNotification(const Text('Menu updated'));
@@ -53,7 +53,6 @@ class _UpdateMenusSheet extends HookWidget {
               return Scaffold(
                 appBar: AppBar(
                   elevation: 0,
-                  automaticallyImplyLeading: true,
                   iconTheme: const IconThemeData(color: Colors.black),
                   backgroundColor: Colors.white,
                   title: const Text(
@@ -63,7 +62,7 @@ class _UpdateMenusSheet extends HookWidget {
                     ),
                   ),
                   bottom: PreferredSize(
-                    preferredSize: const Size.fromHeight(8.0),
+                    preferredSize: const Size.fromHeight(8),
                     child: Visibility(
                       visible: editMenuState.maybeWhen(
                             orElse: () => false,
@@ -78,22 +77,22 @@ class _UpdateMenusSheet extends HookWidget {
                   ),
                   actions: [
                     Center(child: _DeleteMenuButton(menu: editMenuState.menu)),
-                    const SizedBox(width: 12.0),
+                    const SizedBox(width: 12),
                     Center(
                       child: ElevatedButton(
                         onPressed: () => context.read<EditMenuCubit>()
                           ..update(editMenuState.menu.copyWith(
                             name: controller.text,
                             updatedAt: DateTime.now(),
-                          )),
+                          ),),
                         child: const Text('Save'),
                       ),
                     ),
-                    const SizedBox(width: 24.0),
+                    const SizedBox(width: 24),
                   ],
                 ),
                 body: SingleChildScrollView(
-                  padding: EdgeInsets.all(Spacing.pageSpacing),
+                  padding: const EdgeInsets.all(Spacing.pageSpacing),
                   child: Column(
                     children: [
                       TextFormField(
@@ -184,13 +183,13 @@ class UpdateMenusSheet extends StatelessWidget {
               ),
             ),
           ],
-          child: _UpdateMenusSheet(),
+          child: const _UpdateMenusSheet(),
         );
       },
     );
   }
 
-  static open({
+  static Future<Object?> open({
     required BuildContext context,
     required MenuModel menu,
   }) {
@@ -232,18 +231,18 @@ class _DeleteMenuButton extends StatelessWidget {
           actions: [
             OutlinedButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('NO'),
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
+              child: const Text('NO'),
             ),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('YES'),
               style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all(Theme.of(context).errorColor),
               ),
+              child: const Text('YES'),
             ),
           ],
         );
@@ -276,12 +275,12 @@ class _DeleteMenuButton extends StatelessWidget {
                   menu: menu,
                 ),
           ),
+          style: OutlinedButton.styleFrom(
+            primary: Colors.grey[100],
+          ),
           child: Text(
             'Delete',
             style: TextStyle(color: Theme.of(context).errorColor),
-          ),
-          style: OutlinedButton.styleFrom(
-            primary: Colors.grey[100],
           ),
         );
       },

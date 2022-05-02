@@ -10,7 +10,7 @@ class CustomRouter {
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(
+        return MaterialPageRoute<Widget>(
           settings: const RouteSettings(name: '/'),
           builder: (_) => const Scaffold(),
         );
@@ -32,14 +32,15 @@ class CustomRouter {
         return UpdateMenuItemSheet.route(settings.arguments as SheetArgs);
       case MenuPreviewScreen.routeName:
         return MenuPreviewScreen.route(
-            settings.arguments as MenuPreviewScreenArgs);
+          settings.arguments as MenuPreviewScreenArgs,
+        );
       default:
         return _errorRoute();
     }
   }
 
   static Route _errorRoute() {
-    return MaterialPageRoute(
+    return MaterialPageRoute<Widget>(
       settings: const RouteSettings(name: '/error'),
       builder: (_) => Scaffold(
         appBar: AppBar(
