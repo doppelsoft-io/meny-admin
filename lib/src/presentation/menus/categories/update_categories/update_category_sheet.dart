@@ -99,23 +99,9 @@ class _UpdateCategorySheet extends HookWidget {
         },
         builder: (context, editCategoryState) {
           return editCategoryState.maybeWhen(
-            loading: (_) => Scaffold(
-              appBar: AppBar(
-                elevation: 0,
-                automaticallyImplyLeading: true,
-                centerTitle: false,
-                iconTheme: const IconThemeData(color: Colors.black),
-                backgroundColor: Colors.white,
-              ),
-              body: Center(child: CircularProgressIndicator()),
-            ),
-            error: (_, exception) {
-              return Scaffold(
-                appBar: AppBar(automaticallyImplyLeading: true),
-                body: ErrorDisplay(
-                    failure: Failure(message: exception.toString())),
-              );
-            },
+            loading: (_) => ScaffoldBuilder.loading(),
+            error: (_, exception) =>
+                ScaffoldBuilder.error(exception: exception),
             orElse: () {
               return BlocBuilder<MenuCategoriesCubit, MenuCategoriesState>(
                 builder: (context, menuCategoriesState) {

@@ -45,26 +45,10 @@ class _UpdateMenusSheet extends HookWidget {
         },
         builder: (context, editMenuState) {
           return editMenuState.maybeWhen(
-            loading: (_) => Scaffold(
-              appBar: AppBar(
-                elevation: 0,
-                automaticallyImplyLeading: true,
-                centerTitle: false,
-                iconTheme: const IconThemeData(color: Colors.black),
-                backgroundColor: Colors.white,
-              ),
-              body: Center(child: CircularProgressIndicator()),
+            loading: (_) => ScaffoldBuilder.loading(),
+            error: (_, exception) => ScaffoldBuilder.error(
+              exception: exception,
             ),
-            error: (_, exception) {
-              return Scaffold(
-                appBar: AppBar(automaticallyImplyLeading: true),
-                body: ErrorDisplay(
-                  failure: Failure(
-                    message: exception.toString(),
-                  ),
-                ),
-              );
-            },
             orElse: () {
               return Scaffold(
                 appBar: AppBar(
