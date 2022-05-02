@@ -99,7 +99,16 @@ class _UpdateCategorySheet extends HookWidget {
         },
         builder: (context, editCategoryState) {
           return editCategoryState.maybeWhen(
-            loading: (_) => Center(child: CircularProgressIndicator()),
+            loading: (_) => Scaffold(
+              appBar: AppBar(
+                elevation: 0,
+                automaticallyImplyLeading: true,
+                centerTitle: false,
+                iconTheme: const IconThemeData(color: Colors.black),
+                backgroundColor: Colors.white,
+              ),
+              body: Center(child: CircularProgressIndicator()),
+            ),
             error: (_, exception) {
               return Scaffold(
                 appBar: AppBar(automaticallyImplyLeading: true),

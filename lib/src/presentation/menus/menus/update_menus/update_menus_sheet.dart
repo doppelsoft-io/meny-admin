@@ -1,86 +1,147 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:meny/src/constants/spacing.dart';
+import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menus/menus.dart';
+import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 import 'package:meny/src/presentation/sheet_args.dart';
 import 'package:meny/src/services/services.dart';
-import 'package:meny/src/constants/spacing.dart';
 
-class UpdateMenusSheet extends HookWidget {
-  final MenuModel menu;
+class _UpdateMenusSheet extends HookWidget {
+  const _UpdateMenusSheet({Key? key}) : super(key: key);
 
-  const UpdateMenusSheet({
-    Key? key,
-    required this.menu,
-  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final editMenuState = context.watch<EditMenuCubit>().state;
+    final deleteMenuState = context.watch<DeleteMenuCubit>().state;
 
-  static const String routeName = '/updateMenusSheet';
+    final controller = useTextEditingController(text: editMenuState.menu.name);
 
-  static Route route(SheetArgs args) {
-    return MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (context) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider<EditMenuCubit>(
-              create: (context) =>
-                  EditMenuCubit()..loadMenu(menu: args.resource as MenuModel),
-            ),
-            BlocProvider<DeleteMenuCubit>(
-              create: (context) => DeleteMenuCubit(),
-            ),
-          ],
-          child: BlocConsumer<EditMenuCubit, EditMenuState>(
-            listener: (context, state) {
-              if (state.isSuccess) {
-                ToastService.showNotification(const Text('Menu updated'));
-                Navigator.pop(context);
-              }
-              if (state.isError) {
-                DialogService.showErrorDialog(
-                  context: context,
-                  failure: state.failure!,
-                );
-              }
+    return WillPopScope(
+      onWillPop: () => _onWillPop(
+        context: context,
+        menu: editMenuState.menu,
+      ),
+      child: BlocConsumer<EditMenuCubit, EditMenuState>(
+        listener: (context, editMenuState) {
+          editMenuState.maybeWhen(
+            loaded: (menu) {
+              controller..text = menu.name;
             },
-            builder: (context, state) {
-              if (state.menu != null) {
-                final menu = state.menu;
-                return UpdateMenusSheet(menu: menu!);
-              } else {
-                if (state.failure != null) {
-                  return Scaffold(
-                    appBar: AppBar(
-                      automaticallyImplyLeading: true,
+            success: (_) {
+              ToastService.showNotification(const Text('Menu updated'));
+              Navigator.pop(context);
+            },
+            error: (_, exception) {
+              DialogService.showErrorDialog(
+                context: context,
+                failure: Failure(message: exception.toString()),
+              );
+            },
+            orElse: () {},
+          );
+        },
+        builder: (context, editMenuState) {
+          return editMenuState.maybeWhen(
+            loading: (_) => Scaffold(
+              appBar: AppBar(
+                elevation: 0,
+                automaticallyImplyLeading: true,
+                centerTitle: false,
+                iconTheme: const IconThemeData(color: Colors.black),
+                backgroundColor: Colors.white,
+              ),
+              body: Center(child: CircularProgressIndicator()),
+            ),
+            error: (_, exception) {
+              return Scaffold(
+                appBar: AppBar(automaticallyImplyLeading: true),
+                body: ErrorDisplay(
+                  failure: Failure(
+                    message: exception.toString(),
+                  ),
+                ),
+              );
+            },
+            orElse: () {
+              return Scaffold(
+                appBar: AppBar(
+                  elevation: 0,
+                  automaticallyImplyLeading: true,
+                  iconTheme: const IconThemeData(color: Colors.black),
+                  backgroundColor: Colors.white,
+                  title: const Text(
+                    'Edit Menu',
+                    style: TextStyle(
+                      color: Colors.black,
                     ),
-                    body: ErrorDisplay(failure: state.failure!),
-                  );
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              }
+                  ),
+                  bottom: PreferredSize(
+                    preferredSize: const Size.fromHeight(8.0),
+                    child: Visibility(
+                      visible: editMenuState.maybeWhen(
+                            orElse: () => false,
+                            updating: (_) => true,
+                          ) ||
+                          deleteMenuState.maybeWhen(
+                            orElse: () => false,
+                            deleting: () => true,
+                          ),
+                      child: const LinearProgressIndicator(),
+                    ),
+                  ),
+                  actions: [
+                    Center(child: _DeleteMenuButton(menu: editMenuState.menu)),
+                    const SizedBox(width: 12.0),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () => context.read<EditMenuCubit>()
+                          ..update(editMenuState.menu.copyWith(
+                            name: controller.text,
+                            updatedAt: DateTime.now(),
+                          )),
+                        child: const Text('Save'),
+                      ),
+                    ),
+                    const SizedBox(width: 24.0),
+                  ],
+                ),
+                body: SingleChildScrollView(
+                  padding: EdgeInsets.all(Spacing.pageSpacing),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: controller,
+                        autofocus: true,
+                        showCursor: true,
+                        cursorWidth: 3,
+                        cursorHeight: Theme.of(context)
+                            .inputDecorationTheme
+                            .labelStyle!
+                            .fontSize,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter a name',
+                          labelText: 'Name',
+                        ),
+                        style:
+                            Theme.of(context).inputDecorationTheme.labelStyle,
+                      ),
+                    ],
+                  ),
+                ),
+              );
             },
-          ),
-        );
-      },
-    );
-  }
-
-  static open({
-    required BuildContext context,
-    required MenuModel menu,
-  }) {
-    return Navigator.of(context).pushNamed(
-      UpdateMenusSheet.routeName,
-      arguments: SheetArgs(
-        resource: menu,
+          );
+        },
       ),
     );
   }
 
   Future<bool> _onWillPop({
     required BuildContext context,
+    required MenuModel menu,
   }) {
     if (menu.name.isEmpty) {
       return showDialog(
@@ -110,82 +171,54 @@ class UpdateMenusSheet extends HookWidget {
     }
     return Future.value(true);
   }
+}
+
+class UpdateMenusSheet extends StatelessWidget {
+  final MenuModel menu;
+
+  const UpdateMenusSheet({
+    Key? key,
+    required this.menu,
+  }) : super(key: key);
+
+  static const String routeName = '/updateMenusSheet';
+
+  static Route route(SheetArgs args) {
+    return MaterialPageRoute(
+      fullscreenDialog: true,
+      builder: (context) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<EditMenuCubit>(
+              create: (context) => EditMenuCubit(
+                storeCubit: context.read<StoreCubit>(),
+              )..loadMenu(menu: args.resource as MenuModel),
+            ),
+            BlocProvider<DeleteMenuCubit>(
+              create: (context) => DeleteMenuCubit(),
+            ),
+          ],
+          child: _UpdateMenusSheet(),
+        );
+      },
+    );
+  }
+
+  static open({
+    required BuildContext context,
+    required MenuModel menu,
+  }) {
+    return Navigator.of(context).pushNamed(
+      UpdateMenusSheet.routeName,
+      arguments: SheetArgs(
+        resource: menu,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final controller = useTextEditingController(text: menu.name);
-
-    return WillPopScope(
-      onWillPop: () => _onWillPop(context: context),
-      child: BlocBuilder<EditMenuCubit, EditMenuState>(
-        builder: (context, editMenuState) {
-          return BlocBuilder<DeleteMenuCubit, DeleteMenuState>(
-            builder: (context, deleteMenuState) {
-              return Scaffold(
-                appBar: AppBar(
-                  elevation: 0,
-                  automaticallyImplyLeading: true,
-                  iconTheme: const IconThemeData(color: Colors.black),
-                  backgroundColor: Colors.white,
-                  title: const Text(
-                    'Edit Menu',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                  bottom: PreferredSize(
-                    preferredSize: const Size.fromHeight(8.0),
-                    child: Visibility(
-                      visible: editMenuState.isUpdating ||
-                          deleteMenuState.isDeleting,
-                      child: const LinearProgressIndicator(),
-                    ),
-                  ),
-                  actions: [
-                    Center(child: _DeleteMenuButton(menu: menu)),
-                    const SizedBox(width: 12.0),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () => context.read<EditMenuCubit>()
-                          ..update(menu.copyWith(
-                            name: controller.text,
-                            updatedAt: DateTime.now(),
-                          )),
-                        child: const Text('Save'),
-                      ),
-                    ),
-                    const SizedBox(width: 24.0),
-                  ],
-                ),
-                body: SingleChildScrollView(
-                  padding: const EdgeInsets.all(Spacing.pageSpacing),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: controller,
-                        autofocus: true,
-                        showCursor: true,
-                        cursorWidth: 3,
-                        cursorHeight: Theme.of(context)
-                            .inputDecorationTheme
-                            .labelStyle!
-                            .fontSize,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter a name',
-                          labelText: 'Name',
-                        ),
-                        style:
-                            Theme.of(context).inputDecorationTheme.labelStyle,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
+    throw UnimplementedError();
   }
 }
 
@@ -240,16 +273,23 @@ class _DeleteMenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<DeleteMenuCubit, DeleteMenuState>(
       listener: (context, deleteMenuState) {
-        if (deleteMenuState.status == DeleteMenuStatus.success) {
-          Navigator.of(context).pop();
-          ToastService.showNotification(const Text('Menu deleted'));
-        }
+        deleteMenuState.maybeWhen(
+          success: () {
+            Navigator.of(context).pop();
+            ToastService.toast('Menu deleted');
+          },
+          orElse: () {},
+        );
       },
       builder: (context, deleteMenuState) {
         return OutlinedButton(
-          onPressed: deleteMenuState.isDeleting
-              ? null
-              : () => showConfirmationDialog(context: context, menu: menu),
+          onPressed: deleteMenuState.maybeWhen(
+            deleting: () {},
+            orElse: () => () => showConfirmationDialog(
+                  context: context,
+                  menu: menu,
+                ),
+          ),
           child: Text(
             'Delete',
             style: TextStyle(color: Theme.of(context).errorColor),

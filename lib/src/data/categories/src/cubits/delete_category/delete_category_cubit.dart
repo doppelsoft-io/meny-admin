@@ -60,6 +60,8 @@ class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
           exception: Failure(message: 'Failed to delete category'),
         ),
       );
+    } finally {
+      emit(DeleteCategoryState.initial());
     }
   }
 }

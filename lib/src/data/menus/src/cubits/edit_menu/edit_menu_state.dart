@@ -1,40 +1,25 @@
 part of 'edit_menu_cubit.dart';
 
-class EditMenuState extends Equatable {
-  final MenuModel? menu;
-  final EditResourceStatus status;
-  final Failure? failure;
+@freezed
+class EditMenuState with _$EditMenuState {
+  const factory EditMenuState.loading({
+    required MenuModel menu,
+  }) = _Loading;
 
-  const EditMenuState({
-    required this.menu,
-    required this.status,
-    required this.failure,
-  });
+  const factory EditMenuState.loaded({
+    required MenuModel menu,
+  }) = _Loaded;
 
-  @override
-  List<Object?> get props => [menu, status, failure];
+  const factory EditMenuState.updating({
+    required MenuModel menu,
+  }) = _Updating;
 
-  bool get isSuccess => status == EditResourceStatus.success;
-  bool get isError => status == EditResourceStatus.error;
-  bool get isUpdating => status == EditResourceStatus.updating;
+  const factory EditMenuState.success({
+    required MenuModel menu,
+  }) = _Success;
 
-  factory EditMenuState.initial() {
-    return const EditMenuState(
-      failure: null,
-      menu: null,
-      status: EditResourceStatus.initial,
-    );
-  }
-
-  EditMenuState copyWith({
-    MenuModel? menu,
-    EditResourceStatus? status,
-    Failure? failure,
-  }) {
-    return EditMenuState(
-      menu: menu ?? this.menu,
-      status: status ?? this.status,
-      failure: failure,
-    );
-  }
+  const factory EditMenuState.error({
+    required MenuModel menu,
+    required Exception exception,
+  }) = _Error;
 }
