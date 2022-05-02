@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/locator.dart';
 import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
@@ -7,6 +7,7 @@ import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/stores/services/services.dart';
 
 part 'reorder_compiled_category_state.dart';
+part 'reorder_compiled_category_cubit.freezed.dart';
 
 class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
   ReorderCompiledCategoryCubit({
@@ -14,7 +15,7 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
     StoreCacheService? storeCacheService,
   })  : _compiledMenuRepository = compiledMenuRepository ?? Locator.instance(),
         _storeCacheService = storeCacheService ?? Locator.instance(),
-        super(ReorderCompiledCategoryState.initial());
+        super(const ReorderCompiledCategoryState.initial());
 
   final CompiledMenuRepository _compiledMenuRepository;
   final StoreCacheService _storeCacheService;
@@ -23,7 +24,7 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
     required String menuId,
     required List<CategoryModel> categories,
   }) async {
-    emit(state.copyWith(status: ReorderCompiledCategoryStatus.reordering));
+    emit(const ReorderCompiledCategoryState.reordering());
 
     try {
       final storeId = await _storeCacheService.get('storeId');
@@ -41,15 +42,12 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
       await Future.wait(futures);
 
       emit(
-        state.copyWith(
-          status: ReorderCompiledCategoryStatus.success,
-        ),
+        const ReorderCompiledCategoryState.success(),
       );
     } catch (err) {
       emit(
-        state.copyWith(
-          status: ReorderCompiledCategoryStatus.error,
-          failure: const Failure(message: 'Reordering categories failed'),
+        const ReorderCompiledCategoryState.error(
+          exception: Failure(message: 'Reordering failed'),
         ),
       );
     }

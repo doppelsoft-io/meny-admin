@@ -65,23 +65,28 @@ class SignupScreen extends HookWidget {
     ]);
 
     return BlocConsumer<SignupCubit, SignupState>(
-      listenWhen: (prev, curr) =>
-          curr.result != null && curr.status == SignupStatus.done,
       listener: (context, state) {
-        state.result!.fold(
-          (failure) =>
-              DialogService.showErrorDialog(context: context, failure: failure),
-          (result) {
-            /// Pop Signup Screen
-            Navigator.of(context).pop();
+        state.maybeMap(
+          done: (state) {
+            state.result.fold(
+              (failure) => DialogService.showErrorDialog(
+                context: context,
+                failure: failure,
+              ),
+              (result) {
+                /// Pop Signup Screen
+                Navigator.of(context).pop();
 
-            /// Pop Login Screen
-            Navigator.of(context).pop();
+                /// Pop Login Screen
+                Navigator.of(context).pop();
 
-            ToastService.showNotification(
-              const Text('Your sign up was successful!'),
+                ToastService.showNotification(
+                  const Text('Your sign up was successful!'),
+                );
+              },
             );
           },
+          orElse: () {},
         );
       },
       builder: (context, state) {
@@ -109,6 +114,7 @@ class SignupScreen extends HookWidget {
                   ),
                   const SizedBox(height: Spacing.textFieldVerticalSpacing * 2),
                   TextFormField(
+                    autocorrect: false,
                     autovalidateMode: AutovalidateMode.always,
                     controller: storeNameController,
                     decoration: const InputDecoration(
@@ -133,6 +139,7 @@ class SignupScreen extends HookWidget {
                   ),
                   const SizedBox(height: Spacing.textFieldVerticalSpacing),
                   TextFormField(
+                    autocorrect: false,
                     controller: emailController,
                     decoration: const InputDecoration(
                       label: Text('Email'),
@@ -200,16 +207,17 @@ class SignupScreen extends HookWidget {
                                         );
                                   }
                                 },
-                          child: state.isSigninIn
-                              ? SizedBox(
-                                  height: 18,
-                                  width: 18,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.green.shade50,
-                                  ),
-                                )
-                              : const Text('Sign Up'),
+                          child: state.maybeMap(
+                            signingIn: (_) => SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.green.shade50,
+                              ),
+                            ),
+                            orElse: () => const Text('Sign Up'),
+                          ),
                         ),
                       ),
                     ],

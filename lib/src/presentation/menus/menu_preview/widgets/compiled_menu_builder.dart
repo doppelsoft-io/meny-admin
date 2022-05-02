@@ -5,7 +5,6 @@ import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menus/menus.dart';
-import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 import 'package:meny/src/services/services.dart';
 
@@ -21,11 +20,6 @@ class CompiledMenuBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<CompiledMenuCubit>(
-          create: (context) => CompiledMenuCubit(
-            storeCubit: context.read<StoreCubit>(),
-          )..load(menu: menu),
-        ),
         BlocProvider<ReorderCompiledCategoryCubit>(
           create: (context) => ReorderCompiledCategoryCubit(),
         ),
@@ -58,19 +52,27 @@ class _CompiledMenuBuilder extends StatelessWidget {
                 BlocListener<ReorderCompiledCategoryCubit,
                     ReorderCompiledCategoryState>(
                   listener: (context, state) {
-                    if (state.status == ReorderCompiledCategoryStatus.success) {
-                      ToastService.showNotification(
-                        const Text('Categories saved'),
-                      );
-                    }
+                    state.maybeMap(
+                      success: (_) {
+                        ToastService.showNotification(
+                          const Text('Categories saved'),
+                        );
+                      },
+                      orElse: () {},
+                    );
                   },
                 ),
                 BlocListener<ReorderCompiledMenuItemCubit,
                     ReorderCompiledMenuItemState>(
                   listener: (context, state) {
-                    if (state.status == ReorderCompiledMenuItemStatus.success) {
-                      ToastService.showNotification(const Text('Items saved'));
-                    }
+                    state.maybeMap(
+                      success: (_) {
+                        ToastService.showNotification(
+                          const Text('Items saved'),
+                        );
+                      },
+                      orElse: () {},
+                    );
                   },
                 ),
               ],
@@ -103,9 +105,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                           horizontal: Spacing.pageSpacing,
                         ),
                         key: Key(item.id!),
-                        title: Text(
-                          item.name,
-                        ),
+                        title: Text(item.name),
                         subtitle: Text(item.description),
                         trailing: Text(item.price.toCurrency()),
                       );
@@ -114,8 +114,8 @@ class _CompiledMenuBuilder extends StatelessWidget {
                       if (oldIndex < newIndex) {
                         newIndex -= 1;
                       }
-                      final item = items.removeAt(oldIndex);
-                      items.insert(newIndex, item);
+                      // final item = items.removeAt(oldIndex);
+                      // items.insert(newIndex, item);
                       // context.read<ReorderCompiledMenuItemCubit>().reorder(
                       //       menuId: menuId,
                       //       categoryId: categoryId,
@@ -128,8 +128,8 @@ class _CompiledMenuBuilder extends StatelessWidget {
                   if (oldIndex < newIndex) {
                     newIndex -= 1;
                   }
-                  final category = data.removeAt(oldIndex);
-                  data.insert(newIndex, category);
+                  // final category = data.removeAt(oldIndex);
+                  // data.insert(newIndex, category);
                   // context.read<ReorderCompiledCategoryCubit>().reorder(
                   //       menuId: menuId,
                   //       categories: categories,

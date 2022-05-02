@@ -16,13 +16,11 @@ part 'compiled_menu_cubit.freezed.dart';
 class CompiledMenuCubit extends Cubit<CompiledMenuState> {
   CompiledMenuCubit({
     required StoreCubit storeCubit,
-    MenuRepository? menuRepository,
     CategoryRepository? categoryRepository,
     MenuItemRepository? menuItemRepository,
     MenuCategoryRepository? menuCategoryRepository,
     CategoryMenuItemsRepository? categoryMenuItemsRepository,
   })  : _storeCubit = storeCubit,
-        _menuRepository = menuRepository ?? Locator.instance(),
         _categoryRepository = categoryRepository ?? Locator.instance(),
         _menuItemRepository = menuItemRepository ?? Locator.instance(),
         _menuCategoryRepository = menuCategoryRepository ?? Locator.instance(),
@@ -35,7 +33,6 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
         );
 
   final StoreCubit _storeCubit;
-  final MenuRepository _menuRepository;
   final CategoryRepository _categoryRepository;
   final MenuItemRepository _menuItemRepository;
   final MenuCategoryRepository _menuCategoryRepository;

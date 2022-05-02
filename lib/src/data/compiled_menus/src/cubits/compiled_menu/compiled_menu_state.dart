@@ -1,12 +1,5 @@
 part of 'compiled_menu_cubit.dart';
 
-enum CompiledMenuStatus {
-  initial,
-  loading,
-  success,
-  error,
-}
-
 typedef CategoryMenuItemMap = Tuple2<CategoryModel, List<MenuItemModel>>;
 typedef MenuResponse = Tuple2<MenuModel, List<CategoryMenuItemMap>>;
 

@@ -66,6 +66,7 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
 
 class MenuPreviewScreenArgs {
   const MenuPreviewScreenArgs({required this.menu});
+
   final MenuModel menu;
 }
 
@@ -81,8 +82,10 @@ class MenuPreviewScreen extends StatefulWidget {
 
   static Route route(MenuPreviewScreenArgs args) {
     return MaterialPageRoute<Widget>(
-      builder: (context) => BlocProvider<ViewMenuCubit>(
-        create: (context) => ViewMenuCubit()..compile(menuId: args.menu.id!),
+      builder: (context) => BlocProvider<CompiledMenuCubit>(
+        create: (context) => CompiledMenuCubit(
+          storeCubit: context.read<StoreCubit>(),
+        )..load(menu: args.menu),
         child: MenuPreviewScreen(args: args),
       ),
     );
@@ -95,44 +98,32 @@ class MenuPreviewScreen extends StatefulWidget {
 class _MenuPreviewScreenState extends State<MenuPreviewScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ViewMenuCubit, ViewMenuState>(
+    return BlocBuilder<CompiledMenuCubit, CompiledMenuState>(
       builder: (context, state) {
-        if (state.menu != null) {
-          final menu = state.menu!;
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Menu Preview'),
-            ),
-            body: BlocProvider<CompiledMenuCubit>(
-              // create: (context) => CompiledMenuCubit()..load(menu: menu),
-              create: (context) => CompiledMenuCubit(
-                storeCubit: context.read<StoreCubit>(),
-              )..load(menu: menu),
-              child: CustomScrollView(
-                slivers: [
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: _MenuPreviewHeaderDelegate(
-                      title: widget.args.menu.name,
-                    ),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Menu Preview'),
+          ),
+          body: BlocProvider<CompiledMenuCubit>(
+            // create: (context) => CompiledMenuCubit()..load(menu: menu),
+            create: (context) => CompiledMenuCubit(
+              storeCubit: context.read<StoreCubit>(),
+            )..load(menu: widget.args.menu),
+            child: CustomScrollView(
+              slivers: [
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _MenuPreviewHeaderDelegate(
+                    title: widget.args.menu.name,
                   ),
-                  SliverToBoxAdapter(
-                    child: CompiledMenuBuilder(menu: menu),
-                  ),
-                ],
-              ),
+                ),
+                SliverToBoxAdapter(
+                  child: CompiledMenuBuilder(menu: state.response.value1),
+                ),
+              ],
             ),
-          );
-        } else {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Menu Preview'),
-            ),
-            body: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
+          ),
+        );
       },
     );
   }

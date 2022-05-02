@@ -23,7 +23,7 @@ class MenuCategoryModel with _$MenuCategoryModel {
 
   factory MenuCategoryModel.fromSnapshot(DocumentSnapshot snap) {
     try {
-      final data = snap.data();
+      final data = snap.data()!;
       final json = data as Map<String, dynamic>;
       return MenuCategoryModel.fromJson(json);
     } catch (e) {
