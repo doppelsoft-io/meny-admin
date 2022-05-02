@@ -179,7 +179,9 @@ class UpdateMenusSheet extends StatelessWidget {
               )..loadMenu(menu: args.resource as MenuModel),
             ),
             BlocProvider<DeleteMenuCubit>(
-              create: (context) => DeleteMenuCubit(),
+              create: (context) => DeleteMenuCubit(
+                storeCubit: context.read<StoreCubit>(),
+              ),
             ),
           ],
           child: _UpdateMenusSheet(),
