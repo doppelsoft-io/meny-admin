@@ -13,15 +13,15 @@ part 'menu_categories_cubit.freezed.dart';
 
 class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
   MenuCategoriesCubit({
-    StoreCacheService? storeCacheService,
+    required StoreCubit storeCubit,
     MenuRepository? menuRepository,
     MenuCategoryRepository? menuCategoryRepository,
-  })  : _storeCacheService = storeCacheService ?? Locator.instance(),
+  })  : _storeCubit = storeCubit,
         _menuCategoryRepository = menuCategoryRepository ?? Locator.instance(),
         _menuRepository = menuRepository ?? Locator.instance(),
         super(MenuCategoriesState.initial());
 
-  final StoreCacheService _storeCacheService;
+  final StoreCubit _storeCubit;
   final MenuCategoryRepository _menuCategoryRepository;
   final MenuRepository _menuRepository;
   StreamSubscription? _subscription;
@@ -32,8 +32,8 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
     super.close();
   }
 
-  void load({required String categoryId}) async {
-    final storeId = await _storeCacheService.get('storeId');
+  Future<void> load({required String categoryId}) async {
+    final storeId = _storeCubit.state.store!.id!;
     final menus = await _menuRepository.getAll(storeId: storeId).first;
 
     _subscription = _menuCategoryRepository
@@ -71,7 +71,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
         menus: state.menus,
       ));
 
-      final storeId = await _storeCacheService.get('storeId');
+      final storeId = _storeCubit.state.store!.id!;
       await _menuCategoryRepository.create(
         storeId: storeId,
         menuId: menu.id!,
@@ -88,6 +88,11 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
         menus: state.menus,
         exception: err,
       ));
+    } finally {
+      emit(MenuCategoriesState.initial(
+        menuCategories: state.menuCategories,
+        menus: state.menus,
+      ));
     }
   }
 
@@ -101,7 +106,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
         menus: state.menus,
       ));
 
-      final storeId = await _storeCacheService.get('storeId');
+      final storeId = _storeCubit.state.store!.id!;
       await _menuCategoryRepository.remove(
         storeId: storeId,
         menuId: menu.id!,
@@ -117,6 +122,11 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
         menuCategories: state.menuCategories,
         menus: state.menus,
         exception: err,
+      ));
+    } finally {
+      emit(MenuCategoriesState.initial(
+        menuCategories: state.menuCategories,
+        menus: state.menus,
       ));
     }
   }

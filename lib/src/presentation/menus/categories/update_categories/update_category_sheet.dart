@@ -38,7 +38,9 @@ class UpdateCategorySheet extends StatelessWidget {
               ),
             ),
             BlocProvider<MenuCategoriesCubit>(
-              create: (context) => MenuCategoriesCubit(),
+              create: (context) => MenuCategoriesCubit(
+                storeCubit: context.read<StoreCubit>(),
+              ),
             ),
           ],
           child: _UpdateCategorySheet(),

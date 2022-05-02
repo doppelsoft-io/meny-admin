@@ -94,6 +94,11 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
         categories: state.categories,
         exception: err,
       ));
+    } finally {
+      emit(CategoryMenuItemsState.initial(
+        categoryMenuItems: state.categoryMenuItems,
+        categories: state.categories,
+      ));
     }
   }
 
@@ -123,6 +128,11 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
         categoryMenuItems: state.categoryMenuItems,
         categories: state.categories,
         exception: err,
+      ));
+    } finally {
+      emit(CategoryMenuItemsState.initial(
+        categoryMenuItems: state.categoryMenuItems,
+        categories: state.categories,
       ));
     }
   }
