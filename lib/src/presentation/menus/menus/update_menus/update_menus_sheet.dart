@@ -210,12 +210,12 @@ class UpdateMenusSheet extends StatelessWidget {
 }
 
 class _DeleteMenuButton extends StatelessWidget {
-  final MenuModel menu;
-
   const _DeleteMenuButton({
     Key? key,
     required this.menu,
   }) : super(key: key);
+
+  final MenuModel menu;
 
   void showConfirmationDialog({
     required BuildContext context,

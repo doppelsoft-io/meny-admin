@@ -13,9 +13,6 @@ part 'delete_menu_item_cubit.freezed.dart';
 part 'delete_menu_item_state.dart';
 
 class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
-  final FirebaseFirestore _firebaseFirestore;
-  final StoreCubit _storeCubit;
-
   DeleteMenuItemCubit({
     FirebaseFirestore? firebaseFirestore,
     required StoreCubit storeCubit,
@@ -23,7 +20,10 @@ class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
         _storeCubit = storeCubit,
         super(const DeleteMenuItemState.initial());
 
-  void delete({
+  final FirebaseFirestore _firebaseFirestore;
+  final StoreCubit _storeCubit;
+
+  Future<void> delete({
     required MenuItemModel item,
     required List<CategoryModel> categories,
   }) async {

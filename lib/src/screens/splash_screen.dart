@@ -9,6 +9,8 @@ import 'package:meny/themes.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   static const String routeName = '/splash';
 
   static Route route() {
@@ -16,8 +18,6 @@ class SplashScreen extends StatelessWidget {
       builder: (_) => const SplashScreen(),
     );
   }
-
-  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

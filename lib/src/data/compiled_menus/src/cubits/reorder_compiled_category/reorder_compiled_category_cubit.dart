@@ -9,9 +9,6 @@ import 'package:meny/src/data/stores/services/services.dart';
 part 'reorder_compiled_category_state.dart';
 
 class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
-  final CompiledMenuRepository _compiledMenuRepository;
-  final StoreCacheService _storeCacheService;
-
   ReorderCompiledCategoryCubit({
     CompiledMenuRepository? compiledMenuRepository,
     StoreCacheService? storeCacheService,
@@ -19,7 +16,10 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
         _storeCacheService = storeCacheService ?? Locator.instance(),
         super(ReorderCompiledCategoryState.initial());
 
-  void reorder({
+  final CompiledMenuRepository _compiledMenuRepository;
+  final StoreCacheService _storeCacheService;
+
+  Future<void> reorder({
     required String menuId,
     required List<CategoryModel> categories,
   }) async {
@@ -31,7 +31,7 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
         categories.length,
         (index) async {
           final category = categories[index];
-          return await _compiledMenuRepository.updateCategory(
+          return _compiledMenuRepository.updateCategory(
             storeId: storeId,
             menuId: menuId,
             category: category.copyWith(position: index),
@@ -40,14 +40,18 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
       );
       await Future.wait(futures);
 
-      emit(state.copyWith(
-        status: ReorderCompiledCategoryStatus.success,
-      ),);
+      emit(
+        state.copyWith(
+          status: ReorderCompiledCategoryStatus.success,
+        ),
+      );
     } catch (err) {
-      emit(state.copyWith(
-        status: ReorderCompiledCategoryStatus.error,
-        failure: const Failure(message: 'Reordering categories failed'),
-      ),);
+      emit(
+        state.copyWith(
+          status: ReorderCompiledCategoryStatus.error,
+          failure: const Failure(message: 'Reordering categories failed'),
+        ),
+      );
     }
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({Key? key}) : super(key: key);
+
   static const String routeName = '/onboarding';
 
   static Route route() {
@@ -8,8 +10,6 @@ class OnboardingScreen extends StatelessWidget {
       builder: (_) => const OnboardingScreen(),
     );
   }
-
-  const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
