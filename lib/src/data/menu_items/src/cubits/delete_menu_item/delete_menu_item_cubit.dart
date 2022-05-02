@@ -57,6 +57,8 @@ class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
           exception: Failure(message: 'Failed to delete item'),
         ),
       );
+    } finally {
+      emit(DeleteMenuItemState.initial());
     }
   }
 }
