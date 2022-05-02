@@ -91,9 +91,12 @@ class _UpdateCategorySheet extends HookWidget {
                 failure: Failure(message: exception.toString()),
               );
             },
-            loaded: (category) => context
-                .read<MenuCategoriesCubit>()
-                .load(categoryId: category.id!),
+            loaded: (category) {
+              context
+                  .read<MenuCategoriesCubit>()
+                  .load(categoryId: category.id!);
+              controller..text = category.name;
+            },
             orElse: () {},
           );
         },
