@@ -51,6 +51,7 @@ class StoreCubit extends Cubit<StoreState> {
 
   Future<void> setStore(StoreModel store) async {
     assert(store.id != null && store.id!.isNotEmpty, 'store.id is empty');
+    print('MEE: store ${store.id}');
     await _storeCacheService.save(store.id!);
     emit(state.copyWith(store: store));
   }

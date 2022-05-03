@@ -5,6 +5,7 @@ import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menus/menus.dart';
+import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 import 'package:meny/src/services/services.dart';
 
@@ -21,10 +22,14 @@ class CompiledMenuBuilder extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ReorderCompiledCategoryCubit>(
-          create: (context) => ReorderCompiledCategoryCubit(),
+          create: (context) => ReorderCompiledCategoryCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
         ),
         BlocProvider<ReorderCompiledMenuItemCubit>(
-          create: (context) => ReorderCompiledMenuItemCubit(),
+          create: (context) => ReorderCompiledMenuItemCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
         ),
       ],
       child: const _CompiledMenuBuilder(),
@@ -114,13 +119,11 @@ class _CompiledMenuBuilder extends StatelessWidget {
                       if (oldIndex < newIndex) {
                         newIndex -= 1;
                       }
-                      // final item = items.removeAt(oldIndex);
-                      // items.insert(newIndex, item);
-                      // context.read<ReorderCompiledMenuItemCubit>().reorder(
-                      //       menuId: menuId,
-                      //       categoryId: categoryId,
-                      //       items: items,
-                      //     );
+                      final item = items.removeAt(oldIndex);
+                      items.insert(newIndex, item);
+                      context.read<ReorderCompiledMenuItemCubit>().reorder(
+                            items: items,
+                          );
                     },
                   );
                 },
@@ -128,12 +131,11 @@ class _CompiledMenuBuilder extends StatelessWidget {
                   if (oldIndex < newIndex) {
                     newIndex -= 1;
                   }
-                  // final category = data.removeAt(oldIndex);
-                  // data.insert(newIndex, category);
-                  // context.read<ReorderCompiledCategoryCubit>().reorder(
-                  //       menuId: menuId,
-                  //       categories: categories,
-                  //     );
+                  final category = data.removeAt(oldIndex);
+                  data.insert(newIndex, category);
+                  context.read<ReorderCompiledCategoryCubit>().reorder(
+                        categories: data.map((e) => e.value1).toList(),
+                      );
                 },
               ),
             );
