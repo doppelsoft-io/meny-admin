@@ -1,5 +1,5 @@
 fresh: ## Runs `clean`, `codegen-build`
-	make clean build
+	make clean codegen-build
 
 clean: ## Cleans Flutter project.
 	rm -f pubspec.lock
@@ -9,11 +9,11 @@ clean: ## Cleans Flutter project.
 	cd ..
 	flutter pub get
 
-build: ## Generate codegen files once.
+codegen-build: ## Generate codegen files once.
 	flutter pub get
 	flutter pub run build_runner build --delete-conflicting-outputs
 
-watch: ## Generate codegen files and watch for changes.
+codegen-watch: ## Generate codegen files and watch for changes.
 	flutter pub get
 	flutter pub run build_runner watch --delete-conflicting-outputs
 
