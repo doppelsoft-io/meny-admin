@@ -39,7 +39,7 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
   Stream<List<MenuItemModel>> getAll({required String storeId}) {
     return firebaseFirestore
         .menuItemEntitiesCollection(storeId: storeId)
-        .orderBy('createdAt', descending: true)
+        .orderBy('createdAt', descending: false)
         .snapshots()
         .map(
           (doc) =>

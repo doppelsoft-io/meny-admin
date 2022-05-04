@@ -15,7 +15,6 @@ _$_CategoryModel _$$_CategoryModelFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      position: json['position'] as int,
     );
 
 Map<String, dynamic> _$$_CategoryModelToJson(_$_CategoryModel instance) =>
@@ -23,5 +22,4 @@ Map<String, dynamic> _$$_CategoryModelToJson(_$_CategoryModel instance) =>
       'name': instance.name,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
-      'position': instance.position,
     };

@@ -11,6 +11,10 @@ _$_CategoryMenuItemModel _$$_CategoryMenuItemModelFromJson(
     _$_CategoryMenuItemModel(
       categoryId: json['categoryId'] as String,
       menuItemId: json['menuItemId'] as String,
+      position: json['position'] as int?,
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
     );
 
 Map<String, dynamic> _$$_CategoryMenuItemModelToJson(
@@ -18,4 +22,6 @@ Map<String, dynamic> _$$_CategoryMenuItemModelToJson(
     <String, dynamic>{
       'categoryId': instance.categoryId,
       'menuItemId': instance.menuItemId,
+      'position': instance.position,
+      'createdAt': instance.createdAt?.toIso8601String(),
     };

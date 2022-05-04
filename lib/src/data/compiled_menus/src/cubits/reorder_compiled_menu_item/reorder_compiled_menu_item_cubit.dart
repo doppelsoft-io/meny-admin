@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/locator.dart';
+import 'package:meny/src/data/categories/categories.dart';
+import 'package:meny/src/data/category_menu_items/category_menu_items.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/stores/stores.dart';
@@ -11,15 +13,17 @@ part 'reorder_compiled_menu_item_cubit.freezed.dart';
 class ReorderCompiledMenuItemCubit extends Cubit<ReorderCompiledMenuItemState> {
   ReorderCompiledMenuItemCubit({
     required StoreCubit storeCubit,
-    MenuItemRepository? menuItemRepository,
+    CategoryMenuItemsRepository? categoryMenuItemsRepository,
   })  : _storeCubit = storeCubit,
-        _menuItemRepository = menuItemRepository ?? Locator.instance(),
+        _categoryMenuItemsRepository =
+            categoryMenuItemsRepository ?? Locator.instance(),
         super(const ReorderCompiledMenuItemState.initial());
 
   final StoreCubit _storeCubit;
-  final MenuItemRepository _menuItemRepository;
+  final CategoryMenuItemsRepository _categoryMenuItemsRepository;
 
   Future<void> reorder({
+    required CategoryModel category,
     required List<MenuItemModel> items,
   }) async {
     emit(const ReorderCompiledMenuItemState.reordering());
@@ -30,16 +34,21 @@ class ReorderCompiledMenuItemCubit extends Cubit<ReorderCompiledMenuItemState> {
         items.length,
         (index) async {
           final item = items[index];
-          return _menuItemRepository.update(
+          final categoryMenuItem = await _categoryMenuItemsRepository.get(
             storeId: storeId,
-            resource: item.copyWith(position: index),
+            categoryId: category.id!,
+            menuItemId: item.id!,
+          );
+
+          return _categoryMenuItemsRepository.update(
+            storeId: storeId,
+            model: categoryMenuItem.copyWith(position: index),
           );
         },
       );
       await Future.wait(futures);
-      emit(
-        const ReorderCompiledMenuItemState.success(),
-      );
+
+      emit(const ReorderCompiledMenuItemState.success());
     } catch (err) {
       emit(
         const ReorderCompiledMenuItemState.error(

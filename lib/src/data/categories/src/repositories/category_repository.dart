@@ -39,7 +39,7 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
   Stream<List<CategoryModel>> getAll({required String storeId}) {
     return firebaseFirestore
         .categoryEntitiesCollection(storeId: storeId)
-        .orderBy('createdAt', descending: true)
+        .orderBy('createdAt', descending: false)
         .snapshots()
         .map(
           (doc) =>

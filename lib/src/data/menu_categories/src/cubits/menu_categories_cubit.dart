@@ -7,6 +7,7 @@ import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/menu_categories/menu_categories.dart';
 import 'package:meny/src/data/menus/menus.dart';
 import 'package:meny/src/data/stores/stores.dart';
+import 'package:meny/src/typedefs/typedefs.dart';
 
 part 'menu_categories_state.dart';
 part 'menu_categories_cubit.freezed.dart';
@@ -40,6 +41,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
         .streamForCategory(
       storeId: storeId,
       categoryId: categoryId,
+      orderBy: const OrderBy('createdAt', false),
     )
         .listen((menuCategories) {
       syncAvailableMenus(menuCategories: menuCategories, menus: menus);
@@ -53,12 +55,15 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
     final menuCategoryMenuIds = menuCategories.map((mc) => mc.menuId).toList();
     final menusAvailable = List<MenuModel>.from(menus)
         .where((m) => menuCategoryMenuIds.contains(m.id))
-        .toList();
+        .toList()
+      ..sort((a, b) => a.createdAt!.isAfter(b.createdAt!) ? 1 : 0);
 
-    emit(state.copyWith(
-      menus: menusAvailable,
-      menuCategories: menuCategories,
-    ),);
+    emit(
+      state.copyWith(
+        menus: menusAvailable,
+        menuCategories: menuCategories,
+      ),
+    );
   }
 
   Future<void> createMenuCategory({
@@ -66,10 +71,12 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
     required CategoryModel category,
   }) async {
     try {
-      emit(MenuCategoriesState.adding(
-        menuCategories: state.menuCategories,
-        menus: state.menus,
-      ),);
+      emit(
+        MenuCategoriesState.adding(
+          menuCategories: state.menuCategories,
+          menus: state.menus,
+        ),
+      );
 
       final storeId = _storeCubit.state.store.id!;
       await _menuCategoryRepository.create(
@@ -78,21 +85,27 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
         categoryId: category.id!,
       );
 
-      emit(MenuCategoriesState.success(
-        menuCategories: state.menuCategories,
-        menus: state.menus,
-      ),);
+      emit(
+        MenuCategoriesState.success(
+          menuCategories: state.menuCategories,
+          menus: state.menus,
+        ),
+      );
     } on CreateMenuCategoryException catch (err) {
-      emit(MenuCategoriesState.error(
-        menuCategories: state.menuCategories,
-        menus: state.menus,
-        exception: err,
-      ),);
+      emit(
+        MenuCategoriesState.error(
+          menuCategories: state.menuCategories,
+          menus: state.menus,
+          exception: err,
+        ),
+      );
     } finally {
-      emit(MenuCategoriesState.initial(
-        menuCategories: state.menuCategories,
-        menus: state.menus,
-      ),);
+      emit(
+        MenuCategoriesState.initial(
+          menuCategories: state.menuCategories,
+          menus: state.menus,
+        ),
+      );
     }
   }
 
@@ -101,10 +114,12 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
     required CategoryModel category,
   }) async {
     try {
-      emit(MenuCategoriesState.removing(
-        menuCategories: state.menuCategories,
-        menus: state.menus,
-      ),);
+      emit(
+        MenuCategoriesState.removing(
+          menuCategories: state.menuCategories,
+          menus: state.menus,
+        ),
+      );
 
       final storeId = _storeCubit.state.store.id!;
       await _menuCategoryRepository.remove(
@@ -113,21 +128,27 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
         categoryId: category.id!,
       );
 
-      emit(MenuCategoriesState.success(
-        menuCategories: state.menuCategories,
-        menus: state.menus,
-      ),);
+      emit(
+        MenuCategoriesState.success(
+          menuCategories: state.menuCategories,
+          menus: state.menus,
+        ),
+      );
     } on CreateMenuCategoryException catch (err) {
-      emit(MenuCategoriesState.error(
-        menuCategories: state.menuCategories,
-        menus: state.menus,
-        exception: err,
-      ),);
+      emit(
+        MenuCategoriesState.error(
+          menuCategories: state.menuCategories,
+          menus: state.menus,
+          exception: err,
+        ),
+      );
     } finally {
-      emit(MenuCategoriesState.initial(
-        menuCategories: state.menuCategories,
-        menus: state.menus,
-      ),);
+      emit(
+        MenuCategoriesState.initial(
+          menuCategories: state.menuCategories,
+          menus: state.menus,
+        ),
+      );
     }
   }
 }

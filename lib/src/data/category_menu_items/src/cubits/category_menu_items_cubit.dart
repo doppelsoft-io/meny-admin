@@ -58,12 +58,15 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
         categoryMenuItems.map((cmi) => cmi.categoryId).toList();
     final categoriesAvailable = List<CategoryModel>.from(categories)
         .where((c) => categoryMenuItemIds.contains(c.id))
-        .toList();
+        .toList()
+      ..sort((a, b) => a.createdAt!.isAfter(b.createdAt!) ? 1 : 0);
 
-    emit(state.copyWith(
-      categories: categoriesAvailable,
-      categoryMenuItems: categoryMenuItems,
-    ),);
+    emit(
+      state.copyWith(
+        categories: categoriesAvailable,
+        categoryMenuItems: categoryMenuItems,
+      ),
+    );
   }
 
   Future<void> createCategoryMenuItem({
@@ -71,10 +74,12 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
     required MenuItemModel item,
   }) async {
     try {
-      emit(CategoryMenuItemsState.adding(
-        categoryMenuItems: state.categoryMenuItems,
-        categories: state.categories,
-      ),);
+      emit(
+        CategoryMenuItemsState.adding(
+          categoryMenuItems: state.categoryMenuItems,
+          categories: state.categories,
+        ),
+      );
 
       final storeId = _storeCubit.state.store.id!;
 
@@ -84,21 +89,27 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
         menuItemId: item.id!,
       );
 
-      emit(CategoryMenuItemsState.success(
-        categoryMenuItems: state.categoryMenuItems,
-        categories: state.categories,
-      ),);
+      emit(
+        CategoryMenuItemsState.success(
+          categoryMenuItems: state.categoryMenuItems,
+          categories: state.categories,
+        ),
+      );
     } on CreateCategoryMenuItemException catch (err) {
-      emit(CategoryMenuItemsState.error(
-        categoryMenuItems: state.categoryMenuItems,
-        categories: state.categories,
-        exception: err,
-      ),);
+      emit(
+        CategoryMenuItemsState.error(
+          categoryMenuItems: state.categoryMenuItems,
+          categories: state.categories,
+          exception: err,
+        ),
+      );
     } finally {
-      emit(CategoryMenuItemsState.initial(
-        categoryMenuItems: state.categoryMenuItems,
-        categories: state.categories,
-      ),);
+      emit(
+        CategoryMenuItemsState.initial(
+          categoryMenuItems: state.categoryMenuItems,
+          categories: state.categories,
+        ),
+      );
     }
   }
 
@@ -107,10 +118,12 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
     required MenuItemModel item,
   }) async {
     try {
-      emit(CategoryMenuItemsState.removing(
-        categoryMenuItems: state.categoryMenuItems,
-        categories: state.categories,
-      ),);
+      emit(
+        CategoryMenuItemsState.removing(
+          categoryMenuItems: state.categoryMenuItems,
+          categories: state.categories,
+        ),
+      );
 
       final storeId = _storeCubit.state.store.id!;
       await _categoryMenuItemsRepository.remove(
@@ -119,21 +132,27 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
         menuItemId: item.id!,
       );
 
-      emit(CategoryMenuItemsState.success(
-        categoryMenuItems: state.categoryMenuItems,
-        categories: state.categories,
-      ),);
+      emit(
+        CategoryMenuItemsState.success(
+          categoryMenuItems: state.categoryMenuItems,
+          categories: state.categories,
+        ),
+      );
     } on CreateCategoryMenuItemException catch (err) {
-      emit(CategoryMenuItemsState.error(
-        categoryMenuItems: state.categoryMenuItems,
-        categories: state.categories,
-        exception: err,
-      ),);
+      emit(
+        CategoryMenuItemsState.error(
+          categoryMenuItems: state.categoryMenuItems,
+          categories: state.categories,
+          exception: err,
+        ),
+      );
     } finally {
-      emit(CategoryMenuItemsState.initial(
-        categoryMenuItems: state.categoryMenuItems,
-        categories: state.categories,
-      ),);
+      emit(
+        CategoryMenuItemsState.initial(
+          categoryMenuItems: state.categoryMenuItems,
+          categories: state.categories,
+        ),
+      );
     }
   }
 }

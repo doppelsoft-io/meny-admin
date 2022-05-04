@@ -32,13 +32,18 @@ class CompiledMenuBuilder extends StatelessWidget {
           ),
         ),
       ],
-      child: const _CompiledMenuBuilder(),
+      child: _CompiledMenuBuilder(menu: menu),
     );
   }
 }
 
 class _CompiledMenuBuilder extends StatelessWidget {
-  const _CompiledMenuBuilder({Key? key}) : super(key: key);
+  const _CompiledMenuBuilder({
+    Key? key,
+    required this.menu,
+  }) : super(key: key);
+
+  final MenuModel menu;
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +127,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                       final item = items.removeAt(oldIndex);
                       items.insert(newIndex, item);
                       context.read<ReorderCompiledMenuItemCubit>().reorder(
+                            category: category,
                             items: items,
                           );
                     },
@@ -134,6 +140,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                   final category = data.removeAt(oldIndex);
                   data.insert(newIndex, category);
                   context.read<ReorderCompiledCategoryCubit>().reorder(
+                        menuId: menu.id!,
                         categories: data.map((e) => e.value1).toList(),
                       );
                 },

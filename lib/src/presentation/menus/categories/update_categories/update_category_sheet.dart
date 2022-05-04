@@ -177,7 +177,7 @@ class _UpdateCategorySheet extends HookWidget {
                           const SizedBox(height: 24),
                           TagSelector<MenuModel>(
                             initialItems: menuCategoriesState.menus,
-                            fetchSuggestions: () {
+                            fetchSuggestions: () async {
                               final storeId =
                                   context.read<StoreCubit>().state.store.id!;
                               return Locator.instance<MenuRepository>()

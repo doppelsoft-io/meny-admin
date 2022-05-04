@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/locator.dart';
 import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/core/failures.dart';
+import 'package:meny/src/data/menu_categories/menu_categories.dart';
 import 'package:meny/src/data/stores/stores.dart';
 
 part 'reorder_compiled_category_state.dart';
@@ -10,16 +11,17 @@ part 'reorder_compiled_category_cubit.freezed.dart';
 
 class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
   ReorderCompiledCategoryCubit({
-    CategoryRepository? categoryRepository,
+    MenuCategoryRepository? menuCategoryRepository,
     required StoreCubit storeCubit,
   })  : _storeCubit = storeCubit,
-        _categoryRepository = categoryRepository ?? Locator.instance(),
+        _menuCategoryRepository = menuCategoryRepository ?? Locator.instance(),
         super(const ReorderCompiledCategoryState.initial());
 
   final StoreCubit _storeCubit;
-  final CategoryRepository _categoryRepository;
+  final MenuCategoryRepository _menuCategoryRepository;
 
   Future<void> reorder({
+    required String menuId,
     required List<CategoryModel> categories,
   }) async {
     emit(const ReorderCompiledCategoryState.reordering());
@@ -30,17 +32,20 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
         categories.length,
         (index) async {
           final category = categories[index];
-          return _categoryRepository.update(
+          final menuCategory = await _menuCategoryRepository.get(
             storeId: storeId,
-            resource: category.copyWith(position: index),
+            menuId: menuId,
+            categoryId: category.id!,
+          );
+          return _menuCategoryRepository.update(
+            storeId: storeId,
+            model: menuCategory.copyWith(position: index),
           );
         },
       );
       await Future.wait(futures);
 
-      emit(
-        const ReorderCompiledCategoryState.success(),
-      );
+      emit(const ReorderCompiledCategoryState.success());
     } catch (err) {
       emit(
         const ReorderCompiledCategoryState.error(

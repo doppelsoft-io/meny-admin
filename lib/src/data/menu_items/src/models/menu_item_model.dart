@@ -16,7 +16,6 @@ class MenuItemModel with _$MenuItemModel {
     DateTime? createdAt,
     DateTime? updatedAt,
     required String description,
-    required int position,
   }) = _MenuItemModel;
 
   const MenuItemModel._();
@@ -39,19 +38,6 @@ class MenuItemModel with _$MenuItemModel {
       createdAt: now,
       updatedAt: now,
       description: '',
-      position: 0,
-    );
-  }
-
-  factory MenuItemModel.fromEntity(MenuItemModel entity) {
-    return MenuItemModel(
-      id: entity.id,
-      name: entity.name,
-      price: entity.price,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-      description: entity.description,
-      position: 0,
     );
   }
 
@@ -59,16 +45,4 @@ class MenuItemModel with _$MenuItemModel {
       _$MenuItemModelFromJson(json);
 
   String toFriendlyString() => 'menu item';
-  // MenuItemModel mergeWithEntity(MenuItemModel item) {
-  //   return MenuItemModel(
-  //     id: item.id,
-  //     name: item.name,
-  //     price: item.price,
-  //     createdAt: item.createdAt,
-  //     updatedAt: item.updatedAt,
-  //     description: item.description,
-  //     position: position,
-  //   );
-  // }
-
 }

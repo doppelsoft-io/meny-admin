@@ -9,6 +9,7 @@ import 'package:meny/src/data/menu_categories/menu_categories.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/menus/menus.dart';
 import 'package:meny/src/data/stores/stores.dart';
+import 'package:meny/src/typedefs/typedefs.dart';
 
 part 'compiled_menu_state.dart';
 part 'compiled_menu_cubit.freezed.dart';
@@ -41,13 +42,10 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
   Future<void> load({required MenuModel menu}) async {
     try {
       final storeId = _storeCubit.state.store.id!;
-      // final menuModel = await _menuRepository.get(
-      //   storeId: storeId,
-      //   id: menu.id!,
-      // );
       final menuCategories = await _menuCategoryRepository.getForMenu(
         storeId: storeId,
         menuId: menu.id!,
+        orderBy: const OrderBy('position', false),
       );
       final categoryFutures = List.generate(
         menuCategories.length,
@@ -62,7 +60,10 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
               await _categoryMenuItemsRepository.getForCategory(
             storeId: storeId,
             categoryId: categoryId,
-          );
+          )
+                ..sort((a, b) {
+                  return (a.position ?? 1000).compareTo(b.position ?? 999);
+                });
 
           final categoryMenuItemFutures = List.generate(
             categoryMenuItems.length,

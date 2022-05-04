@@ -7,8 +7,11 @@ part 'menu_category_model.g.dart';
 @freezed
 class MenuCategoryModel with _$MenuCategoryModel {
   factory MenuCategoryModel({
+    @JsonKey(ignore: true) String? id,
     required String menuId,
     required String categoryId,
+    @Default(-1) int position,
+    DateTime? createdAt,
   }) = _MenuCategoryModel;
 
   factory MenuCategoryModel.fromJson(Map<String, dynamic> json) =>
@@ -18,6 +21,7 @@ class MenuCategoryModel with _$MenuCategoryModel {
     return MenuCategoryModel(
       menuId: '',
       categoryId: '',
+      createdAt: DateTime.now(),
     );
   }
 
@@ -25,7 +29,7 @@ class MenuCategoryModel with _$MenuCategoryModel {
     try {
       final data = snap.data()!;
       final json = data as Map<String, dynamic>;
-      return MenuCategoryModel.fromJson(json);
+      return MenuCategoryModel.fromJson(json).copyWith(id: snap.id);
     } catch (e) {
       return MenuCategoryModel.empty();
     }

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menus/menus.dart';
 import 'package:meny/src/data/repositories/i_resources_repository.dart';
@@ -39,23 +38,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
   Stream<List<MenuModel>> getAll({required String storeId}) {
     return firebaseFirestore
         .menuEntitiesCollection(storeId: storeId)
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map(
-          (doc) =>
-              doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList(),
-        );
-  }
-
-  Stream<List<MenuModel>> getMenusForCategory({
-    required String storeId,
-    required CategoryModel category,
-  }) {
-    if (category.id == null) return Stream.fromIterable([]);
-    return firebaseFirestore
-        .menuEntitiesCollection(storeId: storeId)
-        .where('categoryIds', arrayContains: category.id)
-        .orderBy('updatedAt', descending: true)
+        .orderBy('createdAt', descending: false)
         .snapshots()
         .map(
           (doc) =>

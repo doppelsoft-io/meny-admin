@@ -17,7 +17,6 @@ _$_MenuItemModel _$$_MenuItemModelFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['updatedAt'] as String),
       description: json['description'] as String,
-      position: json['position'] as int,
     );
 
 Map<String, dynamic> _$$_MenuItemModelToJson(_$_MenuItemModel instance) =>
@@ -27,5 +26,4 @@ Map<String, dynamic> _$$_MenuItemModelToJson(_$_MenuItemModel instance) =>
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'description': instance.description,
-      'position': instance.position,
     };

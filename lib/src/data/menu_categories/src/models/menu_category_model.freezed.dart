@@ -20,8 +20,12 @@ MenuCategoryModel _$MenuCategoryModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MenuCategoryModel {
+  @JsonKey(ignore: true)
+  String? get id => throw _privateConstructorUsedError;
   String get menuId => throw _privateConstructorUsedError;
   String get categoryId => throw _privateConstructorUsedError;
+  int get position => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +38,12 @@ abstract class $MenuCategoryModelCopyWith<$Res> {
   factory $MenuCategoryModelCopyWith(
           MenuCategoryModel value, $Res Function(MenuCategoryModel) then) =
       _$MenuCategoryModelCopyWithImpl<$Res>;
-  $Res call({String menuId, String categoryId});
+  $Res call(
+      {@JsonKey(ignore: true) String? id,
+      String menuId,
+      String categoryId,
+      int position,
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -48,10 +57,17 @@ class _$MenuCategoryModelCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? menuId = freezed,
     Object? categoryId = freezed,
+    Object? position = freezed,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       menuId: menuId == freezed
           ? _value.menuId
           : menuId // ignore: cast_nullable_to_non_nullable
@@ -60,6 +76,14 @@ class _$MenuCategoryModelCopyWithImpl<$Res>
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
+      position: position == freezed
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -71,7 +95,12 @@ abstract class _$MenuCategoryModelCopyWith<$Res>
           _MenuCategoryModel value, $Res Function(_MenuCategoryModel) then) =
       __$MenuCategoryModelCopyWithImpl<$Res>;
   @override
-  $Res call({String menuId, String categoryId});
+  $Res call(
+      {@JsonKey(ignore: true) String? id,
+      String menuId,
+      String categoryId,
+      int position,
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -87,10 +116,17 @@ class __$MenuCategoryModelCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? menuId = freezed,
     Object? categoryId = freezed,
+    Object? position = freezed,
+    Object? createdAt = freezed,
   }) {
     return _then(_MenuCategoryModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       menuId: menuId == freezed
           ? _value.menuId
           : menuId // ignore: cast_nullable_to_non_nullable
@@ -99,6 +135,14 @@ class __$MenuCategoryModelCopyWithImpl<$Res>
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
+      position: position == freezed
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -106,19 +150,32 @@ class __$MenuCategoryModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MenuCategoryModel implements _MenuCategoryModel {
-  _$_MenuCategoryModel({required this.menuId, required this.categoryId});
+  _$_MenuCategoryModel(
+      {@JsonKey(ignore: true) this.id,
+      required this.menuId,
+      required this.categoryId,
+      this.position = -1,
+      this.createdAt});
 
   factory _$_MenuCategoryModel.fromJson(Map<String, dynamic> json) =>
       _$$_MenuCategoryModelFromJson(json);
 
   @override
+  @JsonKey(ignore: true)
+  final String? id;
+  @override
   final String menuId;
   @override
   final String categoryId;
+  @override
+  @JsonKey()
+  final int position;
+  @override
+  final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'MenuCategoryModel(menuId: $menuId, categoryId: $categoryId)';
+    return 'MenuCategoryModel(id: $id, menuId: $menuId, categoryId: $categoryId, position: $position, createdAt: $createdAt)';
   }
 
   @override
@@ -126,17 +183,23 @@ class _$_MenuCategoryModel implements _MenuCategoryModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MenuCategoryModel &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.menuId, menuId) &&
             const DeepCollectionEquality()
-                .equals(other.categoryId, categoryId));
+                .equals(other.categoryId, categoryId) &&
+            const DeepCollectionEquality().equals(other.position, position) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(menuId),
-      const DeepCollectionEquality().hash(categoryId));
+      const DeepCollectionEquality().hash(categoryId),
+      const DeepCollectionEquality().hash(position),
+      const DeepCollectionEquality().hash(createdAt));
 
   @JsonKey(ignore: true)
   @override
@@ -151,16 +214,26 @@ class _$_MenuCategoryModel implements _MenuCategoryModel {
 
 abstract class _MenuCategoryModel implements MenuCategoryModel {
   factory _MenuCategoryModel(
-      {required final String menuId,
-      required final String categoryId}) = _$_MenuCategoryModel;
+      {@JsonKey(ignore: true) final String? id,
+      required final String menuId,
+      required final String categoryId,
+      final int position,
+      final DateTime? createdAt}) = _$_MenuCategoryModel;
 
   factory _MenuCategoryModel.fromJson(Map<String, dynamic> json) =
       _$_MenuCategoryModel.fromJson;
 
   @override
+  @JsonKey(ignore: true)
+  String? get id => throw _privateConstructorUsedError;
+  @override
   String get menuId => throw _privateConstructorUsedError;
   @override
   String get categoryId => throw _privateConstructorUsedError;
+  @override
+  int get position => throw _privateConstructorUsedError;
+  @override
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$MenuCategoryModelCopyWith<_MenuCategoryModel> get copyWith =>

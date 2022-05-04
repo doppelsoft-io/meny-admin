@@ -14,7 +14,6 @@ class CategoryModel with _$CategoryModel {
     required String name,
     DateTime? createdAt,
     DateTime? updatedAt,
-    required int position,
   }) = _CategoryModel;
 
   const CategoryModel._();
@@ -33,17 +32,6 @@ class CategoryModel with _$CategoryModel {
     return const CategoryModel(
       id: '',
       name: '',
-      position: 0,
-    );
-  }
-
-  factory CategoryModel.fromEntity(CategoryModel entity) {
-    return CategoryModel(
-      id: entity.id,
-      name: entity.name,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-      position: 0,
     );
   }
 

@@ -26,7 +26,6 @@ mixin _$CategoryModel {
   String get name => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  int get position => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,8 +42,7 @@ abstract class $CategoryModelCopyWith<$Res> {
       {@JsonKey(ignore: true) String? id,
       String name,
       DateTime? createdAt,
-      DateTime? updatedAt,
-      int position});
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -62,7 +60,6 @@ class _$CategoryModelCopyWithImpl<$Res>
     Object? name = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? position = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -81,10 +78,6 @@ class _$CategoryModelCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      position: position == freezed
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -100,8 +93,7 @@ abstract class _$CategoryModelCopyWith<$Res>
       {@JsonKey(ignore: true) String? id,
       String name,
       DateTime? createdAt,
-      DateTime? updatedAt,
-      int position});
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -121,7 +113,6 @@ class __$CategoryModelCopyWithImpl<$Res>
     Object? name = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? position = freezed,
   }) {
     return _then(_CategoryModel(
       id: id == freezed
@@ -140,10 +131,6 @@ class __$CategoryModelCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      position: position == freezed
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -156,8 +143,7 @@ class _$_CategoryModel extends _CategoryModel {
       {@JsonKey(ignore: true) this.id,
       required this.name,
       this.createdAt,
-      this.updatedAt,
-      required this.position})
+      this.updatedAt})
       : super._();
 
   factory _$_CategoryModel.fromJson(Map<String, dynamic> json) =>
@@ -173,12 +159,10 @@ class _$_CategoryModel extends _CategoryModel {
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
-  @override
-  final int position;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt, position: $position)';
+    return 'CategoryModel(id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -189,8 +173,7 @@ class _$_CategoryModel extends _CategoryModel {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.position, position));
+            const DeepCollectionEquality().equals(other.updatedAt, updatedAt));
   }
 
   @JsonKey(ignore: true)
@@ -200,8 +183,7 @@ class _$_CategoryModel extends _CategoryModel {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(position));
+      const DeepCollectionEquality().hash(updatedAt));
 
   @JsonKey(ignore: true)
   @override
@@ -219,8 +201,7 @@ abstract class _CategoryModel extends CategoryModel {
       {@JsonKey(ignore: true) final String? id,
       required final String name,
       final DateTime? createdAt,
-      final DateTime? updatedAt,
-      required final int position}) = _$_CategoryModel;
+      final DateTime? updatedAt}) = _$_CategoryModel;
   const _CategoryModel._() : super._();
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
@@ -235,8 +216,6 @@ abstract class _CategoryModel extends CategoryModel {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @override
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  @override
-  int get position => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$CategoryModelCopyWith<_CategoryModel> get copyWith =>

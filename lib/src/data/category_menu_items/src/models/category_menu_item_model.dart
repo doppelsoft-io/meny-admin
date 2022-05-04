@@ -7,8 +7,11 @@ part 'category_menu_item_model.g.dart';
 @freezed
 class CategoryMenuItemModel with _$CategoryMenuItemModel {
   factory CategoryMenuItemModel({
+    @JsonKey(ignore: true) String? id,
     required String categoryId,
     required String menuItemId,
+    int? position,
+    DateTime? createdAt,
   }) = _CategoryMenuItemModel;
 
   factory CategoryMenuItemModel.fromJson(Map<String, dynamic> json) =>
@@ -18,6 +21,7 @@ class CategoryMenuItemModel with _$CategoryMenuItemModel {
     return CategoryMenuItemModel(
       categoryId: '',
       menuItemId: '',
+      createdAt: DateTime.now(),
     );
   }
 
@@ -25,7 +29,7 @@ class CategoryMenuItemModel with _$CategoryMenuItemModel {
     try {
       final data = snap.data()!;
       final json = data as Map<String, dynamic>;
-      return CategoryMenuItemModel.fromJson(json);
+      return CategoryMenuItemModel.fromJson(json).copyWith(id: snap.id);
     } catch (e) {
       return CategoryMenuItemModel.empty();
     }
