@@ -25,14 +25,14 @@ class CustomRouter {
       case LoginScreen.routeName:
         return LoginScreen.route();
       case UpdateMenusSheet.routeName:
-        return UpdateMenusSheet.route(settings.arguments as SheetArgs);
+        return UpdateMenusSheet.route(settings.arguments! as SheetArgs);
       case UpdateCategorySheet.routeName:
-        return UpdateCategorySheet.route(settings.arguments as SheetArgs);
+        return UpdateCategorySheet.route(settings.arguments! as SheetArgs);
       case UpdateMenuItemSheet.routeName:
-        return UpdateMenuItemSheet.route(settings.arguments as SheetArgs);
+        return UpdateMenuItemSheet.route(settings.arguments! as SheetArgs);
       case MenuPreviewScreen.routeName:
         return MenuPreviewScreen.route(
-          settings.arguments as MenuPreviewScreenArgs,
+          settings.arguments! as MenuPreviewScreenArgs,
         );
       default:
         return _errorRoute();
