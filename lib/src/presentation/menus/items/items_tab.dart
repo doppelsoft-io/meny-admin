@@ -84,7 +84,7 @@ class _MenusItemsTabState extends State<MenusItemsTab> {
         body: Padding(
           padding: const EdgeInsets.all(Spacing.pageSpacing),
           child: ResourceTable<MenuItemModel>(
-            columnNames: const ['Name', 'Price', 'Last Updated'],
+            columnNames: const ['Photo', 'Name', 'Price', 'Last Updated'],
             dataColumnBuilder: (_, column) => DataColumn(
               label: Text(column),
             ),
@@ -115,6 +115,41 @@ class _MenusItemsTabState extends State<MenusItemsTab> {
                   );
                 },
                 cells: [
+                  DataCell(
+                    resource.imageUrl != null && resource.imageUrl!.isNotEmpty
+                        ? SizedBox(
+                            width: 91,
+                            height: 73,
+                            child: Image.network(
+                              resource.imageUrl!,
+                              height: 73,
+                              width: 91,
+                              fit: BoxFit.cover,
+                              loadingBuilder: (_, child, progress) {
+                                if (progress?.cumulativeBytesLoaded ==
+                                    progress?.expectedTotalBytes) {
+                                  return child;
+                                }
+                                return Container(
+                                  width: 91,
+                                  height: 73,
+                                  color: Colors.grey[200],
+                                  child: const Center(
+                                    child: Icon(Icons.image),
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                        : Container(
+                            width: 91,
+                            height: 73,
+                            color: Colors.grey[200],
+                            child: const Center(
+                              child: Icon(Icons.image),
+                            ),
+                          ),
+                  ),
                   DataCell(Text(resource.name)),
                   DataCell(Text(resource.price.toCurrency())),
                   DataCell(

@@ -4,8 +4,8 @@ import 'package:meny/locator.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/stores/cubits/cubits.dart';
 
-part 'edit_menu_item_cubit.freezed.dart';
 part 'edit_menu_item_state.dart';
+part 'edit_menu_item_cubit.freezed.dart';
 
 class EditMenuItemCubit extends Cubit<EditMenuItemState> {
   EditMenuItemCubit({

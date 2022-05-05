@@ -87,9 +87,12 @@ class _CompiledMenuBuilder extends StatelessWidget {
                 ),
               ],
               child: ReorderableListView.builder(
+                key: const Key('main-one'),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
+                buildDefaultDragHandles: false,
                 itemCount: data.length,
+                padding: EdgeInsets.zero,
                 itemBuilder: (context, i) {
                   final category = data[i].value1;
                   final items = data[i].value2;
@@ -98,7 +101,8 @@ class _CompiledMenuBuilder extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: items.length,
                     physics: const NeverScrollableScrollPhysics(),
-                    header: Padding(
+                    padding: EdgeInsets.zero,
+                    header: Container(
                       padding: const EdgeInsets.all(Spacing.pageSpacing),
                       child: Text(
                         category.name,
@@ -110,14 +114,61 @@ class _CompiledMenuBuilder extends StatelessWidget {
                     ),
                     itemBuilder: (context, i) {
                       final item = items[i];
-                      return ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: Spacing.pageSpacing,
-                        ),
+                      return Container(
                         key: Key(item.id!),
-                        title: Text(item.name),
-                        subtitle: Text(item.description),
-                        trailing: Text(item.price.toCurrency()),
+                        height: 100,
+                        color: Colors.white,
+                        padding: const EdgeInsets.all(Spacing.pageSpacing),
+                        margin: const EdgeInsets.only(bottom: 12),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (item.imageUrl != null &&
+                                item.imageUrl!.isNotEmpty) ...[
+                              SizedBox(
+                                width: 275 / 3,
+                                height: 220 / 3,
+                                child: Image.network(
+                                  item.imageUrl!,
+                                  // width: 75,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ],
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: Spacing.pageSpacing,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            item.name,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1,
+                                          ),
+                                          Text(
+                                            item.description,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Text(item.price.toCurrency()),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                     },
                     onReorder: (oldIndex, newIndex) {

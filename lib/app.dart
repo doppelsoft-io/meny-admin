@@ -8,6 +8,7 @@ import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/enums/enums.dart';
 import 'package:meny/src/screens/screens.dart';
 import 'package:meny/themes.dart';
+import 'package:meny/unfocus.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -35,21 +36,24 @@ class App extends StatelessWidget {
         ],
         child: MaterialApp(
           theme: Themes.defaultTheme,
-          builder: (context, widget) => TextScaleFactorClamper(
-            child: ResponsiveWrapper.builder(
-              widget,
-              maxWidth: 1600,
-              defaultScale: true,
-              breakpoints: const [
-                ResponsiveBreakpoint.resize(450, name: MOBILE),
-                ResponsiveBreakpoint.autoScale(800, name: TABLET),
-                ResponsiveBreakpoint.autoScale(1200, name: TABLET),
-                ResponsiveBreakpoint.resize(1400, name: DESKTOP),
-                ResponsiveBreakpoint.autoScale(2460, name: '4K'),
-              ],
-              background: Container(
-                color: Colors.white,
+          builder: (context, widget) => ResponsiveWrapper.builder(
+            BouncingScrollWrapper.builder(
+              context,
+              TextScaleFactorClamper(
+                child: Unfocus(child: widget!),
               ),
+            ),
+            maxWidth: 1600,
+            defaultScale: true,
+            breakpoints: const [
+              ResponsiveBreakpoint.resize(450, name: MOBILE),
+              ResponsiveBreakpoint.autoScale(800, name: TABLET),
+              ResponsiveBreakpoint.autoScale(1200, name: TABLET),
+              ResponsiveBreakpoint.resize(1400, name: DESKTOP),
+              ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+            ],
+            background: Container(
+              color: Colors.white,
             ),
           ),
           onGenerateRoute: CustomRouter.onGenerateRoute,

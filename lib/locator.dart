@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meny/src/constants/paths.dart';
 import 'package:meny/src/data/auth/auth.dart';
@@ -24,6 +25,7 @@ class Locator {
       ..registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance)
       ..registerSingleton<FirebaseFunctions>(FirebaseFunctions.instance)
       ..registerSingleton<FirebaseAuth>(FirebaseAuth.instance)
+      ..registerSingleton<FirebaseStorage>(FirebaseStorage.instance)
       ..registerSingleton<StoreCacheService>(StoreCacheService())
       ..registerSingleton<LoggerService>(const LoggerService())
       ..registerSingleton<AuthRepository>(

@@ -43,6 +43,7 @@ class ResourceTable<T> extends StatelessWidget {
           case ResourcesLoaded:
             final _state = state as ResourcesLoaded;
             return DataTable(
+              dataRowHeight: 100,
               showCheckboxColumn: false,
               columns: _state.resources.isEmpty
                   ? List.generate(

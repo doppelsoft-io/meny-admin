@@ -28,6 +28,7 @@ mixin _$MenuItemModel {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,7 +47,8 @@ abstract class $MenuItemModelCopyWith<$Res> {
       double price,
       DateTime? createdAt,
       DateTime? updatedAt,
-      String description});
+      String description,
+      String? imageUrl});
 }
 
 /// @nodoc
@@ -66,6 +68,7 @@ class _$MenuItemModelCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? description = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -92,6 +95,10 @@ class _$MenuItemModelCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -109,7 +116,8 @@ abstract class _$MenuItemModelCopyWith<$Res>
       double price,
       DateTime? createdAt,
       DateTime? updatedAt,
-      String description});
+      String description,
+      String? imageUrl});
 }
 
 /// @nodoc
@@ -131,6 +139,7 @@ class __$MenuItemModelCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? description = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_MenuItemModel(
       id: id == freezed
@@ -157,6 +166,10 @@ class __$MenuItemModelCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -171,7 +184,8 @@ class _$_MenuItemModel extends _MenuItemModel {
       required this.price,
       this.createdAt,
       this.updatedAt,
-      required this.description})
+      required this.description,
+      this.imageUrl})
       : super._();
 
   factory _$_MenuItemModel.fromJson(Map<String, dynamic> json) =>
@@ -191,10 +205,12 @@ class _$_MenuItemModel extends _MenuItemModel {
   final DateTime? updatedAt;
   @override
   final String description;
+  @override
+  final String? imageUrl;
 
   @override
   String toString() {
-    return 'MenuItemModel(id: $id, name: $name, price: $price, createdAt: $createdAt, updatedAt: $updatedAt, description: $description)';
+    return 'MenuItemModel(id: $id, name: $name, price: $price, createdAt: $createdAt, updatedAt: $updatedAt, description: $description, imageUrl: $imageUrl)';
   }
 
   @override
@@ -208,7 +224,8 @@ class _$_MenuItemModel extends _MenuItemModel {
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
             const DeepCollectionEquality()
-                .equals(other.description, description));
+                .equals(other.description, description) &&
+            const DeepCollectionEquality().equals(other.imageUrl, imageUrl));
   }
 
   @JsonKey(ignore: true)
@@ -220,7 +237,8 @@ class _$_MenuItemModel extends _MenuItemModel {
       const DeepCollectionEquality().hash(price),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(description));
+      const DeepCollectionEquality().hash(description),
+      const DeepCollectionEquality().hash(imageUrl));
 
   @JsonKey(ignore: true)
   @override
@@ -240,7 +258,8 @@ abstract class _MenuItemModel extends MenuItemModel {
       required final double price,
       final DateTime? createdAt,
       final DateTime? updatedAt,
-      required final String description}) = _$_MenuItemModel;
+      required final String description,
+      final String? imageUrl}) = _$_MenuItemModel;
   const _MenuItemModel._() : super._();
 
   factory _MenuItemModel.fromJson(Map<String, dynamic> json) =
@@ -259,6 +278,8 @@ abstract class _MenuItemModel extends MenuItemModel {
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   @override
   String get description => throw _privateConstructorUsedError;
+  @override
+  String? get imageUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$MenuItemModelCopyWith<_MenuItemModel> get copyWith =>

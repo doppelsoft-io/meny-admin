@@ -18,6 +18,7 @@ dependencies:
   equatable: ^2.0.3
   firebase_auth: ^1.1.4
   firebase_core: ^1.1.1
+  firebase_storage: ^10.2.15
   flutter:
     sdk: flutter
   flutter_bloc: null
@@ -29,8 +30,9 @@ dependencies:
   get_it: ^7.2.0
   google_fonts: ^2.1.1
   hive_flutter: ^1.1.0
-  json_annotation:
-  json_serializable:
+  image_picker: ^0.8.5
+  json_annotation: null
+  json_serializable: null
   overlay_support: ^1.2.1
   provider: ^5.0.0
   qr_flutter: ^4.0.0

@@ -8,6 +8,7 @@ import 'package:meny/src/data/category_menu_items/category_menu_items.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/stores/stores.dart';
+import 'package:meny/src/presentation/menus/items/image_upload/image_upload_card.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 import 'package:meny/src/presentation/sheet_args.dart';
 import 'package:meny/src/services/services.dart';
@@ -44,6 +45,11 @@ class UpdateMenuItemSheet extends StatelessWidget {
                 storeCubit: context.read<StoreCubit>(),
               ),
             ),
+            BlocProvider<ImageUploadCubit>(
+              create: (context) => ImageUploadCubit(
+                storeCubit: context.read<StoreCubit>(),
+              ),
+            ),
           ],
           child: const _UpdateMenuItemSheet(),
         );
@@ -76,18 +82,11 @@ class _UpdateMenuItemSheet extends HookWidget {
     final categoryMenuItemsState =
         context.watch<CategoryMenuItemsCubit>().state;
     final deleteMenuItemState = context.watch<DeleteMenuItemCubit>().state;
-
+    final imageUploadState = context.watch<ImageUploadCubit>().state;
     final item = editMenuItemState.item;
-
     final nameController = useTextEditingController();
-
     final descriptionController = useTextEditingController();
-
     final priceController = useTextEditingController();
-
-    useEffect(() {
-      return null;
-    });
 
     return WillPopScope(
       onWillPop: () => _onWillPop(
@@ -167,6 +166,9 @@ class _UpdateMenuItemSheet extends HookWidget {
                                           0.0,
                                       description: descriptionController.text,
                                       updatedAt: now,
+                                      imageUrl: imageUploadState.url.isNotEmpty
+                                          ? imageUploadState.url
+                                          : null,
                                     ),
                                   );
                             },
@@ -180,6 +182,7 @@ class _UpdateMenuItemSheet extends HookWidget {
                       padding: const EdgeInsets.all(Spacing.pageSpacing),
                       child: Column(
                         children: [
+                          Row(),
                           TextFormField(
                             controller: nameController,
                             autofocus: true,
@@ -219,6 +222,8 @@ class _UpdateMenuItemSheet extends HookWidget {
                                 .labelStyle,
                             textInputAction: TextInputAction.next,
                           ),
+                          const SizedBox(height: 24),
+                          ImageUploadCard(item: item),
                           const SizedBox(height: 24),
                           TextFormField(
                             keyboardType: const TextInputType.numberWithOptions(
@@ -314,6 +319,9 @@ class _UpdateMenuItemSheet extends HookWidget {
             nameController.text = item.name;
             descriptionController.text = item.description;
             priceController.text = item.price.toString();
+            if (item.imageUrl != null) {
+              context.read<ImageUploadCubit>().seed(url: item.imageUrl!);
+            }
           },
           orElse: () {},
         );

@@ -16,6 +16,7 @@ class MenuItemModel with _$MenuItemModel {
     DateTime? createdAt,
     DateTime? updatedAt,
     required String description,
+    String? imageUrl,
   }) = _MenuItemModel;
 
   const MenuItemModel._();
@@ -38,6 +39,7 @@ class MenuItemModel with _$MenuItemModel {
       createdAt: now,
       updatedAt: now,
       description: '',
+      imageUrl: '',
     );
   }
 

@@ -9,8 +9,8 @@ import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/extensions/extensions.dart';
 
-part 'delete_menu_item_cubit.freezed.dart';
 part 'delete_menu_item_state.dart';
+part 'delete_menu_item_cubit.freezed.dart';
 
 class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
   DeleteMenuItemCubit({
