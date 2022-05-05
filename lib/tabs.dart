@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart' as dartz;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -34,4 +35,11 @@ const tabs = <TabTypeDef>[
     FontAwesomeIcons.users,
     'Customers',
   ),
+  if (kDebugMode) ...[
+    TabTypeDef(
+      FontAwesomeIcons.cog,
+      FontAwesomeIcons.cog,
+      'Developer',
+    ),
+  ],
 ];

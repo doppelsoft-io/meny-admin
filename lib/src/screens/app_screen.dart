@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -8,6 +9,7 @@ import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/stores/cubits/cubits.dart';
 import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/presentation/customer/customers_page.dart';
+import 'package:meny/src/presentation/developer/developer_page.dart';
 import 'package:meny/src/presentation/locations/locations_page.dart';
 import 'package:meny/src/presentation/menus/menus_page.dart';
 import 'package:meny/src/presentation/orders/orders_page.dart';
@@ -68,12 +70,15 @@ class _AppScreen extends HookWidget {
                 ),
               ),
               loaded: (store) {
-                const pages = {
-                  0: MenusPage(),
-                  1: OrdersPage(),
-                  2: LocationsPage(),
-                  3: StoreHoursPage(),
-                  4: CustomersPage(),
+                final pages = {
+                  0: const MenusPage(),
+                  1: const OrdersPage(),
+                  2: const LocationsPage(),
+                  3: const StoreHoursPage(),
+                  4: const CustomersPage(),
+                  if (kDebugMode) ...{
+                    5: const DeveloperPage(),
+                  }
                 };
                 return Scaffold(
                   appBar: AppBar(

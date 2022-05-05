@@ -260,9 +260,9 @@ class _UpdateCategorySheet extends HookWidget {
                 category: category,
                 menus: menus,
               );
-          return Future.value(true);
+          return Future.value(false);
         }
-        return Future.value(false);
+        return Future.value(value);
       });
     }
     return Future.value(true);
@@ -279,12 +279,12 @@ class _DeleteCategoryButton extends StatelessWidget {
   final CategoryModel category;
   final List<MenuModel> menus;
 
-  Future<bool> showConfirmationDialog({
+  void showConfirmationDialog({
     required BuildContext context,
     required CategoryModel category,
     required List<MenuModel> menus,
   }) {
-    return showDialog<bool>(
+    showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -318,9 +318,7 @@ class _DeleteCategoryButton extends StatelessWidget {
               category: category,
               menus: menus,
             );
-        return true;
       }
-      return false;
     });
   }
 

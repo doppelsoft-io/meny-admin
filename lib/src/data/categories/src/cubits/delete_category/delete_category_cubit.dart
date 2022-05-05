@@ -9,6 +9,7 @@ import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menus/menus.dart';
 import 'package:meny/src/data/stores/cubits/cubits.dart';
 import 'package:meny/src/extensions/extensions.dart';
+import 'package:meny/src/services/services.dart';
 
 part 'delete_category_cubit.freezed.dart';
 part 'delete_category_state.dart';
@@ -18,15 +19,19 @@ class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
     required StoreCubit storeCubit,
     FirebaseFirestore? firebaseFirestore,
     CategoryMenuItemsRepository? categoryMenuItemsRepository,
+    LoggerService? loggerService,
   })  : _storeCubit = storeCubit,
         _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
         _categoryMenuItemsRepository =
             categoryMenuItemsRepository ?? Locator.instance(),
+        _loggerService = loggerService ??
+            const LoggerService(prepend: 'DeleteCategoryCubit'),
         super(const DeleteCategoryState.initial());
 
   final StoreCubit _storeCubit;
   final FirebaseFirestore _firebaseFirestore;
   final CategoryMenuItemsRepository _categoryMenuItemsRepository;
+  final LoggerService _loggerService;
 
   Future<void> delete({
     required CategoryModel category,
@@ -78,6 +83,7 @@ class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
 
       emit(const DeleteCategoryState.success());
     } catch (err) {
+      _loggerService.log(err.toString());
       emit(
         const DeleteCategoryState.error(
           exception: Failure(message: 'Failed to delete category'),
