@@ -60,8 +60,8 @@ class DeleteMenuCubit extends Cubit<DeleteMenuState> {
       emit(const DeleteMenuState.success());
     } catch (err) {
       emit(
-        const DeleteMenuState.error(
-          exception: Failure(message: 'Failed to delete menu'),
+        DeleteMenuState.error(
+          exception: Failure(message: err.toString()),
         ),
       );
     } finally {

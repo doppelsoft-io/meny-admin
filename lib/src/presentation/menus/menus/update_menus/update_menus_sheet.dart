@@ -265,6 +265,12 @@ class _DeleteMenuButton extends StatelessWidget {
             Navigator.of(context).pop();
             ToastService.toast('Menu deleted');
           },
+          error: (exception) {
+            ToastService.showNotification(
+              Text(exception.toString()),
+              ToastType.error,
+            );
+          },
           orElse: () {},
         );
       },

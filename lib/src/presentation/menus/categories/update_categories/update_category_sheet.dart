@@ -237,7 +237,7 @@ class _UpdateCategorySheet extends HookWidget {
     required CategoryModel category,
   }) {
     if (category.name.isEmpty) {
-      return showDialog<bool>(
+      showDialog<bool>(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -260,7 +260,7 @@ class _UpdateCategorySheet extends HookWidget {
                 category: category,
                 menus: menus,
               );
-          return Future.value(false);
+          return Future.value(true);
         }
         return Future.value(value);
       });
