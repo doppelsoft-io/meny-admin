@@ -6,6 +6,7 @@ import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menus/menus.dart';
 import 'package:meny/src/data/stores/stores.dart';
+import 'package:meny/src/presentation/menus/items/image_upload/image_display_card.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 import 'package:meny/src/services/services.dart';
 
@@ -125,14 +126,8 @@ class _CompiledMenuBuilder extends StatelessWidget {
                           children: [
                             if (item.imageUrl != null &&
                                 item.imageUrl!.isNotEmpty) ...[
-                              SizedBox(
-                                width: 275 / 3,
-                                height: 220 / 3,
-                                child: Image.network(
-                                  item.imageUrl!,
-                                  // width: 75,
-                                  fit: BoxFit.cover,
-                                ),
+                              ImageDisplayCard.forMenuDisplay(
+                                url: item.imageUrl ?? '',
                               ),
                             ],
                             Expanded(

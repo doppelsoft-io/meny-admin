@@ -5,6 +5,7 @@ import 'package:meny/src/constants/analytics.dart';
 import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/stores/stores.dart';
+import 'package:meny/src/presentation/menus/items/image_upload/image_display_card.dart';
 import 'package:meny/src/presentation/menus/items/update_items/update_menu_item_sheet.dart';
 import 'package:meny/src/presentation/menus/widgets/widgets.dart';
 import 'package:meny/src/presentation/resources/cubit/resources_cubit.dart';
@@ -116,39 +117,9 @@ class _MenusItemsTabState extends State<MenusItemsTab> {
                 },
                 cells: [
                   DataCell(
-                    resource.imageUrl != null && resource.imageUrl!.isNotEmpty
-                        ? SizedBox(
-                            width: 91,
-                            height: 73,
-                            child: Image.network(
-                              resource.imageUrl!,
-                              height: 73,
-                              width: 91,
-                              fit: BoxFit.cover,
-                              loadingBuilder: (_, child, progress) {
-                                if (progress?.cumulativeBytesLoaded ==
-                                    progress?.expectedTotalBytes) {
-                                  return child;
-                                }
-                                return Container(
-                                  width: 91,
-                                  height: 73,
-                                  color: Colors.grey[200],
-                                  child: const Center(
-                                    child: Icon(Icons.image),
-                                  ),
-                                );
-                              },
-                            ),
-                          )
-                        : Container(
-                            width: 91,
-                            height: 73,
-                            color: Colors.grey[200],
-                            child: const Center(
-                              child: Icon(Icons.image),
-                            ),
-                          ),
+                    ImageDisplayCard.forTableDisplay(
+                      url: resource.imageUrl ?? '',
+                    ),
                   ),
                   DataCell(Text(resource.name)),
                   DataCell(Text(resource.price.toCurrency())),

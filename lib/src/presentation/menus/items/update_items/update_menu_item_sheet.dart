@@ -8,7 +8,7 @@ import 'package:meny/src/data/category_menu_items/category_menu_items.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/presentation/menus/items/image_upload/image_upload_card.dart';
+import 'package:meny/src/presentation/menus/items/image_upload/image_display_card.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 import 'package:meny/src/presentation/sheet_args.dart';
 import 'package:meny/src/services/services.dart';
@@ -223,7 +223,59 @@ class _UpdateMenuItemSheet extends HookWidget {
                             textInputAction: TextInputAction.next,
                           ),
                           const SizedBox(height: 24),
-                          ImageUploadCard(item: item),
+                          BlocConsumer<ImageUploadCubit, ImageUploadState>(
+                            listener: (context, state) {
+                              state.maybeWhen(
+                                picked: (file, url) => context
+                                    .read<ImageUploadCubit>()
+                                    .upload(item: item),
+                                orElse: () {},
+                              );
+                            },
+                            builder: (context, state) {
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ImageDisplayCard(
+                                    url: state.url,
+                                    processing: state.maybeWhen(
+                                      uploading: (_, __) => true,
+                                      orElse: () => false,
+                                    ),
+                                    onTap: () =>
+                                        context.read<ImageUploadCubit>().pick(),
+                                    emptyBuilder: () => Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Center(child: Icon(Icons.image)),
+                                        Text('Click to upload')
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Photos of your menu items can help customers when deciding to order and can increase sales.',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
                           const SizedBox(height: 24),
                           TextFormField(
                             keyboardType: const TextInputType.numberWithOptions(
@@ -333,7 +385,7 @@ class _UpdateMenuItemSheet extends HookWidget {
     required List<CategoryModel> categories,
   }) {
     if (item.name.isEmpty) {
-      return showDialog<bool>(
+      showDialog<bool>(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
