@@ -3,6 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meny/src/presentation/resources/cubit/resources_cubit.dart';
 
 class ResourceTable<T> extends StatelessWidget {
+  const ResourceTable({
+    Key? key,
+    required this.columnNames,
+    required this.dataColumnBuilder,
+    required this.dataRowBuilder,
+    required this.emptyRowBuilder,
+    this.scrollDirection = Axis.vertical,
+  }) : super(key: key);
+
   final List<String> columnNames;
 
   final DataColumn Function(
@@ -21,15 +30,6 @@ class ResourceTable<T> extends StatelessWidget {
 
   final Axis scrollDirection;
 
-  const ResourceTable({
-    Key? key,
-    required this.columnNames,
-    required this.dataColumnBuilder,
-    required this.dataRowBuilder,
-    required this.emptyRowBuilder,
-    this.scrollDirection = Axis.vertical,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ResourcesCubit, ResourcesState>(
@@ -43,10 +43,14 @@ class ResourceTable<T> extends StatelessWidget {
           case ResourcesLoaded:
             final _state = state as ResourcesLoaded;
             return DataTable(
+              dataRowHeight: 100,
               showCheckboxColumn: false,
+              showBottomBorder: true,
               columns: _state.resources.isEmpty
-                  ? List.generate(1,
-                      (index) => dataColumnBuilder(context, columnNames[index]))
+                  ? List.generate(
+                      1,
+                      (index) => dataColumnBuilder(context, columnNames[index]),
+                    )
                   : List.generate(
                       columnNames.length,
                       (index) {

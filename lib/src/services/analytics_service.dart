@@ -7,12 +7,13 @@ class AnalyticsService {
     required String message,
     Map<String, String>? params,
   }) {
-    final buffer = StringBuffer();
-    buffer.write('[AnalyticsService](track): ');
-    buffer.write(message);
+    final buffer = StringBuffer()
+      ..write('[AnalyticsService](track): ')
+      ..write(message);
     if (params != null) {
-      buffer.write(' ');
-      buffer.write(params.toString());
+      buffer
+        ..write(' ')
+        ..write(params.toString());
     }
     developer.log(buffer.toString());
   }

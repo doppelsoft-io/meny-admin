@@ -1,56 +1,55 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/locator.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/enums/enums.dart';
 import 'package:meny/src/data/menus/menus.dart';
 import 'package:meny/src/data/stores/stores.dart';
 
+part 'edit_menu_cubit.freezed.dart';
 part 'edit_menu_state.dart';
 
 class EditMenuCubit extends Cubit<EditMenuState> {
-  final MenuRepository _menuRepository;
-  final StoreCacheService _storeCacheService;
-
   EditMenuCubit({
+    required StoreCubit storeCubit,
     MenuRepository? menuRepository,
-    StoreCacheService? storeCacheService,
-  })  : _menuRepository = menuRepository ?? Locator.instance(),
-        _storeCacheService = storeCacheService ?? Locator.instance(),
-        super(EditMenuState.initial());
+  })  : _storeCubit = storeCubit,
+        _menuRepository = menuRepository ?? Locator.instance(),
+        super(EditMenuState.loading(menu: MenuModel.empty()));
 
-  void loadMenu({required MenuEntity menu}) async {
+  final MenuRepository _menuRepository;
+  final StoreCubit _storeCubit;
+
+  Future<void> loadMenu({required MenuModel menu}) async {
     if (menu.id != null && menu.id!.isNotEmpty) {
-      emit(state.copyWith(menu: menu));
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+      emit(EditMenuState.loaded(menu: menu));
     } else {
-      final storeId = await _storeCacheService.get('storeId');
+      final storeId = _storeCubit.state.store.id!;
       final failureOrMenu = await _menuRepository.create(
         storeId: storeId,
-        resource: menu,
+        resource: menu.copyWith(createdAt: DateTime.now()),
       );
-      failureOrMenu.fold(
-        (failure) => emit(state.copyWith(failure: failure)),
-        (menu) => emit(state.copyWith(menu: menu, failure: null)),
+      emit(
+        failureOrMenu.fold(
+          (failure) => EditMenuState.error(menu: menu, exception: failure),
+          (menu) => EditMenuState.loaded(menu: menu),
+        ),
       );
     }
   }
 
-  void update(MenuEntity item) async {
-    emit(state.copyWith(status: EditResourceStatus.updating));
-    final storeId = await _storeCacheService.get('storeId');
+  Future<void> update(MenuModel item) async {
+    emit(EditMenuState.updating(menu: state.menu));
+
+    final storeId = _storeCubit.state.store.id!;
     final failureOrUpdate = await _menuRepository.update(
       storeId: storeId,
       resource: item,
     );
-    failureOrUpdate.fold(
-      (failure) => emit(state.copyWith(
-        failure: failure,
-        status: EditResourceStatus.error,
-      )),
-      (update) => emit(state.copyWith(
-        status: EditResourceStatus.success,
-        failure: null,
-      )),
+    emit(
+      failureOrUpdate.fold(
+        (failure) => EditMenuState.error(menu: state.menu, exception: failure),
+        (update) => EditMenuState.success(menu: state.menu),
+      ),
     );
   }
 }

@@ -1,43 +1,20 @@
 part of 'compiled_menu_cubit.dart';
 
-enum CompiledMenuStatus {
-  initial,
-  loading,
-  success,
-  error,
-}
+typedef CategoryMenuItemMap = Tuple2<CategoryModel, List<MenuItemModel>>;
+typedef MenuResponse = Tuple2<MenuModel, List<CategoryMenuItemMap>>;
 
-class CompiledMenuState extends Equatable {
-  final CompiledMenuStatus status;
-  final MenuEntity? menu;
-  final Failure? failure;
+@freezed
+class CompiledMenuState with _$CompiledMenuState {
+  const factory CompiledMenuState.loading({
+    required MenuResponse response,
+  }) = _Loading;
 
-  const CompiledMenuState({
-    required this.status,
-    required this.menu,
-    required this.failure,
-  });
+  const factory CompiledMenuState.loaded({
+    required MenuResponse response,
+  }) = _Loaded;
 
-  @override
-  List<Object?> get props => [status, menu, failure];
-
-  factory CompiledMenuState.initial() {
-    return const CompiledMenuState(
-      menu: null,
-      status: CompiledMenuStatus.initial,
-      failure: null,
-    );
-  }
-
-  CompiledMenuState copyWith({
-    CompiledMenuStatus? status,
-    MenuEntity? menu,
-    Failure? failure,
-  }) {
-    return CompiledMenuState(
-      status: status ?? this.status,
-      menu: menu ?? this.menu,
-      failure: failure,
-    );
-  }
+  const factory CompiledMenuState.error({
+    required MenuResponse response,
+    required Exception exception,
+  }) = _Error;
 }

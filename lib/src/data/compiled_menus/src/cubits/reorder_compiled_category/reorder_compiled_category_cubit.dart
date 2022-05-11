@@ -1,53 +1,57 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/locator.dart';
 import 'package:meny/src/data/categories/categories.dart';
-import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/stores/services/services.dart';
+import 'package:meny/src/data/menu_categories/menu_categories.dart';
+import 'package:meny/src/data/stores/stores.dart';
 
 part 'reorder_compiled_category_state.dart';
+part 'reorder_compiled_category_cubit.freezed.dart';
 
 class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
-  final CompiledMenuRepository _compiledMenuRepository;
-  final StoreCacheService _storeCacheService;
-
   ReorderCompiledCategoryCubit({
-    CompiledMenuRepository? compiledMenuRepository,
-    StoreCacheService? storeCacheService,
-  })  : _compiledMenuRepository = compiledMenuRepository ?? Locator.instance(),
-        _storeCacheService = storeCacheService ?? Locator.instance(),
-        super(ReorderCompiledCategoryState.initial());
+    MenuCategoryRepository? menuCategoryRepository,
+    required StoreCubit storeCubit,
+  })  : _storeCubit = storeCubit,
+        _menuCategoryRepository = menuCategoryRepository ?? Locator.instance(),
+        super(const ReorderCompiledCategoryState.initial());
 
-  void reorder({
+  final StoreCubit _storeCubit;
+  final MenuCategoryRepository _menuCategoryRepository;
+
+  Future<void> reorder({
     required String menuId,
     required List<CategoryModel> categories,
   }) async {
-    emit(state.copyWith(status: ReorderCompiledCategoryStatus.reordering));
+    emit(const ReorderCompiledCategoryState.reordering());
 
     try {
-      final storeId = await _storeCacheService.get('storeId');
+      final storeId = _storeCubit.state.store.id!;
       final futures = List.generate(
         categories.length,
         (index) async {
           final category = categories[index];
-          return await _compiledMenuRepository.updateCategory(
+          final menuCategory = await _menuCategoryRepository.get(
             storeId: storeId,
             menuId: menuId,
-            category: category.copyWith(position: index),
+            categoryId: category.id!,
+          );
+          return _menuCategoryRepository.update(
+            storeId: storeId,
+            model: menuCategory.copyWith(position: index),
           );
         },
       );
       await Future.wait(futures);
 
-      emit(state.copyWith(
-        status: ReorderCompiledCategoryStatus.success,
-      ));
+      emit(const ReorderCompiledCategoryState.success());
     } catch (err) {
-      emit(state.copyWith(
-        status: ReorderCompiledCategoryStatus.error,
-        failure: Failure(message: 'Reordering categories failed'),
-      ));
+      emit(
+        const ReorderCompiledCategoryState.error(
+          exception: Failure(message: 'Reordering failed'),
+        ),
+      );
     }
   }
 }

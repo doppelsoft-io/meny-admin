@@ -25,7 +25,6 @@ class OrdersPage extends StatelessWidget {
                   child: Card(
                     child: DataTable(
                       onSelectAll: (val) {},
-                      showCheckboxColumn: true,
                       showBottomBorder: true,
                       columns: [
                         DataColumn(label: Text('Amount'.toUpperCase())),
@@ -57,7 +56,7 @@ class OrdersPage extends StatelessWidget {
                                 DataCell(IconButton(
                                   icon: const Icon(Icons.more_horiz),
                                   onPressed: () {},
-                                )),
+                                ),),
                               ],
                             ),
                           )

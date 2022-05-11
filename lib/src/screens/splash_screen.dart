@@ -9,15 +9,15 @@ import 'package:meny/themes.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   static const String routeName = '/splash';
 
   static Route route() {
-    return MaterialPageRoute(
-      builder: (_) => SplashScreen(),
+    return MaterialPageRoute<Widget>(
+      builder: (_) => const SplashScreen(),
     );
   }
-
-  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class SplashScreen extends StatelessWidget {
       listener: (context, authState) {
         if (authState.status == AuthStatus.anonymous ||
             authState.status == AuthStatus.authenticated) {
-          Timer(Duration(seconds: 1), () {
+          Timer(const Duration(seconds: 1), () {
             Navigator.of(context).pushNamed(AppScreen.routeName);
           });
         }
@@ -38,6 +38,8 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Shimmer.fromColors(
+                baseColor: Colors.green.shade100,
+                highlightColor: Colors.white,
                 child: Text(
                   'Meny',
                   style: Theme.of(context)
@@ -45,10 +47,8 @@ class SplashScreen extends StatelessWidget {
                       .headline1
                       ?.copyWith(color: Colors.white),
                 ),
-                baseColor: Colors.green.shade100,
-                highlightColor: Colors.white,
               ),
-              LoadingDisplay(adaptive: true),
+              const LoadingDisplay(adaptive: true),
             ],
           ),
         ),

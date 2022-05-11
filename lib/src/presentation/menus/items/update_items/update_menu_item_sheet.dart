@@ -1,73 +1,65 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:meny/locator.dart';
 import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/categories/categories.dart';
+import 'package:meny/src/data/category_menu_items/category_menu_items.dart';
+import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
-import 'package:meny/src/data/stores/services/services.dart';
-import 'package:meny/src/extensions/extensions.dart';
+import 'package:meny/src/data/stores/stores.dart';
+import 'package:meny/src/presentation/menus/items/image_upload/image_display_card.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 import 'package:meny/src/presentation/sheet_args.dart';
 import 'package:meny/src/services/services.dart';
 import 'package:meny/src/utils/utils.dart';
 
-class UpdateMenuItemSheet extends HookWidget {
-  static const String routeName = '/updateMenuItem';
-
-  static Route route(SheetArgs args) {
-    return MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (context) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider<EditMenuItemCubit>(
-              create: (context) => EditMenuItemCubit()
-                ..loadItem(args.resource as MenuItemEntity),
-            ),
-            BlocProvider<DeleteMenuItemCubit>(
-              create: (context) => DeleteMenuItemCubit(),
-            ),
-          ],
-          child: BlocBuilder<EditMenuItemCubit, EditMenuItemState>(
-            builder: (context, state) {
-              if (state.item != null) {
-                final item = state.item!;
-                return BlocProvider<MenuItemCategoriesCubit>(
-                  create: (context) =>
-                      MenuItemCategoriesCubit(menuItem: item)..load(),
-                  child: UpdateMenuItemSheet(resource: item),
-                );
-              } else {
-                if (state.failure != null) {
-                  return Scaffold(
-                    appBar: AppBar(
-                      automaticallyImplyLeading: true,
-                    ),
-                    body: ErrorDisplay(failure: state.failure!),
-                  );
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              }
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  final MenuItemEntity resource;
-
+class UpdateMenuItemSheet extends StatelessWidget {
   const UpdateMenuItemSheet({
     Key? key,
     required this.resource,
   }) : super(key: key);
 
-  static open({
+  final MenuItemModel resource;
+
+  static const String routeName = '/updateMenuItem';
+
+  static Route route(SheetArgs args) {
+    return MaterialPageRoute<Widget>(
+      fullscreenDialog: true,
+      builder: (context) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<EditMenuItemCubit>(
+              create: (context) => EditMenuItemCubit(
+                storeCubit: context.read<StoreCubit>(),
+              )..loadItem(args.resource as MenuItemModel),
+            ),
+            BlocProvider<CategoryMenuItemsCubit>(
+              create: (context) => CategoryMenuItemsCubit(
+                storeCubit: context.read<StoreCubit>(),
+              ),
+            ),
+            BlocProvider<DeleteMenuItemCubit>(
+              create: (context) => DeleteMenuItemCubit(
+                storeCubit: context.read<StoreCubit>(),
+              ),
+            ),
+            BlocProvider<ImageUploadCubit>(
+              create: (context) => ImageUploadCubit(
+                storeCubit: context.read<StoreCubit>(),
+              ),
+            ),
+          ],
+          child: const _UpdateMenuItemSheet(),
+        );
+      },
+    );
+  }
+
+  static Future<Object?> open({
     required BuildContext context,
-    required MenuItemEntity resource,
+    required MenuItemModel resource,
   }) {
     return Navigator.of(context).pushNamed(
       UpdateMenuItemSheet.routeName,
@@ -75,78 +67,67 @@ class UpdateMenuItemSheet extends HookWidget {
     );
   }
 
-  Future<bool> _onWillPop({
-    required BuildContext context,
-    required List<CategoryEntity> categories,
-  }) {
-    if (resource.name.isEmpty) {
-      return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Close without saving?'),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('YES'),
-              ),
-              OutlinedButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('NO'),
-              ),
-            ],
-          );
-        },
-      ).then((value) {
-        if (value) {
-          context.read<DeleteMenuItemCubit>().delete(
-                item: resource,
-                categories: categories,
-              );
-          return Future.value(false);
-        }
-        return Future.value(value);
-      });
-    }
-    return Future.value(true);
+  @override
+  Widget build(BuildContext context) {
+    throw UnimplementedError();
   }
+}
+
+class _UpdateMenuItemSheet extends HookWidget {
+  const _UpdateMenuItemSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final nameController = useTextEditingController(text: resource.name);
-    final descriptionController =
-        useTextEditingController(text: resource.description);
-    final priceController = useTextEditingController(
-      text: resource.price.toString(),
-    );
+    final editMenuItemState = context.watch<EditMenuItemCubit>().state;
+    final categoryMenuItemsState =
+        context.watch<CategoryMenuItemsCubit>().state;
+    final deleteMenuItemState = context.watch<DeleteMenuItemCubit>().state;
+    final imageUploadState = context.watch<ImageUploadCubit>().state;
+    final item = editMenuItemState.item;
+    final nameController = useTextEditingController();
+    final descriptionController = useTextEditingController();
+    final priceController = useTextEditingController();
 
-    return BlocBuilder<MenuItemCategoriesCubit, MenuItemCategoriesState>(
-      builder: (context, menuItemCategoriesState) {
-        return WillPopScope(
-          onWillPop: () => _onWillPop(
-            context: context,
-            categories: menuItemCategoriesState.categories,
-          ),
-          child: BlocConsumer<EditMenuItemCubit, EditMenuItemState>(
-            listener: (context, editMenuItemState) {
-              if (editMenuItemState.isSuccess) {
-                ToastService.showNotification(const Text('Item updated'));
-                Navigator.pop(context);
-              }
-              if (editMenuItemState.isError) {
-                DialogService.showErrorDialog(
-                  context: context,
-                  failure: editMenuItemState.failure!,
-                );
-              }
+    return WillPopScope(
+      onWillPop: () => _onWillPop(
+        context: context,
+        item: item,
+        categories: categoryMenuItemsState.categories,
+      ),
+      child: BlocConsumer<EditMenuItemCubit, EditMenuItemState>(
+        listener: (context, editMenuItemState) {
+          editMenuItemState.maybeWhen(
+            success: (_) => Navigator.pop(context),
+            error: (category, exception) {
+              DialogService.showErrorDialog(
+                context: context,
+                failure: Failure(message: exception.toString()),
+              );
             },
-            builder: (context, editMenuItemState) {
-              return BlocBuilder<DeleteMenuItemCubit, DeleteMenuItemState>(
-                builder: (context, deleteMenuItemState) {
+            loaded: (item) {
+              _setInitialValues(
+                context,
+                nameController,
+                descriptionController,
+                priceController,
+              );
+              context.read<CategoryMenuItemsCubit>().load(menuItemId: item.id!);
+            },
+            orElse: () {},
+          );
+        },
+        builder: (context, editMenuItemState) {
+          return editMenuItemState.maybeWhen(
+            loading: (_) => ScaffoldBuilder.loading(),
+            error: (_, exception) =>
+                ScaffoldBuilder.error(exception: exception),
+            orElse: () {
+              return BlocBuilder<CategoryMenuItemsCubit,
+                  CategoryMenuItemsState>(
+                builder: (context, categoryMenuItemsState) {
                   return Scaffold(
                     appBar: AppBar(
                       elevation: 0,
-                      automaticallyImplyLeading: true,
                       iconTheme: const IconThemeData(color: Colors.black),
                       backgroundColor: Colors.white,
                       title: const Text(
@@ -156,42 +137,52 @@ class UpdateMenuItemSheet extends HookWidget {
                         ),
                       ),
                       bottom: PreferredSize(
-                        preferredSize: const Size.fromHeight(8.0),
+                        preferredSize: const Size.fromHeight(8),
                         child: Visibility(
-                          visible: editMenuItemState.isUpdating ||
-                              deleteMenuItemState.isDeleting,
+                          visible: editMenuItemState.maybeWhen(
+                                orElse: () => false,
+                                updating: (_) => true,
+                              ) ||
+                              deleteMenuItemState.maybeWhen(
+                                orElse: () => false,
+                                deleting: () => true,
+                              ),
                           child: const LinearProgressIndicator(),
                         ),
                       ),
                       actions: [
-                        Center(child: _DeleteMenuItemButton(item: resource)),
-                        const SizedBox(width: 12.0),
+                        Center(child: _DeleteMenuItemButton(item: item)),
+                        const SizedBox(width: 12),
                         Center(
                           child: ElevatedButton(
                             onPressed: () {
                               final now = DateTime.now();
-                              context.read<EditMenuItemCubit>()
-                                ..update(
-                                  resource.copyWith(
-                                    name: nameController.text,
-                                    price:
-                                        double.tryParse(priceController.text) ??
-                                            0.0,
-                                    description: descriptionController.text,
-                                    updatedAt: now,
-                                  ),
-                                );
+                              context.read<EditMenuItemCubit>().update(
+                                    item.copyWith(
+                                      name: nameController.text,
+                                      price: double.tryParse(
+                                            priceController.text,
+                                          ) ??
+                                          0.0,
+                                      description: descriptionController.text,
+                                      updatedAt: now,
+                                      imageUrl: imageUploadState.url.isNotEmpty
+                                          ? imageUploadState.url
+                                          : null,
+                                    ),
+                                  );
                             },
                             child: const Text('Save'),
                           ),
                         ),
-                        const SizedBox(width: 24.0),
+                        const SizedBox(width: 24),
                       ],
                     ),
                     body: SingleChildScrollView(
                       padding: const EdgeInsets.all(Spacing.pageSpacing),
                       child: Column(
                         children: [
+                          Row(),
                           TextFormField(
                             controller: nameController,
                             autofocus: true,
@@ -211,7 +202,7 @@ class UpdateMenuItemSheet extends HookWidget {
                                 .labelStyle,
                             textInputAction: TextInputAction.next,
                           ),
-                          const SizedBox(height: 24.0),
+                          const SizedBox(height: 24),
                           TextFormField(
                             controller: descriptionController,
                             showCursor: true,
@@ -231,10 +222,65 @@ class UpdateMenuItemSheet extends HookWidget {
                                 .labelStyle,
                             textInputAction: TextInputAction.next,
                           ),
-                          const SizedBox(height: 24.0),
+                          const SizedBox(height: 24),
+                          BlocConsumer<ImageUploadCubit, ImageUploadState>(
+                            listener: (context, state) {
+                              state.maybeWhen(
+                                picked: (file, url) => context
+                                    .read<ImageUploadCubit>()
+                                    .upload(item: item),
+                                orElse: () {},
+                              );
+                            },
+                            builder: (context, state) {
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ImageDisplayCard(
+                                    url: state.url,
+                                    processing: state.maybeWhen(
+                                      uploading: (_, __) => true,
+                                      orElse: () => false,
+                                    ),
+                                    onTap: () =>
+                                        context.read<ImageUploadCubit>().pick(),
+                                    emptyBuilder: () => Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Center(child: Icon(Icons.image)),
+                                        Text('Click to upload')
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Photos of your menu items can help customers when deciding to order and can increase sales.',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 24),
                           TextFormField(
                             keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true),
+                              decimal: true,
+                            ),
                             inputFormatters: [
                               ValidatorInputFormatter(
                                 editingValidator:
@@ -257,33 +303,37 @@ class UpdateMenuItemSheet extends HookWidget {
                                 .labelStyle,
                             textInputAction: TextInputAction.next,
                           ),
-                          const SizedBox(height: 24.0),
-                          TagSelector<CategoryEntity>(
-                            initialItems: menuItemCategoriesState.categories,
-                            fetchSuggestions: () async {
+                          const SizedBox(height: 24),
+                          TagSelector<CategoryModel>(
+                            initialItems: categoryMenuItemsState.categories,
+                            fetchSuggestions: () {
                               final storeId =
-                                  await Locator.instance<StoreCacheService>()
-                                      .get('storeId');
-                              final categories = await FirebaseFirestore
-                                  .instance
-                                  .categoryEntitiesCollection(storeId: storeId)
-                                  .get();
-                              return categories.docs
-                                  .map((e) => CategoryEntity.fromSnapshot(e))
-                                  .toList();
+                                  context.read<StoreCubit>().state.store.id!;
+
+                              return Locator.instance<CategoryRepository>()
+                                  .getAll(storeId: storeId)
+                                  .first;
                             },
                             suggestionConfigurationBuilder: (_, category) =>
                                 SuggestionConfiguration(title: category.name),
                             emptyBuilder: (context) => const Padding(
-                              padding: EdgeInsets.all(20.0),
-                              child: Text('No categories to select'),
+                              padding: EdgeInsets.all(20),
+                              child: Text('No categories'),
                             ),
-                            onSelect: (context, category) => context
-                                .read<MenuItemCategoriesCubit>()
-                                .addItemToCategory(category: category),
+                            onSelect: (context, category) {
+                              context
+                                  .read<CategoryMenuItemsCubit>()
+                                  .createCategoryMenuItem(
+                                    category: category,
+                                    item: item,
+                                  );
+                            },
                             onRemove: (context, category) => context
-                                .read<MenuItemCategoriesCubit>()
-                                .removeItemFromCategory(category: category),
+                                .read<CategoryMenuItemsCubit>()
+                                .removeMenuCategory(
+                                  category: category,
+                                  item: item,
+                                ),
                             tagConfigurationBuilder: (_, category) =>
                                 TagConfiguration(
                               title: category.name,
@@ -304,27 +354,83 @@ class UpdateMenuItemSheet extends HookWidget {
                 },
               );
             },
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
+  }
+
+  void _setInitialValues(
+    BuildContext context,
+    TextEditingController nameController,
+    TextEditingController descriptionController,
+    TextEditingController priceController,
+  ) {
+    context.read<EditMenuItemCubit>().state.maybeWhen(
+          loaded: (item) {
+            nameController.text = item.name;
+            descriptionController.text = item.description;
+            priceController.text = item.price.toString();
+            if (item.imageUrl != null) {
+              context.read<ImageUploadCubit>().seed(url: item.imageUrl!);
+            }
+          },
+          orElse: () {},
+        );
+  }
+
+  Future<bool> _onWillPop({
+    required BuildContext context,
+    required MenuItemModel item,
+    required List<CategoryModel> categories,
+  }) {
+    if (item.name.isEmpty) {
+      showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Close without saving?'),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text('YES'),
+              ),
+              OutlinedButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('NO'),
+              ),
+            ],
+          );
+        },
+      ).then((value) {
+        if (value != null && value) {
+          context.read<DeleteMenuItemCubit>().delete(
+                item: item,
+                categories: categories,
+              );
+          return Future.value(true);
+        }
+        return Future.value(false);
+      });
+    }
+    return Future.value(true);
   }
 }
 
 class _DeleteMenuItemButton extends StatelessWidget {
-  final MenuItemEntity item;
-
   const _DeleteMenuItemButton({
     Key? key,
     required this.item,
   }) : super(key: key);
 
+  final MenuItemModel item;
+
   void showConfirmationDialog({
     required BuildContext context,
-    required MenuItemEntity item,
-    required List<CategoryEntity> categories,
+    required MenuItemModel item,
+    required List<CategoryModel> categories,
   }) {
-    showDialog(
+    showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -336,18 +442,18 @@ class _DeleteMenuItemButton extends StatelessWidget {
           actions: [
             OutlinedButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('NO'),
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
+              child: const Text('NO'),
             ),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('YES'),
               style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all(Theme.of(context).errorColor),
               ),
+              child: const Text('YES'),
             ),
           ],
         );
@@ -366,35 +472,43 @@ class _DeleteMenuItemButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<DeleteMenuItemCubit, DeleteMenuItemState>(
       listener: (context, deleteMenuItemState) {
-        if (deleteMenuItemState.status == DeleteMenuItemStatus.success) {
-          Navigator.of(context).pop();
-          ToastService.showNotification(const Text('Item deleted'));
-        }
-        if (deleteMenuItemState.status == DeleteMenuItemStatus.error) {
-          Navigator.of(context).pop();
-          ToastService.showNotification(
-            const Text('Failed to delete'),
-            ToastType.error,
-          );
-        }
+        deleteMenuItemState.maybeWhen(
+          success: () {
+            Navigator.of(context).pop();
+            if (item.name.isNotEmpty) {
+              ToastService.toast('Item deleted');
+            }
+          },
+          error: (exception) {
+            Navigator.of(context).pop();
+            ToastService.showNotification(
+              Text(exception.toString()),
+              ToastType.error,
+            );
+          },
+          orElse: () {},
+        );
       },
       builder: (context, deleteMenuItemState) {
-        return BlocBuilder<MenuItemCategoriesCubit, MenuItemCategoriesState>(
-          builder: (context, menuItemCategoriesState) {
+        return BlocBuilder<CategoryMenuItemsCubit, CategoryMenuItemsState>(
+          builder: (context, categoryMenuItemsState) {
             return OutlinedButton(
-              onPressed: deleteMenuItemState.isDeleting
-                  ? null
-                  : () => showConfirmationDialog(
-                        context: context,
-                        item: item,
-                        categories: menuItemCategoriesState.categories,
-                      ),
-              child: Text(
-                'Delete',
-                style: TextStyle(color: Theme.of(context).errorColor),
+              onPressed: deleteMenuItemState.maybeWhen(
+                deleting: () {
+                  return null;
+                },
+                orElse: () => () => showConfirmationDialog(
+                      context: context,
+                      item: item,
+                      categories: categoryMenuItemsState.categories,
+                    ),
               ),
               style: OutlinedButton.styleFrom(
                 primary: Colors.grey[100],
+              ),
+              child: Text(
+                'Delete',
+                style: TextStyle(color: Theme.of(context).errorColor),
               ),
             );
           },

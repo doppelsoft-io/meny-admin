@@ -1,130 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:meny/src/constants/spacing.dart';
+import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menus/menus.dart';
+import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 import 'package:meny/src/presentation/sheet_args.dart';
 import 'package:meny/src/services/services.dart';
-import 'package:meny/src/constants/spacing.dart';
 
-class UpdateMenusSheet extends HookWidget {
-  final MenuEntity menu;
-
-  const UpdateMenusSheet({
-    Key? key,
-    required this.menu,
-  }) : super(key: key);
-
-  static const String routeName = '/updateMenusSheet';
-
-  static Route route(SheetArgs args) {
-    return MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (context) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider<EditMenuCubit>(
-              create: (context) =>
-                  EditMenuCubit()..loadMenu(menu: args.resource as MenuEntity),
-            ),
-            BlocProvider<DeleteMenuCubit>(
-              create: (context) => DeleteMenuCubit(),
-            ),
-          ],
-          child: BlocConsumer<EditMenuCubit, EditMenuState>(
-            listener: (context, state) {
-              if (state.isSuccess) {
-                ToastService.showNotification(const Text('Menu updated'));
-                Navigator.pop(context);
-              }
-              if (state.isError) {
-                DialogService.showErrorDialog(
-                  context: context,
-                  failure: state.failure!,
-                );
-              }
-            },
-            builder: (context, state) {
-              if (state.menu != null) {
-                final menu = state.menu;
-                return UpdateMenusSheet(menu: menu!);
-              } else {
-                if (state.failure != null) {
-                  return Scaffold(
-                    appBar: AppBar(
-                      automaticallyImplyLeading: true,
-                    ),
-                    body: ErrorDisplay(failure: state.failure!),
-                  );
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              }
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  static open({
-    required BuildContext context,
-    required MenuEntity menu,
-  }) {
-    return Navigator.of(context).pushNamed(
-      UpdateMenusSheet.routeName,
-      arguments: SheetArgs(
-        resource: menu,
-      ),
-    );
-  }
-
-  Future<bool> _onWillPop({
-    required BuildContext context,
-  }) {
-    if (menu.name.isEmpty) {
-      return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Close without saving?'),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('YES'),
-              ),
-              OutlinedButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('NO'),
-              ),
-            ],
-          );
-        },
-      ).then((value) {
-        if (value) {
-          context.read<DeleteMenuCubit>().delete(menu: menu);
-          return Future.value(false);
-        }
-        return Future.value(value);
-      });
-    }
-    return Future.value(true);
-  }
+class _UpdateMenusSheet extends HookWidget {
+  const _UpdateMenusSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final controller = useTextEditingController(text: menu.name);
+    final editMenuState = context.watch<EditMenuCubit>().state;
+    final deleteMenuState = context.watch<DeleteMenuCubit>().state;
+
+    final controller = useTextEditingController(text: editMenuState.menu.name);
 
     return WillPopScope(
-      onWillPop: () => _onWillPop(context: context),
-      child: BlocBuilder<EditMenuCubit, EditMenuState>(
+      onWillPop: () => _onWillPop(
+        context: context,
+        menu: editMenuState.menu,
+      ),
+      child: BlocConsumer<EditMenuCubit, EditMenuState>(
+        listener: (context, editMenuState) {
+          editMenuState.maybeWhen(
+            loaded: (menu) {
+              controller.text = menu.name;
+            },
+            success: (_) {
+              ToastService.showNotification(const Text('Menu updated'));
+              Navigator.pop(context);
+            },
+            error: (_, exception) {
+              DialogService.showErrorDialog(
+                context: context,
+                failure: Failure(message: exception.toString()),
+              );
+            },
+            orElse: () {},
+          );
+        },
         builder: (context, editMenuState) {
-          return BlocBuilder<DeleteMenuCubit, DeleteMenuState>(
-            builder: (context, deleteMenuState) {
+          return editMenuState.maybeWhen(
+            loading: (_) => ScaffoldBuilder.loading(),
+            error: (_, exception) => ScaffoldBuilder.error(
+              exception: exception,
+            ),
+            orElse: () {
               return Scaffold(
                 appBar: AppBar(
                   elevation: 0,
-                  automaticallyImplyLeading: true,
                   iconTheme: const IconThemeData(color: Colors.black),
                   backgroundColor: Colors.white,
                   title: const Text(
@@ -134,27 +62,35 @@ class UpdateMenusSheet extends HookWidget {
                     ),
                   ),
                   bottom: PreferredSize(
-                    preferredSize: const Size.fromHeight(8.0),
+                    preferredSize: const Size.fromHeight(8),
                     child: Visibility(
-                      visible: editMenuState.isUpdating ||
-                          deleteMenuState.isDeleting,
+                      visible: editMenuState.maybeWhen(
+                            orElse: () => false,
+                            updating: (_) => true,
+                          ) ||
+                          deleteMenuState.maybeWhen(
+                            orElse: () => false,
+                            deleting: () => true,
+                          ),
                       child: const LinearProgressIndicator(),
                     ),
                   ),
                   actions: [
-                    Center(child: _DeleteMenuButton(menu: menu)),
-                    const SizedBox(width: 12.0),
+                    Center(child: _DeleteMenuButton(menu: editMenuState.menu)),
+                    const SizedBox(width: 12),
                     Center(
                       child: ElevatedButton(
                         onPressed: () => context.read<EditMenuCubit>()
-                          ..update(menu.copyWith(
-                            name: controller.text,
-                            updatedAt: DateTime.now(),
-                          )),
+                          ..update(
+                            editMenuState.menu.copyWith(
+                              name: controller.text,
+                              updatedAt: DateTime.now(),
+                            ),
+                          ),
                         child: const Text('Save'),
                       ),
                     ),
-                    const SizedBox(width: 24.0),
+                    const SizedBox(width: 24),
                   ],
                 ),
                 body: SingleChildScrollView(
@@ -187,21 +123,105 @@ class UpdateMenusSheet extends HookWidget {
       ),
     );
   }
+
+  Future<bool> _onWillPop({
+    required BuildContext context,
+    required MenuModel menu,
+  }) {
+    if (menu.name.isEmpty) {
+      return showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Close without saving?'),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text('YES'),
+              ),
+              OutlinedButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('NO'),
+              ),
+            ],
+          );
+        },
+      ).then((value) {
+        if (value != null && value) {
+          context.read<DeleteMenuCubit>().delete(menu: menu);
+          return Future.value(false);
+        }
+        return Future.value(value);
+      });
+    }
+    return Future.value(true);
+  }
+}
+
+class UpdateMenusSheet extends StatelessWidget {
+  const UpdateMenusSheet({
+    Key? key,
+    required this.menu,
+  }) : super(key: key);
+
+  final MenuModel menu;
+
+  static const String routeName = '/updateMenusSheet';
+
+  static Route route(SheetArgs? args) {
+    return MaterialPageRoute<Widget>(
+      fullscreenDialog: true,
+      builder: (context) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<EditMenuCubit>(
+              create: (context) => EditMenuCubit(
+                storeCubit: context.read<StoreCubit>(),
+              )..loadMenu(menu: args!.resource as MenuModel),
+            ),
+            BlocProvider<DeleteMenuCubit>(
+              create: (context) => DeleteMenuCubit(
+                storeCubit: context.read<StoreCubit>(),
+              ),
+            ),
+          ],
+          child: const _UpdateMenusSheet(),
+        );
+      },
+    );
+  }
+
+  static Future<Object?> open({
+    required BuildContext context,
+    required MenuModel menu,
+  }) {
+    return Navigator.of(context).pushNamed(
+      UpdateMenusSheet.routeName,
+      arguments: SheetArgs(
+        resource: menu,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    throw UnimplementedError();
+  }
 }
 
 class _DeleteMenuButton extends StatelessWidget {
-  final MenuEntity menu;
-
   const _DeleteMenuButton({
     Key? key,
     required this.menu,
   }) : super(key: key);
 
+  final MenuModel menu;
+
   void showConfirmationDialog({
     required BuildContext context,
-    required MenuEntity menu,
+    required MenuModel menu,
   }) {
-    showDialog(
+    showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -213,18 +233,18 @@ class _DeleteMenuButton extends StatelessWidget {
           actions: [
             OutlinedButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('NO'),
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
+              child: const Text('NO'),
             ),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('YES'),
               style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all(Theme.of(context).errorColor),
               ),
+              child: const Text('YES'),
             ),
           ],
         );
@@ -240,22 +260,37 @@ class _DeleteMenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<DeleteMenuCubit, DeleteMenuState>(
       listener: (context, deleteMenuState) {
-        if (deleteMenuState.status == DeleteMenuStatus.success) {
-          Navigator.of(context).pop();
-          ToastService.showNotification(const Text('Menu deleted'));
-        }
+        deleteMenuState.maybeWhen(
+          success: () {
+            Navigator.of(context).pop();
+            ToastService.toast('Menu deleted');
+          },
+          error: (exception) {
+            ToastService.showNotification(
+              Text(exception.toString()),
+              ToastType.error,
+            );
+          },
+          orElse: () {},
+        );
       },
       builder: (context, deleteMenuState) {
         return OutlinedButton(
-          onPressed: deleteMenuState.isDeleting
-              ? null
-              : () => showConfirmationDialog(context: context, menu: menu),
-          child: Text(
-            'Delete',
-            style: TextStyle(color: Theme.of(context).errorColor),
+          onPressed: deleteMenuState.maybeWhen(
+            deleting: () {
+              return null;
+            },
+            orElse: () => () => showConfirmationDialog(
+                  context: context,
+                  menu: menu,
+                ),
           ),
           style: OutlinedButton.styleFrom(
             primary: Colors.grey[100],
+          ),
+          child: Text(
+            'Delete',
+            style: TextStyle(color: Theme.of(context).errorColor),
           ),
         );
       },

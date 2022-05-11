@@ -1,8 +1,8 @@
 part of 'resources_cubit.dart';
 
 abstract class ResourcesState extends Equatable {
-  final List<IResourceModel> resources;
   const ResourcesState({this.resources = const []});
+  final List<dynamic> resources;
 
   @override
   List<Object> get props => [resources];
@@ -13,19 +13,18 @@ class ResourcesInitial extends ResourcesState {}
 class ResourcesLoading extends ResourcesState {}
 
 class ResourcesLoaded extends ResourcesState {
-  @override
-  final List<IResourceModel> resources;
-
   const ResourcesLoaded(this.resources);
+
+  @override
+  final List<dynamic> resources;
 
   @override
   List<Object> get props => [resources];
 }
 
 class ResourcesFailure extends ResourcesState {
-  final Failure failure;
-
   const ResourcesFailure(this.failure);
+  final Failure failure;
 
   @override
   List<Object> get props => [failure];

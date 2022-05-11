@@ -5,12 +5,12 @@ import 'package:meny/locator.dart';
 import 'package:meny/src/enums/enums.dart';
 import 'package:meny/src/services/services.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   await Locator.setup();
   await HiveService.configure();
 
-  runApp(App(environment: Environment.staging));
+  runApp(const App(environment: Environment.staging));
 }

@@ -1,54 +1,60 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/locator.dart';
-import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
+import 'package:meny/src/data/categories/categories.dart';
+import 'package:meny/src/data/category_menu_items/category_menu_items.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
-import 'package:meny/src/data/stores/services/services.dart';
+import 'package:meny/src/data/stores/stores.dart';
 
 part 'reorder_compiled_menu_item_state.dart';
+part 'reorder_compiled_menu_item_cubit.freezed.dart';
 
 class ReorderCompiledMenuItemCubit extends Cubit<ReorderCompiledMenuItemState> {
-  final CompiledMenuRepository _compiledMenuRepository;
-  final StoreCacheService _storeCacheService;
-
   ReorderCompiledMenuItemCubit({
-    CompiledMenuRepository? compiledMenuRepository,
-    StoreCacheService? storeCacheService,
-  })  : _compiledMenuRepository = compiledMenuRepository ?? Locator.instance(),
-        _storeCacheService = storeCacheService ?? Locator.instance(),
-        super(ReorderCompiledMenuItemState.initial());
+    required StoreCubit storeCubit,
+    CategoryMenuItemsRepository? categoryMenuItemsRepository,
+  })  : _storeCubit = storeCubit,
+        _categoryMenuItemsRepository =
+            categoryMenuItemsRepository ?? Locator.instance(),
+        super(const ReorderCompiledMenuItemState.initial());
 
-  void reorder({
-    required String menuId,
-    required String categoryId,
+  final StoreCubit _storeCubit;
+  final CategoryMenuItemsRepository _categoryMenuItemsRepository;
+
+  Future<void> reorder({
+    required CategoryModel category,
     required List<MenuItemModel> items,
   }) async {
-    emit(state.copyWith(status: ReorderCompiledMenuItemStatus.reordering));
+    emit(const ReorderCompiledMenuItemState.reordering());
 
     try {
-      final storeId = await _storeCacheService.get('storeId');
+      final storeId = _storeCubit.state.store.id!;
       final futures = List.generate(
         items.length,
         (index) async {
           final item = items[index];
-          return await _compiledMenuRepository.updateMenuItem(
+          final categoryMenuItem = await _categoryMenuItemsRepository.get(
             storeId: storeId,
-            menuId: menuId,
-            categoryId: categoryId,
-            item: item.copyWith(position: index),
+            categoryId: category.id!,
+            menuItemId: item.id!,
+          );
+
+          return _categoryMenuItemsRepository.update(
+            storeId: storeId,
+            model: categoryMenuItem.copyWith(position: index),
           );
         },
       );
       await Future.wait(futures);
-      emit(state.copyWith(
-        status: ReorderCompiledMenuItemStatus.success,
-      ));
+
+      emit(const ReorderCompiledMenuItemState.success());
     } catch (err) {
-      emit(state.copyWith(
-        status: ReorderCompiledMenuItemStatus.error,
-        failure: Failure(message: 'Reordering items failed'),
-      ));
+      emit(
+        const ReorderCompiledMenuItemState.error(
+          exception: Failure(message: 'Reordering items failed.'),
+        ),
+      );
     }
   }
 }

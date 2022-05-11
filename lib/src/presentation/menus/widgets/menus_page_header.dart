@@ -3,14 +3,14 @@ import 'package:meny/src/presentation/shared/page_action_button.dart';
 import 'package:meny/src/presentation/shared/page_title.dart';
 
 class MenusPageHeader extends StatelessWidget {
-  final String humanReadableResourceName;
-  final Function() onNewPressed;
-
   const MenusPageHeader({
     Key? key,
     required this.humanReadableResourceName,
     required this.onNewPressed,
   }) : super(key: key);
+
+  final String humanReadableResourceName;
+  final Function() onNewPressed;
 
   @override
   Widget build(BuildContext context) {

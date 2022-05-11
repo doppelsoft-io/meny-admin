@@ -3,13 +3,13 @@ import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/presentation/shared/shared.dart';
 
 class MenusPagePersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final String title;
-  final Function() onNewPressed;
-
   const MenusPagePersistentHeaderDelegate({
     required this.title,
     required this.onNewPressed,
   });
+
+  final String title;
+  final Function() onNewPressed;
 
   @override
   Widget build(
@@ -18,10 +18,10 @@ class MenusPagePersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
     bool overlapsContent,
   ) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
       ),
-      padding: EdgeInsets.symmetric(horizontal: Spacing.pageSpacing),
+      padding: const EdgeInsets.symmetric(horizontal: Spacing.pageSpacing),
       height: maxExtent,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,

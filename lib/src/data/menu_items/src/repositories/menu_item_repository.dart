@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 import 'package:meny/src/constants/paths.dart';
 import 'package:meny/src/data/core/failures.dart';
-import 'package:dartz/dartz.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
 import 'package:meny/src/data/repositories/i_resources_repository.dart';
 import 'package:meny/src/extensions/extensions.dart';
 import 'package:meny/src/services/services.dart';
 
-class MenuItemRepository extends IResourcesRepository<MenuItemEntity> {
-  final LoggerService _loggerService;
+class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
   MenuItemRepository({
     String? path,
     FirebaseFirestore? firebaseFirestore,
@@ -19,7 +18,9 @@ class MenuItemRepository extends IResourcesRepository<MenuItemEntity> {
           firebaseFirestore: firebaseFirestore ?? FirebaseFirestore.instance,
         );
 
-  Future<MenuItemEntity> get({
+  final LoggerService _loggerService;
+
+  Future<MenuItemModel> get({
     required String storeId,
     required String id,
   }) async {
@@ -27,47 +28,51 @@ class MenuItemRepository extends IResourcesRepository<MenuItemEntity> {
       final snap = await firebaseFirestore
           .menuItemEntitiesDocument(storeId: storeId, itemId: id)
           .get();
-      return MenuItemEntity.fromSnapshot(snap);
+      return MenuItemModel.fromSnapshot(snap);
     } catch (err) {
       _loggerService.log('(get): ${err.toString()}');
-      throw Failure(message: 'Failed to retrieve item');
+      throw const Failure(message: 'Failed to retrieve item');
     }
   }
 
   @override
-  Stream<List<MenuItemEntity>> getAll({required String storeId}) {
+  Stream<List<MenuItemModel>> getAll({required String storeId}) {
     return firebaseFirestore
         .menuItemEntitiesCollection(storeId: storeId)
-        .orderBy('createdAt', descending: true)
+        .orderBy('createdAt', descending: false)
         .snapshots()
-        .map((doc) =>
-            doc.docs.map((snap) => MenuItemEntity.fromSnapshot(snap)).toList());
+        .map(
+          (doc) =>
+              doc.docs.map((snap) => MenuItemModel.fromSnapshot(snap)).toList(),
+        );
   }
 
   @override
-  Future<Either<Failure, MenuItemEntity>> create({
+  Future<Either<Failure, MenuItemModel>> create({
     required String storeId,
-    required MenuItemEntity resource,
+    required MenuItemModel resource,
   }) async {
     try {
       final document = await firebaseFirestore
           .menuItemEntitiesCollection(storeId: storeId)
           .add(resource.toJson());
       final snapshot = await document.get();
-      return right(MenuItemEntity.fromSnapshot(snapshot));
+      return right(MenuItemModel.fromSnapshot(snapshot));
     } catch (err) {
       _loggerService.log('(create): ${err.toString()}');
-      return left(Failure(
-        message:
-            "We had an issue creating your ${resource.toFriendlyString()}. Please try again later.",
-      ));
+      return left(
+        Failure(
+          message:
+              'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
+        ),
+      );
     }
   }
 
   @override
   Future<Either<Failure, bool>> update({
     required String storeId,
-    required MenuItemEntity resource,
+    required MenuItemModel resource,
   }) async {
     try {
       await firebaseFirestore
@@ -76,18 +81,20 @@ class MenuItemRepository extends IResourcesRepository<MenuItemEntity> {
       return right(true);
     } catch (err) {
       _loggerService.log('(update): ${err.toString()}');
-      return left(Failure(
-        message:
-            'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
-        shortMessage: 'Update failed.',
-      ));
+      return left(
+        Failure(
+          message:
+              'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
+          shortMessage: 'Update failed.',
+        ),
+      );
     }
   }
 
   @override
   Future<Either<Failure, bool>> delete({
     required String storeId,
-    required MenuItemEntity resource,
+    required MenuItemModel resource,
   }) async {
     try {
       await firebaseFirestore
@@ -96,11 +103,13 @@ class MenuItemRepository extends IResourcesRepository<MenuItemEntity> {
       return right(true);
     } catch (err) {
       _loggerService.log('(delete): ${err.toString()}');
-      return left(Failure(
-        message:
-            'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
-        shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
-      ));
+      return left(
+        Failure(
+          message:
+              'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
+          shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
+        ),
+      );
     }
   }
 }

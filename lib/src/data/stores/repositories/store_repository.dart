@@ -7,14 +7,14 @@ import 'package:meny/src/extensions/extensions.dart';
 import 'package:meny/src/services/services.dart';
 
 class StoreRepository {
-  final FirebaseFirestore _firebaseFirestore;
-  final LoggerService _loggerService;
-
   StoreRepository({
     FirebaseFirestore? firebaseFirestore,
     required LoggerService loggerService,
   })  : _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
         _loggerService = loggerService;
+
+  final FirebaseFirestore _firebaseFirestore;
+  final LoggerService _loggerService;
 
   Stream<StoreModel> stream({
     required String storeId,
@@ -36,7 +36,7 @@ class StoreRepository {
       return right(StoreModel.fromSnapshot(snap));
     } catch (err) {
       _loggerService.log('(get): ${err.toString()}');
-      return left(Failure(message: 'Failed to retrieve store'));
+      return left(const Failure(message: 'Failed to retrieve store'));
     }
   }
 
@@ -56,7 +56,7 @@ class StoreRepository {
       return right(stores);
     } catch (err) {
       _loggerService.log('(getStoresForUser): ${err.toString()}');
-      return left(Failure(message: 'Failed to retrieve store'));
+      return left(const Failure(message: 'Failed to retrieve store'));
     }
   }
 
@@ -76,7 +76,7 @@ class StoreRepository {
       return right(StoreModel.fromSnapshot(snapshot));
     } catch (err) {
       _loggerService.log('(createEmptyStoreForUser): ${err.toString()}');
-      return left(Failure(message: 'Failed to create store'));
+      return left(const Failure(message: 'Failed to create store'));
     }
   }
 }

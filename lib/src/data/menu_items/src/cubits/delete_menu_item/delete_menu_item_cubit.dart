@@ -1,40 +1,35 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny/locator.dart';
-import 'package:meny/src/constants/callables.dart';
+import 'package:meny/src/constants/paths.dart';
 import 'package:meny/src/data/categories/categories.dart';
 import 'package:meny/src/data/core/failures.dart';
 import 'package:meny/src/data/menu_items/menu_items.dart';
-import 'package:meny/src/data/menus/menus.dart';
 import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/extensions/extensions.dart';
 
 part 'delete_menu_item_state.dart';
+part 'delete_menu_item_cubit.freezed.dart';
 
 class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
-  final FirebaseFirestore _firebaseFirestore;
-  final StoreCacheService _storeCacheService;
-
   DeleteMenuItemCubit({
     FirebaseFirestore? firebaseFirestore,
-    StoreCacheService? storeCacheService,
+    required StoreCubit storeCubit,
   })  : _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
-        _storeCacheService = storeCacheService ?? Locator.instance(),
-        super(DeleteMenuItemState.initial());
+        _storeCubit = storeCubit,
+        super(const DeleteMenuItemState.initial());
 
-  void delete({
-    required MenuItemEntity item,
-    required List<CategoryEntity> categories,
+  final FirebaseFirestore _firebaseFirestore;
+  final StoreCubit _storeCubit;
+
+  Future<void> delete({
+    required MenuItemModel item,
+    required List<CategoryModel> categories,
   }) async {
-    emit(state.copyWith(
-      status: DeleteMenuItemStatus.deleting,
-      failure: null,
-    ));
-
+    emit(const DeleteMenuItemState.deleting());
     try {
-      final storeId = await _storeCacheService.get('storeId');
+      final storeId = _storeCubit.state.store.id!;
       final batch = _firebaseFirestore.batch();
       final menuItemRef = _firebaseFirestore.menuItemEntitiesDocument(
         storeId: storeId,
@@ -43,67 +38,27 @@ class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
       batch.delete(menuItemRef);
 
       for (final category in categories) {
-        final updatedCategory = category.copyWith(
-          itemIds: List.from(category.itemIds)..remove(item.id),
-        );
-        final categoryRef = _firebaseFirestore.categoryEntitiesDocument(
-          storeId: storeId,
-          categoryId: category.id!,
-        );
-        batch.update(categoryRef, updatedCategory.toJson());
+        final docId = '${category.id}-${item.id}';
+        final categoryMenuItemRef = _firebaseFirestore
+            .collection(Paths.stores)
+            .doc(storeId)
+            .collection(Paths.categoryMenuItems)
+            .doc(docId);
+
+        batch.delete(categoryMenuItemRef);
       }
-
-      final menusQuery = await _firebaseFirestore
-          .menuEntitiesCollection(storeId: storeId)
-          .get();
-      final menus =
-          menusQuery.docs.map((snap) => MenuEntity.fromSnapshot(snap)).toList();
-
-      final compiledMenuItemFutures = List.generate(
-        menus.length,
-        (index) async {
-          final menu = menus[index];
-          final categories = List.generate(
-            menu.categoryIds.length,
-            (index) async {
-              final categoryId = menu.categoryIds[index];
-              final menuItemRef = _firebaseFirestore.compiledMenuItemsDocument(
-                storeId: storeId,
-                menuId: menu.id!,
-                categoryId: categoryId,
-                itemId: item.id!,
-              );
-              final menuItemDoc = await menuItemRef.get();
-              if (menuItemDoc.exists) {
-                final callable = FirebaseFunctions.instance
-                    .httpsCallable(Callables.recursiveDelete);
-
-                return await callable({'path': menuItemRef.path});
-              }
-            },
-          );
-          return await Future.wait(categories);
-        },
-      );
-      await Future.wait(compiledMenuItemFutures);
 
       await batch.commit();
 
-      emit(
-        state.copyWith(
-          status: DeleteMenuItemStatus.success,
-          failure: null,
-        ),
-      );
+      emit(const DeleteMenuItemState.success());
     } catch (err) {
       emit(
-        state.copyWith(
-          status: DeleteMenuItemStatus.error,
-          failure: Failure(
-            message: 'Deleting menu item failed.',
-          ),
+        const DeleteMenuItemState.error(
+          exception: Failure(message: 'Failed to delete item'),
         ),
       );
+    } finally {
+      emit(const DeleteMenuItemState.initial());
     }
   }
 }

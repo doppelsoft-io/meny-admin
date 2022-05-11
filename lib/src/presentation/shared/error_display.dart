@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:meny/src/data/core/failures.dart';
 
 class ErrorDisplay extends StatelessWidget {
-  final Failure failure;
-
   const ErrorDisplay({
     Key? key,
     required this.failure,
   }) : super(key: key);
 
+  final Failure failure;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(24),
       alignment: Alignment.topCenter,
       child: Text(
         failure.message,

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class PageTitle extends StatelessWidget {
-  final String title;
-
   const PageTitle({
     Key? key,
     required this.title,
   }) : super(key: key);
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {

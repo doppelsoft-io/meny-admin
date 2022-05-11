@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:meny/app.dart';
@@ -9,7 +8,7 @@ import 'package:meny/src/enums/enums.dart';
 import 'package:meny/src/services/services.dart';
 import 'package:universal_platform/universal_platform.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final localhost = UniversalPlatform.isAndroid ? '10.0.2.2' : 'localhost';
@@ -24,10 +23,10 @@ void main() async {
 
   FirebaseFunctions.instance.useFunctionsEmulator(localhost, 5001);
 
-  FirebaseAuth.instance.useEmulator('http://localhost:9099');
+  // await FirebaseAuth.instance.useEmulator('http://localhost:9099');
 
   await Locator.setup();
   await HiveService.configure();
 
-  runApp(App(environment: Environment.development));
+  runApp(const App(environment: Environment.development));
 }

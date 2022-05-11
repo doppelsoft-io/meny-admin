@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:meny/locator.dart';
@@ -7,17 +6,14 @@ import 'package:meny/src/data/users/users.dart';
 import 'package:meny/src/services/services.dart';
 
 class AuthRepository {
-  final FirebaseFirestore _firebaseFirestore;
-  final FirebaseAuth _firebaseAuth;
-  final LoggerService _loggerService;
-
   AuthRepository({
-    FirebaseFirestore? firebaseFirestore,
     FirebaseAuth? firebaseAuth,
     required LoggerService loggerService,
-  })  : _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
-        _firebaseAuth = firebaseAuth ?? Locator.instance(),
+  })  : _firebaseAuth = firebaseAuth ?? Locator.instance(),
         _loggerService = loggerService;
+
+  final FirebaseAuth _firebaseAuth;
+  final LoggerService _loggerService;
 
   Future<UserModel> getCurrentUser() async {
     try {
@@ -30,7 +26,7 @@ class AuthRepository {
       }
     } catch (err) {
       _loggerService.log('(getCurrentUser): ${err.toString()}');
-      throw Failure(message: 'Failed to fetch current user');
+      throw const Failure(message: 'Failed to fetch current user');
     }
   }
 
@@ -40,17 +36,16 @@ class AuthRepository {
 
       if (credential.user != null) {
         final user = UserModel.fromFirebaseAuthUser(credential.user!);
-        print("anonymous user $user");
         return user;
       } else {
         return UserModel.empty();
       }
     } on PlatformException catch (err) {
       _loggerService.log('(loginAnonymously): ${err.message}');
-      throw Failure(message: 'Failed to login anonymously');
+      throw const Failure(message: 'Failed to login anonymously');
     } catch (err) {
       _loggerService.log('(loginAnonymously): ${err.toString()}');
-      throw Failure(message: 'Failed to login anonymously');
+      throw const Failure(message: 'Failed to login anonymously');
     }
   }
 
@@ -107,7 +102,7 @@ class AuthRepository {
       await _firebaseAuth.signOut();
     } catch (err) {
       _loggerService.log('(logout): ${err.toString()}');
-      throw Failure(message: 'Logout failed');
+      throw const Failure(message: 'Logout failed');
     }
   }
 }

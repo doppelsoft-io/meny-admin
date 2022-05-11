@@ -6,26 +6,21 @@ part of 'menu_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MenuModel _$MenuModelFromJson(Map<String, dynamic> json) => MenuModel(
+_$_MenuModel _$$_MenuModelFromJson(Map<String, dynamic> json) => _$_MenuModel(
       name: json['name'] as String,
-      categoryIds: (json['categoryIds'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      description: json['description'] as String?,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      categories: (json['categories'] as List<dynamic>)
-          .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
     );
 
-Map<String, dynamic> _$MenuModelToJson(MenuModel instance) => <String, dynamic>{
+Map<String, dynamic> _$$_MenuModelToJson(_$_MenuModel instance) =>
+    <String, dynamic>{
       'name': instance.name,
-      'categoryIds': instance.categoryIds,
+      'description': instance.description,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
-      'categories': instance.categories.map((e) => e.toJson()).toList(),
     };

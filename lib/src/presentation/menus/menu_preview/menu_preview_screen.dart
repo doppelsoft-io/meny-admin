@@ -3,13 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny/src/data/menus/menus.dart';
+import 'package:meny/src/data/stores/stores.dart';
 import 'package:meny/src/presentation/menus/menu_preview/widgets/widgets.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final String title;
-
   const _MenuPreviewHeaderDelegate({required this.title});
+
+  final String title;
 
   @override
   Widget build(
@@ -36,11 +37,10 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
             Row(
               children: [
                 QrImage(
-                  data: "https://google.com",
-                  version: QrVersions.auto,
-                  size: 75.0,
+                  data: 'https://google.com',
+                  size: 75,
                 ),
-                const SizedBox(width: 12.0),
+                const SizedBox(width: 12),
                 ElevatedButton(
                   child: const Text('Publish'),
                   onPressed: () {},
@@ -65,29 +65,31 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class MenuPreviewScreenArgs {
-  final MenuEntity menu;
-
   const MenuPreviewScreenArgs({required this.menu});
+
+  final MenuModel menu;
 }
 
 class MenuPreviewScreen extends StatefulWidget {
+  const MenuPreviewScreen({
+    Key? key,
+    required this.args,
+  }) : super(key: key);
+
   final MenuPreviewScreenArgs args;
 
   static const String routeName = '/menuPreviewScreen';
 
   static Route route(MenuPreviewScreenArgs args) {
-    return MaterialPageRoute(
-      builder: (context) => BlocProvider<ViewMenuCubit>(
-        create: (context) => ViewMenuCubit()..compile(menuId: args.menu.id!),
+    return MaterialPageRoute<Widget>(
+      builder: (context) => BlocProvider<CompiledMenuCubit>(
+        create: (context) => CompiledMenuCubit(
+          storeCubit: context.read<StoreCubit>(),
+        )..load(menu: args.menu),
         child: MenuPreviewScreen(args: args),
       ),
     );
   }
-
-  const MenuPreviewScreen({
-    Key? key,
-    required this.args,
-  }) : super(key: key);
 
   @override
   State<MenuPreviewScreen> createState() => _MenuPreviewScreenState();
@@ -96,41 +98,32 @@ class MenuPreviewScreen extends StatefulWidget {
 class _MenuPreviewScreenState extends State<MenuPreviewScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ViewMenuCubit, ViewMenuState>(
+    return BlocBuilder<CompiledMenuCubit, CompiledMenuState>(
       builder: (context, state) {
-        if (state.menu != null) {
-          final menu = state.menu!;
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Menu Preview'),
-            ),
-            body: BlocProvider<CompiledMenuCubit>(
-              create: (context) => CompiledMenuCubit()..load(menu: menu),
-              child: CustomScrollView(
-                slivers: [
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: _MenuPreviewHeaderDelegate(
-                      title: widget.args.menu.name,
-                    ),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Menu Preview'),
+          ),
+          body: BlocProvider<CompiledMenuCubit>(
+            // create: (context) => CompiledMenuCubit()..load(menu: menu),
+            create: (context) => CompiledMenuCubit(
+              storeCubit: context.read<StoreCubit>(),
+            )..load(menu: widget.args.menu),
+            child: CustomScrollView(
+              slivers: [
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _MenuPreviewHeaderDelegate(
+                    title: widget.args.menu.name,
                   ),
-                  SliverToBoxAdapter(
-                    child: CompiledMenuBuilder(menu: menu),
-                  ),
-                ],
-              ),
+                ),
+                SliverToBoxAdapter(
+                  child: CompiledMenuBuilder(menu: state.response.value1),
+                ),
+              ],
             ),
-          );
-        } else {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Menu Preview'),
-            ),
-            body: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
+          ),
+        );
       },
     );
   }

@@ -11,24 +11,14 @@ import 'package:meny/src/data/users/users.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final AuthRepository _authRepository;
-  final UserRepository _userRepository;
-  final FirebaseAuth _firebaseAuth;
-  final StoreCacheService _storeCacheService;
-
-  StreamSubscription? _authSubscription;
-
   AuthCubit({
     AuthRepository? authRepository,
-    UserRepository? userRepository,
     FirebaseAuth? firebaseAuth,
     StoreCacheService? storeCacheService,
   })  : _authRepository = authRepository ?? Locator.instance(),
-        _userRepository = userRepository ?? Locator.instance(),
         _firebaseAuth = firebaseAuth ?? Locator.instance(),
         _storeCacheService = storeCacheService ?? Locator.instance(),
         super(AuthState.initial()) {
-    print("MEE: AUTH STATE CHANGE AuthCubit");
     _authSubscription?.cancel();
     _authSubscription = _firebaseAuth.authStateChanges().listen((user) {
       if (user != null) {
@@ -37,49 +27,65 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
+  final AuthRepository _authRepository;
+  final FirebaseAuth _firebaseAuth;
+  final StoreCacheService _storeCacheService;
+
+  StreamSubscription? _authSubscription;
+
   @override
   Future<void> close() {
     _authSubscription?.cancel();
     return super.close();
   }
 
-  void userChanged(UserModel user) async {
-    print("MEE: userChanged $user ${user.isAnonymous}");
-    await Future.delayed(Duration.zero);
+  Future<void> userChanged(UserModel user) async {
+    await Future<void>.delayed(Duration.zero);
 
     if (user.isAnonymous) {
-      emit(state.copyWith(
-        status: AuthStatus.anonymous,
-        user: user,
-      ));
+      emit(
+        state.copyWith(
+          status: AuthStatus.anonymous,
+          user: user,
+        ),
+      );
     } else {
-      emit(state.copyWith(
-        status: AuthStatus.authenticated,
-        user: user,
-      ));
+      emit(
+        state.copyWith(
+          status: AuthStatus.authenticated,
+          user: user,
+        ),
+      );
     }
   }
 
-  void appStarted() async {
+  Future<void> appStarted() async {
     UserModel currentUser;
     currentUser = await _authRepository.getCurrentUser();
     if (currentUser == UserModel.empty()) {
       currentUser = await _authRepository.loginAnonymously();
     }
     if (currentUser.isAnonymous) {
-      emit(state.copyWith(
-        status: AuthStatus.anonymous,
-        user: currentUser,
-      ));
+      emit(
+        state.copyWith(
+          status: AuthStatus.anonymous,
+          user: currentUser,
+        ),
+      );
     } else {
-      emit(state.copyWith(
-        status: AuthStatus.authenticated,
-        user: currentUser,
-      ));
+      emit(
+        state.copyWith(
+          status: AuthStatus.authenticated,
+          user: currentUser,
+        ),
+      );
     }
   }
 
   Future<void> logout() async {
+    /// Remove storeId from cache
+    await _storeCacheService.remove('storeId');
+
     await Future.wait([
       /// Logout
       _authRepository.logout(),
@@ -87,8 +93,5 @@ class AuthCubit extends Cubit<AuthState> {
       /// Then login anonymously
       _authRepository.loginAnonymously(),
     ]);
-
-    /// Remove storeId from cache
-    _storeCacheService.remove('storeId');
   }
 }

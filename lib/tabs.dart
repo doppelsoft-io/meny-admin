@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart' as dartz;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -10,13 +11,13 @@ const tabs = <TabTypeDef>[
     'Menus',
   ),
   TabTypeDef(
-    FontAwesomeIcons.thList,
-    FontAwesomeIcons.thList,
+    FontAwesomeIcons.tableList,
+    FontAwesomeIcons.tableList,
     'Orders',
   ),
   TabTypeDef(
-    FontAwesomeIcons.mapMarkerAlt,
-    FontAwesomeIcons.mapMarkerAlt,
+    FontAwesomeIcons.locationDot,
+    FontAwesomeIcons.locationDot,
     'Locations',
   ),
   TabTypeDef(
@@ -34,4 +35,11 @@ const tabs = <TabTypeDef>[
     FontAwesomeIcons.users,
     'Customers',
   ),
+  if (kDebugMode) ...[
+    TabTypeDef(
+      FontAwesomeIcons.gear,
+      FontAwesomeIcons.gear,
+      'Developer',
+    ),
+  ],
 ];

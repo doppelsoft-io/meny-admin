@@ -4,26 +4,25 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:meny/src/constants/spacing.dart';
 import 'package:meny/src/data/login/login.dart';
 import 'package:meny/src/screens/signup_screen.dart';
-import 'package:meny/src/services/dialog_service.dart';
 import 'package:meny/src/services/services.dart';
 import 'package:meny/src/utils/utils.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class LoginScreen extends HookWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
   static const String routeName = '/login';
 
   static Route route() {
-    return MaterialPageRoute(
+    return MaterialPageRoute<Widget>(
       builder: (context) {
         return BlocProvider<LoginCubit>(
           create: (context) => LoginCubit(),
-          child: LoginScreen(),
+          child: const LoginScreen(),
         );
       },
     );
   }
-
-  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,40 +42,45 @@ class LoginScreen extends HookWidget {
         ..text = updatePassword.text
         ..selection =
             TextSelection.collapsed(offset: passwordController.text.length);
+      return null;
     }, [
       updateEmail,
       updatePassword,
     ]);
 
     return BlocConsumer<LoginCubit, LoginState>(
-      listenWhen: (prev, curr) =>
-          curr.result != null && curr.status == LoginStatus.done,
       listener: (context, state) {
-        final result = state.result!;
-        result.fold(
-          (failure) => DialogService.showErrorDialog(
-            context: context,
-            failure: failure,
-          ),
-          (user) {
-            /// Pop login screen
-            Navigator.of(context).pop();
-            ToastService.showNotification(Text("You're logged in!"));
+        state.maybeWhen(
+          done: (result) {
+            result.fold(
+              (failure) => DialogService.showErrorDialog(
+                context: context,
+                failure: failure,
+              ),
+              (user) {
+                /// Pop login screen
+                Navigator.of(context).pop();
+                ToastService.showNotification(const Text("You're logged in!"));
+              },
+            );
           },
+          orElse: () {},
         );
       },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Log In'),
+            title: const Text('Log In'),
           ),
           body: SingleChildScrollView(
-            padding: EdgeInsets.all(getValueForScreenType<double>(
-              context: context,
-              mobile: Spacing.formPadding / 2,
-              tablet: Spacing.formPadding,
-              desktop: Spacing.formPadding,
-            )),
+            padding: EdgeInsets.all(
+              getValueForScreenType<double>(
+                context: context,
+                mobile: Spacing.formPadding / 2,
+                tablet: Spacing.formPadding,
+                desktop: Spacing.formPadding,
+              ),
+            ),
             child: Form(
               key: loginFormKey.value,
               child: Column(
@@ -86,10 +90,11 @@ class LoginScreen extends HookWidget {
                     style: Theme.of(context).textTheme.headline5,
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: Spacing.textFieldVerticalSpacing * 2),
+                  const SizedBox(height: Spacing.textFieldVerticalSpacing * 2),
                   TextFormField(
+                    autocorrect: false,
                     controller: emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: Text('Email'),
                       hintText: 'Enter your email address',
                     ),
@@ -112,13 +117,14 @@ class LoginScreen extends HookWidget {
                             ? null
                             : 'Email is invalid';
                       }
+                      return null;
                     },
                   ),
-                  SizedBox(height: Spacing.textFieldVerticalSpacing),
+                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
                   TextFormField(
                     controller: passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: Text('Password'),
                       hintText: 'Enter your password',
                     ),
@@ -129,7 +135,7 @@ class LoginScreen extends HookWidget {
                       loginFormKey.value.currentState?.validate();
                     },
                   ),
-                  SizedBox(height: Spacing.textFieldVerticalSpacing),
+                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
                   Row(
                     children: [
                       Expanded(
@@ -144,23 +150,25 @@ class LoginScreen extends HookWidget {
                                       .value.currentState!
                                       .validate();
                                   if (isValid) {
-                                    context.read<LoginCubit>()
-                                      ..loginWithCredentials(
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                      );
+                                    context
+                                        .read<LoginCubit>()
+                                        .loginWithCredentials(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                        );
                                   }
                                 },
-                          child: state.isLoggingIn
-                              ? SizedBox(
-                                  height: 18,
-                                  width: 18,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.green.shade50,
-                                  ),
-                                )
-                              : Text('Log In'),
+                          child: state.maybeWhen(
+                            loggingIn: () => SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.green.shade50,
+                              ),
+                            ),
+                            orElse: () => const Text('Log In'),
+                          ),
                         ),
                       ),
                     ],
@@ -168,7 +176,7 @@ class LoginScreen extends HookWidget {
                   TextButton(
                     onPressed: () =>
                         Navigator.of(context).pushNamed(SignupScreen.routeName),
-                    child: Text('Don\'t have an account?'),
+                    child: const Text("Don't have an account?"),
                   ),
                 ],
               ),

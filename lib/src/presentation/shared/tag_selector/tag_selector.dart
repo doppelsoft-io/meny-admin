@@ -2,44 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class TextFieldConfiguration {
-  final InputDecoration? decoration;
-
   const TextFieldConfiguration({
     this.decoration = const InputDecoration(),
   });
+
+  final InputDecoration? decoration;
 }
 
 class SuggestionConfiguration {
-  final String title;
-
   const SuggestionConfiguration({
     required this.title,
   });
+
+  final String title;
 }
 
 class TagConfiguration {
-  final String title;
-  final bool removable;
-  final Color? color;
-
   const TagConfiguration({
     required this.title,
     required this.removable,
     this.color,
   });
+
+  final String title;
+  final bool removable;
+  final Color? color;
 }
 
 class TagSelector<T> extends HookWidget {
-  final List<T> initialItems;
-  final Future<List<T>> Function() fetchSuggestions;
-  final Function(BuildContext, T) onSelect;
-  final Function(BuildContext, T) onRemove;
-  final Widget Function(BuildContext) emptyBuilder;
-  final SuggestionConfiguration Function(BuildContext, T)
-      suggestionConfigurationBuilder;
-  final TagConfiguration Function(BuildContext, T) tagConfigurationBuilder;
-  final TextFieldConfiguration? textFieldConfiguration;
-
   const TagSelector({
     Key? key,
     required this.initialItems,
@@ -52,6 +42,16 @@ class TagSelector<T> extends HookWidget {
     this.textFieldConfiguration,
   }) : super(key: key);
 
+  final List<T> initialItems;
+  final Future<List<T>> Function() fetchSuggestions;
+  final Function(BuildContext, T) onSelect;
+  final Function(BuildContext, T) onRemove;
+  final Widget Function(BuildContext) emptyBuilder;
+  final SuggestionConfiguration Function(BuildContext, T)
+      suggestionConfigurationBuilder;
+  final TagConfiguration Function(BuildContext, T) tagConfigurationBuilder;
+  final TextFieldConfiguration? textFieldConfiguration;
+
   @override
   Widget build(BuildContext context) {
     final isOpen = useState<bool>(false);
@@ -63,7 +63,6 @@ class TagSelector<T> extends HookWidget {
       /// So the drawer closes when you click outside the dropdown
       onTap: () => isOpen.value = false,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
@@ -78,9 +77,6 @@ class TagSelector<T> extends HookWidget {
           Stack(
             children: [
               Wrap(
-                alignment: WrapAlignment.start,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                runAlignment: WrapAlignment.start,
                 runSpacing: 10,
                 spacing: 10,
                 children: initialItems.map(
@@ -90,14 +86,14 @@ class TagSelector<T> extends HookWidget {
 
                     return Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 6.0,
+                        horizontal: 12,
+                        vertical: 6,
                       ),
                       decoration: BoxDecoration(
                         color: tagConfiguration.color ??
                             Theme.of(context).primaryColor,
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(50.0)),
+                            const BorderRadius.all(Radius.circular(50)),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -112,14 +108,14 @@ class TagSelector<T> extends HookWidget {
                                       Theme.of(context).colorScheme.onPrimary,
                                 ),
                           ),
-                          const SizedBox(width: 8.0),
+                          const SizedBox(width: 8),
                           GestureDetector(
                             onTap: () {
                               onRemove(context, option);
                             },
                             child: Icon(
                               Icons.close,
-                              size: 20.0,
+                              size: 20,
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),
                           ),
@@ -137,7 +133,7 @@ class TagSelector<T> extends HookWidget {
                     future: fetchSuggestions(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        final data = (snapshot.data as List<T>)
+                        final data = (snapshot.data!)
                             .where((e) => !initialItems.contains(e))
                             .toList();
 
@@ -157,7 +153,8 @@ class TagSelector<T> extends HookWidget {
 
                               return ListTile(
                                 contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0),
+                                  horizontal: 20,
+                                ),
                                 onTap: () {
                                   onSelect(context, item);
                                   isOpen.value = false;
@@ -173,8 +170,12 @@ class TagSelector<T> extends HookWidget {
                       } else {
                         return const Center(
                           child: Padding(
-                            padding: EdgeInsets.all(12.0),
-                            child: CircularProgressIndicator(),
+                            padding: EdgeInsets.all(18),
+                            child: SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator(),
+                            ),
                           ),
                         );
                       }

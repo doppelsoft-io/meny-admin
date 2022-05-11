@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meny/src/presentation/menus/categories/update_categories/update_categories_sheet.dart';
+import 'package:meny/src/presentation/menus/categories/update_categories/update_category_sheet.dart';
 import 'package:meny/src/presentation/menus/items/update_items/update_menu_item_sheet.dart';
 import 'package:meny/src/presentation/menus/menu_preview/menu_preview_screen.dart';
 import 'package:meny/src/presentation/menus/menus/update_menus/update_menus_sheet.dart';
@@ -10,7 +10,7 @@ class CustomRouter {
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(
+        return MaterialPageRoute<Widget>(
           settings: const RouteSettings(name: '/'),
           builder: (_) => const Scaffold(),
         );
@@ -25,21 +25,22 @@ class CustomRouter {
       case LoginScreen.routeName:
         return LoginScreen.route();
       case UpdateMenusSheet.routeName:
-        return UpdateMenusSheet.route(settings.arguments as SheetArgs);
+        return UpdateMenusSheet.route(settings.arguments! as SheetArgs);
       case UpdateCategorySheet.routeName:
-        return UpdateCategorySheet.route(settings.arguments as SheetArgs);
+        return UpdateCategorySheet.route(settings.arguments! as SheetArgs);
       case UpdateMenuItemSheet.routeName:
-        return UpdateMenuItemSheet.route(settings.arguments as SheetArgs);
+        return UpdateMenuItemSheet.route(settings.arguments! as SheetArgs);
       case MenuPreviewScreen.routeName:
         return MenuPreviewScreen.route(
-            settings.arguments as MenuPreviewScreenArgs);
+          settings.arguments! as MenuPreviewScreenArgs,
+        );
       default:
         return _errorRoute();
     }
   }
 
   static Route _errorRoute() {
-    return MaterialPageRoute(
+    return MaterialPageRoute<Widget>(
       settings: const RouteSettings(name: '/error'),
       builder: (_) => Scaffold(
         appBar: AppBar(
