@@ -46,10 +46,10 @@ class App extends StatelessWidget {
             maxWidth: 1600,
             defaultScale: true,
             breakpoints: const [
-              ResponsiveBreakpoint.resize(450, name: MOBILE),
+              ResponsiveBreakpoint.resize(350, name: MOBILE),
+              ResponsiveBreakpoint.autoScale(600, name: TABLET),
               ResponsiveBreakpoint.autoScale(800, name: TABLET),
-              ResponsiveBreakpoint.autoScale(1200, name: TABLET),
-              ResponsiveBreakpoint.resize(1400, name: DESKTOP),
+              ResponsiveBreakpoint.resize(1000, name: DESKTOP),
               ResponsiveBreakpoint.autoScale(2460, name: '4K'),
             ],
             background: Container(

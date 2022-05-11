@@ -11,13 +11,13 @@ const tabs = <TabTypeDef>[
     'Menus',
   ),
   TabTypeDef(
-    FontAwesomeIcons.thList,
-    FontAwesomeIcons.thList,
+    FontAwesomeIcons.tableList,
+    FontAwesomeIcons.tableList,
     'Orders',
   ),
   TabTypeDef(
-    FontAwesomeIcons.mapMarkerAlt,
-    FontAwesomeIcons.mapMarkerAlt,
+    FontAwesomeIcons.locationDot,
+    FontAwesomeIcons.locationDot,
     'Locations',
   ),
   TabTypeDef(
@@ -37,8 +37,8 @@ const tabs = <TabTypeDef>[
   ),
   if (kDebugMode) ...[
     TabTypeDef(
-      FontAwesomeIcons.cog,
-      FontAwesomeIcons.cog,
+      FontAwesomeIcons.gear,
+      FontAwesomeIcons.gear,
       'Developer',
     ),
   ],

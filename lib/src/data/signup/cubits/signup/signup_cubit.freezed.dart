@@ -128,9 +128,10 @@ class _$SignupStateCopyWithImpl<$Res> implements $SignupStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
   @override
   $Res call({StoreModel store, String email, String password});
 
@@ -139,13 +140,13 @@ abstract class _$InitialCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 
   @override
   $Res call({
@@ -153,7 +154,7 @@ class __$InitialCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
     Object? email = freezed,
     Object? password = freezed,
   }) {
-    return _then(_Initial(
+    return _then(_$_Initial(
       store: store == freezed
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
@@ -193,7 +194,7 @@ class _$_Initial implements _Initial {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Initial &&
+            other is _$_Initial &&
             const DeepCollectionEquality().equals(other.store, store) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.password, password));
@@ -208,8 +209,8 @@ class _$_Initial implements _Initial {
 
   @JsonKey(ignore: true)
   @override
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -304,15 +305,16 @@ abstract class _Initial implements SignupState {
   String get password => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$InitialCopyWith<_Initial> get copyWith =>
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$SigningInCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
-  factory _$SigningInCopyWith(
-          _SigningIn value, $Res Function(_SigningIn) then) =
-      __$SigningInCopyWithImpl<$Res>;
+abstract class _$$_SigningInCopyWith<$Res>
+    implements $SignupStateCopyWith<$Res> {
+  factory _$$_SigningInCopyWith(
+          _$_SigningIn value, $Res Function(_$_SigningIn) then) =
+      __$$_SigningInCopyWithImpl<$Res>;
   @override
   $Res call({StoreModel store, String email, String password});
 
@@ -321,13 +323,14 @@ abstract class _$SigningInCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$SigningInCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
-    implements _$SigningInCopyWith<$Res> {
-  __$SigningInCopyWithImpl(_SigningIn _value, $Res Function(_SigningIn) _then)
-      : super(_value, (v) => _then(v as _SigningIn));
+class __$$_SigningInCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
+    implements _$$_SigningInCopyWith<$Res> {
+  __$$_SigningInCopyWithImpl(
+      _$_SigningIn _value, $Res Function(_$_SigningIn) _then)
+      : super(_value, (v) => _then(v as _$_SigningIn));
 
   @override
-  _SigningIn get _value => super._value as _SigningIn;
+  _$_SigningIn get _value => super._value as _$_SigningIn;
 
   @override
   $Res call({
@@ -335,7 +338,7 @@ class __$SigningInCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
     Object? email = freezed,
     Object? password = freezed,
   }) {
-    return _then(_SigningIn(
+    return _then(_$_SigningIn(
       store: store == freezed
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
@@ -374,7 +377,7 @@ class _$_SigningIn implements _SigningIn {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SigningIn &&
+            other is _$_SigningIn &&
             const DeepCollectionEquality().equals(other.store, store) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.password, password));
@@ -389,8 +392,8 @@ class _$_SigningIn implements _SigningIn {
 
   @JsonKey(ignore: true)
   @override
-  _$SigningInCopyWith<_SigningIn> get copyWith =>
-      __$SigningInCopyWithImpl<_SigningIn>(this, _$identity);
+  _$$_SigningInCopyWith<_$_SigningIn> get copyWith =>
+      __$$_SigningInCopyWithImpl<_$_SigningIn>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -485,14 +488,14 @@ abstract class _SigningIn implements SignupState {
   String get password => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$SigningInCopyWith<_SigningIn> get copyWith =>
+  _$$_SigningInCopyWith<_$_SigningIn> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$DoneCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
-  factory _$DoneCopyWith(_Done value, $Res Function(_Done) then) =
-      __$DoneCopyWithImpl<$Res>;
+abstract class _$$_DoneCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
+  factory _$$_DoneCopyWith(_$_Done value, $Res Function(_$_Done) then) =
+      __$$_DoneCopyWithImpl<$Res>;
   @override
   $Res call(
       {StoreModel store,
@@ -505,13 +508,13 @@ abstract class _$DoneCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$DoneCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
-    implements _$DoneCopyWith<$Res> {
-  __$DoneCopyWithImpl(_Done _value, $Res Function(_Done) _then)
-      : super(_value, (v) => _then(v as _Done));
+class __$$_DoneCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
+    implements _$$_DoneCopyWith<$Res> {
+  __$$_DoneCopyWithImpl(_$_Done _value, $Res Function(_$_Done) _then)
+      : super(_value, (v) => _then(v as _$_Done));
 
   @override
-  _Done get _value => super._value as _Done;
+  _$_Done get _value => super._value as _$_Done;
 
   @override
   $Res call({
@@ -520,7 +523,7 @@ class __$DoneCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
     Object? password = freezed,
     Object? result = freezed,
   }) {
-    return _then(_Done(
+    return _then(_$_Done(
       store: store == freezed
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
@@ -568,7 +571,7 @@ class _$_Done implements _Done {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Done &&
+            other is _$_Done &&
             const DeepCollectionEquality().equals(other.store, store) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.password, password) &&
@@ -585,8 +588,8 @@ class _$_Done implements _Done {
 
   @JsonKey(ignore: true)
   @override
-  _$DoneCopyWith<_Done> get copyWith =>
-      __$DoneCopyWithImpl<_Done>(this, _$identity);
+  _$$_DoneCopyWith<_$_Done> get copyWith =>
+      __$$_DoneCopyWithImpl<_$_Done>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -683,5 +686,5 @@ abstract class _Done implements SignupState {
   Either<Failure, bool> get result => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$DoneCopyWith<_Done> get copyWith => throw _privateConstructorUsedError;
+  _$$_DoneCopyWith<_$_Done> get copyWith => throw _privateConstructorUsedError;
 }

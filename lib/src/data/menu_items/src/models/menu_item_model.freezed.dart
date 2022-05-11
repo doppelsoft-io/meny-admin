@@ -104,11 +104,11 @@ class _$MenuItemModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$MenuItemModelCopyWith<$Res>
+abstract class _$$_MenuItemModelCopyWith<$Res>
     implements $MenuItemModelCopyWith<$Res> {
-  factory _$MenuItemModelCopyWith(
-          _MenuItemModel value, $Res Function(_MenuItemModel) then) =
-      __$MenuItemModelCopyWithImpl<$Res>;
+  factory _$$_MenuItemModelCopyWith(
+          _$_MenuItemModel value, $Res Function(_$_MenuItemModel) then) =
+      __$$_MenuItemModelCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(ignore: true) String? id,
@@ -121,15 +121,15 @@ abstract class _$MenuItemModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MenuItemModelCopyWithImpl<$Res>
+class __$$_MenuItemModelCopyWithImpl<$Res>
     extends _$MenuItemModelCopyWithImpl<$Res>
-    implements _$MenuItemModelCopyWith<$Res> {
-  __$MenuItemModelCopyWithImpl(
-      _MenuItemModel _value, $Res Function(_MenuItemModel) _then)
-      : super(_value, (v) => _then(v as _MenuItemModel));
+    implements _$$_MenuItemModelCopyWith<$Res> {
+  __$$_MenuItemModelCopyWithImpl(
+      _$_MenuItemModel _value, $Res Function(_$_MenuItemModel) _then)
+      : super(_value, (v) => _then(v as _$_MenuItemModel));
 
   @override
-  _MenuItemModel get _value => super._value as _MenuItemModel;
+  _$_MenuItemModel get _value => super._value as _$_MenuItemModel;
 
   @override
   $Res call({
@@ -141,7 +141,7 @@ class __$MenuItemModelCopyWithImpl<$Res>
     Object? description = freezed,
     Object? imageUrl = freezed,
   }) {
-    return _then(_MenuItemModel(
+    return _then(_$_MenuItemModel(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -217,7 +217,7 @@ class _$_MenuItemModel extends _MenuItemModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MenuItemModel &&
+            other is _$_MenuItemModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.price, price) &&
@@ -242,8 +242,8 @@ class _$_MenuItemModel extends _MenuItemModel {
 
   @JsonKey(ignore: true)
   @override
-  _$MenuItemModelCopyWith<_MenuItemModel> get copyWith =>
-      __$MenuItemModelCopyWithImpl<_MenuItemModel>(this, _$identity);
+  _$$_MenuItemModelCopyWith<_$_MenuItemModel> get copyWith =>
+      __$$_MenuItemModelCopyWithImpl<_$_MenuItemModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -282,6 +282,6 @@ abstract class _MenuItemModel extends MenuItemModel {
   String? get imageUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$MenuItemModelCopyWith<_MenuItemModel> get copyWith =>
+  _$$_MenuItemModelCopyWith<_$_MenuItemModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

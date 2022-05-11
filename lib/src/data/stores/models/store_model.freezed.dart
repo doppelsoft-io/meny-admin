@@ -89,10 +89,11 @@ class _$StoreModelCopyWithImpl<$Res> implements $StoreModelCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$StoreModelCopyWith<$Res> implements $StoreModelCopyWith<$Res> {
-  factory _$StoreModelCopyWith(
-          _StoreModel value, $Res Function(_StoreModel) then) =
-      __$StoreModelCopyWithImpl<$Res>;
+abstract class _$$_StoreModelCopyWith<$Res>
+    implements $StoreModelCopyWith<$Res> {
+  factory _$$_StoreModelCopyWith(
+          _$_StoreModel value, $Res Function(_$_StoreModel) then) =
+      __$$_StoreModelCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(ignore: true) String? id,
@@ -103,14 +104,14 @@ abstract class _$StoreModelCopyWith<$Res> implements $StoreModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$StoreModelCopyWithImpl<$Res> extends _$StoreModelCopyWithImpl<$Res>
-    implements _$StoreModelCopyWith<$Res> {
-  __$StoreModelCopyWithImpl(
-      _StoreModel _value, $Res Function(_StoreModel) _then)
-      : super(_value, (v) => _then(v as _StoreModel));
+class __$$_StoreModelCopyWithImpl<$Res> extends _$StoreModelCopyWithImpl<$Res>
+    implements _$$_StoreModelCopyWith<$Res> {
+  __$$_StoreModelCopyWithImpl(
+      _$_StoreModel _value, $Res Function(_$_StoreModel) _then)
+      : super(_value, (v) => _then(v as _$_StoreModel));
 
   @override
-  _StoreModel get _value => super._value as _StoreModel;
+  _$_StoreModel get _value => super._value as _$_StoreModel;
 
   @override
   $Res call({
@@ -120,7 +121,7 @@ class __$StoreModelCopyWithImpl<$Res> extends _$StoreModelCopyWithImpl<$Res>
     Object? roles = freezed,
     Object? createdAt = freezed,
   }) {
-    return _then(_StoreModel(
+    return _then(_$_StoreModel(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -130,11 +131,11 @@ class __$StoreModelCopyWithImpl<$Res> extends _$StoreModelCopyWithImpl<$Res>
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       users: users == freezed
-          ? _value.users
+          ? _value._users
           : users // ignore: cast_nullable_to_non_nullable
               as List<String>,
       roles: roles == freezed
-          ? _value.roles
+          ? _value._roles
           : roles // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
       createdAt: createdAt == freezed
@@ -194,11 +195,11 @@ class _$_StoreModel extends _StoreModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _StoreModel &&
+            other is _$_StoreModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.users, users) &&
-            const DeepCollectionEquality().equals(other.roles, roles) &&
+            const DeepCollectionEquality().equals(other._users, _users) &&
+            const DeepCollectionEquality().equals(other._roles, _roles) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt));
   }
 
@@ -208,14 +209,14 @@ class _$_StoreModel extends _StoreModel {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(users),
-      const DeepCollectionEquality().hash(roles),
+      const DeepCollectionEquality().hash(_users),
+      const DeepCollectionEquality().hash(_roles),
       const DeepCollectionEquality().hash(createdAt));
 
   @JsonKey(ignore: true)
   @override
-  _$StoreModelCopyWith<_StoreModel> get copyWith =>
-      __$StoreModelCopyWithImpl<_StoreModel>(this, _$identity);
+  _$$_StoreModelCopyWith<_$_StoreModel> get copyWith =>
+      __$$_StoreModelCopyWithImpl<_$_StoreModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -248,6 +249,6 @@ abstract class _StoreModel extends StoreModel {
   DateTime get createdAt => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$StoreModelCopyWith<_StoreModel> get copyWith =>
+  _$$_StoreModelCopyWith<_$_StoreModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

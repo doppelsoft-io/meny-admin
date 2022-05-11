@@ -120,10 +120,11 @@ class _$EditCategoryStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res>
+abstract class _$$_InitialCopyWith<$Res>
     implements $EditCategoryStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
   @override
   $Res call({CategoryModel category});
 
@@ -132,19 +133,20 @@ abstract class _$InitialCopyWith<$Res>
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$EditCategoryStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 
   @override
   $Res call({
     Object? category = freezed,
   }) {
-    return _then(_Initial(
+    return _then(_$_Initial(
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -170,7 +172,7 @@ class _$_Initial implements _Initial {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Initial &&
+            other is _$_Initial &&
             const DeepCollectionEquality().equals(other.category, category));
   }
 
@@ -180,8 +182,8 @@ class _$_Initial implements _Initial {
 
   @JsonKey(ignore: true)
   @override
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -272,15 +274,15 @@ abstract class _Initial implements EditCategoryState {
   CategoryModel get category => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$InitialCopyWith<_Initial> get copyWith =>
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$LoadedCopyWith<$Res>
+abstract class _$$_LoadedCopyWith<$Res>
     implements $EditCategoryStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
-      __$LoadedCopyWithImpl<$Res>;
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
   @override
   $Res call({CategoryModel category});
 
@@ -289,19 +291,20 @@ abstract class _$LoadedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
-      : super(_value, (v) => _then(v as _Loaded));
+class __$$_LoadedCopyWithImpl<$Res>
+    extends _$EditCategoryStateCopyWithImpl<$Res>
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+      : super(_value, (v) => _then(v as _$_Loaded));
 
   @override
-  _Loaded get _value => super._value as _Loaded;
+  _$_Loaded get _value => super._value as _$_Loaded;
 
   @override
   $Res call({
     Object? category = freezed,
   }) {
-    return _then(_Loaded(
+    return _then(_$_Loaded(
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -327,7 +330,7 @@ class _$_Loaded implements _Loaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Loaded &&
+            other is _$_Loaded &&
             const DeepCollectionEquality().equals(other.category, category));
   }
 
@@ -337,8 +340,8 @@ class _$_Loaded implements _Loaded {
 
   @JsonKey(ignore: true)
   @override
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -429,14 +432,16 @@ abstract class _Loaded implements EditCategoryState {
   CategoryModel get category => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$LoadedCopyWith<_Loaded> get copyWith => throw _privateConstructorUsedError;
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$UpdatingCopyWith<$Res>
+abstract class _$$_UpdatingCopyWith<$Res>
     implements $EditCategoryStateCopyWith<$Res> {
-  factory _$UpdatingCopyWith(_Updating value, $Res Function(_Updating) then) =
-      __$UpdatingCopyWithImpl<$Res>;
+  factory _$$_UpdatingCopyWith(
+          _$_Updating value, $Res Function(_$_Updating) then) =
+      __$$_UpdatingCopyWithImpl<$Res>;
   @override
   $Res call({CategoryModel category});
 
@@ -445,20 +450,21 @@ abstract class _$UpdatingCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UpdatingCopyWithImpl<$Res>
+class __$$_UpdatingCopyWithImpl<$Res>
     extends _$EditCategoryStateCopyWithImpl<$Res>
-    implements _$UpdatingCopyWith<$Res> {
-  __$UpdatingCopyWithImpl(_Updating _value, $Res Function(_Updating) _then)
-      : super(_value, (v) => _then(v as _Updating));
+    implements _$$_UpdatingCopyWith<$Res> {
+  __$$_UpdatingCopyWithImpl(
+      _$_Updating _value, $Res Function(_$_Updating) _then)
+      : super(_value, (v) => _then(v as _$_Updating));
 
   @override
-  _Updating get _value => super._value as _Updating;
+  _$_Updating get _value => super._value as _$_Updating;
 
   @override
   $Res call({
     Object? category = freezed,
   }) {
-    return _then(_Updating(
+    return _then(_$_Updating(
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -484,7 +490,7 @@ class _$_Updating implements _Updating {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Updating &&
+            other is _$_Updating &&
             const DeepCollectionEquality().equals(other.category, category));
   }
 
@@ -494,8 +500,8 @@ class _$_Updating implements _Updating {
 
   @JsonKey(ignore: true)
   @override
-  _$UpdatingCopyWith<_Updating> get copyWith =>
-      __$UpdatingCopyWithImpl<_Updating>(this, _$identity);
+  _$$_UpdatingCopyWith<_$_Updating> get copyWith =>
+      __$$_UpdatingCopyWithImpl<_$_Updating>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -587,15 +593,16 @@ abstract class _Updating implements EditCategoryState {
   CategoryModel get category => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$UpdatingCopyWith<_Updating> get copyWith =>
+  _$$_UpdatingCopyWith<_$_Updating> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$SuccessCopyWith<$Res>
+abstract class _$$_SuccessCopyWith<$Res>
     implements $EditCategoryStateCopyWith<$Res> {
-  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
-      __$SuccessCopyWithImpl<$Res>;
+  factory _$$_SuccessCopyWith(
+          _$_Success value, $Res Function(_$_Success) then) =
+      __$$_SuccessCopyWithImpl<$Res>;
   @override
   $Res call({CategoryModel category});
 
@@ -604,19 +611,20 @@ abstract class _$SuccessCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SuccessCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
-    implements _$SuccessCopyWith<$Res> {
-  __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
-      : super(_value, (v) => _then(v as _Success));
+class __$$_SuccessCopyWithImpl<$Res>
+    extends _$EditCategoryStateCopyWithImpl<$Res>
+    implements _$$_SuccessCopyWith<$Res> {
+  __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
+      : super(_value, (v) => _then(v as _$_Success));
 
   @override
-  _Success get _value => super._value as _Success;
+  _$_Success get _value => super._value as _$_Success;
 
   @override
   $Res call({
     Object? category = freezed,
   }) {
-    return _then(_Success(
+    return _then(_$_Success(
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -642,7 +650,7 @@ class _$_Success implements _Success {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Success &&
+            other is _$_Success &&
             const DeepCollectionEquality().equals(other.category, category));
   }
 
@@ -652,8 +660,8 @@ class _$_Success implements _Success {
 
   @JsonKey(ignore: true)
   @override
-  _$SuccessCopyWith<_Success> get copyWith =>
-      __$SuccessCopyWithImpl<_Success>(this, _$identity);
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -744,15 +752,15 @@ abstract class _Success implements EditCategoryState {
   CategoryModel get category => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$SuccessCopyWith<_Success> get copyWith =>
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<$Res>
+abstract class _$$_ErrorCopyWith<$Res>
     implements $EditCategoryStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
-      __$ErrorCopyWithImpl<$Res>;
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
+      __$$_ErrorCopyWithImpl<$Res>;
   @override
   $Res call({CategoryModel category, Exception exception});
 
@@ -761,20 +769,20 @@ abstract class _$ErrorCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
-      : super(_value, (v) => _then(v as _Error));
+class __$$_ErrorCopyWithImpl<$Res> extends _$EditCategoryStateCopyWithImpl<$Res>
+    implements _$$_ErrorCopyWith<$Res> {
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+      : super(_value, (v) => _then(v as _$_Error));
 
   @override
-  _Error get _value => super._value as _Error;
+  _$_Error get _value => super._value as _$_Error;
 
   @override
   $Res call({
     Object? category = freezed,
     Object? exception = freezed,
   }) {
-    return _then(_Error(
+    return _then(_$_Error(
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -806,7 +814,7 @@ class _$_Error implements _Error {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Error &&
+            other is _$_Error &&
             const DeepCollectionEquality().equals(other.category, category) &&
             const DeepCollectionEquality().equals(other.exception, exception));
   }
@@ -819,8 +827,8 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -914,5 +922,6 @@ abstract class _Error implements EditCategoryState {
   Exception get exception => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -79,19 +79,20 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
@@ -107,7 +108,7 @@ class _$_Initial implements _Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -187,20 +188,21 @@ abstract class _Initial implements LoginState {
 }
 
 /// @nodoc
-abstract class _$LoggingInCopyWith<$Res> {
-  factory _$LoggingInCopyWith(
-          _LoggingIn value, $Res Function(_LoggingIn) then) =
-      __$LoggingInCopyWithImpl<$Res>;
+abstract class _$$_LoggingInCopyWith<$Res> {
+  factory _$$_LoggingInCopyWith(
+          _$_LoggingIn value, $Res Function(_$_LoggingIn) then) =
+      __$$_LoggingInCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoggingInCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
-    implements _$LoggingInCopyWith<$Res> {
-  __$LoggingInCopyWithImpl(_LoggingIn _value, $Res Function(_LoggingIn) _then)
-      : super(_value, (v) => _then(v as _LoggingIn));
+class __$$_LoggingInCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
+    implements _$$_LoggingInCopyWith<$Res> {
+  __$$_LoggingInCopyWithImpl(
+      _$_LoggingIn _value, $Res Function(_$_LoggingIn) _then)
+      : super(_value, (v) => _then(v as _$_LoggingIn));
 
   @override
-  _LoggingIn get _value => super._value as _LoggingIn;
+  _$_LoggingIn get _value => super._value as _$_LoggingIn;
 }
 
 /// @nodoc
@@ -216,7 +218,7 @@ class _$_LoggingIn implements _LoggingIn {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoggingIn);
+        (other.runtimeType == runtimeType && other is _$_LoggingIn);
   }
 
   @override
@@ -296,26 +298,26 @@ abstract class _LoggingIn implements LoginState {
 }
 
 /// @nodoc
-abstract class _$DoneCopyWith<$Res> {
-  factory _$DoneCopyWith(_Done value, $Res Function(_Done) then) =
-      __$DoneCopyWithImpl<$Res>;
+abstract class _$$_DoneCopyWith<$Res> {
+  factory _$$_DoneCopyWith(_$_Done value, $Res Function(_$_Done) then) =
+      __$$_DoneCopyWithImpl<$Res>;
   $Res call({Either<Failure, UserModel> result});
 }
 
 /// @nodoc
-class __$DoneCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
-    implements _$DoneCopyWith<$Res> {
-  __$DoneCopyWithImpl(_Done _value, $Res Function(_Done) _then)
-      : super(_value, (v) => _then(v as _Done));
+class __$$_DoneCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
+    implements _$$_DoneCopyWith<$Res> {
+  __$$_DoneCopyWithImpl(_$_Done _value, $Res Function(_$_Done) _then)
+      : super(_value, (v) => _then(v as _$_Done));
 
   @override
-  _Done get _value => super._value as _Done;
+  _$_Done get _value => super._value as _$_Done;
 
   @override
   $Res call({
     Object? result = freezed,
   }) {
-    return _then(_Done(
+    return _then(_$_Done(
       result: result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
@@ -341,7 +343,7 @@ class _$_Done implements _Done {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Done &&
+            other is _$_Done &&
             const DeepCollectionEquality().equals(other.result, result));
   }
 
@@ -351,8 +353,8 @@ class _$_Done implements _Done {
 
   @JsonKey(ignore: true)
   @override
-  _$DoneCopyWith<_Done> get copyWith =>
-      __$DoneCopyWithImpl<_Done>(this, _$identity);
+  _$$_DoneCopyWith<_$_Done> get copyWith =>
+      __$$_DoneCopyWithImpl<_$_Done>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -429,5 +431,5 @@ abstract class _Done implements LoginState {
 
   Either<Failure, UserModel> get result => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$DoneCopyWith<_Done> get copyWith => throw _privateConstructorUsedError;
+  _$$_DoneCopyWith<_$_Done> get copyWith => throw _privateConstructorUsedError;
 }

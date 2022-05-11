@@ -96,7 +96,7 @@ class _AppScreen extends HookWidget {
                               const Text('Logged out!'),
                             );
                           },
-                          icon: const FaIcon(FontAwesomeIcons.signOutAlt),
+                          icon: const FaIcon(FontAwesomeIcons.rightFromBracket),
                         ),
                       ] else ...[
                         TextButton(

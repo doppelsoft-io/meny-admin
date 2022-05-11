@@ -147,36 +147,37 @@ class _$MenuCategoriesStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res>
+abstract class _$$_InitialCopyWith<$Res>
     implements $MenuCategoriesStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
   @override
   $Res call({List<MenuCategoryModel> menuCategories, List<MenuModel> menus});
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
     extends _$MenuCategoriesStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 
   @override
   $Res call({
     Object? menuCategories = freezed,
     Object? menus = freezed,
   }) {
-    return _then(_Initial(
+    return _then(_$_Initial(
       menuCategories: menuCategories == freezed
-          ? _value.menuCategories
+          ? _value._menuCategories
           : menuCategories // ignore: cast_nullable_to_non_nullable
               as List<MenuCategoryModel>,
       menus: menus == freezed
-          ? _value.menus
+          ? _value._menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuModel>,
     ));
@@ -218,22 +219,22 @@ class _$_Initial implements _Initial {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Initial &&
+            other is _$_Initial &&
             const DeepCollectionEquality()
-                .equals(other.menuCategories, menuCategories) &&
-            const DeepCollectionEquality().equals(other.menus, menus));
+                .equals(other._menuCategories, _menuCategories) &&
+            const DeepCollectionEquality().equals(other._menus, _menus));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(menuCategories),
-      const DeepCollectionEquality().hash(menus));
+      const DeepCollectionEquality().hash(_menuCategories),
+      const DeepCollectionEquality().hash(_menus));
 
   @JsonKey(ignore: true)
   @override
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -358,41 +359,41 @@ abstract class _Initial implements MenuCategoriesState {
   List<MenuModel> get menus => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$InitialCopyWith<_Initial> get copyWith =>
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$AddingCopyWith<$Res>
+abstract class _$$_AddingCopyWith<$Res>
     implements $MenuCategoriesStateCopyWith<$Res> {
-  factory _$AddingCopyWith(_Adding value, $Res Function(_Adding) then) =
-      __$AddingCopyWithImpl<$Res>;
+  factory _$$_AddingCopyWith(_$_Adding value, $Res Function(_$_Adding) then) =
+      __$$_AddingCopyWithImpl<$Res>;
   @override
   $Res call({List<MenuCategoryModel> menuCategories, List<MenuModel> menus});
 }
 
 /// @nodoc
-class __$AddingCopyWithImpl<$Res>
+class __$$_AddingCopyWithImpl<$Res>
     extends _$MenuCategoriesStateCopyWithImpl<$Res>
-    implements _$AddingCopyWith<$Res> {
-  __$AddingCopyWithImpl(_Adding _value, $Res Function(_Adding) _then)
-      : super(_value, (v) => _then(v as _Adding));
+    implements _$$_AddingCopyWith<$Res> {
+  __$$_AddingCopyWithImpl(_$_Adding _value, $Res Function(_$_Adding) _then)
+      : super(_value, (v) => _then(v as _$_Adding));
 
   @override
-  _Adding get _value => super._value as _Adding;
+  _$_Adding get _value => super._value as _$_Adding;
 
   @override
   $Res call({
     Object? menuCategories = freezed,
     Object? menus = freezed,
   }) {
-    return _then(_Adding(
+    return _then(_$_Adding(
       menuCategories: menuCategories == freezed
-          ? _value.menuCategories
+          ? _value._menuCategories
           : menuCategories // ignore: cast_nullable_to_non_nullable
               as List<MenuCategoryModel>,
       menus: menus == freezed
-          ? _value.menus
+          ? _value._menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuModel>,
     ));
@@ -431,22 +432,22 @@ class _$_Adding implements _Adding {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Adding &&
+            other is _$_Adding &&
             const DeepCollectionEquality()
-                .equals(other.menuCategories, menuCategories) &&
-            const DeepCollectionEquality().equals(other.menus, menus));
+                .equals(other._menuCategories, _menuCategories) &&
+            const DeepCollectionEquality().equals(other._menus, _menus));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(menuCategories),
-      const DeepCollectionEquality().hash(menus));
+      const DeepCollectionEquality().hash(_menuCategories),
+      const DeepCollectionEquality().hash(_menus));
 
   @JsonKey(ignore: true)
   @override
-  _$AddingCopyWith<_Adding> get copyWith =>
-      __$AddingCopyWithImpl<_Adding>(this, _$identity);
+  _$$_AddingCopyWith<_$_Adding> get copyWith =>
+      __$$_AddingCopyWithImpl<_$_Adding>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -571,40 +572,43 @@ abstract class _Adding implements MenuCategoriesState {
   List<MenuModel> get menus => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$AddingCopyWith<_Adding> get copyWith => throw _privateConstructorUsedError;
+  _$$_AddingCopyWith<_$_Adding> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$RemovingCopyWith<$Res>
+abstract class _$$_RemovingCopyWith<$Res>
     implements $MenuCategoriesStateCopyWith<$Res> {
-  factory _$RemovingCopyWith(_Removing value, $Res Function(_Removing) then) =
-      __$RemovingCopyWithImpl<$Res>;
+  factory _$$_RemovingCopyWith(
+          _$_Removing value, $Res Function(_$_Removing) then) =
+      __$$_RemovingCopyWithImpl<$Res>;
   @override
   $Res call({List<MenuCategoryModel> menuCategories, List<MenuModel> menus});
 }
 
 /// @nodoc
-class __$RemovingCopyWithImpl<$Res>
+class __$$_RemovingCopyWithImpl<$Res>
     extends _$MenuCategoriesStateCopyWithImpl<$Res>
-    implements _$RemovingCopyWith<$Res> {
-  __$RemovingCopyWithImpl(_Removing _value, $Res Function(_Removing) _then)
-      : super(_value, (v) => _then(v as _Removing));
+    implements _$$_RemovingCopyWith<$Res> {
+  __$$_RemovingCopyWithImpl(
+      _$_Removing _value, $Res Function(_$_Removing) _then)
+      : super(_value, (v) => _then(v as _$_Removing));
 
   @override
-  _Removing get _value => super._value as _Removing;
+  _$_Removing get _value => super._value as _$_Removing;
 
   @override
   $Res call({
     Object? menuCategories = freezed,
     Object? menus = freezed,
   }) {
-    return _then(_Removing(
+    return _then(_$_Removing(
       menuCategories: menuCategories == freezed
-          ? _value.menuCategories
+          ? _value._menuCategories
           : menuCategories // ignore: cast_nullable_to_non_nullable
               as List<MenuCategoryModel>,
       menus: menus == freezed
-          ? _value.menus
+          ? _value._menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuModel>,
     ));
@@ -643,22 +647,22 @@ class _$_Removing implements _Removing {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Removing &&
+            other is _$_Removing &&
             const DeepCollectionEquality()
-                .equals(other.menuCategories, menuCategories) &&
-            const DeepCollectionEquality().equals(other.menus, menus));
+                .equals(other._menuCategories, _menuCategories) &&
+            const DeepCollectionEquality().equals(other._menus, _menus));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(menuCategories),
-      const DeepCollectionEquality().hash(menus));
+      const DeepCollectionEquality().hash(_menuCategories),
+      const DeepCollectionEquality().hash(_menus));
 
   @JsonKey(ignore: true)
   @override
-  _$RemovingCopyWith<_Removing> get copyWith =>
-      __$RemovingCopyWithImpl<_Removing>(this, _$identity);
+  _$$_RemovingCopyWith<_$_Removing> get copyWith =>
+      __$$_RemovingCopyWithImpl<_$_Removing>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -783,41 +787,42 @@ abstract class _Removing implements MenuCategoriesState {
   List<MenuModel> get menus => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$RemovingCopyWith<_Removing> get copyWith =>
+  _$$_RemovingCopyWith<_$_Removing> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$SuccessCopyWith<$Res>
+abstract class _$$_SuccessCopyWith<$Res>
     implements $MenuCategoriesStateCopyWith<$Res> {
-  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
-      __$SuccessCopyWithImpl<$Res>;
+  factory _$$_SuccessCopyWith(
+          _$_Success value, $Res Function(_$_Success) then) =
+      __$$_SuccessCopyWithImpl<$Res>;
   @override
   $Res call({List<MenuCategoryModel> menuCategories, List<MenuModel> menus});
 }
 
 /// @nodoc
-class __$SuccessCopyWithImpl<$Res>
+class __$$_SuccessCopyWithImpl<$Res>
     extends _$MenuCategoriesStateCopyWithImpl<$Res>
-    implements _$SuccessCopyWith<$Res> {
-  __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
-      : super(_value, (v) => _then(v as _Success));
+    implements _$$_SuccessCopyWith<$Res> {
+  __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
+      : super(_value, (v) => _then(v as _$_Success));
 
   @override
-  _Success get _value => super._value as _Success;
+  _$_Success get _value => super._value as _$_Success;
 
   @override
   $Res call({
     Object? menuCategories = freezed,
     Object? menus = freezed,
   }) {
-    return _then(_Success(
+    return _then(_$_Success(
       menuCategories: menuCategories == freezed
-          ? _value.menuCategories
+          ? _value._menuCategories
           : menuCategories // ignore: cast_nullable_to_non_nullable
               as List<MenuCategoryModel>,
       menus: menus == freezed
-          ? _value.menus
+          ? _value._menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuModel>,
     ));
@@ -856,22 +861,22 @@ class _$_Success implements _Success {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Success &&
+            other is _$_Success &&
             const DeepCollectionEquality()
-                .equals(other.menuCategories, menuCategories) &&
-            const DeepCollectionEquality().equals(other.menus, menus));
+                .equals(other._menuCategories, _menuCategories) &&
+            const DeepCollectionEquality().equals(other._menus, _menus));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(menuCategories),
-      const DeepCollectionEquality().hash(menus));
+      const DeepCollectionEquality().hash(_menuCategories),
+      const DeepCollectionEquality().hash(_menus));
 
   @JsonKey(ignore: true)
   @override
-  _$SuccessCopyWith<_Success> get copyWith =>
-      __$SuccessCopyWithImpl<_Success>(this, _$identity);
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -996,15 +1001,15 @@ abstract class _Success implements MenuCategoriesState {
   List<MenuModel> get menus => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$SuccessCopyWith<_Success> get copyWith =>
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<$Res>
+abstract class _$$_ErrorCopyWith<$Res>
     implements $MenuCategoriesStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
-      __$ErrorCopyWithImpl<$Res>;
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
+      __$$_ErrorCopyWithImpl<$Res>;
   @override
   $Res call(
       {List<MenuCategoryModel> menuCategories,
@@ -1013,13 +1018,14 @@ abstract class _$ErrorCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$MenuCategoriesStateCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
-      : super(_value, (v) => _then(v as _Error));
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$MenuCategoriesStateCopyWithImpl<$Res>
+    implements _$$_ErrorCopyWith<$Res> {
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+      : super(_value, (v) => _then(v as _$_Error));
 
   @override
-  _Error get _value => super._value as _Error;
+  _$_Error get _value => super._value as _$_Error;
 
   @override
   $Res call({
@@ -1027,13 +1033,13 @@ class __$ErrorCopyWithImpl<$Res> extends _$MenuCategoriesStateCopyWithImpl<$Res>
     Object? menus = freezed,
     Object? exception = freezed,
   }) {
-    return _then(_Error(
+    return _then(_$_Error(
       menuCategories: menuCategories == freezed
-          ? _value.menuCategories
+          ? _value._menuCategories
           : menuCategories // ignore: cast_nullable_to_non_nullable
               as List<MenuCategoryModel>,
       menus: menus == freezed
-          ? _value.menus
+          ? _value._menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuModel>,
       exception: exception == freezed
@@ -1080,24 +1086,24 @@ class _$_Error implements _Error {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Error &&
+            other is _$_Error &&
             const DeepCollectionEquality()
-                .equals(other.menuCategories, menuCategories) &&
-            const DeepCollectionEquality().equals(other.menus, menus) &&
+                .equals(other._menuCategories, _menuCategories) &&
+            const DeepCollectionEquality().equals(other._menus, _menus) &&
             const DeepCollectionEquality().equals(other.exception, exception));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(menuCategories),
-      const DeepCollectionEquality().hash(menus),
+      const DeepCollectionEquality().hash(_menuCategories),
+      const DeepCollectionEquality().hash(_menus),
       const DeepCollectionEquality().hash(exception));
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1224,5 +1230,6 @@ abstract class _Error implements MenuCategoriesState {
   Exception get exception => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }

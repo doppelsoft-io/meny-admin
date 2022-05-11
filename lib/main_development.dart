@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:meny/app.dart';
@@ -24,7 +23,7 @@ Future<void> main() async {
 
   FirebaseFunctions.instance.useFunctionsEmulator(localhost, 5001);
 
-  await FirebaseAuth.instance.useEmulator('http://localhost:9099');
+  // await FirebaseAuth.instance.useEmulator('http://localhost:9099');
 
   await Locator.setup();
   await HiveService.configure();

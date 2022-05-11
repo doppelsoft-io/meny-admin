@@ -132,10 +132,11 @@ class _$CompiledMenuStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res>
+abstract class _$$_LoadingCopyWith<$Res>
     implements $CompiledMenuStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
   @override
   $Res call(
       {Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
@@ -143,19 +144,20 @@ abstract class _$LoadingCopyWith<$Res>
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$CompiledMenuStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
+class __$$_LoadingCopyWithImpl<$Res>
+    extends _$CompiledMenuStateCopyWithImpl<$Res>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
 
   @override
-  _Loading get _value => super._value as _Loading;
+  _$_Loading get _value => super._value as _$_Loading;
 
   @override
   $Res call({
     Object? response = freezed,
   }) {
-    return _then(_Loading(
+    return _then(_$_Loading(
       response: response == freezed
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
@@ -183,7 +185,7 @@ class _$_Loading implements _Loading {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Loading &&
+            other is _$_Loading &&
             const DeepCollectionEquality().equals(other.response, response));
   }
 
@@ -193,8 +195,8 @@ class _$_Loading implements _Loading {
 
   @JsonKey(ignore: true)
   @override
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$$_LoadingCopyWith<_$_Loading> get copyWith =>
+      __$$_LoadingCopyWithImpl<_$_Loading>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -306,15 +308,15 @@ abstract class _Loading implements CompiledMenuState {
       get response => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$LoadingCopyWith<_Loading> get copyWith =>
+  _$$_LoadingCopyWith<_$_Loading> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$LoadedCopyWith<$Res>
+abstract class _$$_LoadedCopyWith<$Res>
     implements $CompiledMenuStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
-      __$LoadedCopyWithImpl<$Res>;
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
   @override
   $Res call(
       {Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
@@ -322,19 +324,20 @@ abstract class _$LoadedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res> extends _$CompiledMenuStateCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
-      : super(_value, (v) => _then(v as _Loaded));
+class __$$_LoadedCopyWithImpl<$Res>
+    extends _$CompiledMenuStateCopyWithImpl<$Res>
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+      : super(_value, (v) => _then(v as _$_Loaded));
 
   @override
-  _Loaded get _value => super._value as _Loaded;
+  _$_Loaded get _value => super._value as _$_Loaded;
 
   @override
   $Res call({
     Object? response = freezed,
   }) {
-    return _then(_Loaded(
+    return _then(_$_Loaded(
       response: response == freezed
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
@@ -362,7 +365,7 @@ class _$_Loaded implements _Loaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Loaded &&
+            other is _$_Loaded &&
             const DeepCollectionEquality().equals(other.response, response));
   }
 
@@ -372,8 +375,8 @@ class _$_Loaded implements _Loaded {
 
   @JsonKey(ignore: true)
   @override
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -485,14 +488,15 @@ abstract class _Loaded implements CompiledMenuState {
       get response => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$LoadedCopyWith<_Loaded> get copyWith => throw _privateConstructorUsedError;
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<$Res>
+abstract class _$$_ErrorCopyWith<$Res>
     implements $CompiledMenuStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
-      __$ErrorCopyWithImpl<$Res>;
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
+      __$$_ErrorCopyWithImpl<$Res>;
   @override
   $Res call(
       {Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
@@ -501,20 +505,20 @@ abstract class _$ErrorCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$CompiledMenuStateCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
-      : super(_value, (v) => _then(v as _Error));
+class __$$_ErrorCopyWithImpl<$Res> extends _$CompiledMenuStateCopyWithImpl<$Res>
+    implements _$$_ErrorCopyWith<$Res> {
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+      : super(_value, (v) => _then(v as _$_Error));
 
   @override
-  _Error get _value => super._value as _Error;
+  _$_Error get _value => super._value as _$_Error;
 
   @override
   $Res call({
     Object? response = freezed,
     Object? exception = freezed,
   }) {
-    return _then(_Error(
+    return _then(_$_Error(
       response: response == freezed
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
@@ -548,7 +552,7 @@ class _$_Error implements _Error {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Error &&
+            other is _$_Error &&
             const DeepCollectionEquality().equals(other.response, response) &&
             const DeepCollectionEquality().equals(other.exception, exception));
   }
@@ -561,8 +565,8 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -676,5 +680,6 @@ abstract class _Error implements CompiledMenuState {
   Exception get exception => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }

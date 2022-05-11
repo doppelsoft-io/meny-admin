@@ -117,29 +117,31 @@ class _$ImageUploadStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res>
+abstract class _$$_InitialCopyWith<$Res>
     implements $ImageUploadStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
   @override
   $Res call({XFile file, String url});
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$ImageUploadStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 
   @override
   $Res call({
     Object? file = freezed,
     Object? url = freezed,
   }) {
-    return _then(_Initial(
+    return _then(_$_Initial(
       file: file == freezed
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
@@ -172,7 +174,7 @@ class _$_Initial implements _Initial {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Initial &&
+            other is _$_Initial &&
             const DeepCollectionEquality().equals(other.file, file) &&
             const DeepCollectionEquality().equals(other.url, url));
   }
@@ -185,8 +187,8 @@ class _$_Initial implements _Initial {
 
   @JsonKey(ignore: true)
   @override
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -280,34 +282,34 @@ abstract class _Initial implements ImageUploadState {
   String get url => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$InitialCopyWith<_Initial> get copyWith =>
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$PickedCopyWith<$Res>
+abstract class _$$_PickedCopyWith<$Res>
     implements $ImageUploadStateCopyWith<$Res> {
-  factory _$PickedCopyWith(_Picked value, $Res Function(_Picked) then) =
-      __$PickedCopyWithImpl<$Res>;
+  factory _$$_PickedCopyWith(_$_Picked value, $Res Function(_$_Picked) then) =
+      __$$_PickedCopyWithImpl<$Res>;
   @override
   $Res call({XFile file, String url});
 }
 
 /// @nodoc
-class __$PickedCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
-    implements _$PickedCopyWith<$Res> {
-  __$PickedCopyWithImpl(_Picked _value, $Res Function(_Picked) _then)
-      : super(_value, (v) => _then(v as _Picked));
+class __$$_PickedCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
+    implements _$$_PickedCopyWith<$Res> {
+  __$$_PickedCopyWithImpl(_$_Picked _value, $Res Function(_$_Picked) _then)
+      : super(_value, (v) => _then(v as _$_Picked));
 
   @override
-  _Picked get _value => super._value as _Picked;
+  _$_Picked get _value => super._value as _$_Picked;
 
   @override
   $Res call({
     Object? file = freezed,
     Object? url = freezed,
   }) {
-    return _then(_Picked(
+    return _then(_$_Picked(
       file: file == freezed
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
@@ -339,7 +341,7 @@ class _$_Picked implements _Picked {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Picked &&
+            other is _$_Picked &&
             const DeepCollectionEquality().equals(other.file, file) &&
             const DeepCollectionEquality().equals(other.url, url));
   }
@@ -352,8 +354,8 @@ class _$_Picked implements _Picked {
 
   @JsonKey(ignore: true)
   @override
-  _$PickedCopyWith<_Picked> get copyWith =>
-      __$PickedCopyWithImpl<_Picked>(this, _$identity);
+  _$$_PickedCopyWith<_$_Picked> get copyWith =>
+      __$$_PickedCopyWithImpl<_$_Picked>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -447,35 +449,37 @@ abstract class _Picked implements ImageUploadState {
   String get url => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$PickedCopyWith<_Picked> get copyWith => throw _privateConstructorUsedError;
+  _$$_PickedCopyWith<_$_Picked> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$UploadingCopyWith<$Res>
+abstract class _$$_UploadingCopyWith<$Res>
     implements $ImageUploadStateCopyWith<$Res> {
-  factory _$UploadingCopyWith(
-          _Uploading value, $Res Function(_Uploading) then) =
-      __$UploadingCopyWithImpl<$Res>;
+  factory _$$_UploadingCopyWith(
+          _$_Uploading value, $Res Function(_$_Uploading) then) =
+      __$$_UploadingCopyWithImpl<$Res>;
   @override
   $Res call({XFile file, String url});
 }
 
 /// @nodoc
-class __$UploadingCopyWithImpl<$Res>
+class __$$_UploadingCopyWithImpl<$Res>
     extends _$ImageUploadStateCopyWithImpl<$Res>
-    implements _$UploadingCopyWith<$Res> {
-  __$UploadingCopyWithImpl(_Uploading _value, $Res Function(_Uploading) _then)
-      : super(_value, (v) => _then(v as _Uploading));
+    implements _$$_UploadingCopyWith<$Res> {
+  __$$_UploadingCopyWithImpl(
+      _$_Uploading _value, $Res Function(_$_Uploading) _then)
+      : super(_value, (v) => _then(v as _$_Uploading));
 
   @override
-  _Uploading get _value => super._value as _Uploading;
+  _$_Uploading get _value => super._value as _$_Uploading;
 
   @override
   $Res call({
     Object? file = freezed,
     Object? url = freezed,
   }) {
-    return _then(_Uploading(
+    return _then(_$_Uploading(
       file: file == freezed
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
@@ -507,7 +511,7 @@ class _$_Uploading implements _Uploading {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Uploading &&
+            other is _$_Uploading &&
             const DeepCollectionEquality().equals(other.file, file) &&
             const DeepCollectionEquality().equals(other.url, url));
   }
@@ -520,8 +524,8 @@ class _$_Uploading implements _Uploading {
 
   @JsonKey(ignore: true)
   @override
-  _$UploadingCopyWith<_Uploading> get copyWith =>
-      __$UploadingCopyWithImpl<_Uploading>(this, _$identity);
+  _$$_UploadingCopyWith<_$_Uploading> get copyWith =>
+      __$$_UploadingCopyWithImpl<_$_Uploading>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -615,34 +619,37 @@ abstract class _Uploading implements ImageUploadState {
   String get url => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$UploadingCopyWith<_Uploading> get copyWith =>
+  _$$_UploadingCopyWith<_$_Uploading> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$UploadedCopyWith<$Res>
+abstract class _$$_UploadedCopyWith<$Res>
     implements $ImageUploadStateCopyWith<$Res> {
-  factory _$UploadedCopyWith(_Uploaded value, $Res Function(_Uploaded) then) =
-      __$UploadedCopyWithImpl<$Res>;
+  factory _$$_UploadedCopyWith(
+          _$_Uploaded value, $Res Function(_$_Uploaded) then) =
+      __$$_UploadedCopyWithImpl<$Res>;
   @override
   $Res call({XFile file, String url});
 }
 
 /// @nodoc
-class __$UploadedCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
-    implements _$UploadedCopyWith<$Res> {
-  __$UploadedCopyWithImpl(_Uploaded _value, $Res Function(_Uploaded) _then)
-      : super(_value, (v) => _then(v as _Uploaded));
+class __$$_UploadedCopyWithImpl<$Res>
+    extends _$ImageUploadStateCopyWithImpl<$Res>
+    implements _$$_UploadedCopyWith<$Res> {
+  __$$_UploadedCopyWithImpl(
+      _$_Uploaded _value, $Res Function(_$_Uploaded) _then)
+      : super(_value, (v) => _then(v as _$_Uploaded));
 
   @override
-  _Uploaded get _value => super._value as _Uploaded;
+  _$_Uploaded get _value => super._value as _$_Uploaded;
 
   @override
   $Res call({
     Object? file = freezed,
     Object? url = freezed,
   }) {
-    return _then(_Uploaded(
+    return _then(_$_Uploaded(
       file: file == freezed
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
@@ -674,7 +681,7 @@ class _$_Uploaded implements _Uploaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Uploaded &&
+            other is _$_Uploaded &&
             const DeepCollectionEquality().equals(other.file, file) &&
             const DeepCollectionEquality().equals(other.url, url));
   }
@@ -687,8 +694,8 @@ class _$_Uploaded implements _Uploaded {
 
   @JsonKey(ignore: true)
   @override
-  _$UploadedCopyWith<_Uploaded> get copyWith =>
-      __$UploadedCopyWithImpl<_Uploaded>(this, _$identity);
+  _$$_UploadedCopyWith<_$_Uploaded> get copyWith =>
+      __$$_UploadedCopyWithImpl<_$_Uploaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -782,27 +789,27 @@ abstract class _Uploaded implements ImageUploadState {
   String get url => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$UploadedCopyWith<_Uploaded> get copyWith =>
+  _$$_UploadedCopyWith<_$_Uploaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<$Res>
+abstract class _$$_ErrorCopyWith<$Res>
     implements $ImageUploadStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
-      __$ErrorCopyWithImpl<$Res>;
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
+      __$$_ErrorCopyWithImpl<$Res>;
   @override
   $Res call({XFile file, String url, Exception exception});
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
-      : super(_value, (v) => _then(v as _Error));
+class __$$_ErrorCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
+    implements _$$_ErrorCopyWith<$Res> {
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+      : super(_value, (v) => _then(v as _$_Error));
 
   @override
-  _Error get _value => super._value as _Error;
+  _$_Error get _value => super._value as _$_Error;
 
   @override
   $Res call({
@@ -810,7 +817,7 @@ class __$ErrorCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
     Object? url = freezed,
     Object? exception = freezed,
   }) {
-    return _then(_Error(
+    return _then(_$_Error(
       file: file == freezed
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
@@ -849,7 +856,7 @@ class _$_Error implements _Error {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Error &&
+            other is _$_Error &&
             const DeepCollectionEquality().equals(other.file, file) &&
             const DeepCollectionEquality().equals(other.url, url) &&
             const DeepCollectionEquality().equals(other.exception, exception));
@@ -864,8 +871,8 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -962,5 +969,6 @@ abstract class _Error implements ImageUploadState {
   Exception get exception => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }
