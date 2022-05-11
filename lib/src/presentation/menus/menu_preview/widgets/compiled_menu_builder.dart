@@ -91,7 +91,6 @@ class _CompiledMenuBuilder extends StatelessWidget {
                 key: const Key('main-one'),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                buildDefaultDragHandles: false,
                 itemCount: data.length,
                 padding: EdgeInsets.zero,
                 itemBuilder: (context, i) {
@@ -117,51 +116,45 @@ class _CompiledMenuBuilder extends StatelessWidget {
                       final item = items[i];
                       return Container(
                         key: Key(item.id!),
-                        height: 100,
-                        color: Colors.white,
                         padding: const EdgeInsets.all(Spacing.pageSpacing),
                         margin: const EdgeInsets.only(bottom: 12),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (item.imageUrl != null &&
-                                item.imageUrl!.isNotEmpty) ...[
-                              ImageDisplayCard.forMenuDisplay(
-                                url: item.imageUrl ?? '',
-                              ),
-                            ],
                             Expanded(
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: Spacing.pageSpacing,
                                 ),
-                                child: Row(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            item.name,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1,
-                                          ),
-                                          Text(
-                                            item.description,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge,
-                                          ),
-                                        ],
-                                      ),
+                                    Text(
+                                      item.name,
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
                                     ),
+                                    if (item.description.isNotEmpty) ...[
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        item.description,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                    ],
+                                    const SizedBox(height: 6),
                                     Text(item.price.toCurrency()),
                                   ],
                                 ),
                               ),
                             ),
+                            if (item.imageUrl != null &&
+                                item.imageUrl!.isNotEmpty)
+                              ImageDisplayCard.forMenuDisplay(
+                                url: item.imageUrl ?? '',
+                              ),
+                            const SizedBox(width: Spacing.pageSpacing),
                           ],
                         ),
                       );

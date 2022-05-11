@@ -24,8 +24,8 @@ class ImageDisplayCard extends StatelessWidget {
   }) {
     return ImageDisplayCard(
       url: url,
-      width: kImageUploadCardWidth / 3,
-      height: kImageUploadCardHeight / 3,
+      width: kImageUploadCardWidth * .30,
+      height: kImageUploadCardHeight * .30,
       processing: processing ?? false,
       onTap: onTap,
       emptyBuilder: () => const Center(child: Icon(Icons.image)),
@@ -56,9 +56,13 @@ class ImageDisplayCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: height,
       width: width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(11),
+        border: Border.all(width: 2, color: Colors.grey[200]!),
+      ),
       child: GestureDetector(
         onTap: onTap,
         child: Stack(
@@ -69,32 +73,38 @@ class ImageDisplayCard extends StatelessWidget {
             ),
             if (url.isNotEmpty) ...[
               if (kIsWeb)
-                Image.network(
-                  url,
-                  width: width,
-                  height: height,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (context, child, progress) {
-                    if (progress?.cumulativeBytesLoaded ==
-                        progress?.expectedTotalBytes) {
-                      return child;
-                    }
-                    return Stack(
-                      children: [
-                        _LoadingContainer.custom(
-                          color: Colors.white38,
-                        ),
-                      ],
-                    );
-                  },
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    url,
+                    width: width,
+                    height: height,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, progress) {
+                      if (progress?.cumulativeBytesLoaded ==
+                          progress?.expectedTotalBytes) {
+                        return child;
+                      }
+                      return Stack(
+                        children: [
+                          _LoadingContainer.custom(
+                            color: Colors.white38,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 )
               else
-                CachedNetworkImage(
-                  imageUrl: url,
-                  width: width,
-                  height: height,
-                  fit: BoxFit.cover,
-                  placeholder: (_, __) => const ImageUploadShimmer(),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImage(
+                    imageUrl: url,
+                    width: width,
+                    height: height,
+                    fit: BoxFit.cover,
+                    placeholder: (_, __) => const ImageUploadShimmer(),
+                  ),
                 )
             ] else ...[
               emptyBuilder(),
@@ -139,9 +149,12 @@ class _LoadingContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: color ?? Colors.grey[200],
       width: width,
       height: height,
+      decoration: BoxDecoration(
+        color: color ?? Colors.grey[200],
+        borderRadius: BorderRadius.circular(11),
+      ),
       child: child,
     );
   }
