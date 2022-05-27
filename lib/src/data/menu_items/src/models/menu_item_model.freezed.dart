@@ -24,7 +24,7 @@ mixin _$MenuItemModel {
   @JsonKey(ignore: true)
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  double get price => throw _privateConstructorUsedError;
+  PriceInfo get priceInfo => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -44,11 +44,13 @@ abstract class $MenuItemModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(ignore: true) String? id,
       String name,
-      double price,
+      PriceInfo priceInfo,
       DateTime? createdAt,
       DateTime? updatedAt,
       String description,
       String? imageUrl});
+
+  $PriceInfoCopyWith<$Res> get priceInfo;
 }
 
 /// @nodoc
@@ -64,7 +66,7 @@ class _$MenuItemModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? price = freezed,
+    Object? priceInfo = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? description = freezed,
@@ -79,10 +81,10 @@ class _$MenuItemModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      price: price == freezed
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
+      priceInfo: priceInfo == freezed
+          ? _value.priceInfo
+          : priceInfo // ignore: cast_nullable_to_non_nullable
+              as PriceInfo,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -101,6 +103,13 @@ class _$MenuItemModelCopyWithImpl<$Res>
               as String?,
     ));
   }
+
+  @override
+  $PriceInfoCopyWith<$Res> get priceInfo {
+    return $PriceInfoCopyWith<$Res>(_value.priceInfo, (value) {
+      return _then(_value.copyWith(priceInfo: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -113,11 +122,14 @@ abstract class _$$_MenuItemModelCopyWith<$Res>
   $Res call(
       {@JsonKey(ignore: true) String? id,
       String name,
-      double price,
+      PriceInfo priceInfo,
       DateTime? createdAt,
       DateTime? updatedAt,
       String description,
       String? imageUrl});
+
+  @override
+  $PriceInfoCopyWith<$Res> get priceInfo;
 }
 
 /// @nodoc
@@ -135,7 +147,7 @@ class __$$_MenuItemModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? price = freezed,
+    Object? priceInfo = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? description = freezed,
@@ -150,10 +162,10 @@ class __$$_MenuItemModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      price: price == freezed
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
+      priceInfo: priceInfo == freezed
+          ? _value.priceInfo
+          : priceInfo // ignore: cast_nullable_to_non_nullable
+              as PriceInfo,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -181,7 +193,7 @@ class _$_MenuItemModel extends _MenuItemModel {
   const _$_MenuItemModel(
       {@JsonKey(ignore: true) this.id,
       required this.name,
-      required this.price,
+      required this.priceInfo,
       this.createdAt,
       this.updatedAt,
       required this.description,
@@ -198,7 +210,7 @@ class _$_MenuItemModel extends _MenuItemModel {
   @override
   final String name;
   @override
-  final double price;
+  final PriceInfo priceInfo;
   @override
   final DateTime? createdAt;
   @override
@@ -210,7 +222,7 @@ class _$_MenuItemModel extends _MenuItemModel {
 
   @override
   String toString() {
-    return 'MenuItemModel(id: $id, name: $name, price: $price, createdAt: $createdAt, updatedAt: $updatedAt, description: $description, imageUrl: $imageUrl)';
+    return 'MenuItemModel(id: $id, name: $name, priceInfo: $priceInfo, createdAt: $createdAt, updatedAt: $updatedAt, description: $description, imageUrl: $imageUrl)';
   }
 
   @override
@@ -220,7 +232,7 @@ class _$_MenuItemModel extends _MenuItemModel {
             other is _$_MenuItemModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.price, price) &&
+            const DeepCollectionEquality().equals(other.priceInfo, priceInfo) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
             const DeepCollectionEquality()
@@ -234,7 +246,7 @@ class _$_MenuItemModel extends _MenuItemModel {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(price),
+      const DeepCollectionEquality().hash(priceInfo),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(updatedAt),
       const DeepCollectionEquality().hash(description),
@@ -255,7 +267,7 @@ abstract class _MenuItemModel extends MenuItemModel {
   const factory _MenuItemModel(
       {@JsonKey(ignore: true) final String? id,
       required final String name,
-      required final double price,
+      required final PriceInfo priceInfo,
       final DateTime? createdAt,
       final DateTime? updatedAt,
       required final String description,
@@ -271,7 +283,7 @@ abstract class _MenuItemModel extends MenuItemModel {
   @override
   String get name => throw _privateConstructorUsedError;
   @override
-  double get price => throw _privateConstructorUsedError;
+  PriceInfo get priceInfo => throw _privateConstructorUsedError;
   @override
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @override

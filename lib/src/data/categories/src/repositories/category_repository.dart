@@ -42,8 +42,7 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
         .orderBy('createdAt', descending: false)
         .snapshots()
         .map(
-          (doc) =>
-              doc.docs.map((snap) => CategoryModel.fromSnapshot(snap)).toList(),
+          (doc) => doc.docs.map(CategoryModel.fromSnapshot).toList(),
         );
   }
 
@@ -124,8 +123,7 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
         .orderBy('updatedAt', descending: true)
         .snapshots()
         .map(
-          (doc) =>
-              doc.docs.map((snap) => CategoryModel.fromSnapshot(snap)).toList(),
+          (doc) => doc.docs.map(CategoryModel.fromSnapshot).toList(),
         );
   }
 }

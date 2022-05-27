@@ -29,7 +29,7 @@ class CompiledMenuRepository {
         .snapshots()
         .map(
           (snap) =>
-              snap.docs.map((doc) => CategoryModel.fromSnapshot(doc)).toList(),
+              snap.docs.map(CategoryModel.fromSnapshot).toList(),
         );
   }
 
@@ -48,7 +48,7 @@ class CompiledMenuRepository {
         .snapshots()
         .map(
           (snap) =>
-              snap.docs.map((doc) => MenuItemModel.fromSnapshot(doc)).toList(),
+              snap.docs.map(MenuItemModel.fromSnapshot).toList(),
         );
   }
 

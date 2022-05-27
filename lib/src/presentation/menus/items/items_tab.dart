@@ -122,7 +122,7 @@ class _MenusItemsTabState extends State<MenusItemsTab> {
                     ),
                   ),
                   DataCell(Text(resource.name)),
-                  DataCell(Text(resource.price.toCurrency())),
+                  DataCell(Text(resource.priceInfo.price.toCurrency())),
                   DataCell(
                     Text(
                       resource.updatedAt?.formatWith('MM/dd/yy @ h:mm a') ?? '',

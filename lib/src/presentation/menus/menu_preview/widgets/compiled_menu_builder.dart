@@ -144,7 +144,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                       ),
                                     ],
                                     const SizedBox(height: 6),
-                                    Text(item.price.toCurrency()),
+                                    Text(item.priceInfo.price.toCurrency()),
                                   ],
                                 ),
                               ),

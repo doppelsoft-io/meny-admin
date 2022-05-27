@@ -50,7 +50,7 @@ class StoreRepository {
           .get();
 
       final stores = storeDocuments.docs
-          .map((snap) => StoreModel.fromSnapshot(snap))
+          .map(StoreModel.fromSnapshot)
           .toList();
 
       return right(stores);

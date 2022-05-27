@@ -99,7 +99,7 @@ class MenuCategoryRepository {
           .snapshots()
           .map(
             (doc) => doc.docs
-                .map((snap) => MenuCategoryModel.fromSnapshot(snap))
+                .map(MenuCategoryModel.fromSnapshot)
                 .toList(),
           );
     } catch (err) {
@@ -140,7 +140,7 @@ class MenuCategoryRepository {
           .snapshots()
           .map(
             (doc) => doc.docs
-                .map((snap) => MenuCategoryModel.fromSnapshot(snap))
+                .map(MenuCategoryModel.fromSnapshot)
                 .toList(),
           );
     } catch (err) {

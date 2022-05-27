@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meny/src/data/menu_items/src/models/price_info.dart';
 
 part 'menu_item_model.freezed.dart';
 part 'menu_item_model.g.dart';
@@ -12,7 +13,7 @@ class MenuItemModel with _$MenuItemModel {
     // ignore: invalid_annotation_target
     @JsonKey(ignore: true) String? id,
     required String name,
-    required double price,
+    required PriceInfo priceInfo,
     DateTime? createdAt,
     DateTime? updatedAt,
     required String description,
@@ -35,7 +36,7 @@ class MenuItemModel with _$MenuItemModel {
     final now = DateTime.now();
     return MenuItemModel(
       name: '',
-      price: 0,
+      priceInfo: PriceInfo(price: 0),
       createdAt: now,
       updatedAt: now,
       description: '',

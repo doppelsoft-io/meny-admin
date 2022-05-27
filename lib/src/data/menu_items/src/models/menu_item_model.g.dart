@@ -9,7 +9,7 @@ part of 'menu_item_model.dart';
 _$_MenuItemModel _$$_MenuItemModelFromJson(Map<String, dynamic> json) =>
     _$_MenuItemModel(
       name: json['name'] as String,
-      price: (json['price'] as num).toDouble(),
+      priceInfo: PriceInfo.fromJson(json['priceInfo'] as Map<String, dynamic>),
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -23,7 +23,7 @@ _$_MenuItemModel _$$_MenuItemModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_MenuItemModelToJson(_$_MenuItemModel instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'price': instance.price,
+      'priceInfo': instance.priceInfo.toJson(),
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'description': instance.description,

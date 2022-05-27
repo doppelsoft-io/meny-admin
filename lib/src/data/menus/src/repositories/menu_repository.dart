@@ -42,7 +42,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
         .snapshots()
         .map(
           (doc) =>
-              doc.docs.map((snap) => MenuModel.fromSnapshot(snap)).toList(),
+              doc.docs.map(MenuModel.fromSnapshot).toList(),
         );
   }
 

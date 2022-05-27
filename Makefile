@@ -8,6 +8,9 @@ clean: ## Cleans Flutter project.
 	rm -rf Pods Podfile.lock
 	cd ..
 	flutter pub get
+	cd ios
+	pod install
+	cd ..
 
 codegen-build: ## Generate codegen files once.
 	flutter pub get
