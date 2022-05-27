@@ -1,2 +1,2 @@
-export 'models/models.dart';
-export 'repositories/repositories.dart';
+export 'models/user_model.dart';
+export 'repositories/user_repository.dart';

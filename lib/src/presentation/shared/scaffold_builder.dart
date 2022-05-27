@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/presentation/shared/shared.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/presentation/shared/shared.dart';
 
 class ScaffoldBuilder extends StatelessWidget {
   const ScaffoldBuilder({

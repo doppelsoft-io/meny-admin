@@ -4,10 +4,10 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/menu_items/menu_items.dart';
-import 'package:meny/src/data/stores/stores.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_core/meny_core.dart';
 
 part 'image_upload_state.dart';
 part 'image_upload_cubit.freezed.dart';

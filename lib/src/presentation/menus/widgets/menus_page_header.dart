@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meny/src/presentation/shared/page_action_button.dart';
-import 'package:meny/src/presentation/shared/page_title.dart';
+import 'package:meny_admin/src/presentation/shared/page_action_button.dart';
+import 'package:meny_admin/src/presentation/shared/page_title.dart';
 
 class MenusPageHeader extends StatelessWidget {
   const MenusPageHeader({

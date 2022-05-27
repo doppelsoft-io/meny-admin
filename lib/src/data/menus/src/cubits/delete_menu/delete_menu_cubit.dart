@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/constants/paths.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/menu_categories/menu_categories.dart';
-import 'package:meny/src/data/menus/menus.dart';
-import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/extensions/extensions.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/constants/paths.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/menu_categories/menu_categories.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/extensions/extensions.dart';
+import 'package:meny_core/meny_core.dart';
 
 part 'delete_menu_cubit.freezed.dart';
 part 'delete_menu_state.dart';

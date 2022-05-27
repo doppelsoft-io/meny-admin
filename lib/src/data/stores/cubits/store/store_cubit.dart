@@ -1,12 +1,14 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/data/users/users.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/data/users/users.dart';
+import 'package:meny_core/meny_core.dart';
 
 part 'store_cubit.freezed.dart';
 part 'store_state.dart';
@@ -51,7 +53,7 @@ class StoreCubit extends Cubit<StoreState> {
 
   Future<void> setStore(StoreModel store) async {
     assert(store.id != null && store.id!.isNotEmpty, 'store.id is empty');
-    print('MEE: store ${store.id}');
+    log('MEE: store ${store.id}');
     await _storeCacheService.save(store.id!);
     emit(state.copyWith(store: store));
   }

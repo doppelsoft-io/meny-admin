@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/services/services.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/services/services.dart';
 
 class StoreCacheService {
   Future<void> save(String storeId) async {

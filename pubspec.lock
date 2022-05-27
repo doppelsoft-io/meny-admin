@@ -211,13 +211,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  core:
-    dependency: "direct main"
-    description:
-      path: "../core"
-      relative: true
-    source: path
-    version: "0.0.2"
   cross_file:
     dependency: transitive
     description:
@@ -253,6 +246,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.1"
+  doppelsoft_core:
+    dependency: "direct main"
+    description:
+      path: "../doppelsoft-core"
+      relative: true
+    source: path
+    version: "0.0.1"
   equatable:
     dependency: "direct main"
     description:
@@ -604,6 +604,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.4"
+  meny_core:
+    dependency: "direct main"
+    description:
+      path: "../meny-core"
+      relative: true
+    source: path
+    version: "0.0.1"
   meta:
     dependency: transitive
     description:
@@ -974,5 +981,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.17.0-0 <3.0.0"
+  dart: ">=2.17.0 <3.0.0"
   flutter: ">=2.10.0-0"

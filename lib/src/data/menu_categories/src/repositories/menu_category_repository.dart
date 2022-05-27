@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/constants/paths.dart';
-import 'package:meny/src/data/menu_categories/menu_categories.dart';
-import 'package:meny/src/typedefs/typedefs.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/constants/paths.dart';
+import 'package:meny_admin/src/typedefs/typedefs.dart';
+import 'package:meny_core/meny_core.dart';
 
 class MenuCategoryException implements Exception {
   const MenuCategoryException({String? message})
@@ -98,9 +98,7 @@ class MenuCategoryRepository {
           .orderBy(_orderBy.value1, descending: _orderBy.value2)
           .snapshots()
           .map(
-            (doc) => doc.docs
-                .map(MenuCategoryModel.fromSnapshot)
-                .toList(),
+            (doc) => doc.docs.map(MenuCategoryModel.fromSnapshot).toList(),
           );
     } catch (err) {
       throw const GetMenuCategoriesException();
@@ -139,9 +137,7 @@ class MenuCategoryRepository {
           .orderBy(_orderBy.value1, descending: _orderBy.value2)
           .snapshots()
           .map(
-            (doc) => doc.docs
-                .map(MenuCategoryModel.fromSnapshot)
-                .toList(),
+            (doc) => doc.docs.map(MenuCategoryModel.fromSnapshot).toList(),
           );
     } catch (err) {
       throw const GetMenuCategoriesException();

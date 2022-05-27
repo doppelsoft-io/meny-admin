@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/data/categories/categories.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/menu_items/menu_items.dart';
-import 'package:meny/src/extensions/extensions.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/extensions/extensions.dart';
+import 'package:meny_core/meny_core.dart';
 
 class CategoryDoesNotExistException implements Exception {}
 
@@ -28,8 +27,7 @@ class CompiledMenuRepository {
         .orderBy('position')
         .snapshots()
         .map(
-          (snap) =>
-              snap.docs.map(CategoryModel.fromSnapshot).toList(),
+          (snap) => snap.docs.map(CategoryModel.fromSnapshot).toList(),
         );
   }
 
@@ -47,8 +45,7 @@ class CompiledMenuRepository {
         .orderBy('position')
         .snapshots()
         .map(
-          (snap) =>
-              snap.docs.map(MenuItemModel.fromSnapshot).toList(),
+          (snap) => snap.docs.map(MenuItemModel.fromSnapshot).toList(),
         );
   }
 

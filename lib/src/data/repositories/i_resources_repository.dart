@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:meny/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
 
 abstract class IResourcesRepository<T> {
   IResourcesRepository({

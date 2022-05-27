@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meny/src/data/models/orders/order_model.dart';
+import 'package:meny_admin/src/data/models/orders/order_model.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({Key? key}) : super(key: key);
@@ -53,10 +53,12 @@ class OrdersPage extends StatelessWidget {
                                 DataCell(Text((model.amount / 100).toString())),
                                 DataCell(Text(model.displayName)),
                                 DataCell(Text(model.createdAt.toString())),
-                                DataCell(IconButton(
-                                  icon: const Icon(Icons.more_horiz),
-                                  onPressed: () {},
-                                ),),
+                                DataCell(
+                                  IconButton(
+                                    icon: const Icon(Icons.more_horiz),
+                                    onPressed: () {},
+                                  ),
+                                ),
                               ],
                             ),
                           )

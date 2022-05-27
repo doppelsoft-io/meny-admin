@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meny/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
 
 class ErrorDisplay extends StatelessWidget {
   const ErrorDisplay({

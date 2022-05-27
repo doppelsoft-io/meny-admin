@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:meny/src/constants/spacing.dart';
-import 'package:meny/src/data/login/login.dart';
-import 'package:meny/src/screens/signup_screen.dart';
-import 'package:meny/src/services/services.dart';
-import 'package:meny/src/utils/utils.dart';
+import 'package:meny_admin/src/constants/spacing.dart';
+import 'package:meny_admin/src/data/login/login.dart';
+import 'package:meny_admin/src/screens/signup_screen.dart';
+import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_admin/src/utils/utils.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class LoginScreen extends HookWidget {

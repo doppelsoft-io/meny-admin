@@ -1,19 +1,20 @@
-import 'package:core/core.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/constants/spacing.dart';
-import 'package:meny/src/data/categories/categories.dart';
-import 'package:meny/src/data/category_menu_items/category_menu_items.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/menu_items/menu_items.dart';
-import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/presentation/menus/items/image_upload/image_display_card.dart';
-import 'package:meny/src/presentation/shared/shared.dart';
-import 'package:meny/src/presentation/sheet_args.dart';
-import 'package:meny/src/services/services.dart';
-import 'package:meny/src/utils/utils.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/constants/spacing.dart';
+import 'package:meny_admin/src/data/categories/categories.dart';
+import 'package:meny_admin/src/data/category_menu_items/category_menu_items.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/menu_items/menu_items.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/presentation/menus/items/image_upload/image_display_card.dart';
+import 'package:meny_admin/src/presentation/shared/shared.dart';
+import 'package:meny_admin/src/presentation/sheet_args.dart';
+import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_admin/src/utils/utils.dart';
+import 'package:meny_core/meny_core.dart';
 
 class UpdateMenuItemSheet extends StatelessWidget {
   const UpdateMenuItemSheet({

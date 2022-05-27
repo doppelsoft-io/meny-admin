@@ -7,8 +7,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:meny/app.dart';
-import 'package:meny/src/enums/enums.dart';
+import 'package:meny_admin/app.dart';
+import 'package:meny_admin/src/enums/enums.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

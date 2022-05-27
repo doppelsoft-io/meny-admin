@@ -1,14 +1,14 @@
-import 'package:core/core.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meny/src/constants/analytics.dart';
-import 'package:meny/src/constants/spacing.dart';
-import 'package:meny/src/data/categories/categories.dart';
-import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/presentation/menus/categories/update_categories/update_category_sheet.dart';
-import 'package:meny/src/presentation/menus/widgets/widgets.dart';
-import 'package:meny/src/presentation/resources/cubit/resources_cubit.dart';
-import 'package:meny/src/services/services.dart';
+import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/constants/spacing.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/presentation/menus/categories/update_categories/update_category_sheet.dart';
+import 'package:meny_admin/src/presentation/menus/widgets/widgets.dart';
+import 'package:meny_admin/src/presentation/resources/cubit/resources_cubit.dart';
+import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_core/meny_core.dart';
 
 class MenusCategoriesTab extends StatefulWidget {
   const MenusCategoriesTab({Key? key}) : super(key: key);

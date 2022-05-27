@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:meny/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
 
 class OrdersRepository {
   Future<Either<Failure, List>> get() {

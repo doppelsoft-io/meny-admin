@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meny/src/constants/analytics.dart';
-import 'package:meny/src/presentation/menus/categories/categories_tab.dart';
-import 'package:meny/src/presentation/menus/items/items_tab.dart';
-import 'package:meny/src/presentation/menus/menus/menus_tab.dart';
-import 'package:meny/src/services/services.dart';
+import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/presentation/menus/categories/categories_tab.dart';
+import 'package:meny_admin/src/presentation/menus/items/items_tab.dart';
+import 'package:meny_admin/src/presentation/menus/menus/menus_tab.dart';
+import 'package:meny_admin/src/services/services.dart';
 
 class MenusPage extends StatelessWidget {
   const MenusPage({Key? key}) : super(key: key);

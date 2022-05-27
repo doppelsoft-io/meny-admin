@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meny/src/presentation/resources/cubit/resources_cubit.dart';
+import 'package:meny_admin/src/presentation/resources/cubit/resources_cubit.dart';
 
 class ResourceTable<T> extends StatelessWidget {
   const ResourceTable({

@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/users/users.dart';
-import 'package:meny/src/services/services.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/users/users.dart';
+import 'package:meny_admin/src/services/services.dart';
 
 class AuthRepository {
   AuthRepository({

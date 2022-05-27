@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/menus/menus.dart';
-import 'package:meny/src/data/repositories/i_resources_repository.dart';
-import 'package:meny/src/extensions/extensions.dart';
-import 'package:meny/src/services/services.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/repositories/i_resources_repository.dart';
+import 'package:meny_admin/src/extensions/extensions.dart';
+import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_core/meny_core.dart';
 
 class MenuRepository extends IResourcesRepository<MenuModel> {
   MenuRepository({
@@ -41,8 +41,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
         .orderBy('createdAt', descending: false)
         .snapshots()
         .map(
-          (doc) =>
-              doc.docs.map(MenuModel.fromSnapshot).toList(),
+          (doc) => doc.docs.map(MenuModel.fromSnapshot).toList(),
         );
   }
 

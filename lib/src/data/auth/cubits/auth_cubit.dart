@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/data/auth/auth.dart';
-import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/data/users/users.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/data/auth/auth.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/data/users/users.dart';
 
 part 'auth_state.dart';
 

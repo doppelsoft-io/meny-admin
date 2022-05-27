@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/data/categories/categories.dart';
-import 'package:meny/src/data/menu_categories/menu_categories.dart';
-import 'package:meny/src/data/menus/menus.dart';
-import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/typedefs/typedefs.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/data/menu_categories/menu_categories.dart';
+import 'package:meny_admin/src/data/menus/menus.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/typedefs/typedefs.dart';
+import 'package:meny_core/meny_core.dart';
 
 part 'menu_categories_state.dart';
 part 'menu_categories_cubit.freezed.dart';

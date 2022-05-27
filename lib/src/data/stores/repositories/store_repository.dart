@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/extensions/extensions.dart';
-import 'package:meny/src/services/services.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/extensions/extensions.dart';
+import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_core/meny_core.dart';
 
 class StoreRepository {
   StoreRepository({
@@ -49,9 +50,7 @@ class StoreRepository {
           .where('users', arrayContains: userId)
           .get();
 
-      final stores = storeDocuments.docs
-          .map(StoreModel.fromSnapshot)
-          .toList();
+      final stores = storeDocuments.docs.map(StoreModel.fromSnapshot).toList();
 
       return right(stores);
     } catch (err) {

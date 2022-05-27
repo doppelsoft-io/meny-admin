@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/data/auth/auth.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/users/models/user_model.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/data/auth/auth.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/users/models/user_model.dart';
 
 part 'login_cubit.freezed.dart';
 part 'login_state.dart';

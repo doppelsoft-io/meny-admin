@@ -1,14 +1,14 @@
-import 'package:core/core.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meny/src/custom_router.dart';
-import 'package:meny/src/data/auth/auth.dart';
-import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/enums/enums.dart';
-import 'package:meny/src/screens/screens.dart';
-import 'package:meny/themes.dart';
-import 'package:meny/unfocus.dart';
+import 'package:meny_admin/src/custom_router.dart';
+import 'package:meny_admin/src/data/auth/auth.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/enums/enums.dart';
+import 'package:meny_admin/src/screens/screens.dart';
+import 'package:meny_admin/themes.dart';
+import 'package:meny_admin/unfocus.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 

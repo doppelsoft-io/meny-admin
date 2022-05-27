@@ -1,16 +1,17 @@
-import 'package:core/core.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/constants/analytics.dart';
-import 'package:meny/src/constants/spacing.dart';
-import 'package:meny/src/data/menus/menus.dart';
-import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/presentation/menus/menu_preview/menu_preview_screen.dart';
-import 'package:meny/src/presentation/menus/menus/update_menus/update_menus_sheet.dart';
-import 'package:meny/src/presentation/menus/widgets/widgets.dart';
-import 'package:meny/src/presentation/resources/cubit/resources_cubit.dart';
-import 'package:meny/src/services/services.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/constants/spacing.dart';
+import 'package:meny_admin/src/data/menus/menus.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/presentation/menus/menu_preview/menu_preview_screen.dart';
+import 'package:meny_admin/src/presentation/menus/menus/update_menus/update_menus_sheet.dart';
+import 'package:meny_admin/src/presentation/menus/widgets/widgets.dart';
+import 'package:meny_admin/src/presentation/resources/cubit/resources_cubit.dart';
+import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_core/meny_core.dart';
 
 class MenusMenusTab extends StatefulWidget {
   const MenusMenusTab({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:meny/src/presentation/menus/items/image_upload/image_upload_shimmer.dart';
+import 'package:meny_admin/src/presentation/menus/items/image_upload/image_upload_shimmer.dart';
 
 const kImageUploadCardWidth = 275.0;
 const kImageUploadCardHeight = 220.0;

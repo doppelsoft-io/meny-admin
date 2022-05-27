@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:meny/app.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/enums/enums.dart';
-import 'package:meny/src/services/services.dart';
+import 'package:meny_admin/app.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/enums/enums.dart';
+import 'package:meny_admin/src/services/services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

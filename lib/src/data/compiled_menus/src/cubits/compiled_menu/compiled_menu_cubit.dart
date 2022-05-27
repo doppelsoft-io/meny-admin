@@ -1,15 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/data/categories/categories.dart';
-import 'package:meny/src/data/category_menu_items/category_menu_items.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/menu_categories/menu_categories.dart';
-import 'package:meny/src/data/menu_items/menu_items.dart';
-import 'package:meny/src/data/menus/menus.dart';
-import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/typedefs/typedefs.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/data/categories/categories.dart';
+import 'package:meny_admin/src/data/category_menu_items/category_menu_items.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/menu_categories/menu_categories.dart';
+import 'package:meny_admin/src/data/menu_items/menu_items.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/typedefs/typedefs.dart';
+import 'package:meny_core/meny_core.dart';
 
 part 'compiled_menu_state.dart';
 part 'compiled_menu_cubit.freezed.dart';

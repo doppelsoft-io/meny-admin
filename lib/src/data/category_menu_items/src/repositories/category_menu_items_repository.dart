@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/constants/paths.dart';
-import 'package:meny/src/data/category_menu_items/category_menu_items.dart';
-import 'package:meny/src/typedefs/typedefs.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/constants/paths.dart';
+import 'package:meny_admin/src/typedefs/typedefs.dart';
+import 'package:meny_core/meny_core.dart';
 
 class CategoryMenuItemException implements Exception {
   const CategoryMenuItemException({String? message})
@@ -106,9 +106,7 @@ class CategoryMenuItemsRepository {
           .orderBy(_orderBy.value1, descending: _orderBy.value2)
           .snapshots()
           .map(
-            (doc) => doc.docs
-                .map(CategoryMenuItemModel.fromSnapshot)
-                .toList(),
+            (doc) => doc.docs.map(CategoryMenuItemModel.fromSnapshot).toList(),
           );
     } catch (err) {
       throw const GetCategoryMenuItemsException();
@@ -130,9 +128,7 @@ class CategoryMenuItemsRepository {
           .orderBy(_orderBy.value1, descending: _orderBy.value2)
           .snapshots()
           .map(
-            (doc) => doc.docs
-                .map(CategoryMenuItemModel.fromSnapshot)
-                .toList(),
+            (doc) => doc.docs.map(CategoryMenuItemModel.fromSnapshot).toList(),
           );
     } catch (err) {
       throw const GetCategoryMenuItemsException();

@@ -1,15 +1,15 @@
-import 'package:core/core.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meny/src/constants/analytics.dart';
-import 'package:meny/src/constants/spacing.dart';
-import 'package:meny/src/data/menu_items/menu_items.dart';
-import 'package:meny/src/data/stores/stores.dart';
-import 'package:meny/src/presentation/menus/items/image_upload/image_display_card.dart';
-import 'package:meny/src/presentation/menus/items/update_items/update_menu_item_sheet.dart';
-import 'package:meny/src/presentation/menus/widgets/widgets.dart';
-import 'package:meny/src/presentation/resources/cubit/resources_cubit.dart';
-import 'package:meny/src/services/services.dart';
+import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/constants/spacing.dart';
+import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/presentation/menus/items/image_upload/image_display_card.dart';
+import 'package:meny_admin/src/presentation/menus/items/update_items/update_menu_item_sheet.dart';
+import 'package:meny_admin/src/presentation/menus/widgets/widgets.dart';
+import 'package:meny_admin/src/presentation/resources/cubit/resources_cubit.dart';
+import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_core/meny_core.dart';
 
 class CustomTableCell extends StatelessWidget {
   const CustomTableCell({

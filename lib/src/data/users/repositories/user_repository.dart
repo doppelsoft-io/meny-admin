@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:meny/locator.dart';
-import 'package:meny/src/data/core/failures.dart';
-import 'package:meny/src/data/users/models/models.dart';
-import 'package:meny/src/extensions/extensions.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:meny_admin/src/data/users/users.dart';
+import 'package:meny_admin/src/extensions/extensions.dart';
 
 class UserRepository {
   UserRepository({

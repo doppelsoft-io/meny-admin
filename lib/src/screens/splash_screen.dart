@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meny/src/data/auth/auth.dart';
-import 'package:meny/src/presentation/shared/shared.dart';
-import 'package:meny/src/screens/screens.dart';
-import 'package:meny/themes.dart';
+import 'package:meny_admin/src/data/auth/auth.dart';
+import 'package:meny_admin/src/presentation/shared/shared.dart';
+import 'package:meny_admin/src/screens/screens.dart';
+import 'package:meny_admin/themes.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SplashScreen extends StatelessWidget {

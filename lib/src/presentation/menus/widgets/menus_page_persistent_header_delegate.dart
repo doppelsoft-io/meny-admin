@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meny/src/constants/spacing.dart';
-import 'package:meny/src/presentation/shared/shared.dart';
+import 'package:meny_admin/src/constants/spacing.dart';
+import 'package:meny_admin/src/presentation/shared/shared.dart';
 
 class MenusPagePersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   const MenusPagePersistentHeaderDelegate({
