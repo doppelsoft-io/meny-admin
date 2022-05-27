@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meny_admin/src/custom_router.dart';
 import 'package:meny_admin/src/data/auth/auth.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
-import 'package:meny_admin/src/enums/enums.dart';
 import 'package:meny_admin/src/screens/screens.dart';
 import 'package:meny_admin/themes.dart';
 import 'package:meny_admin/unfocus.dart';
@@ -18,7 +17,7 @@ class App extends StatelessWidget {
     required this.environment,
   }) : super(key: key);
 
-  final Environment environment;
+  final AppEnvironment environment;
 
   @override
   Widget build(BuildContext context) {
