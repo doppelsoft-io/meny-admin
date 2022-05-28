@@ -1,5 +1,5 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
 
 class ScaffoldBuilder extends StatelessWidget {
@@ -18,7 +18,7 @@ class ScaffoldBuilder extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       body: ErrorDisplay(
-        failure: Failure(message: exception.toString()),
+        exception: CustomException(message: exception.toString()),
       ),
     );
   }

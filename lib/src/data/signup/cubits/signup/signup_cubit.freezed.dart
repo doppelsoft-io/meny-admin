@@ -26,7 +26,7 @@ mixin _$SignupState {
     required TResult Function(StoreModel store, String email, String password)
         signingIn,
     required TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)
+            Either<CustomException, bool> result)
         done,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$SignupState {
     TResult Function(StoreModel store, String email, String password)?
         signingIn,
     TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)?
+            Either<CustomException, bool> result)?
         done,
   }) =>
       throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ mixin _$SignupState {
     TResult Function(StoreModel store, String email, String password)?
         signingIn,
     TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)?
+            Either<CustomException, bool> result)?
         done,
     required TResult orElse(),
   }) =>
@@ -220,7 +220,7 @@ class _$_Initial implements _Initial {
     required TResult Function(StoreModel store, String email, String password)
         signingIn,
     required TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)
+            Either<CustomException, bool> result)
         done,
   }) {
     return initial(store, email, password);
@@ -233,7 +233,7 @@ class _$_Initial implements _Initial {
     TResult Function(StoreModel store, String email, String password)?
         signingIn,
     TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)?
+            Either<CustomException, bool> result)?
         done,
   }) {
     return initial?.call(store, email, password);
@@ -246,7 +246,7 @@ class _$_Initial implements _Initial {
     TResult Function(StoreModel store, String email, String password)?
         signingIn,
     TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)?
+            Either<CustomException, bool> result)?
         done,
     required TResult orElse(),
   }) {
@@ -403,7 +403,7 @@ class _$_SigningIn implements _SigningIn {
     required TResult Function(StoreModel store, String email, String password)
         signingIn,
     required TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)
+            Either<CustomException, bool> result)
         done,
   }) {
     return signingIn(store, email, password);
@@ -416,7 +416,7 @@ class _$_SigningIn implements _SigningIn {
     TResult Function(StoreModel store, String email, String password)?
         signingIn,
     TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)?
+            Either<CustomException, bool> result)?
         done,
   }) {
     return signingIn?.call(store, email, password);
@@ -429,7 +429,7 @@ class _$_SigningIn implements _SigningIn {
     TResult Function(StoreModel store, String email, String password)?
         signingIn,
     TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)?
+            Either<CustomException, bool> result)?
         done,
     required TResult orElse(),
   }) {
@@ -501,7 +501,7 @@ abstract class _$$_DoneCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
       {StoreModel store,
       String email,
       String password,
-      Either<Failure, bool> result});
+      Either<CustomException, bool> result});
 
   @override
   $StoreModelCopyWith<$Res> get store;
@@ -539,7 +539,7 @@ class __$$_DoneCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
       result: result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
-              as Either<Failure, bool>,
+              as Either<CustomException, bool>,
     ));
   }
 }
@@ -560,7 +560,7 @@ class _$_Done implements _Done {
   @override
   final String password;
   @override
-  final Either<Failure, bool> result;
+  final Either<CustomException, bool> result;
 
   @override
   String toString() {
@@ -599,7 +599,7 @@ class _$_Done implements _Done {
     required TResult Function(StoreModel store, String email, String password)
         signingIn,
     required TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)
+            Either<CustomException, bool> result)
         done,
   }) {
     return done(store, email, password, result);
@@ -612,7 +612,7 @@ class _$_Done implements _Done {
     TResult Function(StoreModel store, String email, String password)?
         signingIn,
     TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)?
+            Either<CustomException, bool> result)?
         done,
   }) {
     return done?.call(store, email, password, result);
@@ -625,7 +625,7 @@ class _$_Done implements _Done {
     TResult Function(StoreModel store, String email, String password)?
         signingIn,
     TResult Function(StoreModel store, String email, String password,
-            Either<Failure, bool> result)?
+            Either<CustomException, bool> result)?
         done,
     required TResult orElse(),
   }) {
@@ -675,7 +675,7 @@ abstract class _Done implements SignupState {
       {required final StoreModel store,
       required final String email,
       required final String password,
-      required final Either<Failure, bool> result}) = _$_Done;
+      required final Either<CustomException, bool> result}) = _$_Done;
 
   @override
   StoreModel get store => throw _privateConstructorUsedError;
@@ -683,7 +683,8 @@ abstract class _Done implements SignupState {
   String get email => throw _privateConstructorUsedError;
   @override
   String get password => throw _privateConstructorUsedError;
-  Either<Failure, bool> get result => throw _privateConstructorUsedError;
+  Either<CustomException, bool> get result =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_DoneCopyWith<_$_Done> get copyWith => throw _privateConstructorUsedError;

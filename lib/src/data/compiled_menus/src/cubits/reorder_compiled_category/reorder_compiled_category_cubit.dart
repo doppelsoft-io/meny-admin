@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/menu_categories/menu_categories.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_core/meny_core.dart';
@@ -49,7 +49,7 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
     } catch (err) {
       emit(
         const ReorderCompiledCategoryState.error(
-          exception: Failure(message: 'Reordering failed'),
+          exception: CustomException(message: 'Reordering failed'),
         ),
       );
     }

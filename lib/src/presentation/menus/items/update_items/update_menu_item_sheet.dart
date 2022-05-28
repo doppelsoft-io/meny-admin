@@ -6,7 +6,6 @@ import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/constants/spacing.dart';
 import 'package:meny_admin/src/data/categories/categories.dart';
 import 'package:meny_admin/src/data/category_menu_items/category_menu_items.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/menu_items/menu_items.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/menus/items/image_upload/image_display_card.dart';
@@ -103,7 +102,7 @@ class _UpdateMenuItemSheet extends HookWidget {
             error: (category, exception) {
               DialogService.showErrorDialog(
                 context: context,
-                failure: Failure(message: exception.toString()),
+                failure: CustomException(message: exception.toString()),
               );
             },
             loaded: (item) {

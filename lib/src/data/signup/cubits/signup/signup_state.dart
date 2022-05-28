@@ -24,6 +24,6 @@ class SignupState with _$SignupState {
     required StoreModel store,
     required String email,
     required String password,
-    required Either<Failure, bool> result,
+    required Either<CustomException, bool> result,
   }) = _Done;
 }

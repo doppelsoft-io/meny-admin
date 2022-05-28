@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/compiled_menus/compiled_menus.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/stores/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
 part 'compiled_category_state.dart';
+part 'compiled_category_cubit.freezed.dart';
 
 class CompiledCategoryCubit extends Cubit<CompiledCategoryState> {
   CompiledCategoryCubit({
@@ -39,26 +40,21 @@ class CompiledCategoryCubit extends Cubit<CompiledCategoryState> {
         menuId: menuId,
       )
           .listen((categories) {
-        emit(
-          state.copyWith(
-            categories: categories,
-            status: CompiledCategoryStatus.success,
-          ),
-        );
+        emit(CompiledCategoryState.success(categories: categories));
       })
         ..onError((dynamic err) {
           emit(
-            state.copyWith(
-              failure: Failure(message: err.toString()),
-              status: CompiledCategoryStatus.error,
+            CompiledCategoryState.error(
+              categories: state.categories,
+              exception: CustomException(message: err.toString()),
             ),
           );
         });
-    } on Failure catch (failure) {
+    } on CustomException catch (err) {
       emit(
-        state.copyWith(
-          failure: failure,
-          status: CompiledCategoryStatus.error,
+        CompiledCategoryState.error(
+          categories: state.categories,
+          exception: err,
         ),
       );
     }

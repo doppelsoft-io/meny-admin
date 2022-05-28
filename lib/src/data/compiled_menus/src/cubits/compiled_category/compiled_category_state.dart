@@ -1,43 +1,21 @@
 part of 'compiled_category_cubit.dart';
 
-enum CompiledCategoryStatus {
-  initial,
-  loading,
-  success,
-  error,
-}
+@freezed
+class CompiledCategoryState with _$CompiledCategoryState {
+  factory CompiledCategoryState.initial({
+    @Default(<CategoryModel>[]) List<CategoryModel> categories,
+  }) = _Initial;
 
-class CompiledCategoryState extends Equatable {
-  const CompiledCategoryState({
-    required this.status,
-    required this.categories,
-    required this.failure,
-  });
+  factory CompiledCategoryState.loading({
+    required List<CategoryModel> categories,
+  }) = _Loading;
 
-  factory CompiledCategoryState.initial() {
-    return const CompiledCategoryState(
-      categories: null,
-      status: CompiledCategoryStatus.initial,
-      failure: null,
-    );
-  }
+  factory CompiledCategoryState.success({
+    required List<CategoryModel> categories,
+  }) = _Success;
 
-  final CompiledCategoryStatus status;
-  final List<CategoryModel>? categories;
-  final Failure? failure;
-
-  CompiledCategoryState copyWith({
-    CompiledCategoryStatus? status,
-    List<CategoryModel>? categories,
-    Failure? failure,
-  }) {
-    return CompiledCategoryState(
-      status: status ?? this.status,
-      categories: categories ?? this.categories,
-      failure: failure,
-    );
-  }
-
-  @override
-  List<Object?> get props => [status, categories, failure];
+  factory CompiledCategoryState.error({
+    required List<CategoryModel> categories,
+    required Exception exception,
+  }) = _Error;
 }

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/locator.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -70,7 +70,7 @@ class CompiledMenuRepository {
     } on CategoryDoesNotExistException catch (_) {
       rethrow;
     } catch (err) {
-      throw const Failure(message: 'Error fetching category');
+      throw const CustomException(message: 'Error fetching category');
     }
   }
 
@@ -88,7 +88,7 @@ class CompiledMenuRepository {
           )
           .set(category.toJson(), SetOptions(merge: true));
     } catch (err) {
-      throw const Failure(message: 'Error updating category');
+      throw const CustomException(message: 'Error updating category');
     }
   }
 
@@ -115,7 +115,7 @@ class CompiledMenuRepository {
     } on MenuItemDoesNotExistException catch (_) {
       rethrow;
     } catch (err) {
-      throw const Failure(message: 'Error fetching item');
+      throw const CustomException(message: 'Error fetching item');
     }
   }
 
@@ -135,7 +135,7 @@ class CompiledMenuRepository {
           )
           .set(item.toJson(), SetOptions(merge: true));
     } catch (err) {
-      throw const Failure(message: 'Error updating item');
+      throw const CustomException(message: 'Error updating item');
     }
   }
 }

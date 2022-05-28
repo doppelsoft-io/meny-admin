@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/locator.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -28,7 +28,7 @@ class StoreRepository {
     });
   }
 
-  Future<Either<Failure, StoreModel>> get({
+  Future<Either<CustomException, StoreModel>> get({
     required String storeId,
   }) async {
     try {
@@ -37,11 +37,11 @@ class StoreRepository {
       return right(StoreModel.fromSnapshot(snap));
     } catch (err) {
       _loggerService.log('(get): ${err.toString()}');
-      return left(const Failure(message: 'Failed to retrieve store'));
+      return left(const CustomException(message: 'Failed to retrieve store'));
     }
   }
 
-  Future<Either<Failure, List<StoreModel>>> getStoresForUser({
+  Future<Either<CustomException, List<StoreModel>>> getStoresForUser({
     required String userId,
   }) async {
     try {
@@ -55,11 +55,11 @@ class StoreRepository {
       return right(stores);
     } catch (err) {
       _loggerService.log('(getStoresForUser): ${err.toString()}');
-      return left(const Failure(message: 'Failed to retrieve store'));
+      return left(const CustomException(message: 'Failed to retrieve store'));
     }
   }
 
-  Future<Either<Failure, StoreModel>> createEmptyStoreForUser({
+  Future<Either<CustomException, StoreModel>> createEmptyStoreForUser({
     required String userId,
   }) async {
     try {
@@ -75,7 +75,7 @@ class StoreRepository {
       return right(StoreModel.fromSnapshot(snapshot));
     } catch (err) {
       _loggerService.log('(createEmptyStoreForUser): ${err.toString()}');
-      return left(const Failure(message: 'Failed to create store'));
+      return left(const CustomException(message: 'Failed to create store'));
     }
   }
 }

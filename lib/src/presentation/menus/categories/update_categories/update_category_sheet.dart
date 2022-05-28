@@ -1,9 +1,9 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/categories/categories.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/menu_categories/menu_categories.dart';
 import 'package:meny_admin/src/data/menus/menus.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
@@ -91,7 +91,7 @@ class _UpdateCategorySheet extends HookWidget {
             error: (category, exception) {
               DialogService.showErrorDialog(
                 context: context,
-                failure: Failure(message: exception.toString()),
+                failure: CustomException(message: exception.toString()),
               );
             },
             loaded: (category) {

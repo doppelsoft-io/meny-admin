@@ -1,13 +1,13 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 
 class ErrorDisplay extends StatelessWidget {
   const ErrorDisplay({
     Key? key,
-    required this.failure,
+    required this.exception,
   }) : super(key: key);
 
-  final Failure failure;
+  final CustomException exception;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class ErrorDisplay extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       alignment: Alignment.topCenter,
       child: Text(
-        failure.message,
+        exception.toString(),
         style: TextStyle(
           color: Theme.of(context).errorColor,
         ),

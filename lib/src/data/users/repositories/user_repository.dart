@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/locator.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/users/users.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 
@@ -18,7 +18,7 @@ class UserRepository {
           .set(user.toJson());
       return user;
     } catch (err) {
-      throw Failure(message: 'Creating user failed. ${err.toString()}');
+      throw CustomException(message: 'Creating user failed. ${err.toString()}');
     }
   }
 }

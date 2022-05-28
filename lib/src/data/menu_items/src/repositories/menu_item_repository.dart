@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/src/constants/paths.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/repositories/i_resources_repository.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -31,7 +31,7 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
       return MenuItemModel.fromSnapshot(snap);
     } catch (err) {
       _loggerService.log('(get): ${err.toString()}');
-      throw const Failure(message: 'Failed to retrieve item');
+      throw const CustomException(message: 'Failed to retrieve item');
     }
   }
 
@@ -47,7 +47,7 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
   }
 
   @override
-  Future<Either<Failure, MenuItemModel>> create({
+  Future<Either<CustomException, MenuItemModel>> create({
     required String storeId,
     required MenuItemModel resource,
   }) async {
@@ -60,7 +60,7 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
     } catch (err) {
       _loggerService.log('(create): ${err.toString()}');
       return left(
-        Failure(
+        CustomException(
           message:
               'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
         ),
@@ -69,7 +69,7 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
   }
 
   @override
-  Future<Either<Failure, bool>> update({
+  Future<Either<CustomException, bool>> update({
     required String storeId,
     required MenuItemModel resource,
   }) async {
@@ -81,17 +81,16 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
     } catch (err) {
       _loggerService.log('(update): ${err.toString()}');
       return left(
-        Failure(
+        CustomException(
           message:
               'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
-          shortMessage: 'Update failed.',
         ),
       );
     }
   }
 
   @override
-  Future<Either<Failure, bool>> delete({
+  Future<Either<CustomException, bool>> delete({
     required String storeId,
     required MenuItemModel resource,
   }) async {
@@ -103,10 +102,9 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
     } catch (err) {
       _loggerService.log('(delete): ${err.toString()}');
       return left(
-        Failure(
+        CustomException(
           message:
               'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
-          shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
         ),
       );
     }

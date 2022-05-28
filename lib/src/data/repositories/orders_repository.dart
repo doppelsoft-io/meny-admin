@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 
 class OrdersRepository {
-  Future<Either<Failure, List>> get() {
+  Future<Either<CustomException, List>> get() {
     throw UnimplementedError();
     // return Future<void>.delayed(const Duration(milliseconds: 300), () {
     //   return right([

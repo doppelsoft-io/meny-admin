@@ -1,10 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/src/data/repositories/i_resources_repository.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
+
+class GetMenuException extends CustomException {
+  const GetMenuException({String? message}) : super(message: message);
+}
+
+class CreateMenuException extends CustomException {
+  const CreateMenuException({String? message}) : super(message: message);
+}
+
+class UpdateMenuException extends CustomException {
+  const UpdateMenuException({String? message}) : super(message: message);
+}
+
+class DeleteMenuException extends CustomException {
+  const DeleteMenuException({String? message}) : super(message: message);
+}
 
 class MenuRepository extends IResourcesRepository<MenuModel> {
   MenuRepository({
@@ -30,7 +46,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
       return MenuModel.fromSnapshot(snap);
     } catch (err) {
       _loggerService.log('(get): ${err.toString()}');
-      throw const Failure(message: 'Failed to retrieve menu');
+      throw const GetMenuException(message: 'Failed to retrieve menu');
     }
   }
 
@@ -46,7 +62,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
   }
 
   @override
-  Future<Either<Failure, MenuModel>> create({
+  Future<Either<CustomException, MenuModel>> create({
     required String storeId,
     required MenuModel resource,
   }) async {
@@ -59,7 +75,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
     } catch (err) {
       _loggerService.log('(create): ${err.toString()}');
       return left(
-        Failure(
+        CreateMenuException(
           message:
               'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
         ),
@@ -68,7 +84,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
   }
 
   @override
-  Future<Either<Failure, bool>> update({
+  Future<Either<CustomException, bool>> update({
     required String storeId,
     required MenuModel resource,
   }) async {
@@ -80,17 +96,16 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
     } catch (err) {
       _loggerService.log('(update): ${err.toString()}');
       return left(
-        Failure(
+        UpdateMenuException(
           message:
               'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
-          shortMessage: 'Update failed.',
         ),
       );
     }
   }
 
   @override
-  Future<Either<Failure, bool>> delete({
+  Future<Either<CustomException, bool>> delete({
     required String storeId,
     required MenuModel resource,
   }) async {
@@ -102,10 +117,9 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
     } catch (err) {
       _loggerService.log('(delete): ${err.toString()}');
       return left(
-        Failure(
+        DeleteMenuException(
           message:
               'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
-          shortMessage: 'Deleting ${resource.toFriendlyString()} failed.',
         ),
       );
     }

@@ -37,8 +37,8 @@ class ResourceTable<T> extends StatelessWidget {
         switch (state.runtimeType) {
           case ResourcesFailure:
             final _state = state as ResourcesFailure;
-            return Center(
-              child: Text(_state.failure.message),
+            return const Center(
+              child: Text('Replace'),
             );
           case ResourcesLoaded:
             final _state = state as ResourcesLoaded;

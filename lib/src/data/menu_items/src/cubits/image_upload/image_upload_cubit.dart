@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meny_admin/locator.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -47,7 +47,7 @@ class ImageUploadCubit extends Cubit<ImageUploadState> {
           ImageUploadState.error(
             file: state.file,
             url: state.url,
-            exception: const Failure(message: 'Image upload failed'),
+            exception: const CustomException(message: 'Image upload failed'),
           ),
         );
       }
@@ -56,7 +56,7 @@ class ImageUploadCubit extends Cubit<ImageUploadState> {
         ImageUploadState.error(
           file: state.file,
           url: state.url,
-          exception: Failure(message: err.toString()),
+          exception: CustomException(message: err.toString()),
         ),
       );
     } finally {
@@ -97,7 +97,8 @@ class ImageUploadCubit extends Cubit<ImageUploadState> {
         ImageUploadState.error(
           file: state.file,
           url: state.url,
-          exception: Failure(message: err.message ?? 'Something went wrong'),
+          exception:
+              CustomException(message: err.message ?? 'Something went wrong'),
         ),
       );
     } catch (err) {
@@ -105,7 +106,7 @@ class ImageUploadCubit extends Cubit<ImageUploadState> {
         ImageUploadState.error(
           file: state.file,
           url: state.url,
-          exception: Failure(message: err.toString()),
+          exception: CustomException(message: err.toString()),
         ),
       );
     } finally {

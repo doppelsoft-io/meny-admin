@@ -48,7 +48,6 @@ class Locator {
       )
       ..registerSingleton<CategoryRepository>(
         CategoryRepository(
-          path: Paths.categories,
           firebaseFirestore: instance(),
           loggerService: const LoggerService(prepend: 'CategoryRepository'),
         ),

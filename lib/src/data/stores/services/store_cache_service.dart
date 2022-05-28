@@ -1,5 +1,5 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/services/services.dart';
 
 class StoreCacheService {
@@ -7,7 +7,7 @@ class StoreCacheService {
     try {
       await Hive.box(HiveService.storesBox).put('storeId', storeId);
     } catch (err) {
-      throw const Failure(message: 'Failed to save store');
+      throw const CustomException(message: 'Failed to save store');
     }
   }
 
@@ -15,7 +15,7 @@ class StoreCacheService {
     try {
       await Hive.box(HiveService.storesBox).delete(key);
     } catch (err) {
-      throw const Failure(message: 'Failed to remove storeId');
+      throw const CustomException(message: 'Failed to remove storeId');
     }
   }
 
@@ -24,7 +24,7 @@ class StoreCacheService {
       final id = await Hive.box(HiveService.storesBox).get(storeId) as String;
       return id;
     } catch (err) {
-      throw const Failure(message: 'Failed to retrieve store');
+      throw const CustomException(message: 'Failed to retrieve store');
     }
   }
 }

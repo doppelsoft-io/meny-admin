@@ -13,6 +13,6 @@ class LoginState with _$LoginState {
   const factory LoginState.loggingIn() = _LoggingIn;
 
   const factory LoginState.done({
-    required Either<Failure, UserModel> result,
+    required Either<CustomException, UserModel> result,
   }) = _Done;
 }

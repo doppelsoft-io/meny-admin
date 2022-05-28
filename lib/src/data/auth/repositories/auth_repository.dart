@@ -1,9 +1,29 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:meny_admin/locator.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/users/users.dart';
 import 'package:meny_admin/src/services/services.dart';
+
+class GetCurrentUserException extends CustomException {
+  const GetCurrentUserException({String? message}) : super(message: message);
+}
+
+class AnonymousLoginException extends CustomException {
+  const AnonymousLoginException({String? message}) : super(message: message);
+}
+
+class EmailLoginException extends CustomException {
+  const EmailLoginException({String? message}) : super(message: message);
+}
+
+class SignUpAndLinkException extends CustomException {
+  const SignUpAndLinkException({String? message}) : super(message: message);
+}
+
+class LogOutException extends CustomException {
+  const LogOutException({String? message}) : super(message: message);
+}
 
 class AuthRepository {
   AuthRepository({
@@ -26,7 +46,9 @@ class AuthRepository {
       }
     } catch (err) {
       _loggerService.log('(getCurrentUser): ${err.toString()}');
-      throw const Failure(message: 'Failed to fetch current user');
+      throw const GetCurrentUserException(
+        message: 'Failed to fetch current user',
+      );
     }
   }
 
@@ -42,10 +64,14 @@ class AuthRepository {
       }
     } on PlatformException catch (err) {
       _loggerService.log('(loginAnonymously): ${err.message}');
-      throw const Failure(message: 'Failed to login anonymously');
+      throw const AnonymousLoginException(
+        message: 'Failed to login anonymously',
+      );
     } catch (err) {
       _loggerService.log('(loginAnonymously): ${err.toString()}');
-      throw const Failure(message: 'Failed to login anonymously');
+      throw const AnonymousLoginException(
+        message: 'Failed to login anonymously',
+      );
     }
   }
 
@@ -64,10 +90,10 @@ class AuthRepository {
       return UserModel.empty();
     } on FirebaseAuthException catch (err) {
       _loggerService.log('(loginWithEmailAndPassword): ${err.message}');
-      throw Failure(message: err.message ?? 'Log in failed');
+      throw EmailLoginException(message: err.message ?? 'Log in failed');
     } on PlatformException catch (err) {
       _loggerService.log('(loginWithEmailAndPassword): ${err.toString()}');
-      throw Failure(message: err.message ?? 'Log in failed');
+      throw EmailLoginException(message: err.message ?? 'Log in failed');
     }
   }
 
@@ -90,10 +116,10 @@ class AuthRepository {
       return UserModel.empty();
     } on FirebaseAuthException catch (err) {
       _loggerService.log('(signUpAndLinkAnonymousUser): ${err.message}');
-      throw Failure(message: err.message ?? 'Sign up failed');
+      throw SignUpAndLinkException(message: err.message ?? 'Sign up failed');
     } on PlatformException catch (err) {
       _loggerService.log('(signUpAndLinkAnonymousUser): ${err.toString()}');
-      throw Failure(message: err.message ?? 'Sign up failed');
+      throw SignUpAndLinkException(message: err.message ?? 'Sign up failed');
     }
   }
 
@@ -102,7 +128,7 @@ class AuthRepository {
       await _firebaseAuth.signOut();
     } catch (err) {
       _loggerService.log('(logout): ${err.toString()}');
-      throw const Failure(message: 'Logout failed');
+      throw const LogOutException(message: 'Logout failed');
     }
   }
 }

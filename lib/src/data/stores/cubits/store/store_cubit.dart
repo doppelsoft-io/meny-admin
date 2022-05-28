@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/data/users/users.dart';
 import 'package:meny_core/meny_core.dart';
@@ -63,7 +63,7 @@ class StoreCubit extends Cubit<StoreState> {
       emit(
         StoreState.error(
           store: state.store,
-          exception: const Failure(message: 'User is null'),
+          exception: const CustomException(message: 'User is null'),
         ),
       );
     }

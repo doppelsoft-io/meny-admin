@@ -25,43 +25,42 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
       await Future<void>.delayed(const Duration(milliseconds: 300));
       emit(EditCategoryState.loaded(category: category));
     } else {
-      final storeId = _storeCubit.state.store.id!;
-
-      final failureOrCategory = await _categoryRepository.create(
-        storeId: storeId,
-        resource: category.copyWith(createdAt: DateTime.now()),
-      );
-
-      emit(
-        failureOrCategory.fold(
-          (failure) => EditCategoryState.error(
+      try {
+        final storeId = _storeCubit.state.store.id!;
+        await _categoryRepository.create(
+          storeId: storeId,
+          resource: category.copyWith(createdAt: DateTime.now()),
+        );
+        emit(EditCategoryState.loaded(category: category));
+      } on CreateCategoryException catch (err) {
+        emit(
+          EditCategoryState.error(
             category: category,
-            exception: failure,
+            exception: err,
           ),
-          (category) => EditCategoryState.loaded(category: category),
-        ),
-      );
+        );
+      }
     }
   }
 
   Future<void> update(CategoryModel item) async {
     emit(EditCategoryState.updating(category: state.category));
 
-    final storeId = _storeCubit.state.store.id!;
+    try {
+      final storeId = _storeCubit.state.store.id!;
 
-    final failureOrUpdate = await _categoryRepository.update(
-      storeId: storeId,
-      resource: item,
-    );
-
-    emit(
-      failureOrUpdate.fold(
-        (failure) => EditCategoryState.error(
+      await _categoryRepository.update(
+        storeId: storeId,
+        resource: item,
+      );
+      emit(EditCategoryState.success(category: state.category));
+    } on UpdateCategoryException catch (err) {
+      emit(
+        EditCategoryState.error(
           category: state.category,
-          exception: failure,
+          exception: err,
         ),
-        (update) => EditCategoryState.success(category: state.category),
-      ),
-    );
+      );
+    }
   }
 }

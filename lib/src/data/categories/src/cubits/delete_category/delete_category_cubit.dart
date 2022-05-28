@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/constants/paths.dart';
+import 'package:meny_admin/src/data/categories/src/repositories/repositories.dart';
 import 'package:meny_admin/src/data/category_menu_items/category_menu_items.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/stores/cubits/cubits.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -85,7 +85,9 @@ class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
       _loggerService.log(err.toString());
       emit(
         const DeleteCategoryState.error(
-          exception: Failure(message: 'Failed to delete category'),
+          exception: DeleteCategoryException(
+            message: 'Failed to delete category',
+          ),
         ),
       );
     } finally {

@@ -20,21 +20,21 @@ mixin _$LoginState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loggingIn,
-    required TResult Function(Either<Failure, UserModel> result) done,
+    required TResult Function(Either<CustomException, UserModel> result) done,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loggingIn,
-    TResult Function(Either<Failure, UserModel> result)? done,
+    TResult Function(Either<CustomException, UserModel> result)? done,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loggingIn,
-    TResult Function(Either<Failure, UserModel> result)? done,
+    TResult Function(Either<CustomException, UserModel> result)? done,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,7 +119,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loggingIn,
-    required TResult Function(Either<Failure, UserModel> result) done,
+    required TResult Function(Either<CustomException, UserModel> result) done,
   }) {
     return initial();
   }
@@ -129,7 +129,7 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loggingIn,
-    TResult Function(Either<Failure, UserModel> result)? done,
+    TResult Function(Either<CustomException, UserModel> result)? done,
   }) {
     return initial?.call();
   }
@@ -139,7 +139,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loggingIn,
-    TResult Function(Either<Failure, UserModel> result)? done,
+    TResult Function(Either<CustomException, UserModel> result)? done,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -229,7 +229,7 @@ class _$_LoggingIn implements _LoggingIn {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loggingIn,
-    required TResult Function(Either<Failure, UserModel> result) done,
+    required TResult Function(Either<CustomException, UserModel> result) done,
   }) {
     return loggingIn();
   }
@@ -239,7 +239,7 @@ class _$_LoggingIn implements _LoggingIn {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loggingIn,
-    TResult Function(Either<Failure, UserModel> result)? done,
+    TResult Function(Either<CustomException, UserModel> result)? done,
   }) {
     return loggingIn?.call();
   }
@@ -249,7 +249,7 @@ class _$_LoggingIn implements _LoggingIn {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loggingIn,
-    TResult Function(Either<Failure, UserModel> result)? done,
+    TResult Function(Either<CustomException, UserModel> result)? done,
     required TResult orElse(),
   }) {
     if (loggingIn != null) {
@@ -301,7 +301,7 @@ abstract class _LoggingIn implements LoginState {
 abstract class _$$_DoneCopyWith<$Res> {
   factory _$$_DoneCopyWith(_$_Done value, $Res Function(_$_Done) then) =
       __$$_DoneCopyWithImpl<$Res>;
-  $Res call({Either<Failure, UserModel> result});
+  $Res call({Either<CustomException, UserModel> result});
 }
 
 /// @nodoc
@@ -321,7 +321,7 @@ class __$$_DoneCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
       result: result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
-              as Either<Failure, UserModel>,
+              as Either<CustomException, UserModel>,
     ));
   }
 }
@@ -332,7 +332,7 @@ class _$_Done implements _Done {
   const _$_Done({required this.result});
 
   @override
-  final Either<Failure, UserModel> result;
+  final Either<CustomException, UserModel> result;
 
   @override
   String toString() {
@@ -361,7 +361,7 @@ class _$_Done implements _Done {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loggingIn,
-    required TResult Function(Either<Failure, UserModel> result) done,
+    required TResult Function(Either<CustomException, UserModel> result) done,
   }) {
     return done(result);
   }
@@ -371,7 +371,7 @@ class _$_Done implements _Done {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loggingIn,
-    TResult Function(Either<Failure, UserModel> result)? done,
+    TResult Function(Either<CustomException, UserModel> result)? done,
   }) {
     return done?.call(result);
   }
@@ -381,7 +381,7 @@ class _$_Done implements _Done {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loggingIn,
-    TResult Function(Either<Failure, UserModel> result)? done,
+    TResult Function(Either<CustomException, UserModel> result)? done,
     required TResult orElse(),
   }) {
     if (done != null) {
@@ -426,10 +426,11 @@ class _$_Done implements _Done {
 }
 
 abstract class _Done implements LoginState {
-  const factory _Done({required final Either<Failure, UserModel> result}) =
-      _$_Done;
+  const factory _Done(
+      {required final Either<CustomException, UserModel> result}) = _$_Done;
 
-  Either<Failure, UserModel> get result => throw _privateConstructorUsedError;
+  Either<CustomException, UserModel> get result =>
+      throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_DoneCopyWith<_$_Done> get copyWith => throw _privateConstructorUsedError;
 }

@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/constants/paths.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/menu_categories/menu_categories.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
@@ -61,7 +61,7 @@ class DeleteMenuCubit extends Cubit<DeleteMenuState> {
     } catch (err) {
       emit(
         DeleteMenuState.error(
-          exception: Failure(message: err.toString()),
+          exception: CustomException(message: err.toString()),
         ),
       );
     } finally {

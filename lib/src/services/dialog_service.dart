@@ -1,12 +1,12 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 
 class DialogService {
   const DialogService._();
 
   static void showErrorDialog({
     required BuildContext context,
-    required Failure failure,
+    required CustomException failure,
   }) {
     showDialog<bool>(
       context: context,
@@ -28,7 +28,7 @@ class DialogService {
               ),
             ),
           ),
-          content: Text(failure.message),
+          content: Text(failure.toString()),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),

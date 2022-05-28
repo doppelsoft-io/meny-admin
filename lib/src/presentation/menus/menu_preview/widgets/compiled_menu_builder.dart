@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meny_admin/src/constants/spacing.dart';
 import 'package:meny_admin/src/data/compiled_menus/compiled_menus.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/menus/items/image_upload/image_display_card.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
@@ -53,7 +52,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
         return state.maybeWhen(
           loading: (_) => const LinearProgressIndicator(),
           error: (_, exception) => ErrorDisplay(
-            failure: Failure(message: exception.toString()),
+            exception: CustomException(message: exception.toString()),
           ),
           loaded: (response) {
             final data = response.value2;

@@ -24,7 +24,7 @@ class ResourcesLoaded extends ResourcesState {
 
 class ResourcesFailure extends ResourcesState {
   const ResourcesFailure(this.failure);
-  final Failure failure;
+  final CustomException failure;
 
   @override
   List<Object> get props => [failure];

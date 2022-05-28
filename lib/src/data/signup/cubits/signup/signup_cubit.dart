@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/auth/auth.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -67,13 +67,13 @@ class SignupCubit extends Cubit<SignupState> {
           result: right(true),
         ),
       );
-    } on Failure catch (failure) {
+    } on CustomException catch (err) {
       emit(
         SignupState.done(
           store: state.store,
           email: state.email,
           password: state.password,
-          result: left(failure),
+          result: left(err),
         ),
       );
     } catch (err) {
@@ -82,7 +82,7 @@ class SignupCubit extends Cubit<SignupState> {
           store: state.store,
           email: state.email,
           password: state.password,
-          result: left(Failure(message: err.toString())),
+          result: left(CustomException(message: err.toString())),
         ),
       );
     } finally {

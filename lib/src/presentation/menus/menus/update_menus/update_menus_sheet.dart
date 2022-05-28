@@ -1,8 +1,8 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:meny_admin/src/constants/spacing.dart';
-import 'package:meny_admin/src/data/core/failures.dart';
 import 'package:meny_admin/src/data/menus/menus.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
@@ -38,7 +38,7 @@ class _UpdateMenusSheet extends HookWidget {
             error: (_, exception) {
               DialogService.showErrorDialog(
                 context: context,
-                failure: Failure(message: exception.toString()),
+                failure: CustomException(message: exception.toString()),
               );
             },
             orElse: () {},
