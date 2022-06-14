@@ -1,3 +1,4 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -6,7 +7,7 @@ class TextFieldConfiguration {
     this.decoration = const InputDecoration(),
   });
 
-  final InputDecoration? decoration;
+  final InputDecoration decoration;
 }
 
 class SuggestionConfiguration {
@@ -40,6 +41,7 @@ class TagSelector<T> extends HookWidget {
     required this.onRemove,
     required this.emptyBuilder,
     this.textFieldConfiguration,
+    this.tagBuilder,
   }) : super(key: key);
 
   final List<T> initialItems;
@@ -47,6 +49,7 @@ class TagSelector<T> extends HookWidget {
   final Function(BuildContext, T) onSelect;
   final Function(BuildContext, T) onRemove;
   final Widget Function(BuildContext) emptyBuilder;
+  final Widget Function(BuildContext, TagConfiguration, T)? tagBuilder;
   final SuggestionConfiguration Function(BuildContext, T)
       suggestionConfigurationBuilder;
   final TagConfiguration Function(BuildContext, T) tagConfigurationBuilder;
@@ -55,18 +58,37 @@ class TagSelector<T> extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final isOpen = useState<bool>(false);
+    final focusNode = useFocusNode();
+
+    useEffect(
+      () {
+        focusNode.addListener(() {
+          if (!focusNode.hasFocus) {
+            isOpen.value = false;
+            FocusManager.instance.primaryFocus?.unfocus();
+          }
+        });
+        return null;
+      },
+      const [],
+    );
 
     return GestureDetector(
       /// Needed so that `onTap` works properly
       behavior: HitTestBehavior.translucent,
 
       /// So the drawer closes when you click outside the dropdown
-      onTap: () => isOpen.value = false,
+      onTap: () {
+        isOpen.value = false;
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
-            decoration: textFieldConfiguration?.decoration,
+          DTextFormField(
+            controller: TextEditingController(),
+            focusNode: focusNode,
+            decoration: textFieldConfiguration!.decoration,
             onTap: () => isOpen.value = !isOpen.value,
           ),
           const Visibility(
@@ -84,44 +106,48 @@ class TagSelector<T> extends HookWidget {
                     final tagConfiguration =
                         tagConfigurationBuilder(context, option);
 
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: tagConfiguration.color ??
-                            Theme.of(context).primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(50)),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            tagConfiguration.title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                ),
-                          ),
-                          const SizedBox(width: 8),
-                          GestureDetector(
-                            onTap: () {
-                              onRemove(context, option);
-                            },
-                            child: Icon(
-                              Icons.close,
-                              size: 20,
-                              color: Theme.of(context).colorScheme.onPrimary,
+                    if (tagBuilder != null) {
+                      return tagBuilder!(context, tagConfiguration, option);
+                    } else {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: tagConfiguration.color ??
+                              Theme.of(context).primaryColor,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(50)),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              tagConfiguration.title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                  ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
+                            const SizedBox(width: 8),
+                            GestureDetector(
+                              onTap: () {
+                                onRemove(context, option);
+                              },
+                              child: Icon(
+                                Icons.close,
+                                size: 20,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
                 ).toList(),
               ),
@@ -183,7 +209,6 @@ class TagSelector<T> extends HookWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 300),
             ],
           ),
         ],
