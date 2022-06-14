@@ -87,26 +87,29 @@ class _AppScreen extends HookWidget {
                     title: Text(store.name.isEmpty ? 'Meny' : store.name),
                     centerTitle: false,
                     actions: [
-                      if (authState.user != null &&
-                          authState.status == AuthStatus.authenticated) ...[
-                        IconButton(
-                          onPressed: () {
-                            context.read<AuthCubit>().logout();
-                            ToastService.showNotification(
-                              const Text('Logged out!'),
-                            );
-                          },
-                          icon: const FaIcon(FontAwesomeIcons.rightFromBracket),
-                        ),
-                      ] else ...[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(LoginScreen.routeName);
-                          },
-                          child: const Text('Log in'),
-                        ),
-                      ],
+                      authState.maybeWhen(
+                        authenticated: (_) {
+                          return IconButton(
+                            onPressed: () {
+                              context.read<AuthCubit>().logout();
+                              ToastService.showNotification(
+                                const Text('Logged out!'),
+                              );
+                            },
+                            icon:
+                                const FaIcon(FontAwesomeIcons.rightFromBracket),
+                          );
+                        },
+                        orElse: () {
+                          return TextButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(LoginScreen.routeName);
+                            },
+                            child: const Text('Log in'),
+                          );
+                        },
+                      ),
                     ],
                   ),
                   body: ScreenTypeLayout(
@@ -243,13 +246,13 @@ class _AppScreen extends HookWidget {
 //   });
 // }
 //
-// class MenuItem {
+// class MenuItemModel {
 //   final String category;
 //   final String name;
 //   final double price;
 //   final List<ModifierGroup> modificationGroups;
 //
-//   const MenuItem({
+//   const MenuItemModel({
 //     required this.category,
 //     required this.name,
 //     required this.price,
@@ -257,20 +260,20 @@ class _AppScreen extends HookWidget {
 //   });
 // }
 //
-// class Menu {
+// class MenuModel {
 //   final String name;
-//   final List<MenuItem> items;
+//   final List<MenuItemModel> items;
 //
-//   Menu({
+//   MenuModel({
 //     required this.name,
 //     required this.items,
 //   });
 // }
 //
-// final menu = Menu(
+// final menu = MenuModel(
 //   name: 'Main',
 //   items: [
-//     MenuItem(
+//     MenuItemModel(
 //       category: 'Coffee',
 //       name: 'OG Kraveman',
 //       price: 8.50,
@@ -331,13 +334,13 @@ class _AppScreen extends HookWidget {
 //         ),
 //       ],
 //     ),
-//     MenuItem(
+//     MenuItemModel(
 //       category: 'Coffee',
 //       name: 'Mocha Kraveman',
 //       price: 8.50,
 //       modificationGroups: [],
 //     ),
-//     MenuItem(
+//     MenuItemModel(
 //       category: 'Waffles',
 //       name: 'Liege Waffle',
 //       price: 8.50,

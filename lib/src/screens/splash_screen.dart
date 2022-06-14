@@ -22,14 +22,20 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-      listenWhen: (prev, curr) => prev.status == AuthStatus.initial,
       listener: (context, authState) {
-        if (authState.status == AuthStatus.anonymous ||
-            authState.status == AuthStatus.authenticated) {
-          Timer(const Duration(seconds: 1), () {
-            Navigator.of(context).pushNamed(AppScreen.routeName);
-          });
-        }
+        authState.maybeWhen(
+          authenticated: (_) {
+            Timer(const Duration(seconds: 1), () {
+              Navigator.of(context).pushNamed(AppScreen.routeName);
+            });
+          },
+          anonymous: (_) {
+            Timer(const Duration(seconds: 1), () {
+              Navigator.of(context).pushNamed(AppScreen.routeName);
+            });
+          },
+          orElse: () {},
+        );
       },
       child: Scaffold(
         body: Container(

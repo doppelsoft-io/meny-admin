@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/auth/auth.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/data/users/users.dart';
 
 part 'auth_state.dart';
+part 'auth_cubit.freezed.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit({
@@ -18,7 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
   })  : _authRepository = authRepository ?? Locator.instance(),
         _firebaseAuth = firebaseAuth ?? Locator.instance(),
         _storeCacheService = storeCacheService ?? Locator.instance(),
-        super(AuthState.initial()) {
+        super(_Initial(user: UserModel.empty())) {
     _authSubscription?.cancel();
     _authSubscription = _firebaseAuth.authStateChanges().listen((user) {
       if (user != null) {
@@ -43,19 +44,9 @@ class AuthCubit extends Cubit<AuthState> {
     await Future<void>.delayed(Duration.zero);
 
     if (user.isAnonymous) {
-      emit(
-        state.copyWith(
-          status: AuthStatus.anonymous,
-          user: user,
-        ),
-      );
+      emit(_Anonymous(user: user));
     } else {
-      emit(
-        state.copyWith(
-          status: AuthStatus.authenticated,
-          user: user,
-        ),
-      );
+      emit(_Authenticated(user: user));
     }
   }
 
@@ -66,19 +57,9 @@ class AuthCubit extends Cubit<AuthState> {
       currentUser = await _authRepository.loginAnonymously();
     }
     if (currentUser.isAnonymous) {
-      emit(
-        state.copyWith(
-          status: AuthStatus.anonymous,
-          user: currentUser,
-        ),
-      );
+      emit(_Anonymous(user: currentUser));
     } else {
-      emit(
-        state.copyWith(
-          status: AuthStatus.authenticated,
-          user: currentUser,
-        ),
-      );
+      emit(_Authenticated(user: currentUser));
     }
   }
 
