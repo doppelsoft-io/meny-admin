@@ -38,8 +38,10 @@ class App extends StatelessWidget {
           builder: (context, widget) => ResponsiveWrapper.builder(
             BouncingScrollWrapper.builder(
               context,
-              TextScaleFactorClamper(
-                child: Unfocus(child: widget!),
+              DUnfocus(
+                child: TextScaleFactorClamper(
+                  child: Unfocus(child: widget!),
+                ),
               ),
             ),
             maxWidth: 1600,
