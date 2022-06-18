@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
-import 'package:doppelsoft_core/doppelsoft_core.dart';
 
 abstract class IResourcesRepository<T> {
   IResourcesRepository({
@@ -12,15 +10,15 @@ abstract class IResourcesRepository<T> {
   FirebaseFirestore firebaseFirestore;
 
   Stream<List<T>> getAll({required String storeId});
-  Future<Either<CustomException, T>> create({
+  Future<T> create({
     required String storeId,
     required T resource,
   });
-  Future<Either<CustomException, bool>> update({
+  Future<void> update({
     required String storeId,
     required T resource,
   });
-  Future<Either<CustomException, bool>> delete({
+  Future<void> delete({
     required String storeId,
     required T resource,
   });

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/src/data/repositories/i_resources_repository.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
@@ -62,7 +61,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
   }
 
   @override
-  Future<Either<CustomException, MenuModel>> create({
+  Future<MenuModel> create({
     required String storeId,
     required MenuModel resource,
   }) async {
@@ -71,20 +70,17 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
           .menuEntitiesCollection(storeId: storeId)
           .add(resource.toJson());
       final snapshot = await document.get();
-      return right(MenuModel.fromSnapshot(snapshot));
+      return MenuModel.fromSnapshot(snapshot);
     } catch (err) {
       _loggerService.log('(create): ${err.toString()}');
-      return left(
-        CreateMenuException(
-          message:
-              'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
-        ),
+      throw const CreateMenuException(
+        message: 'We had an issue creating your menu.',
       );
     }
   }
 
   @override
-  Future<Either<CustomException, bool>> update({
+  Future<void> update({
     required String storeId,
     required MenuModel resource,
   }) async {
@@ -92,20 +88,16 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
       await firebaseFirestore
           .menuEntitiesDocument(storeId: storeId, menuId: resource.id!)
           .set(resource.toJson(), SetOptions(merge: true));
-      return right(true);
     } catch (err) {
       _loggerService.log('(update): ${err.toString()}');
-      return left(
-        UpdateMenuException(
-          message:
-              'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
-        ),
+      throw const UpdateMenuException(
+        message: 'We had trouble updating your menu.',
       );
     }
   }
 
   @override
-  Future<Either<CustomException, bool>> delete({
+  Future<void> delete({
     required String storeId,
     required MenuModel resource,
   }) async {
@@ -113,14 +105,10 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
       await firebaseFirestore
           .menuEntitiesDocument(storeId: storeId, menuId: resource.id!)
           .delete();
-      return right(true);
     } catch (err) {
       _loggerService.log('(delete): ${err.toString()}');
-      return left(
-        DeleteMenuException(
-          message:
-              'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
-        ),
+      throw const DeleteMenuException(
+        message: 'There was an issue deleting your menu.',
       );
     }
   }

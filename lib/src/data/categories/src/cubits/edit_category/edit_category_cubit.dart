@@ -14,7 +14,7 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
     CategoryRepository? categoryRepository,
   })  : _storeCubit = storeCubit,
         _categoryRepository = categoryRepository ?? Locator.instance(),
-        super(EditCategoryState.loading(category: CategoryModel.empty()));
+        super(_Loading(category: CategoryModel.empty()));
 
   final CategoryRepository _categoryRepository;
   final StoreCubit _storeCubit;
@@ -23,18 +23,18 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
     if (category.id != null && category.id!.isNotEmpty) {
       /// Needed to trigger loaded event in listener
       await Future<void>.delayed(const Duration(milliseconds: 300));
-      emit(EditCategoryState.loaded(category: category));
+      emit(_Loaded(category: category));
     } else {
       try {
         final storeId = _storeCubit.state.store.id!;
-        await _categoryRepository.create(
+        final newCategory = await _categoryRepository.create(
           storeId: storeId,
           resource: category.copyWith(createdAt: DateTime.now()),
         );
-        emit(EditCategoryState.loaded(category: category));
+        emit(_Loaded(category: newCategory));
       } on CreateCategoryException catch (err) {
         emit(
-          EditCategoryState.error(
+          _Error(
             category: category,
             exception: err,
           ),
@@ -44,7 +44,7 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
   }
 
   Future<void> update(CategoryModel item) async {
-    emit(EditCategoryState.updating(category: state.category));
+    emit(_Updating(category: state.category));
 
     try {
       final storeId = _storeCubit.state.store.id!;
@@ -53,10 +53,10 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
         storeId: storeId,
         resource: item,
       );
-      emit(EditCategoryState.success(category: state.category));
+      emit(_Success(category: state.category));
     } on UpdateCategoryException catch (err) {
       emit(
-        EditCategoryState.error(
+        _Error(
           category: state.category,
           exception: err,
         ),

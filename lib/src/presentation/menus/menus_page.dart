@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
-import 'package:meny_admin/src/presentation/menus/categories/categories_tab.dart';
-import 'package:meny_admin/src/presentation/menus/items/items_tab.dart';
-import 'package:meny_admin/src/presentation/menus/menus/menus_tab.dart';
+import 'package:meny_admin/src/presentation/menus/menus.dart';
 import 'package:meny_admin/src/services/services.dart';
 
 class MenusPage extends StatelessWidget {
@@ -12,13 +10,15 @@ class MenusPage extends StatelessWidget {
     const Tab(text: 'Menus'),
     const Tab(text: 'Categories'),
     const Tab(text: 'Items'),
-    const Tab(text: 'Modifiers'),
+    const Tab(text: 'Ingredients'),
+    const Tab(text: 'Tags'),
+    const Tab(text: 'Modifier Groups'),
   ];
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -40,13 +40,15 @@ class MenusPage extends StatelessWidget {
             tabs: _tabs,
           ),
         ),
-        body: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
+        body: const TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           children: [
-            MenusMenusTab.page(),
-            MenusCategoriesTab.page(),
-            MenusItemsTab.page(),
-            const Icon(Icons.directions_bike),
+            MenusMenusTab(),
+            MenusCategoriesTab(),
+            MenusItemsTab(),
+            IngredientsTab(),
+            TagsTab(),
+            ModifierGroupsTab(),
           ],
         ),
       ),

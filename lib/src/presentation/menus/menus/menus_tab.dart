@@ -1,46 +1,42 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
-import 'package:meny_admin/src/constants/spacing.dart';
 import 'package:meny_admin/src/data/menus/menus.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
-import 'package:meny_admin/src/presentation/menus/menu_preview/menu_preview_screen.dart';
-import 'package:meny_admin/src/presentation/menus/menus/update_menus/update_menus_sheet.dart';
-import 'package:meny_admin/src/presentation/menus/widgets/widgets.dart';
+import 'package:meny_admin/src/presentation/menus/menus.dart';
 import 'package:meny_admin/src/presentation/resources/cubit/resources_cubit.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
-class MenusMenusTab extends StatefulWidget {
+class MenusMenusTab extends StatelessWidget {
   const MenusMenusTab({Key? key}) : super(key: key);
 
-  static Widget page() {
+  @override
+  Widget build(BuildContext context) {
     return BlocProvider<ResourcesCubit>(
       create: (context) => ResourcesCubit(
         iResourcesRepository: Locator.instance<MenuRepository>(),
       ),
-      child: const MenusMenusTab(),
+      child: _MenusMenusTab(),
     );
   }
-
-  @override
-  State<MenusMenusTab> createState() => _MenusMenusTabState();
 }
 
-class _MenusMenusTabState extends State<MenusMenusTab> {
-  @override
-  void initState() {
-    final storeCubit = context.read<StoreCubit>();
-    final storeId = storeCubit.state.store.id!;
-    context.read<ResourcesCubit>().load(storeId: storeId);
-
-    super.initState();
-  }
-
+class _MenusMenusTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    useEffect(
+      () {
+        final storeCubit = context.read<StoreCubit>();
+        final storeId = storeCubit.state.store.id!;
+        context.read<ResourcesCubit>().load(storeId: storeId);
+        return null;
+      },
+      const [],
+    );
     return BlocListener<StoreCubit, StoreState>(
       listenWhen: (prev, curr) => prev.store != curr.store,
       listener: (context, state) =>

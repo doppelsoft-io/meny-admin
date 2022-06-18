@@ -30,78 +30,76 @@ class Themes {
   static TextTheme secondaryTextTheme =
       GoogleFonts.hindTextTheme(_light.textTheme);
 
+  static ColorScheme colorScheme = ColorScheme(
+    primary: primaryColor,
+    secondary: Colors.white,
+    surface: Colors.white,
+    background: Colors.white,
+    error: Colors.red,
+    onPrimary: Colors.white,
+    onSecondary: Colors.black,
+    onSurface: primaryColor,
+    onBackground: Colors.grey[200]!,
+    onError: Colors.white,
+    brightness: Brightness.dark,
+  );
+
   static ThemeData defaultTheme = _light.copyWith(
-    colorScheme: ColorScheme(
-      primary: primaryColor,
-      secondary: Colors.white,
-      surface: Colors.white,
-      background: Colors.white,
-      error: Colors.red,
-      onPrimary: Colors.white,
-      onSecondary: Colors.black,
-      onSurface: primaryColor,
-      onBackground: Colors.white,
-      onError: Colors.white,
-      brightness: Brightness.dark,
-    ),
-    primaryColor: Colors.green,
+    colorScheme: colorScheme,
+    primaryColor: const Color.fromARGB(255, 48, 58, 48),
     backgroundColor: Colors.grey[100],
     indicatorColor: primaryColor,
-    // dialogTheme: DialogTheme(
-    //   contentTextStyle: TextStyle(
-    //     color: Colors.black,
-    //   ),
-    //   titleTextStyle: TextStyle(
-    //     color: Colors.black,
-    //   ),
-    // ),
     appBarTheme: _light.appBarTheme.copyWith(
       elevation: 1,
     ),
-    // bottomAppBarColor: Colors.red,
-    // bottomAppBarTheme: BottomAppBarTheme(
-    //   color: Colors.red,
-    // ),
-    inputDecorationTheme: InputDecorationTheme(
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-      hintStyle: textTheme.bodyText1,
-      labelStyle: textTheme.bodyText1!.copyWith(color: Colors.grey[800]),
-      helperStyle: textTheme.bodyText1,
-      suffixStyle: textTheme.bodyText1,
-      counterStyle: textTheme.bodyText1,
-      errorStyle: textTheme.bodyText1,
-      prefixStyle: textTheme.bodyText1,
-      fillColor: Colors.grey[100],
-      filled: true,
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
-        borderSide: BorderSide(
-          width: 2,
-          color: Colors.grey[100]!,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
-        borderSide: BorderSide(
-          width: 2,
-          color: Colors.grey[200]!,
-        ),
-      ),
-      disabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
-        borderSide: BorderSide(
-          width: 2,
-          color: Colors.grey[200]!,
-        ),
-      ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
-        borderSide: BorderSide(
-          width: 2,
-          color: Colors.grey[200]!,
-        ),
-      ),
+    listTileTheme: const ListTileThemeData(
+      enableFeedback: true,
+      contentPadding: EdgeInsets.zero,
     ),
+    checkboxTheme: CheckboxThemeData(
+      fillColor: MaterialStateProperty.all(colorScheme.primary),
+      checkColor: MaterialStateProperty.all(colorScheme.onPrimary),
+    ),
+    // inputDecorationTheme: InputDecorationTheme(
+    //   floatingLabelBehavior: FloatingLabelBehavior.always,
+    //   hintStyle: textTheme.bodyText1,
+    //   labelStyle: textTheme.bodyText1!.copyWith(color: Colors.grey[800]),
+    //   helperStyle: textTheme.bodyText1,
+    //   suffixStyle: textTheme.bodyText1,
+    //   counterStyle: textTheme.bodyText1,
+    //   errorStyle: textTheme.bodyText1,
+    //   prefixStyle: textTheme.bodyText1,
+    //   fillColor: Colors.grey[100],
+    //   filled: true,
+    //   enabledBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.zero,
+    //     borderSide: BorderSide(
+    //       width: 2,
+    //       color: Colors.grey[100]!,
+    //     ),
+    //   ),
+    //   focusedBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.zero,
+    //     borderSide: BorderSide(
+    //       width: 2,
+    //       color: primaryColor,
+    //     ),
+    //   ),
+    //   disabledBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.zero,
+    //     borderSide: BorderSide(
+    //       width: 2,
+    //       color: Colors.grey[200]!,
+    //     ),
+    //   ),
+    //   border: OutlineInputBorder(
+    //     borderRadius: BorderRadius.zero,
+    //     borderSide: BorderSide(
+    //       width: 2,
+    //       color: Colors.grey[200]!,
+    //     ),
+    //   ),
+    // ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         // visualDensity: VisualDensity.adaptivePlatformDensity,

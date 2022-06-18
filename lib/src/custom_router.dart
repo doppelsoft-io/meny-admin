@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meny_admin/src/presentation/menus/categories/update_categories/update_category_sheet.dart';
-import 'package:meny_admin/src/presentation/menus/items/update_items/update_menu_item_sheet.dart';
-import 'package:meny_admin/src/presentation/menus/menu_preview/menu_preview_screen.dart';
-import 'package:meny_admin/src/presentation/menus/menus/update_menus/update_menus_sheet.dart';
+import 'package:meny_admin/src/presentation/menus/menus.dart';
+import 'package:meny_admin/src/presentation/menus/tags/widgets/update_tag_sheet.dart';
 import 'package:meny_admin/src/presentation/sheet_args.dart';
 import 'package:meny_admin/src/screens/screens.dart';
 
@@ -30,6 +28,10 @@ class CustomRouter {
         return UpdateCategorySheet.route(settings.arguments! as SheetArgs);
       case UpdateMenuItemSheet.routeName:
         return UpdateMenuItemSheet.route(settings.arguments! as SheetArgs);
+      case UpdateModifierGroupSheet.routeName:
+        return UpdateModifierGroupSheet.route(settings.arguments! as SheetArgs);
+      case UpdateTagSheet.routeName:
+        return UpdateTagSheet.route(settings.arguments! as SheetArgs);
       case MenuPreviewScreen.routeName:
         return MenuPreviewScreen.route(
           settings.arguments! as MenuPreviewScreenArgs,

@@ -23,7 +23,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
-  flutter_hooks: ^0.18.3
+  flutter_hooks: ^0.18.4
   flutter_reorderable_list: ^1.2.0
   font_awesome_flutter: ^10.1.0
   freezed: ^2.0.2
@@ -36,10 +36,10 @@ dependencies:
   json_serializable: null
   meny_core:
     path: ../meny-core
-  overlay_support: ^1.2.1
+  overlay_support: ^2.0.0
   qr_flutter: ^4.0.0
   responsive_builder: ^0.4.2
-  responsive_framework: ^0.1.7
+  responsive_framework: ^0.2.0
   shimmer: ^2.0.0
   universal_platform: ^1.0.0+1
 

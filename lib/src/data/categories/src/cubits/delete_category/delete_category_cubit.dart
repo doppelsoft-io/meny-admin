@@ -10,8 +10,8 @@ import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
-part 'delete_category_cubit.freezed.dart';
 part 'delete_category_state.dart';
+part 'delete_category_cubit.freezed.dart';
 
 class DeleteCategoryCubit extends Cubit<DeleteCategoryState> {
   DeleteCategoryCubit({

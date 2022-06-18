@@ -1,9 +1,9 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meny_admin/src/constants/spacing.dart';
 import 'package:meny_admin/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
-import 'package:meny_admin/src/presentation/menus/menu_preview/widgets/widgets.dart';
+import 'package:meny_admin/src/presentation/menus/menus.dart';
 import 'package:meny_core/meny_core.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -102,7 +102,7 @@ class _MenuPreviewScreenState extends State<MenuPreviewScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Menu Preview'),
+            title: const Text('MenuModel Preview'),
           ),
           body: BlocProvider<CompiledMenuCubit>(
             // create: (context) => CompiledMenuCubit()..load(menu: menu),

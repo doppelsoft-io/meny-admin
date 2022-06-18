@@ -14,7 +14,7 @@ class EditMenuCubit extends Cubit<EditMenuState> {
     MenuRepository? menuRepository,
   })  : _storeCubit = storeCubit,
         _menuRepository = menuRepository ?? Locator.instance(),
-        super(EditMenuState.loading(menu: MenuModel.empty()));
+        super(_Loading(menu: MenuModel.empty()));
 
   final MenuRepository _menuRepository;
   final StoreCubit _storeCubit;
@@ -22,35 +22,39 @@ class EditMenuCubit extends Cubit<EditMenuState> {
   Future<void> loadMenu({required MenuModel menu}) async {
     if (menu.id != null && menu.id!.isNotEmpty) {
       await Future<void>.delayed(const Duration(milliseconds: 300));
-      emit(EditMenuState.loaded(menu: menu));
+      emit(_Loaded(menu: menu));
     } else {
-      final storeId = _storeCubit.state.store.id!;
-      final failureOrMenu = await _menuRepository.create(
-        storeId: storeId,
-        resource: menu.copyWith(createdAt: DateTime.now()),
-      );
-      emit(
-        failureOrMenu.fold(
-          (failure) => EditMenuState.error(menu: menu, exception: failure),
-          (menu) => EditMenuState.loaded(menu: menu),
-        ),
-      );
+      try {
+        final storeId = _storeCubit.state.store.id!;
+        final newMenu = await _menuRepository.create(
+          storeId: storeId,
+          resource: menu.copyWith(createdAt: DateTime.now()),
+        );
+        emit(_Loaded(menu: newMenu));
+      } on CreateMenuException catch (err) {
+        emit(
+          _Error(
+            menu: menu,
+            exception: err,
+          ),
+        );
+      }
     }
   }
 
   Future<void> update(MenuModel item) async {
-    emit(EditMenuState.updating(menu: state.menu));
+    emit(_Updating(menu: state.menu));
 
-    final storeId = _storeCubit.state.store.id!;
-    final failureOrUpdate = await _menuRepository.update(
-      storeId: storeId,
-      resource: item,
-    );
-    emit(
-      failureOrUpdate.fold(
-        (failure) => EditMenuState.error(menu: state.menu, exception: failure),
-        (update) => EditMenuState.success(menu: state.menu),
-      ),
-    );
+    try {
+      final storeId = _storeCubit.state.store.id!;
+      await _menuRepository.update(
+        storeId: storeId,
+        resource: item,
+      );
+
+      emit(_Success(menu: state.menu));
+    } on UpdateMenuException catch (err) {
+      emit(_Error(menu: state.menu, exception: err));
+    }
   }
 }

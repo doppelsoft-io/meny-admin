@@ -48,7 +48,7 @@ mixin _$EditCategoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -57,7 +57,7 @@ mixin _$EditCategoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -66,7 +66,7 @@ mixin _$EditCategoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -120,11 +120,11 @@ class _$EditCategoryStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res>
+abstract class _$$_LoadingCopyWith<$Res>
     implements $EditCategoryStateCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
   @override
   $Res call({CategoryModel category});
 
@@ -133,20 +133,20 @@ abstract class _$$_InitialCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
+class __$$_LoadingCopyWithImpl<$Res>
     extends _$EditCategoryStateCopyWithImpl<$Res>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
 
   @override
-  _$_Initial get _value => super._value as _$_Initial;
+  _$_Loading get _value => super._value as _$_Loading;
 
   @override
   $Res call({
     Object? category = freezed,
   }) {
-    return _then(_$_Initial(
+    return _then(_$_Loading(
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -157,8 +157,8 @@ class __$$_InitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial({required this.category});
+class _$_Loading implements _Loading {
+  const _$_Loading({required this.category});
 
   @override
   final CategoryModel category;
@@ -172,7 +172,7 @@ class _$_Initial implements _Initial {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Initial &&
+            other is _$_Loading &&
             const DeepCollectionEquality().equals(other.category, category));
   }
 
@@ -182,8 +182,8 @@ class _$_Initial implements _Initial {
 
   @JsonKey(ignore: true)
   @override
-  _$$_InitialCopyWith<_$_Initial> get copyWith =>
-      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
+  _$$_LoadingCopyWith<_$_Loading> get copyWith =>
+      __$$_LoadingCopyWithImpl<_$_Loading>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -229,7 +229,7 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -241,7 +241,7 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -253,7 +253,7 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -267,14 +267,14 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements EditCategoryState {
-  const factory _Initial({required final CategoryModel category}) = _$_Initial;
+abstract class _Loading implements EditCategoryState {
+  const factory _Loading({required final CategoryModel category}) = _$_Loading;
 
   @override
   CategoryModel get category => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+  _$$_LoadingCopyWith<_$_Loading> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -387,7 +387,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -399,7 +399,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -411,7 +411,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -547,7 +547,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -559,7 +559,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -571,7 +571,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -707,7 +707,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -719,7 +719,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -731,7 +731,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -874,7 +874,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) loading,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
     required TResult Function(_Success value) success,
@@ -886,7 +886,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,
@@ -898,7 +898,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? loading,
+    TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
     TResult Function(_Success value)? success,

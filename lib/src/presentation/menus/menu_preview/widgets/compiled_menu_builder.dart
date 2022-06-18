@@ -1,10 +1,8 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meny_admin/src/constants/spacing.dart';
 import 'package:meny_admin/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
-import 'package:meny_admin/src/presentation/menus/items/image_upload/image_display_card.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
@@ -143,15 +141,22 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                       ),
                                     ],
                                     const SizedBox(height: 6),
-                                    Text(item.priceInfo.price.toCurrency()),
+                                    Text(
+                                      (item.priceInfo.price / 100).toCurrency(),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                             if (item.imageUrl != null &&
                                 item.imageUrl!.isNotEmpty)
-                              ImageDisplayCard.forMenuDisplay(
+                              DImageUploadCard(
                                 url: item.imageUrl ?? '',
+                                theme: DImageUploadCardThemeData.fallback()
+                                    .copyWith(
+                                  width: 91,
+                                  height: 73,
+                                ),
                               ),
                             const SizedBox(width: Spacing.pageSpacing),
                           ],

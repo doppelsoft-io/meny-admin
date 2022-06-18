@@ -9,9 +9,13 @@ import 'package:meny_admin/src/data/categories/categories.dart';
 import 'package:meny_admin/src/data/category_menu_items/category_menu_items.dart';
 import 'package:meny_admin/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny_admin/src/data/menu_categories/menu_categories.dart';
+import 'package:meny_admin/src/data/menu_item_modifier_groups/menu_item_modifier_groups.dart';
 import 'package:meny_admin/src/data/menu_items/menu_items.dart';
 import 'package:meny_admin/src/data/menus/menus.dart';
+import 'package:meny_admin/src/data/modifier_group_items/modifier_group_items.dart';
+import 'package:meny_admin/src/data/modifier_groups/modifier_groups.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/data/tags/tags.dart';
 import 'package:meny_admin/src/data/users/users.dart';
 import 'package:meny_admin/src/services/services.dart';
 
@@ -73,6 +77,22 @@ class Locator {
         CategoryMenuItemsRepository(
           firebaseFirestore: instance(),
         ),
+      )
+      ..registerSingleton<ModifierGroupRepository>(
+        ModifierGroupRepository(
+          loggerService: const LoggerService(
+            prepend: 'ModifierGroupRepository',
+          ),
+        ),
+      )
+      ..registerSingleton<MenuItemModifierGroupRepository>(
+        MenuItemModifierGroupRepository(),
+      )
+      ..registerSingleton<ModifierGroupItemRepository>(
+        ModifierGroupItemRepository(),
+      )
+      ..registerSingleton<TagRepository>(
+        TagRepository(),
       );
   }
 }

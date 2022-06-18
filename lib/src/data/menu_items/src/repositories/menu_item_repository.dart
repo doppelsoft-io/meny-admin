@@ -1,11 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/src/constants/paths.dart';
 import 'package:meny_admin/src/data/repositories/i_resources_repository.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
+
+class GetMenuItemException extends CustomException {
+  const GetMenuItemException({String? message}) : super(message: message);
+}
+
+class CreateMenuItemException extends CustomException {
+  const CreateMenuItemException({String? message}) : super(message: message);
+}
+
+class UpdateMenuItemException extends CustomException {
+  const UpdateMenuItemException({String? message}) : super(message: message);
+}
+
+class DeleteMenuItemException extends CustomException {
+  const DeleteMenuItemException({String? message}) : super(message: message);
+}
 
 class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
   MenuItemRepository({
@@ -31,15 +46,29 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
       return MenuItemModel.fromSnapshot(snap);
     } catch (err) {
       _loggerService.log('(get): ${err.toString()}');
-      throw const CustomException(message: 'Failed to retrieve item');
+      throw const GetMenuItemException(message: 'Failed to retrieve item');
     }
   }
 
   @override
-  Stream<List<MenuItemModel>> getAll({required String storeId}) {
+  Stream<List<MenuItemModel>> getAll({
+    required String storeId,
+  }) {
     return firebaseFirestore
         .menuItemEntitiesCollection(storeId: storeId)
-        .orderBy('createdAt', descending: false)
+        .snapshots()
+        .map(
+          (doc) => doc.docs.map(MenuItemModel.fromSnapshot).toList(),
+        );
+  }
+
+  Stream<List<MenuItemModel>> getAllByType({
+    required String storeId,
+    MenuItemType type = MenuItemType.item,
+  }) {
+    return firebaseFirestore
+        .menuItemEntitiesCollection(storeId: storeId)
+        .where('type', isEqualTo: type.stringify())
         .snapshots()
         .map(
           (doc) => doc.docs.map(MenuItemModel.fromSnapshot).toList(),
@@ -47,7 +76,7 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
   }
 
   @override
-  Future<Either<CustomException, MenuItemModel>> create({
+  Future<MenuItemModel> create({
     required String storeId,
     required MenuItemModel resource,
   }) async {
@@ -56,20 +85,18 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
           .menuItemEntitiesCollection(storeId: storeId)
           .add(resource.toJson());
       final snapshot = await document.get();
-      return right(MenuItemModel.fromSnapshot(snapshot));
+      return MenuItemModel.fromSnapshot(snapshot);
     } catch (err) {
       _loggerService.log('(create): ${err.toString()}');
-      return left(
-        CustomException(
-          message:
-              'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
-        ),
+      throw CreateMenuItemException(
+        message:
+            'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
       );
     }
   }
 
   @override
-  Future<Either<CustomException, bool>> update({
+  Future<void> update({
     required String storeId,
     required MenuItemModel resource,
   }) async {
@@ -77,20 +104,17 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
       await firebaseFirestore
           .menuItemEntitiesDocument(storeId: storeId, itemId: resource.id!)
           .set(resource.toJson(), SetOptions(merge: true));
-      return right(true);
     } catch (err) {
       _loggerService.log('(update): ${err.toString()}');
-      return left(
-        CustomException(
-          message:
-              'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
-        ),
+      throw UpdateMenuItemException(
+        message:
+            'We had trouble updating your ${resource.toFriendlyString()}. Please try again later.',
       );
     }
   }
 
   @override
-  Future<Either<CustomException, bool>> delete({
+  Future<void> delete({
     required String storeId,
     required MenuItemModel resource,
   }) async {
@@ -98,14 +122,11 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
       await firebaseFirestore
           .menuItemEntitiesDocument(storeId: storeId, itemId: resource.id!)
           .delete();
-      return right(true);
     } catch (err) {
       _loggerService.log('(delete): ${err.toString()}');
-      return left(
-        CustomException(
-          message:
-              'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
-        ),
+      throw DeleteMenuItemException(
+        message:
+            'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',
       );
     }
   }

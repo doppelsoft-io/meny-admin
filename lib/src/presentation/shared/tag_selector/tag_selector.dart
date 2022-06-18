@@ -40,7 +40,7 @@ class TagSelector<T> extends HookWidget {
     required this.onSelect,
     required this.onRemove,
     required this.emptyBuilder,
-    this.textFieldConfiguration,
+    this.textFieldConfiguration = const TextFieldConfiguration(),
     this.tagBuilder,
   }) : super(key: key);
 
@@ -53,7 +53,7 @@ class TagSelector<T> extends HookWidget {
   final SuggestionConfiguration Function(BuildContext, T)
       suggestionConfigurationBuilder;
   final TagConfiguration Function(BuildContext, T) tagConfigurationBuilder;
-  final TextFieldConfiguration? textFieldConfiguration;
+  final TextFieldConfiguration textFieldConfiguration;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class TagSelector<T> extends HookWidget {
           DTextFormField(
             controller: TextEditingController(),
             focusNode: focusNode,
-            decoration: textFieldConfiguration!.decoration,
+            decoration: textFieldConfiguration.decoration,
             onTap: () => isOpen.value = !isOpen.value,
           ),
           const Visibility(

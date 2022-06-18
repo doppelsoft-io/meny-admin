@@ -14,7 +14,7 @@ class EditMenuItemCubit extends Cubit<EditMenuItemState> {
     required StoreCubit storeCubit,
   })  : _menuItemRepository = menuItemRepository ?? Locator.instance(),
         _storeCubit = storeCubit,
-        super(EditMenuItemState.loading(item: MenuItemModel.empty()));
+        super(_Loading(item: MenuItemModel.empty()));
 
   final MenuItemRepository _menuItemRepository;
   final StoreCubit _storeCubit;
@@ -23,34 +23,47 @@ class EditMenuItemCubit extends Cubit<EditMenuItemState> {
     if (item.id != null && item.id!.isNotEmpty) {
       /// Needed to trigger loaded event in listener
       await Future<void>.delayed(const Duration(milliseconds: 300));
-      emit(EditMenuItemState.loaded(item: item));
+      emit(_Loaded(item: item));
     } else {
-      final storeId = _storeCubit.state.store.id!;
-      final failureOrItem = await _menuItemRepository.create(
-        storeId: storeId,
-        resource: item.copyWith(createdAt: DateTime.now()),
-      );
-      emit(
-        failureOrItem.fold(
-          (failure) => EditMenuItemState.error(item: item, exception: failure),
-          (item) => EditMenuItemState.loaded(item: item),
-        ),
-      );
+      try {
+        final storeId = _storeCubit.state.store.id!;
+        final newItem = await _menuItemRepository.create(
+          storeId: storeId,
+          resource: item.copyWith(createdAt: DateTime.now()),
+        );
+        emit(_Loaded(item: newItem));
+      } on CreateMenuItemException catch (err) {
+        emit(
+          _Error(
+            item: item,
+            exception: err,
+          ),
+        );
+      }
     }
   }
 
-  Future<void> update(MenuItemModel item) async {
-    emit(EditMenuItemState.updating(item: item));
-    final storeId = _storeCubit.state.store.id!;
-    final failureOrUpdate = await _menuItemRepository.update(
-      storeId: storeId,
-      resource: item,
-    );
-    emit(
-      failureOrUpdate.fold(
-        (failure) => EditMenuItemState.error(item: item, exception: failure),
-        (update) => EditMenuItemState.success(item: item),
-      ),
-    );
+  Future<void> update(MenuItemModel item, {bool save = true}) async {
+    emit(_Updating(item: item));
+
+    try {
+      final storeId = _storeCubit.state.store.id!;
+      if (save) {
+        await _menuItemRepository.update(
+          storeId: storeId,
+          resource: item.copyWith(updatedAt: DateTime.now()),
+        );
+        emit(_Success(item: item));
+      } else {
+        emit(_Loaded(item: item));
+      }
+    } on UpdateMenuItemException catch (err) {
+      emit(
+        _Error(
+          item: item,
+          exception: err,
+        ),
+      );
+    }
   }
 }

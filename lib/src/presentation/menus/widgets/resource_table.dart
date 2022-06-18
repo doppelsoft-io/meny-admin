@@ -37,13 +37,16 @@ class ResourceTable<T> extends StatelessWidget {
         switch (state.runtimeType) {
           case ResourcesFailure:
             final _state = state as ResourcesFailure;
-            return const Center(
-              child: Text('Replace'),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(_state.failure.message ?? 'Failed to load items'),
+              ],
             );
           case ResourcesLoaded:
             final _state = state as ResourcesLoaded;
             return DataTable(
-              dataRowHeight: 100,
+              dataRowHeight: 70,
               showCheckboxColumn: false,
               showBottomBorder: true,
               columns: _state.resources.isEmpty

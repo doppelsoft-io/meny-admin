@@ -1,5 +1,5 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
-import 'package:meny_admin/src/constants/spacing.dart';
 
 class DeveloperPage extends StatelessWidget {
   const DeveloperPage({Key? key}) : super(key: key);

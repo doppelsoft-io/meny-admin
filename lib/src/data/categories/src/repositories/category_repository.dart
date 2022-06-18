@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/constants/paths.dart';
+import 'package:meny_admin/src/data/repositories/i_resources_repository.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
@@ -23,14 +25,17 @@ class DeleteCategoryException extends CustomException {
   const DeleteCategoryException({String? message}) : super(message: message);
 }
 
-class CategoryRepository {
+class CategoryRepository extends IResourcesRepository<CategoryModel> {
   CategoryRepository({
+    String? path,
     FirebaseFirestore? firebaseFirestore,
     LoggerService? loggerService,
-  })  : _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
-        _loggerService = loggerService ?? Locator.instance();
+  })  : _loggerService = loggerService ?? Locator.instance(),
+        super(
+          path: path ?? Paths.categories,
+          firebaseFirestore: firebaseFirestore ?? FirebaseFirestore.instance,
+        );
 
-  final FirebaseFirestore _firebaseFirestore;
   final LoggerService _loggerService;
 
   Future<CategoryModel> get({
@@ -38,7 +43,7 @@ class CategoryRepository {
     required String id,
   }) async {
     try {
-      final snap = await _firebaseFirestore
+      final snap = await firebaseFirestore
           .categoryEntitiesDocument(storeId: storeId, categoryId: id)
           .get();
       return CategoryModel.fromSnapshot(snap);
@@ -50,7 +55,7 @@ class CategoryRepository {
 
   @override
   Stream<List<CategoryModel>> getAll({required String storeId}) {
-    return _firebaseFirestore
+    return firebaseFirestore
         .categoryEntitiesCollection(storeId: storeId)
         .orderBy('createdAt', descending: false)
         .snapshots()
@@ -59,12 +64,13 @@ class CategoryRepository {
         );
   }
 
-  FutureOr<CategoryModel> create({
+  @override
+  Future<CategoryModel> create({
     required String storeId,
     required CategoryModel resource,
   }) async {
     try {
-      final document = await _firebaseFirestore
+      final document = await firebaseFirestore
           .categoryEntitiesCollection(storeId: storeId)
           .add(resource.toJson());
       final snapshot = await document.get();
@@ -78,12 +84,13 @@ class CategoryRepository {
     }
   }
 
-  FutureOr<void> update({
+  @override
+  Future<void> update({
     required String storeId,
     required CategoryModel resource,
   }) async {
     try {
-      await _firebaseFirestore
+      await firebaseFirestore
           .categoryEntitiesDocument(storeId: storeId, categoryId: resource.id!)
           .set(resource.toJson(), SetOptions(merge: true));
     } catch (err) {
@@ -95,12 +102,13 @@ class CategoryRepository {
     }
   }
 
+  @override
   Future<void> delete({
     required String storeId,
     required CategoryModel resource,
   }) async {
     try {
-      await _firebaseFirestore
+      await firebaseFirestore
           .categoryEntitiesDocument(storeId: storeId, categoryId: resource.id!)
           .delete();
     } catch (err) {
@@ -117,13 +125,11 @@ class CategoryRepository {
     required MenuItemModel item,
   }) {
     if (item.id == null) return Stream.fromIterable([]);
-    return _firebaseFirestore
+    return firebaseFirestore
         .categoryEntitiesCollection(storeId: storeId)
         .where('itemIds', arrayContains: item.id)
         .orderBy('updatedAt', descending: true)
         .snapshots()
-        .map(
-          (doc) => doc.docs.map(CategoryModel.fromSnapshot).toList(),
-        );
+        .map((doc) => doc.docs.map(CategoryModel.fromSnapshot).toList());
   }
 }

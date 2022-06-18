@@ -25,8 +25,9 @@ class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
   Future<void> delete({
     required MenuItemModel item,
     required List<CategoryModel> categories,
+    required List<ModifierGroupModel> modifierGroups,
   }) async {
-    emit(const DeleteMenuItemState.deleting());
+    emit(const _Deleting());
     try {
       final storeId = _storeCubit.state.store.id!;
       final batch = _firebaseFirestore.batch();
@@ -36,6 +37,7 @@ class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
       );
       batch.delete(menuItemRef);
 
+      /// Delete associated category menu items
       for (final category in categories) {
         final docId = '${category.id}-${item.id}';
         final categoryMenuItemRef = _firebaseFirestore
@@ -47,17 +49,29 @@ class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
         batch.delete(categoryMenuItemRef);
       }
 
+      /// Delete associated menu item modifier groups
+      for (final modifierGroup in modifierGroups) {
+        final docId = '${item.id}-${modifierGroup.id}';
+        final menuItemModifierGroupRef = _firebaseFirestore
+            .collection(Paths.stores)
+            .doc(storeId)
+            .collection(Paths.menuItemModifierGroups)
+            .doc(docId);
+
+        batch.delete(menuItemModifierGroupRef);
+      }
+
       await batch.commit();
 
-      emit(const DeleteMenuItemState.success());
+      emit(const _Success());
     } catch (err) {
       emit(
-        const DeleteMenuItemState.error(
+        const _Error(
           exception: CustomException(message: 'Failed to delete item'),
         ),
       );
     } finally {
-      emit(const DeleteMenuItemState.initial());
+      emit(const _Initial());
     }
   }
 }

@@ -4,7 +4,7 @@ part of 'edit_category_cubit.dart';
 class EditCategoryState with _$EditCategoryState {
   const factory EditCategoryState.loading({
     required CategoryModel category,
-  }) = _Initial;
+  }) = _Loading;
 
   const factory EditCategoryState.loaded({
     required CategoryModel category,
