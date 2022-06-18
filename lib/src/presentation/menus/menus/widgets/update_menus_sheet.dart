@@ -8,6 +8,7 @@ import 'package:meny_admin/src/presentation/resources/widgets/delete_resource_bu
 import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/presentation/sheet_args.dart';
 import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
 class _UpdateMenusSheet extends HookWidget {
@@ -97,13 +98,18 @@ class _UpdateMenusSheet extends HookWidget {
                 body: SingleChildScrollView(
                   padding: const EdgeInsets.all(Spacing.pageSpacing),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      DText.subtitle1('Name'),
+                      VerticalSpacing.smallest(),
                       DTextFormField(
-                        controller: controller,
-                        autofocus: true,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter a name',
-                          labelText: 'Name',
+                        theme: Themes.theme.textFormFieldThemeData,
+                        args: DTextFormFieldArgs(
+                          controller: controller,
+                          autofocus: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter a name',
+                          ),
                         ),
                       ),
                     ],

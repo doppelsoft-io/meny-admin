@@ -8,6 +8,7 @@ import 'package:meny_admin/src/presentation/resources/widgets/delete_resource_bu
 import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/presentation/sheet_args.dart';
 import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
 class UpdateTagSheetParams {
@@ -155,10 +156,13 @@ class _UpdateTagSheet extends HookWidget {
                     DText.subtitle1('Name'),
                     VerticalSpacing.smallest(),
                     DTextFormField(
-                      autofocus: true,
-                      controller: params.nameController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter a name',
+                      theme: Themes.theme.textFormFieldThemeData,
+                      args: DTextFormFieldArgs(
+                        autofocus: true,
+                        controller: params.nameController,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter a name',
+                        ),
                       ),
                     ),
                   ],

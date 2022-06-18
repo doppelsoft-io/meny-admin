@@ -12,6 +12,7 @@ import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/presentation/sheet_args.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
+import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
 enum MaxItemChoice {
@@ -312,12 +313,15 @@ class _UpdateModifierGroupSheet extends HookWidget {
                       DText.subtitle1('Name'),
                       VerticalSpacing.smallest(),
                       DTextFormField(
-                        controller: params.nameController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter a name',
+                        theme: Themes.theme.textFormFieldThemeData,
+                        args: DTextFormFieldArgs(
+                          controller: params.nameController,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter a name',
+                          ),
+                          autocorrect: false,
+                          textInputAction: TextInputAction.next,
                         ),
-                        autocorrect: false,
-                        textInputAction: TextInputAction.next,
                       ),
                       VerticalSpacing.medium(),
                       DText.subtitle1('Items'),
@@ -455,13 +459,15 @@ class _UpdateModifierGroupSheet extends HookWidget {
                             Container(
                               constraints: const BoxConstraints(maxWidth: 100),
                               child: DTextFormField(
-                                controller: params
-                                    .quantityConstraintsOptionalMaxItemsController,
-                                textInputType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                decoration: const InputDecoration(),
+                                theme: Themes.theme.textFormFieldThemeData,
+                                args: DTextFormFieldArgs(
+                                  controller: params
+                                      .quantityConstraintsOptionalMaxItemsController,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -474,28 +480,33 @@ class _UpdateModifierGroupSheet extends HookWidget {
                           children: [
                             Container(
                               constraints: const BoxConstraints(maxWidth: 200),
-                              child: DTextFormFieldThemeWrapper(
-                                child: DropdownButtonFormField<MaxItemChoice>(
-                                  value: params.maxItemChoice.value,
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
+                              child: SizedBox(
+                                height: 60,
+                                child: DTextFormFieldThemeWrapper(
+                                  theme: Themes.theme.textFormFieldThemeData,
+                                  child: DropdownButtonFormField<MaxItemChoice>(
+                                    value: params.maxItemChoice.value,
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                    alignment: Alignment.centerLeft,
+                                    items: MaxItemChoice.values
+                                        .map(
+                                          (e) =>
+                                              DropdownMenuItem<MaxItemChoice>(
+                                            value: e,
+                                            child: Text(e.name),
+                                          ),
+                                        )
+                                        .toList(),
+                                    onChanged: (v) {
+                                      if (v != null) {
+                                        params.maxItemChoice.value = v;
+                                      }
+                                    },
                                   ),
-                                  alignment: Alignment.centerLeft,
-                                  items: MaxItemChoice.values
-                                      .map(
-                                        (e) => DropdownMenuItem<MaxItemChoice>(
-                                          value: e,
-                                          child: Text(e.name),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (v) {
-                                    if (v != null) {
-                                      params.maxItemChoice.value = v;
-                                    }
-                                  },
                                 ),
                               ),
                             ),
@@ -503,13 +514,15 @@ class _UpdateModifierGroupSheet extends HookWidget {
                             Container(
                               constraints: const BoxConstraints(maxWidth: 100),
                               child: DTextFormField(
-                                controller: params
-                                    .quantityConstraintsRequiredMaxItemsController,
-                                textInputType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                decoration: const InputDecoration(),
+                                theme: Themes.theme.textFormFieldThemeData,
+                                args: DTextFormFieldArgs(
+                                  controller: params
+                                      .quantityConstraintsRequiredMaxItemsController,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -660,35 +673,38 @@ class _ModifierGroupItem extends HookWidget {
             width: 200,
             padding: const EdgeInsets.all(8),
             child: DTextFormField(
-              controller: controller,
-              focusNode: focusNode,
-              onChanged: (price) {
-                final cents = ((double.tryParse(price) ?? 0) * 100).toInt();
-                final existingPriceOverride = modifierGroupItem.priceOverride;
-                priceDebouncer.run(() {
-                  context.read<EditModifierGroupItemCubit>().update(
-                        model: modifierGroupItem.copyWith(
-                          priceOverride: existingPriceOverride.copyWith(
-                            price: cents,
+              theme: Themes.theme.textFormFieldThemeData,
+              args: DTextFormFieldArgs(
+                controller: controller,
+                focusNode: focusNode,
+                onChanged: (price) {
+                  final cents = ((double.tryParse(price) ?? 0) * 100).toInt();
+                  final existingPriceOverride = modifierGroupItem.priceOverride;
+                  priceDebouncer.run(() {
+                    context.read<EditModifierGroupItemCubit>().update(
+                          model: modifierGroupItem.copyWith(
+                            priceOverride: existingPriceOverride.copyWith(
+                              price: cents,
+                            ),
                           ),
-                        ),
-                      );
-                });
-              },
-              decoration: const InputDecoration(
-                prefixIcon: Icon(
-                  Icons.attach_money,
-                  color: Colors.black,
+                        );
+                  });
+                },
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.attach_money,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              textInputType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              inputFormatters: [
-                ValidatorInputFormatter(
-                  editingValidator: DecimalNumberEditingRegexValidator(),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
                 ),
-              ],
+                inputFormatters: [
+                  ValidatorInputFormatter(
+                    editingValidator: DecimalNumberEditingRegexValidator(),
+                  ),
+                ],
+              ),
             ),
           ),
           IconButton(

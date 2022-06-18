@@ -1,6 +1,7 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:meny_admin/themes.dart';
 
 class TextFieldConfiguration {
   const TextFieldConfiguration({
@@ -86,10 +87,13 @@ class TagSelector<T> extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DTextFormField(
-            controller: TextEditingController(),
-            focusNode: focusNode,
-            decoration: textFieldConfiguration.decoration,
-            onTap: () => isOpen.value = !isOpen.value,
+            theme: Themes.theme.textFormFieldThemeData,
+            args: DTextFormFieldArgs(
+              controller: TextEditingController(),
+              focusNode: focusNode,
+              decoration: textFieldConfiguration.decoration,
+              onTap: () => isOpen.value = !isOpen.value,
+            ),
           ),
           const Visibility(
             visible: false,

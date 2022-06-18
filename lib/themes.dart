@@ -1,10 +1,9 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Themes {
   const Themes._();
-
-  static final ThemeData _light = ThemeData.light();
 
   static Color primaryColor = Colors.green;
 
@@ -15,20 +14,7 @@ class Themes {
     bodyText2: GoogleFonts.hind(textStyle: defaultTextTheme.bodyText2),
     caption: GoogleFonts.hind(textStyle: defaultTextTheme.caption),
     overline: GoogleFonts.hind(textStyle: defaultTextTheme.overline),
-    // button: GoogleFonts.hind(textStyle: defaultTextTheme.button),
   );
-
-  static BoxShadow boxShadow = BoxShadow(
-    color: Colors.grey[100]!,
-    offset: const Offset(0, 2),
-    blurRadius: 4,
-  );
-
-  static TextStyle textStyle = GoogleFonts.baloo();
-  static TextStyle secondaryTextStyle = GoogleFonts.hind();
-
-  static TextTheme secondaryTextTheme =
-      GoogleFonts.hindTextTheme(_light.textTheme);
 
   static ColorScheme colorScheme = ColorScheme(
     primary: primaryColor,
@@ -44,9 +30,56 @@ class Themes {
     brightness: Brightness.dark,
   );
 
+  static final textFormFieldThemeData = DTextFormFieldThemeData.fallback();
+
+  static final DTheme theme = DTheme(
+    textTheme: textTheme,
+    colorScheme: colorScheme,
+    checkboxThemeData: DCheckboxThemeData.fallback().copyWith(
+      contentPadding: EdgeInsets.zero,
+      fillColor: MaterialStateProperty.all(primaryColor),
+    ),
+    textFormFieldThemeData: textFormFieldThemeData.copyWith(
+      cursorColor: colorScheme.primary,
+      errorColor: colorScheme.error,
+      labelStyle: textTheme.bodyText1,
+      border: textFormFieldThemeData.border!.copyWith(
+        borderSide: BorderSide(
+          color: primaryColor,
+        ),
+      ),
+      enabledBorder: textFormFieldThemeData.border!.copyWith(
+        borderSide: BorderSide(
+          color: Colors.grey[100]!,
+        ),
+      ),
+      focusedBorder: textFormFieldThemeData.border!.copyWith(
+        borderSide: BorderSide(
+          color: primaryColor,
+          width: 2,
+        ),
+      ),
+    ),
+  );
+
+  static final ThemeData _light = ThemeData.light();
+
+  static BoxShadow boxShadow = BoxShadow(
+    color: Colors.grey[100]!,
+    offset: const Offset(0, 2),
+    blurRadius: 4,
+  );
+
+  static TextStyle textStyle = GoogleFonts.baloo();
+  static TextStyle secondaryTextStyle = GoogleFonts.hind();
+
+  static TextTheme secondaryTextTheme =
+      GoogleFonts.hindTextTheme(_light.textTheme);
+
   static ThemeData defaultTheme = _light.copyWith(
     colorScheme: colorScheme,
-    primaryColor: const Color.fromARGB(255, 48, 58, 48),
+    // primaryColor: const Color.fromARGB(255, 48, 58, 48),
+    primaryColor: primaryColor,
     backgroundColor: Colors.grey[100],
     indicatorColor: primaryColor,
     appBarTheme: _light.appBarTheme.copyWith(
@@ -60,46 +93,6 @@ class Themes {
       fillColor: MaterialStateProperty.all(colorScheme.primary),
       checkColor: MaterialStateProperty.all(colorScheme.onPrimary),
     ),
-    // inputDecorationTheme: InputDecorationTheme(
-    //   floatingLabelBehavior: FloatingLabelBehavior.always,
-    //   hintStyle: textTheme.bodyText1,
-    //   labelStyle: textTheme.bodyText1!.copyWith(color: Colors.grey[800]),
-    //   helperStyle: textTheme.bodyText1,
-    //   suffixStyle: textTheme.bodyText1,
-    //   counterStyle: textTheme.bodyText1,
-    //   errorStyle: textTheme.bodyText1,
-    //   prefixStyle: textTheme.bodyText1,
-    //   fillColor: Colors.grey[100],
-    //   filled: true,
-    //   enabledBorder: OutlineInputBorder(
-    //     borderRadius: BorderRadius.zero,
-    //     borderSide: BorderSide(
-    //       width: 2,
-    //       color: Colors.grey[100]!,
-    //     ),
-    //   ),
-    //   focusedBorder: OutlineInputBorder(
-    //     borderRadius: BorderRadius.zero,
-    //     borderSide: BorderSide(
-    //       width: 2,
-    //       color: primaryColor,
-    //     ),
-    //   ),
-    //   disabledBorder: OutlineInputBorder(
-    //     borderRadius: BorderRadius.zero,
-    //     borderSide: BorderSide(
-    //       width: 2,
-    //       color: Colors.grey[200]!,
-    //     ),
-    //   ),
-    //   border: OutlineInputBorder(
-    //     borderRadius: BorderRadius.zero,
-    //     borderSide: BorderSide(
-    //       width: 2,
-    //       color: Colors.grey[200]!,
-    //     ),
-    //   ),
-    // ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         // visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -112,12 +105,6 @@ class Themes {
         ),
       ),
     ),
-    // textButtonTheme: TextButtonThemeData(
-    //   style: TextButton.styleFrom(
-    //     visualDensity: VisualDensity.adaptivePlatformDensity,
-    //     textStyle: TextStyle(color: Colors.black),
-    //   ),
-    // ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
         side: MaterialStateProperty.all(BorderSide(color: Colors.grey[300]!)),
@@ -132,11 +119,6 @@ class Themes {
       elevation: 0,
       margin: EdgeInsets.zero,
     ),
-    // dividerTheme: DividerThemeData(
-    //   color: Colors.grey[200],
-    //   space: 30,
-    //   thickness: 2,
-    // ),
     dataTableTheme: const DataTableThemeData(
       horizontalMargin: 5,
     ),
@@ -160,21 +142,11 @@ class Themes {
       ),
     ),
     scaffoldBackgroundColor: Colors.white,
-    // bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    //   unselectedItemColor: Colors.green[100],
-    //   selectedItemColor: Colors.white,
-    //   backgroundColor: Colors.green,
-    //   unselectedLabelStyle: TextStyle(fontSize: 10.0),
-    //   selectedLabelStyle: TextStyle(fontSize: 12.0),
-    //   showUnselectedLabels: true,
-    //   type: BottomNavigationBarType.fixed,
-    // ),
     textTheme: textTheme,
     tabBarTheme: TabBarTheme(
       labelColor: Colors.black,
       labelStyle: secondaryTextStyle.copyWith(fontWeight: FontWeight.w700),
       labelPadding: const EdgeInsets.symmetric(horizontal: 25),
-      // unselectedLabelColor: Colors.grey[600],
       unselectedLabelStyle:
           secondaryTextStyle.copyWith(fontWeight: FontWeight.w700),
     ),

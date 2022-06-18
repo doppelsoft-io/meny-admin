@@ -11,6 +11,7 @@ import 'package:meny_admin/src/presentation/resources/widgets/delete_resource_bu
 import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/presentation/sheet_args.dart';
 import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
 class UpdateCategorySheet extends StatelessWidget {
@@ -161,16 +162,23 @@ class _UpdateCategorySheet extends HookWidget {
                     body: SingleChildScrollView(
                       padding: const EdgeInsets.all(24),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          DText.subtitle1('Name'),
+                          VerticalSpacing.smallest(),
                           DTextFormField(
-                            controller: controller,
-                            autofocus: true,
-                            decoration: const InputDecoration(
-                              hintText: 'Enter a name',
-                              labelText: 'Name',
+                            theme: Themes.theme.textFormFieldThemeData,
+                            args: DTextFormFieldArgs(
+                              controller: controller,
+                              autofocus: true,
+                              decoration: const InputDecoration(
+                                hintText: 'Enter a name',
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          VerticalSpacing.large(),
+                          DText.subtitle1('Add to menu'),
+                          VerticalSpacing.smallest(),
                           TagSelector<MenuModel>(
                             initialItems: menuCategoriesState.menus,
                             fetchSuggestions: () async {
@@ -211,8 +219,6 @@ class _UpdateCategorySheet extends HookWidget {
                             textFieldConfiguration:
                                 const TextFieldConfiguration(
                               decoration: InputDecoration(
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
                                 hintText: 'Add to menu',
                                 labelText: 'Menus',
                               ),

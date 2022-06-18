@@ -14,6 +14,7 @@ import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/presentation/sheet_args.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
+import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
 class UpdateMenuItemSheet extends StatelessWidget {
@@ -195,13 +196,13 @@ class _UpdateMenuItemSheet extends HookWidget {
                           DText.subtitle1('Name'),
                           VerticalSpacing.smallest(),
                           _NameField(nameController: nameController),
-                          VerticalSpacing.medium(),
+                          VerticalSpacing.large(),
                           DText.subtitle1('Description'),
                           VerticalSpacing.smallest(),
                           _DescriptionField(
                             descriptionController: descriptionController,
                           ),
-                          VerticalSpacing.medium(),
+                          VerticalSpacing.large(),
                           if (item.type == MenuItemType.item) ...[
                             DText.subtitle1('Photo'),
                             VerticalSpacing.smallest(),
@@ -211,18 +212,18 @@ class _UpdateMenuItemSheet extends HookWidget {
                           DText.subtitle1('Availability'),
                           VerticalSpacing.smallest(),
                           const _SuspensionRules(),
-                          VerticalSpacing.medium(),
+                          VerticalSpacing.large(),
                           DText.subtitle1('Price'),
                           VerticalSpacing.smallest(),
                           _PriceField(priceController: priceController),
-                          VerticalSpacing.medium(),
+                          VerticalSpacing.large(),
                           DText.subtitle1('Categories'),
                           DText.caption(
                             'Select which categories this item will appear in',
                           ),
                           VerticalSpacing.small(),
                           _CategorySelector(item: item),
-                          VerticalSpacing.medium(),
+                          VerticalSpacing.large(),
                           DText.subtitle1('Modifier Groups'),
                           VerticalSpacing.smallest(),
                           _ModifierGroupSelector(item: item),
@@ -321,49 +322,27 @@ class _SuspensionRules extends HookWidget {
       loaded: (item) {
         return Column(
           children: [
-            CheckboxListTile(
-              enableFeedback: true,
-              contentPadding: EdgeInsets.zero,
-              controlAffinity: ListTileControlAffinity.leading,
-              title: const Text('Is item available?'),
-              value: item.suspensionRules == null,
-              onChanged: (available) {
-                if (available != null && available) {
-                  final updatedItem = item.copyWith(suspensionRules: null);
-                  suspensionReasonController.clear();
-                  context.read<EditMenuItemCubit>().update(
-                        updatedItem,
-                        save: false,
-                      );
-                } else {
-                  final suspensionRules =
-                      item.suspensionRules ?? SuspensionRulesModel.empty();
-                  final updatedItem = item.copyWith(
-                    suspensionRules: suspensionRules.copyWith(
-                      suspension: SuspensionRulesSuspension(
-                        isSuspended: true,
-                      ),
-                    ),
-                  );
-                  context.read<EditMenuItemCubit>().update(
-                        updatedItem,
-                        save: false,
-                      );
-                }
-              },
-            ),
-            if (item.suspensionRules != null) ...[
-              VerticalSpacing.small(),
-              DTextFormField(
-                controller: suspensionReasonController,
-                onChanged: (reason) {
-                  suspensionReasonDebouncer.run(() {
-                    final item = context.read<EditMenuItemCubit>().state.item;
-                    final suspension = item.suspensionRules!.suspension;
+            DCheckbox(
+              theme: Themes.theme.checkboxThemeData,
+              args: DCheckboxArgs(
+                title: const Text('Is item available?'),
+                value: item.suspensionRules == null,
+                enableFeedback: true,
+                onChanged: (available) {
+                  if (available != null && available) {
+                    final updatedItem = item.copyWith(suspensionRules: null);
+                    suspensionReasonController.clear();
+                    context.read<EditMenuItemCubit>().update(
+                          updatedItem,
+                          save: false,
+                        );
+                  } else {
+                    final suspensionRules =
+                        item.suspensionRules ?? SuspensionRulesModel.empty();
                     final updatedItem = item.copyWith(
-                      suspensionRules: item.suspensionRules!.copyWith(
-                        suspension: suspension.copyWith(
-                          reason: reason,
+                      suspensionRules: suspensionRules.copyWith(
+                        suspension: SuspensionRulesSuspension(
+                          isSuspended: true,
                         ),
                       ),
                     );
@@ -371,11 +350,68 @@ class _SuspensionRules extends HookWidget {
                           updatedItem,
                           save: false,
                         );
-                  });
+                  }
                 },
-                decoration: const InputDecoration(
-                  hintText:
-                      "Enter a reason for the item's suspension (optional)",
+              ),
+            ),
+            // CheckboxListTile(
+            //   enableFeedback: true,
+            //   contentPadding: EdgeInsets.zero,
+            //   controlAffinity: ListTileControlAffinity.leading,
+            //   title: const Text('Is item available?'),
+            //   value: item.suspensionRules == null,
+            //   onChanged: (available) {
+            //     if (available != null && available) {
+            //       final updatedItem = item.copyWith(suspensionRules: null);
+            //       suspensionReasonController.clear();
+            //       context.read<EditMenuItemCubit>().update(
+            //             updatedItem,
+            //             save: false,
+            //           );
+            //     } else {
+            //       final suspensionRules =
+            //           item.suspensionRules ?? SuspensionRulesModel.empty();
+            //       final updatedItem = item.copyWith(
+            //         suspensionRules: suspensionRules.copyWith(
+            //           suspension: SuspensionRulesSuspension(
+            //             isSuspended: true,
+            //           ),
+            //         ),
+            //       );
+            //       context.read<EditMenuItemCubit>().update(
+            //             updatedItem,
+            //             save: false,
+            //           );
+            //     }
+            //   },
+            // ),
+            if (item.suspensionRules != null) ...[
+              VerticalSpacing.small(),
+              DTextFormField(
+                theme: Themes.theme.textFormFieldThemeData,
+                args: DTextFormFieldArgs(
+                  controller: suspensionReasonController,
+                  onChanged: (reason) {
+                    suspensionReasonDebouncer.run(() {
+                      final item = context.read<EditMenuItemCubit>().state.item;
+                      final suspension = item.suspensionRules!.suspension;
+                      final updatedItem = item.copyWith(
+                        suspensionRules: item.suspensionRules!.copyWith(
+                          suspension: suspension.copyWith(
+                            reason: reason,
+                          ),
+                        ),
+                      );
+                      context.read<EditMenuItemCubit>().update(
+                            updatedItem,
+                            save: false,
+                          );
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    hintText:
+                        "Enter a reason for the item's suspension (optional)",
+                  ),
                 ),
               ),
               VerticalSpacing.medium(),
@@ -437,7 +473,6 @@ class _CategorySelector extends StatelessWidget {
           floatingLabelBehavior: FloatingLabelBehavior.always,
           prefixIcon: Icon(Icons.search, color: Colors.black),
           hintText: 'Add to category',
-          // labelText: 'Categories',
         ),
       ),
     );
@@ -516,24 +551,26 @@ class _PriceField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DTextFormField(
-      textInputType: const TextInputType.numberWithOptions(
-        decimal: true,
-      ),
-      inputFormatters: [
-        ValidatorInputFormatter(
-          editingValidator: DecimalNumberEditingRegexValidator(),
+      theme: Themes.theme.textFormFieldThemeData,
+      args: DTextFormFieldArgs(
+        keyboardType: const TextInputType.numberWithOptions(
+          decimal: true,
         ),
-      ],
-      controller: priceController,
-      decoration: const InputDecoration(
-        prefixIcon: Icon(
-          Icons.attach_money,
-          color: Colors.black,
+        inputFormatters: [
+          ValidatorInputFormatter(
+            editingValidator: DecimalNumberEditingRegexValidator(),
+          ),
+        ],
+        controller: priceController,
+        decoration: const InputDecoration(
+          prefixIcon: Icon(
+            Icons.attach_money,
+            color: Colors.black,
+          ),
+          hintText: 'Enter a price',
         ),
-        hintText: 'Enter a price',
-        // labelText: 'Price',
+        textInputAction: TextInputAction.next,
       ),
-      textInputAction: TextInputAction.next,
     );
   }
 }
@@ -609,17 +646,18 @@ class _DescriptionField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DTextFormField(
-      theme: const DTextFormFieldThemeData(
+      theme: Themes.theme.textFormFieldThemeData.copyWith(
         maxLines: 3,
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
-      controller: descriptionController,
-      autocorrect: false,
-      decoration: const InputDecoration(
-        hintText: 'Enter a description',
-        // labelText: 'Description',
+      args: DTextFormFieldArgs(
+        controller: descriptionController,
+        autocorrect: false,
+        decoration: const InputDecoration(
+          hintText: 'Enter a description',
+        ),
+        textInputAction: TextInputAction.next,
       ),
-      textInputAction: TextInputAction.next,
     );
   }
 }
@@ -635,13 +673,16 @@ class _NameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DTextFormField(
-      controller: nameController,
-      autofocus: true,
-      autocorrect: false,
-      decoration: const InputDecoration(
-        hintText: 'Enter a name',
+      theme: Themes.theme.textFormFieldThemeData,
+      args: DTextFormFieldArgs(
+        controller: nameController,
+        autofocus: true,
+        autocorrect: false,
+        decoration: const InputDecoration(
+          hintText: 'Enter a name',
+        ),
+        textInputAction: TextInputAction.next,
       ),
-      textInputAction: TextInputAction.next,
     );
   }
 }
