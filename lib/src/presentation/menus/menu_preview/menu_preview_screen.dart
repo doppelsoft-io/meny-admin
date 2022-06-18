@@ -102,7 +102,7 @@ class _MenuPreviewScreenState extends State<MenuPreviewScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('MenuModel Preview'),
+            title: const Text('Menu Preview'),
           ),
           body: BlocProvider<CompiledMenuCubit>(
             // create: (context) => CompiledMenuCubit()..load(menu: menu),
