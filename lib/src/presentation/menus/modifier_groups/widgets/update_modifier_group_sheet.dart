@@ -132,8 +132,6 @@ class _UpdateModifierGroupSheet extends HookWidget {
         context.watch<EditModifierGroupCubit>().state;
     final modifierGroupItemsState =
         context.watch<ModifierGroupItemsCubit>().state;
-    // final categoryModifierGroupsState =
-    //     context.watch<CategoryModifierGroupsCubit>().state;
     final deleteModifierGroupState =
         context.watch<DeleteModifierGroupCubit>().state;
 
@@ -152,29 +150,6 @@ class _UpdateModifierGroupSheet extends HookWidget {
     useValueListenable(params.maxItemChoice);
     useValueListenable(params.quantityConstraintsRequiredMaxItemsController);
     useValueListenable(params.quantityConstraintsOptionalMaxItemsController);
-
-    // useEffect(
-    //   () {
-    //     final groupState = context.read<EditModifierGroupCubit>().state;
-    //     print('MEE: groupState $groupState');
-    //     groupState.maybeWhen(
-    //       loaded: (group) {
-    //         print('MEE: here');
-    //         final quantityConstraints = group.quantityConstraints;
-    //         params.seed(
-    //           name: group.name,
-    //           optionalMaxItems:
-    //               (quantityConstraints.maxPermitted ?? 1).toString(),
-    //           requiredMaxItems:
-    //               (quantityConstraints.maxPermitted ?? 1).toString(),
-    //         );
-    //       },
-    //       orElse: () {},
-    //     );
-    //     return null;
-    //   },
-    //   const [],
-    // );
 
     useEffect(
       () {

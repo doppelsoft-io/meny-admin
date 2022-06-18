@@ -4,7 +4,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/modifier_groups/modifier_groups.dart';
 import 'package:meny_admin/src/data/stores/cubits/cubits.dart';
-import 'package:meny_admin/src/presentation/menus/menus.dart';
 import 'package:meny_core/meny_core.dart';
 
 part 'edit_modifier_group_state.dart';
@@ -67,25 +66,6 @@ class EditModifierGroupCubit extends Cubit<EditModifierGroupState> {
         ),
       );
     }
-  }
-
-  void setAsRequired(MaxItemChoice choice) {
-    final quantityConstraints = state.group.quantityConstraints;
-    final updatedConstraints = quantityConstraints.copyWith(
-      minPermittedOptional: false,
-      minPermitted: quantityConstraints.minPermitted ?? 1,
-    );
-
-    updateQuantityConstraints(updatedConstraints);
-  }
-
-  void setAsNotRequired() {
-    final quantityConstraints = state.group.quantityConstraints;
-    final updatedConstraints = quantityConstraints.copyWith(
-      minPermittedOptional: true,
-    );
-
-    updateQuantityConstraints(updatedConstraints);
   }
 
   void updateQuantityConstraints(QuantityConstraintRules rules) {
