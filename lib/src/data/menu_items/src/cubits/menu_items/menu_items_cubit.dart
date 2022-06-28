@@ -29,7 +29,7 @@ class MenuItemsCubit extends Cubit<MenuItemsState> {
   Future<void> load({required String storeId}) async {
     await _subscription?.cancel();
     _subscription = _menuItemRepository
-        .getAllByType(
+        .getAll(
       storeId: storeId,
     )
         .listen((items) {

@@ -11,6 +11,59 @@ import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
+class UpdateMenusSheet extends StatelessWidget {
+  const UpdateMenusSheet({
+    Key? key,
+    required this.menu,
+  }) : super(key: key);
+
+  final MenuModel menu;
+
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  static const String routeName = '/updateMenusSheet';
+
+  static Route route(SheetArgs? args) {
+    return MaterialPageRoute<Widget>(
+      fullscreenDialog: true,
+      builder: (context) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<EditMenuCubit>(
+              create: (context) => EditMenuCubit(
+                storeCubit: context.read<StoreCubit>(),
+              )..loadMenu(menu: args!.resource as MenuModel),
+            ),
+            BlocProvider<DeleteMenuCubit>(
+              create: (context) => DeleteMenuCubit(
+                storeCubit: context.read<StoreCubit>(),
+              ),
+            ),
+          ],
+          child: const _UpdateMenusSheet(),
+        );
+      },
+    );
+  }
+
+  static Future<Object?> open({
+    required BuildContext context,
+    required MenuModel menu,
+  }) {
+    return Navigator.of(context).pushNamed(
+      UpdateMenusSheet.routeName,
+      arguments: SheetArgs(
+        resource: menu,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const _UpdateMenusSheet();
+  }
+}
+
 class _UpdateMenusSheet extends HookWidget {
   const _UpdateMenusSheet({Key? key}) : super(key: key);
 
@@ -48,9 +101,6 @@ class _UpdateMenusSheet extends HookWidget {
         builder: (context, editMenuState) {
           return editMenuState.maybeWhen(
             loading: (_) => ScaffoldBuilder.loading(),
-            error: (_, exception) => ScaffoldBuilder.error(
-              exception: exception,
-            ),
             orElse: () {
               return Scaffold(
                 appBar: AppBar(
@@ -82,13 +132,20 @@ class _UpdateMenusSheet extends HookWidget {
                     HorizontalSpacing.small(),
                     Center(
                       child: ElevatedButton(
-                        onPressed: () => context.read<EditMenuCubit>()
-                          ..update(
-                            editMenuState.menu.copyWith(
-                              name: controller.text,
-                              updatedAt: DateTime.now(),
-                            ),
-                          ),
+                        onPressed: () {
+                          final isValid = UpdateMenusSheet
+                              ._formKey.currentState!
+                              .validate();
+
+                          if (!isValid) return;
+
+                          context.read<EditMenuCubit>().update(
+                                editMenuState.menu.copyWith(
+                                  name: controller.text,
+                                  updatedAt: DateTime.now(),
+                                ),
+                              );
+                        },
                         child: const Text('Save'),
                       ),
                     ),
@@ -97,22 +154,31 @@ class _UpdateMenusSheet extends HookWidget {
                 ),
                 body: SingleChildScrollView(
                   padding: const EdgeInsets.all(Spacing.pageSpacing),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DText.subtitle1('Name'),
-                      VerticalSpacing.smallest(),
-                      DTextFormField(
-                        theme: Themes.theme.textFormFieldThemeData,
-                        args: DTextFormFieldArgs(
-                          controller: controller,
-                          autofocus: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter a name',
+                  child: Form(
+                    key: UpdateMenusSheet._formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PageSection(
+                          title: 'Name',
+                          child: DTextFormField(
+                            theme: Themes.theme.textFormFieldThemeData,
+                            args: DTextFormFieldArgs(
+                              controller: controller,
+                              autofocus: true,
+                              decoration: const InputDecoration(
+                                hintText: 'Enter a name',
+                              ),
+                              validator: (value) =>
+                                  FormValidatorHelper.validateExists(
+                                value,
+                                message: 'Please enter a name for your menu',
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -154,57 +220,6 @@ class _UpdateMenusSheet extends HookWidget {
       });
     }
     return Future.value(true);
-  }
-}
-
-class UpdateMenusSheet extends StatelessWidget {
-  const UpdateMenusSheet({
-    Key? key,
-    required this.menu,
-  }) : super(key: key);
-
-  final MenuModel menu;
-
-  static const String routeName = '/updateMenusSheet';
-
-  static Route route(SheetArgs? args) {
-    return MaterialPageRoute<Widget>(
-      fullscreenDialog: true,
-      builder: (context) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider<EditMenuCubit>(
-              create: (context) => EditMenuCubit(
-                storeCubit: context.read<StoreCubit>(),
-              )..loadMenu(menu: args!.resource as MenuModel),
-            ),
-            BlocProvider<DeleteMenuCubit>(
-              create: (context) => DeleteMenuCubit(
-                storeCubit: context.read<StoreCubit>(),
-              ),
-            ),
-          ],
-          child: const _UpdateMenusSheet(),
-        );
-      },
-    );
-  }
-
-  static Future<Object?> open({
-    required BuildContext context,
-    required MenuModel menu,
-  }) {
-    return Navigator.of(context).pushNamed(
-      UpdateMenusSheet.routeName,
-      arguments: SheetArgs(
-        resource: menu,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
   }
 }
 

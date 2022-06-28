@@ -6,6 +6,7 @@ import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/data/modifier_groups/modifier_groups.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/menus/menus.dart';
+import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -48,107 +49,100 @@ class _ModifierGroupsTab extends HookWidget {
       },
       const [],
     );
-    return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) {
-        return [
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: MenusPagePersistentHeaderDelegate(
-              title: 'Modifier Groups',
-              onNewPressed: () {
-                ActionService.run(
-                  () => UpdateModifierGroupSheet.open(
-                    context: context,
-                    resource: ModifierGroupModel.empty(),
-                  ),
-                  () => AnalyticsService.track(
-                    message: Analytics.modifierGroupsTabNewTapped,
-                  ),
-                );
-              },
-            ),
-          ),
-        ];
-      },
-      body: Padding(
-        padding: const EdgeInsets.all(Spacing.pageSpacing),
-        child: modifierGroupsState.maybeWhen(
-          loading: (_) => Column(
-            children: const [
-              LinearProgressIndicator(),
-            ],
-          ),
-          loaded: (ingredients) {
-            return DataTable(
-              showCheckboxColumn: false,
-              showBottomBorder: true,
-              columns: ingredients.isEmpty
-                  ? [const DataColumn(label: Text('Name'))]
-                  : const [
-                      DataColumn(label: Text('Name')),
-                      // DataColumn(
-                      //   label: Text(
-                      //     'Price',
-                      //   ),
-                      // ),
-                      // DataColumn(
-                      //   label: Text(
-                      //     'Last Updated',
-                      //   ),
-                      // ),
-                    ],
-              rows: ingredients.isEmpty
-                  ? [
-                      const DataRow(
-                        cells: [
-                          DataCell(
-                            Text(
-                              'Modifier groups you create will appear here! Click "New" to add one.',
-                            ),
-                          )
-                        ],
-                      )
-                    ]
-                  : ingredients
-                      .map(
-                        (e) => DataRow(
-                          onSelectChanged: (selected) {
-                            ActionService.run(
-                              () => UpdateModifierGroupSheet.open(
-                                context: context,
-                                resource: e,
-                              ),
-                              () => AnalyticsService.track(
-                                message: Analytics
-                                    .modifierGroupsTabModifierGroupSelected,
-                                params: {
-                                  'groupId': e.id!,
-                                  'groupName': e.name,
-                                },
-                              ),
-                            );
-                          },
-                          cells: [
-                            DataCell(Text(e.name)),
-                            // DataCell(
-                            //   Text(
-                            //     (e.priceInfo.price / 100).toCurrency(),
-                            //   ),
-                            // ),
-                            // DataCell(
-                            //   Text(
-                            //     e.updatedAt?.formatWith('MM/dd/yy @ h:mm a') ??
-                            //         '',
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                      )
-                      .toList(),
-            );
-          },
-          orElse: SizedBox.shrink,
+    return SingleChildScrollView(
+      child: modifierGroupsState.maybeWhen(
+        loading: (_) => Column(
+          children: const [
+            LinearProgressIndicator(),
+          ],
         ),
+        loaded: (modifierGroups) {
+          return DTable(
+            args: DTableArgs(
+              header: DText.headline5('Modifier Groups'),
+              actions: [
+                PageActionButton(
+                  title: 'New',
+                  onPressed: () {
+                    ActionService.run(
+                      () => UpdateModifierGroupSheet.open(
+                        context: context,
+                        resource: ModifierGroupModel.empty(),
+                      ),
+                      () => AnalyticsService.track(
+                        message: Analytics.modifierGroupsTabNewTapped,
+                      ),
+                    );
+                  },
+                ),
+              ],
+              columns: [
+                const DTableHeader(name: 'Name'),
+                // const DTableHeader(name: 'Price'),
+                const DTableHeader(name: 'Last Updated'),
+              ],
+              source: DTableDataSource(
+                emptyBuilder: (_) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Divider(height: kMinInteractiveDimension),
+                      DText.bodyText1(
+                        'No modifier groups yet. Click "New" above to add a menu',
+                      ),
+                      const Divider(height: kMinInteractiveDimension),
+                    ],
+                  );
+                },
+                rows: modifierGroups
+                    .map(
+                      (e) => DTableRow(
+                        onSelectChanged: (selected) {
+                          ActionService.run(
+                            () => UpdateModifierGroupSheet.open(
+                              context: context,
+                              resource: e,
+                            ),
+                            () => AnalyticsService.track(
+                              message: Analytics
+                                  .modifierGroupsTabModifierGroupSelected,
+                              params: {
+                                'groupId': e.id!,
+                                'groupName': e.name,
+                              },
+                            ),
+                          );
+                        },
+                        cells: [
+                          DTableCell(
+                            builder: () {
+                              return DText.bodyText1(e.name);
+                            },
+                          ),
+                          // DTableCell(
+                          //   builder: () {
+                          //     return DText.bodyText1(
+                          //       (e.priceInfo.price / 100).toCurrency(),
+                          //     );
+                          //   },
+                          // ),
+                          DTableCell(
+                            builder: () {
+                              return DText.bodyText1(
+                                e.updatedAt?.formatWith('MM/dd/yy @ h:mm a') ??
+                                    '',
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          );
+        },
+        orElse: SizedBox.shrink,
       ),
     );
   }

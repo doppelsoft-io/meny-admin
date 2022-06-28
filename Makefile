@@ -4,11 +4,9 @@ fresh: ## Runs `clean`, `codegen-build`
 clean: ## Cleans Flutter project.
 	rm -f pubspec.lock
 	flutter clean
-	cd ios
-	rm -rf Pods Podfile.lock
-	cd ..
 	flutter pub get
 	cd ios
+	rm -rf Pods Podfile.lock
 	pod install
 	cd ..
 

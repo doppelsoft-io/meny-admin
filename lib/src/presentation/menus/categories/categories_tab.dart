@@ -6,6 +6,7 @@ import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/menus/menus.dart';
 import 'package:meny_admin/src/presentation/resources/cubit/resources_cubit.dart';
+import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -24,6 +25,9 @@ class MenusCategoriesTab extends StatelessWidget {
 class _MenusCategoriesTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final categoriesState = context.watch<ResourcesCubit>().state;
+    final categories = List<CategoryModel>.from(categoriesState.resources);
+
     useEffect(
       () {
         final storeCubit = context.read<StoreCubit>();
@@ -33,71 +37,83 @@ class _MenusCategoriesTab extends HookWidget {
       },
       const [],
     );
+
     return BlocListener<StoreCubit, StoreState>(
       listenWhen: (prev, curr) => prev.store != curr.store,
       listener: (context, state) =>
           context.read<ResourcesCubit>()..load(storeId: state.store.id!),
-      child: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxScrolled) {
-          return [
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: MenusPagePersistentHeaderDelegate(
-                title: 'Categories',
-                onNewPressed: () => ActionService.run(
-                  () => UpdateCategorySheet.open(
-                    context: context,
-                    resource: CategoryModel.empty(),
-                  ),
-                  () => AnalyticsService.track(
-                    message: Analytics.categoriesTabNewTapped,
-                  ),
-                ),
+      child: SingleChildScrollView(
+        child: DTable(
+          args: DTableArgs(
+            header: DText.headline5('Categories'),
+            actions: [
+              PageActionButton(
+                title: 'New',
+                onPressed: () {
+                  ActionService.run(
+                    () => UpdateCategorySheet.open(
+                      context: context,
+                      resource: CategoryModel.empty(),
+                    ),
+                    () => AnalyticsService.track(
+                      message: Analytics.categoriesTabNewTapped,
+                    ),
+                  );
+                },
               ),
+            ],
+            columns: [
+              const DTableHeader(name: 'Name'),
+              const DTableHeader(name: 'Last Updated'),
+            ],
+            source: DTableDataSource(
+              emptyBuilder: (context) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Divider(height: kMinInteractiveDimension),
+                    DText.bodyText1(
+                      'No categories yet. Click "New" above to add a category',
+                    ),
+                    const Divider(height: kMinInteractiveDimension),
+                  ],
+                );
+              },
+              rows: categories
+                  .map(
+                    (e) => DTableRow(
+                      onSelectChanged: (selected) => ActionService.run(
+                        () => UpdateCategorySheet.open(
+                          context: context,
+                          resource: e,
+                        ),
+                        () => AnalyticsService.track(
+                          message: Analytics.categoriesTabItemSelected,
+                          params: {
+                            'categoryId': e.id!,
+                            'categoryName': e.name,
+                          },
+                        ),
+                      ),
+                      cells: [
+                        DTableCell(
+                          builder: () {
+                            return DText.bodyText1(e.name);
+                          },
+                        ),
+                        DTableCell(
+                          builder: () {
+                            return DText.bodyText1(
+                              e.updatedAt?.formatWith('MM/dd/yy @ h:mm a') ??
+                                  '',
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  )
+                  .toList(),
             ),
-          ];
-        },
-        body: Padding(
-          padding: const EdgeInsets.all(Spacing.pageSpacing),
-          child: ResourceTable<CategoryModel>(
-            columnNames: const ['Name', 'Last Updated'],
-            dataColumnBuilder: (_, column) => DataColumn(label: Text(column)),
-            emptyRowBuilder: (context) {
-              return const DataRow(
-                cells: [
-                  DataCell(
-                    Text(
-                      'Categories you create will appear here! Click "New" to add one.',
-                    ),
-                  ),
-                ],
-              );
-            },
-            dataRowBuilder: (_, resource) {
-              return DataRow(
-                onSelectChanged: (selected) => ActionService.run(
-                  () => UpdateCategorySheet.open(
-                    context: context,
-                    resource: resource,
-                  ),
-                  () => AnalyticsService.track(
-                    message: Analytics.categoriesTabItemSelected,
-                    params: {
-                      'categoryId': resource.id!,
-                      'categoryName': resource.name,
-                    },
-                  ),
-                ),
-                cells: [
-                  DataCell(Text(resource.name)),
-                  DataCell(
-                    Text(
-                      resource.updatedAt?.formatWith('MM/dd/yy @ h:mm a') ?? '',
-                    ),
-                  ),
-                ],
-              );
-            },
           ),
         ),
       ),

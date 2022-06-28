@@ -2,6 +2,7 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/categories/categories.dart';
 import 'package:meny_admin/src/data/category_menu_items/category_menu_items.dart';
@@ -9,13 +10,27 @@ import 'package:meny_admin/src/data/menu_item_modifier_groups/cubits/menu_item_m
 import 'package:meny_admin/src/data/menu_items/menu_items.dart';
 import 'package:meny_admin/src/data/modifier_groups/modifier_groups.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/presentation/menus/menus.dart';
 import 'package:meny_admin/src/presentation/resources/widgets/delete_resource_button.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/presentation/sheet_args.dart';
 import 'package:meny_admin/src/services/services.dart';
-import 'package:meny_admin/src/utils/utils.dart';
 import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
+
+class UpdateMenuItemSheetParams {
+  UpdateMenuItemSheetParams({
+    required this.nameController,
+    required this.descriptionController,
+    required this.priceController,
+    required this.taxRateController,
+  });
+
+  final TextEditingController nameController;
+  final TextEditingController descriptionController;
+  final TextEditingController priceController;
+  final TextEditingController taxRateController;
+}
 
 class UpdateMenuItemSheet extends StatelessWidget {
   const UpdateMenuItemSheet({
@@ -26,6 +41,8 @@ class UpdateMenuItemSheet extends StatelessWidget {
   final MenuItemModel resource;
 
   static const String routeName = '/updateMenuItem';
+
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   static Route route(SheetArgs args) {
     return MaterialPageRoute<Widget>(
@@ -77,7 +94,7 @@ class UpdateMenuItemSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return const _UpdateMenuItemSheet();
   }
 }
 
@@ -90,9 +107,19 @@ class _UpdateMenuItemSheet extends HookWidget {
     final deleteMenuItemState = context.watch<DeleteMenuItemCubit>().state;
     final imageUploadState = context.watch<ImageUploadCubit>().state;
     final item = editMenuItemState.item;
-    final nameController = useTextEditingController();
-    final descriptionController = useTextEditingController();
-    final priceController = useTextEditingController();
+    final params = UpdateMenuItemSheetParams(
+      nameController: useTextEditingController(),
+      descriptionController: useTextEditingController(),
+      priceController: useTextEditingController(),
+      taxRateController: useTextEditingController(),
+    );
+
+    useEffect(
+      () {
+        return null;
+      },
+      const [],
+    );
 
     return WillPopScope(
       onWillPop: () => _onWillPop(context),
@@ -107,12 +134,6 @@ class _UpdateMenuItemSheet extends HookWidget {
               );
             },
             loaded: (item) {
-              _setInitialValues(
-                context,
-                nameController,
-                descriptionController,
-                priceController,
-              );
               context.read<CategoryMenuItemsCubit>().load(menuItemId: item.id!);
               context
                   .read<MenuItemModifierGroupsCubit>()
@@ -124,141 +145,16 @@ class _UpdateMenuItemSheet extends HookWidget {
         builder: (context, editMenuItemState) {
           return editMenuItemState.maybeWhen(
             loading: (_) => ScaffoldBuilder.loading(),
-            error: (_, exception) => ScaffoldBuilder.error(
-              exception: exception,
-            ),
             orElse: () {
-              return BlocBuilder<CategoryMenuItemsCubit,
-                  CategoryMenuItemsState>(
-                builder: (context, categoryMenuItemsState) {
-                  return Scaffold(
-                    appBar: AppBar(
-                      elevation: 0,
-                      iconTheme: const IconThemeData(color: Colors.black),
-                      backgroundColor: Colors.white,
-                      title: const Text(
-                        'Edit Item',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      bottom: PreferredSize(
-                        preferredSize: const Size.fromHeight(8),
-                        child: Visibility(
-                          visible: editMenuItemState.maybeWhen(
-                                orElse: () => false,
-                                updating: (_) => true,
-                              ) ||
-                              deleteMenuItemState.maybeWhen(
-                                orElse: () => false,
-                                deleting: () => true,
-                              ),
-                          child: const LinearProgressIndicator(),
-                        ),
-                      ),
-                      actions: [
-                        Center(child: _DeleteMenuItemButton(item: item)),
-                        HorizontalSpacing.small(),
-                        Center(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              final now = DateTime.now();
-                              context.read<EditMenuItemCubit>().update(
-                                    item.copyWith(
-                                      name: nameController.text,
-                                      priceInfo: PriceInfoModel(
-                                        price: ((double.tryParse(
-                                                      priceController.text,
-                                                    ) ??
-                                                    0) *
-                                                100)
-                                            .toInt(),
-                                      ),
-                                      description: descriptionController.text,
-                                      updatedAt: now,
-                                      imageUrl: imageUploadState.url.isNotEmpty
-                                          ? imageUploadState.url
-                                          : null,
-                                    ),
-                                  );
-                            },
-                            child: const Text('Save'),
-                          ),
-                        ),
-                        HorizontalSpacing.medium(),
-                      ],
-                    ),
-                    body: SingleChildScrollView(
-                      padding: const EdgeInsets.all(Spacing.pageSpacing),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DText.subtitle1('Name'),
-                          VerticalSpacing.smallest(),
-                          _NameField(nameController: nameController),
-                          VerticalSpacing.large(),
-                          DText.subtitle1('Description'),
-                          VerticalSpacing.smallest(),
-                          _DescriptionField(
-                            descriptionController: descriptionController,
-                          ),
-                          VerticalSpacing.large(),
-                          if (item.type == MenuItemType.item) ...[
-                            DText.subtitle1('Photo'),
-                            VerticalSpacing.smallest(),
-                            _ImageUpload(item: item),
-                            VerticalSpacing.large(),
-                          ],
-                          DText.subtitle1('Availability'),
-                          VerticalSpacing.smallest(),
-                          const _SuspensionRules(),
-                          VerticalSpacing.large(),
-                          DText.subtitle1('Price'),
-                          VerticalSpacing.smallest(),
-                          _PriceField(priceController: priceController),
-                          VerticalSpacing.large(),
-                          DText.subtitle1('Categories'),
-                          DText.caption(
-                            'Select which categories this item will appear in',
-                          ),
-                          VerticalSpacing.small(),
-                          _CategorySelector(item: item),
-                          VerticalSpacing.large(),
-                          DText.subtitle1('Modifier Groups'),
-                          VerticalSpacing.smallest(),
-                          _ModifierGroupSelector(item: item),
-                          const SizedBox(height: 100),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+              return _ItemForm(
+                item: item,
+                params: params,
               );
             },
           );
         },
       ),
     );
-  }
-
-  void _setInitialValues(
-    BuildContext context,
-    TextEditingController nameController,
-    TextEditingController descriptionController,
-    TextEditingController priceController,
-  ) {
-    context.read<EditMenuItemCubit>().state.maybeWhen(
-          loaded: (item) {
-            nameController.text = item.name;
-            descriptionController.text = item.description;
-            priceController.text = (item.priceInfo.price / 100)
-                .toCurrency(excludeDollarSign: true);
-            if (item.imageUrl != null) {
-              context.read<ImageUploadCubit>().seed(url: item.imageUrl!);
-            }
-          },
-          orElse: () {},
-        );
   }
 
   Future<bool> _onWillPop(BuildContext context) {
@@ -301,6 +197,326 @@ class _UpdateMenuItemSheet extends HookWidget {
   }
 }
 
+class _ItemForm extends HookWidget {
+  const _ItemForm({
+    Key? key,
+    required this.item,
+    required this.params,
+  }) : super(key: key);
+
+  final MenuItemModel item;
+  final UpdateMenuItemSheetParams params;
+
+  @override
+  Widget build(BuildContext context) {
+    final editMenuItemState = context.watch<EditMenuItemCubit>().state;
+    final deleteMenuItemState = context.watch<DeleteMenuItemCubit>().state;
+    final imageUploadState = context.watch<ImageUploadCubit>().state;
+
+    useEffect(
+      () {
+        context.read<EditMenuItemCubit>().state.maybeWhen(
+              loaded: (item) {
+                params.nameController.text = item.name;
+                params.descriptionController.text = item.description;
+                params.priceController.text = (item.priceInfo.price / 100)
+                    .toCurrency(excludeDollarSign: true);
+                if (item.imageUrl != null) {
+                  context.read<ImageUploadCubit>().seed(url: item.imageUrl!);
+                }
+              },
+              orElse: () {},
+            );
+        return null;
+      },
+      const [],
+    );
+
+    return BlocBuilder<CategoryMenuItemsCubit, CategoryMenuItemsState>(
+      builder: (context, categoryMenuItemsState) {
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            iconTheme: const IconThemeData(color: Colors.black),
+            backgroundColor: Colors.white,
+            title: const Text(
+              'Edit Item',
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(8),
+              child: Visibility(
+                visible: editMenuItemState.maybeWhen(
+                      orElse: () => false,
+                      updating: (_) => true,
+                    ) ||
+                    deleteMenuItemState.maybeWhen(
+                      orElse: () => false,
+                      deleting: () => true,
+                    ),
+                child: const LinearProgressIndicator(),
+              ),
+            ),
+            actions: [
+              Center(child: _DeleteMenuItemButton(item: item)),
+              HorizontalSpacing.small(),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    final isValid =
+                        UpdateMenuItemSheet._formKey.currentState!.validate();
+                    if (!isValid) return;
+
+                    final now = DateTime.now();
+
+                    context.read<EditMenuItemCubit>().update(
+                          item.copyWith(
+                            name: params.nameController.text,
+                            priceInfo: PriceInfoModel(
+                              price: ((double.tryParse(
+                                            params.priceController.text,
+                                          ) ??
+                                          0) *
+                                      100)
+                                  .toInt(),
+                            ),
+                            description: params.descriptionController.text,
+                            updatedAt: now,
+                            imageUrl: imageUploadState.url.isNotEmpty
+                                ? imageUploadState.url
+                                : null,
+                          ),
+                        );
+                  },
+                  child: const Text('Save'),
+                ),
+              ),
+              HorizontalSpacing.medium(),
+            ],
+          ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(Spacing.pageSpacing),
+            child: Form(
+              key: UpdateMenuItemSheet._formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PageSection(
+                    title: 'Name',
+                    child: MenuItemNameField(
+                      controller: params.nameController,
+                    ),
+                  ),
+                  PageSection(
+                    title: 'Description',
+                    caption: '(Optional)',
+                    child: MenuItemDescriptionField(
+                      controller: params.descriptionController,
+                    ),
+                  ),
+                  PageSection(
+                    title: 'Sell as a stand-alone item?',
+                    onInfoTapped: (_) {
+                      showDialog(
+                        context: context,
+                        builder: (_) {
+                          return SimpleDialog(
+                            title: DText.headline6(
+                              'Sell as a stand-alone item?',
+                            ),
+                            contentPadding: const EdgeInsets.all(24),
+                            children: [
+                              DText.bodyText1(
+                                'This determines whether this menu item should appear to customers as a sellable item by itself on the menu.',
+                              ),
+                              const SizedBox(height: 12),
+                              DText.bodyText1(
+                                'If you are creating a menu item to be used in a modifier group, set this property to "No".',
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        IntrinsicWidth(
+                          child: RadioListTile(
+                            value: true,
+                            groupValue: item.type == MenuItemType.item,
+                            onChanged: (v) {
+                              final updatedItem = item.copyWith(
+                                type: MenuItemType.item,
+                              );
+                              context.read<EditMenuItemCubit>().update(
+                                    updatedItem,
+                                    save: false,
+                                  );
+                            },
+                            title: const Text(
+                              'Yes',
+                            ),
+                          ),
+                        ),
+                        HorizontalSpacing.large(),
+                        IntrinsicWidth(
+                          child: RadioListTile(
+                            value: false,
+                            groupValue: item.type == MenuItemType.item,
+                            onChanged: (v) {
+                              final updatedItem = item.copyWith(
+                                type: MenuItemType.modifierGroup,
+                              );
+                              context.read<EditMenuItemCubit>().update(
+                                    updatedItem,
+                                    save: false,
+                                  );
+                            },
+                            title: const Text(
+                              'No',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  PageSection(
+                    title: 'Photo',
+                    caption: '(Optional)',
+                    subtitle:
+                        'Photos of your menu items can help customers when deciding to order and can increase sales.',
+                    child: _ImageUpload(item: item),
+                  ),
+                  PageSection(
+                    title: 'Default Price',
+                    child: MenuItemPriceField(
+                      controller: params.priceController,
+                    ),
+                  ),
+                  PageSection(
+                    title: 'Tax Rate',
+                    child: MenuItemTaxInfoField(
+                      controller: params.taxRateController,
+                    ),
+                  ),
+                  const _SuspensionRules(),
+                  PageSection(
+                    title: 'Categories',
+                    subtitle:
+                        'Select which categories this item will appear in',
+                    child: _CategorySelector(item: item),
+                  ),
+                  if (item.type == MenuItemType.item) ...[
+                    PageSection(
+                      title: 'Modifier Groups',
+                      child: _ModifierGroupSelector(item: item),
+                    ),
+                  ],
+                  PageSection(
+                    title: 'Dietary Labels',
+                    child: _DietaryLabels(item: item),
+                  ),
+                  const SizedBox(height: 100),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _DietaryLabels extends StatelessWidget {
+  const _DietaryLabels({
+    Key? key,
+    required this.item,
+  }) : super(key: key);
+
+  final MenuItemModel item;
+
+  IconData _getIcon(DietaryLabel label) {
+    switch (label) {
+      case DietaryLabel.vegan:
+        return FontAwesomeIcons.egg;
+      case DietaryLabel.vegetarian:
+        return FontAwesomeIcons.leaf;
+      case DietaryLabel.glutenFree:
+        return FontAwesomeIcons.wheatAwn;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 12,
+      children: DietaryLabel.values
+          .map(
+            (e) => Builder(
+              builder: (context) {
+                final colorScheme = Theme.of(context).colorScheme;
+                final dietaryLabels = item.dietaryLabels ?? [];
+                final isSelected = dietaryLabels.contains(e);
+
+                return GestureDetector(
+                  onTap: () {
+                    if (isSelected) {
+                      final updatedLabels = List<DietaryLabel>.from(
+                        dietaryLabels,
+                      )..removeWhere((l) => l == e);
+
+                      final updatedItem = item.copyWith(
+                        dietaryLabels: updatedLabels,
+                      );
+                      context.read<EditMenuItemCubit>().update(
+                            updatedItem,
+                            save: false,
+                          );
+                    } else {
+                      final updatedLabels = List<DietaryLabel>.from(
+                        dietaryLabels,
+                      )..add(e);
+
+                      final updatedItem = item.copyWith(
+                        dietaryLabels: updatedLabels,
+                      );
+                      context.read<EditMenuItemCubit>().update(
+                            updatedItem,
+                            save: false,
+                          );
+                    }
+                  },
+                  child: Chip(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    backgroundColor: isSelected
+                        ? colorScheme.primary
+                        : colorScheme.onBackground,
+                    label: Text(e.stringify()),
+                    avatar: Icon(
+                      _getIcon(e),
+                      color: isSelected ? colorScheme.onPrimary : Colors.black,
+                      size: 16,
+                    ),
+                    labelStyle: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(
+                          fontWeight: FontWeight.w100,
+                          color:
+                              isSelected ? colorScheme.onPrimary : Colors.black,
+                        ),
+                  ),
+                );
+              },
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
 class _SuspensionRules extends HookWidget {
   const _SuspensionRules({
     Key? key,
@@ -321,22 +537,17 @@ class _SuspensionRules extends HookWidget {
     return itemState.maybeWhen(
       loaded: (item) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DCheckbox(
-              theme: Themes.theme.checkboxThemeData,
-              args: DCheckboxArgs(
-                title: const Text('Is item available?'),
-                value: item.suspensionRules == null,
+            SizedBox(
+              width: 225,
+              child: SwitchListTile(
+                contentPadding: EdgeInsets.zero,
                 enableFeedback: true,
-                onChanged: (available) {
-                  if (available != null && available) {
-                    final updatedItem = item.copyWith(suspensionRules: null);
-                    suspensionReasonController.clear();
-                    context.read<EditMenuItemCubit>().update(
-                          updatedItem,
-                          save: false,
-                        );
-                  } else {
+                title: const Text('Item out of stock?'),
+                value: item.suspensionRules != null,
+                onChanged: (outOfStock) {
+                  if (outOfStock) {
                     final suspensionRules =
                         item.suspensionRules ?? SuspensionRulesModel.empty();
                     final updatedItem = item.copyWith(
@@ -350,41 +561,18 @@ class _SuspensionRules extends HookWidget {
                           updatedItem,
                           save: false,
                         );
+                  } else {
+                    final updatedItem = item.copyWith(suspensionRules: null);
+                    suspensionReasonController.clear();
+                    context.read<EditMenuItemCubit>().update(
+                          updatedItem,
+                          save: false,
+                        );
                   }
                 },
+                visualDensity: VisualDensity.compact,
               ),
             ),
-            // CheckboxListTile(
-            //   enableFeedback: true,
-            //   contentPadding: EdgeInsets.zero,
-            //   controlAffinity: ListTileControlAffinity.leading,
-            //   title: const Text('Is item available?'),
-            //   value: item.suspensionRules == null,
-            //   onChanged: (available) {
-            //     if (available != null && available) {
-            //       final updatedItem = item.copyWith(suspensionRules: null);
-            //       suspensionReasonController.clear();
-            //       context.read<EditMenuItemCubit>().update(
-            //             updatedItem,
-            //             save: false,
-            //           );
-            //     } else {
-            //       final suspensionRules =
-            //           item.suspensionRules ?? SuspensionRulesModel.empty();
-            //       final updatedItem = item.copyWith(
-            //         suspensionRules: suspensionRules.copyWith(
-            //           suspension: SuspensionRulesSuspension(
-            //             isSuspended: true,
-            //           ),
-            //         ),
-            //       );
-            //       context.read<EditMenuItemCubit>().update(
-            //             updatedItem,
-            //             save: false,
-            //           );
-            //     }
-            //   },
-            // ),
             if (item.suspensionRules != null) ...[
               VerticalSpacing.small(),
               DTextFormField(
@@ -414,8 +602,8 @@ class _SuspensionRules extends HookWidget {
                   ),
                 ),
               ),
-              VerticalSpacing.medium(),
             ],
+            VerticalSpacing.large(),
           ],
         );
       },
@@ -540,41 +728,6 @@ class _ModifierGroupSelector extends StatelessWidget {
   }
 }
 
-class _PriceField extends StatelessWidget {
-  const _PriceField({
-    Key? key,
-    required this.priceController,
-  }) : super(key: key);
-
-  final TextEditingController priceController;
-
-  @override
-  Widget build(BuildContext context) {
-    return DTextFormField(
-      theme: Themes.theme.textFormFieldThemeData,
-      args: DTextFormFieldArgs(
-        keyboardType: const TextInputType.numberWithOptions(
-          decimal: true,
-        ),
-        inputFormatters: [
-          ValidatorInputFormatter(
-            editingValidator: DecimalNumberEditingRegexValidator(),
-          ),
-        ],
-        controller: priceController,
-        decoration: const InputDecoration(
-          prefixIcon: Icon(
-            Icons.attach_money,
-            color: Colors.black,
-          ),
-          hintText: 'Enter a price',
-        ),
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-}
-
 class _ImageUpload extends StatelessWidget {
   const _ImageUpload({
     Key? key,
@@ -612,77 +765,9 @@ class _ImageUpload extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Photos of your menu items can help customers when deciding to order and can increase sales.',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ],
         );
       },
-    );
-  }
-}
-
-class _DescriptionField extends StatelessWidget {
-  const _DescriptionField({
-    Key? key,
-    required this.descriptionController,
-  }) : super(key: key);
-
-  final TextEditingController descriptionController;
-
-  @override
-  Widget build(BuildContext context) {
-    return DTextFormField(
-      theme: Themes.theme.textFormFieldThemeData.copyWith(
-        maxLines: 3,
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-      ),
-      args: DTextFormFieldArgs(
-        controller: descriptionController,
-        autocorrect: false,
-        decoration: const InputDecoration(
-          hintText: 'Enter a description',
-        ),
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-}
-
-class _NameField extends StatelessWidget {
-  const _NameField({
-    Key? key,
-    required this.nameController,
-  }) : super(key: key);
-
-  final TextEditingController nameController;
-
-  @override
-  Widget build(BuildContext context) {
-    return DTextFormField(
-      theme: Themes.theme.textFormFieldThemeData,
-      args: DTextFormFieldArgs(
-        controller: nameController,
-        autofocus: true,
-        autocorrect: false,
-        decoration: const InputDecoration(
-          hintText: 'Enter a name',
-        ),
-        textInputAction: TextInputAction.next,
-      ),
     );
   }
 }

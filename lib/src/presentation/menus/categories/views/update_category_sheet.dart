@@ -22,6 +22,8 @@ class UpdateCategorySheet extends StatelessWidget {
 
   final CategoryModel resource;
 
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   static const String routeName = '/updateCategorySheet';
 
   static Route route(SheetArgs? args) {
@@ -146,13 +148,18 @@ class _UpdateCategorySheet extends HookWidget {
                         HorizontalSpacing.small(),
                         Center(
                           child: ElevatedButton(
-                            onPressed: () =>
-                                context.read<EditCategoryCubit>().update(
-                                      editCategoryState.category.copyWith(
-                                        name: controller.text,
-                                        updatedAt: DateTime.now(),
-                                      ),
+                            onPressed: () {
+                              final isValid = UpdateCategorySheet
+                                  ._formKey.currentState!
+                                  .validate();
+                              if (!isValid) return;
+                              context.read<EditCategoryCubit>().update(
+                                    editCategoryState.category.copyWith(
+                                      name: controller.text,
+                                      updatedAt: DateTime.now(),
                                     ),
+                                  );
+                            },
                             child: const Text('Save'),
                           ),
                         ),
@@ -161,70 +168,78 @@ class _UpdateCategorySheet extends HookWidget {
                     ),
                     body: SingleChildScrollView(
                       padding: const EdgeInsets.all(24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DText.subtitle1('Name'),
-                          VerticalSpacing.smallest(),
-                          DTextFormField(
-                            theme: Themes.theme.textFormFieldThemeData,
-                            args: DTextFormFieldArgs(
-                              controller: controller,
-                              autofocus: true,
-                              decoration: const InputDecoration(
-                                hintText: 'Enter a name',
+                      child: Form(
+                        key: UpdateCategorySheet._formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            DText.subtitle1('Name'),
+                            VerticalSpacing.smallest(),
+                            DTextFormField(
+                              theme: Themes.theme.textFormFieldThemeData,
+                              args: DTextFormFieldArgs(
+                                controller: controller,
+                                autofocus: true,
+                                decoration: const InputDecoration(
+                                  hintText: 'Enter a name',
+                                ),
+                                validator: (value) =>
+                                    FormValidatorHelper.validateExists(
+                                  value,
+                                  message:
+                                      'Please enter a name for your category',
+                                ),
                               ),
                             ),
-                          ),
-                          VerticalSpacing.large(),
-                          DText.subtitle1('Add to menu'),
-                          VerticalSpacing.smallest(),
-                          TagSelector<MenuModel>(
-                            initialItems: menuCategoriesState.menus,
-                            fetchSuggestions: () async {
-                              final storeId =
-                                  context.read<StoreCubit>().state.store.id!;
-                              return Locator.instance<MenuRepository>()
-                                  .getAll(storeId: storeId)
-                                  .first;
-                            },
-                            suggestionConfigurationBuilder: (_, menu) =>
-                                SuggestionConfiguration(
-                              title: menu.name,
-                            ),
-                            emptyBuilder: (context) {
-                              return const Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Text('No menus to select'),
-                              );
-                            },
-                            onSelect: (context, menu) => context
-                                .read<MenuCategoriesCubit>()
-                                .createMenuCategory(
-                                  menu: menu,
-                                  category: editCategoryState.category,
-                                ),
-                            onRemove: (context, menu) => context
-                                .read<MenuCategoriesCubit>()
-                                .removeMenuCategory(
-                                  menu: menu,
-                                  category: editCategoryState.category,
-                                ),
-                            tagConfigurationBuilder: (_, menu) {
-                              return TagConfiguration(
+                            VerticalSpacing.large(),
+                            DText.subtitle1('Add to menu'),
+                            VerticalSpacing.smallest(),
+                            TagSelector<MenuModel>(
+                              initialItems: menuCategoriesState.menus,
+                              fetchSuggestions: () async {
+                                final storeId =
+                                    context.read<StoreCubit>().state.store.id!;
+                                return Locator.instance<MenuRepository>()
+                                    .getAll(storeId: storeId)
+                                    .first;
+                              },
+                              suggestionConfigurationBuilder: (_, menu) =>
+                                  SuggestionConfiguration(
                                 title: menu.name,
-                                removable: true,
-                              );
-                            },
-                            textFieldConfiguration:
-                                const TextFieldConfiguration(
-                              decoration: InputDecoration(
-                                hintText: 'Add to menu',
-                                labelText: 'Menus',
+                              ),
+                              emptyBuilder: (context) {
+                                return const Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: Text('No menus to select'),
+                                );
+                              },
+                              onSelect: (context, menu) => context
+                                  .read<MenuCategoriesCubit>()
+                                  .createMenuCategory(
+                                    menu: menu,
+                                    category: editCategoryState.category,
+                                  ),
+                              onRemove: (context, menu) => context
+                                  .read<MenuCategoriesCubit>()
+                                  .removeMenuCategory(
+                                    menu: menu,
+                                    category: editCategoryState.category,
+                                  ),
+                              tagConfigurationBuilder: (_, menu) {
+                                return TagConfiguration(
+                                  title: menu.name,
+                                  removable: true,
+                                );
+                              },
+                              textFieldConfiguration:
+                                  const TextFieldConfiguration(
+                                decoration: InputDecoration(
+                                  hintText: 'Add to menu',
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );

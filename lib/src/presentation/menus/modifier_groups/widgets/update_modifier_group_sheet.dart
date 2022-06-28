@@ -79,6 +79,8 @@ class UpdateModifierGroupSheet extends StatelessWidget {
 
   static const String routeName = '/updateModifierGroup';
 
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   static Route route(SheetArgs args) {
     return MaterialPageRoute<Widget>(
       fullscreenDialog: true,
@@ -233,9 +235,6 @@ class _UpdateModifierGroupSheet extends HookWidget {
           return editModifierGroupState.maybeWhen(
             orElse: SizedBox.shrink,
             loading: (_) => ScaffoldBuilder.loading(),
-            error: (_, exception) => ScaffoldBuilder.error(
-              exception: exception,
-            ),
             loaded: (group) {
               return Scaffold(
                 appBar: AppBar(
@@ -268,6 +267,12 @@ class _UpdateModifierGroupSheet extends HookWidget {
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
+                          final isValid = UpdateModifierGroupSheet
+                              ._formKey.currentState!
+                              .validate();
+
+                          if (!isValid) return;
+
                           context.read<EditModifierGroupCubit>().update(
                                 group.copyWith(
                                   name: params.nameController.text,
@@ -282,228 +287,243 @@ class _UpdateModifierGroupSheet extends HookWidget {
                 ),
                 body: SingleChildScrollView(
                   padding: const EdgeInsets.all(Spacing.pageSpacing),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DText.subtitle1('Name'),
-                      VerticalSpacing.smallest(),
-                      DTextFormField(
-                        theme: Themes.theme.textFormFieldThemeData,
-                        args: DTextFormFieldArgs(
-                          controller: params.nameController,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter a name',
+                  child: Form(
+                    key: UpdateModifierGroupSheet._formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DText.subtitle1('Name'),
+                        VerticalSpacing.smallest(),
+                        DTextFormField(
+                          theme: Themes.theme.textFormFieldThemeData,
+                          args: DTextFormFieldArgs(
+                            controller: params.nameController,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter a name',
+                            ),
+                            autocorrect: false,
+                            textInputAction: TextInputAction.next,
+                            validator: (value) =>
+                                FormValidatorHelper.validateExists(
+                              value,
+                              message:
+                                  'Please enter a name for your modifier group',
+                            ),
                           ),
-                          autocorrect: false,
-                          textInputAction: TextInputAction.next,
                         ),
-                      ),
-                      VerticalSpacing.medium(),
-                      DText.subtitle1('Items'),
-                      VerticalSpacing.smallest(),
-                      TagSelector<MenuItemModel>(
-                        initialItems: modifierGroupItemsState.items,
-                        fetchSuggestions: () async {
-                          final storeId =
-                              context.read<StoreCubit>().state.store.id!;
-                          return Locator.instance<MenuItemRepository>()
-                              .getAll(storeId: storeId)
-                              .first;
-                        },
-                        suggestionConfigurationBuilder: (_, item) =>
-                            SuggestionConfiguration(
-                          title: item.name,
-                        ),
-                        emptyBuilder: (context) {
-                          return const Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Text('No menus to select'),
-                          );
-                        },
-                        onSelect: (context, item) {
-                          context
-                              .read<ModifierGroupItemsCubit>()
-                              .createModifierGroupItem(
-                                item: item,
-                                modifierGroup: group,
-                              );
-                        },
-                        onRemove: (context, item) {
-                          context
-                              .read<ModifierGroupItemsCubit>()
-                              .removeMenuItemModifierGroup(
-                                item: item,
-                                modifierGroup: group,
-                              );
-                        },
-                        tagConfigurationBuilder: (_, item) {
-                          return TagConfiguration(
+                        VerticalSpacing.medium(),
+                        DText.subtitle1('Items'),
+                        VerticalSpacing.smallest(),
+                        TagSelector<MenuItemModel>(
+                          initialItems: modifierGroupItemsState.items,
+                          fetchSuggestions: () async {
+                            final storeId =
+                                context.read<StoreCubit>().state.store.id!;
+                            return Locator.instance<MenuItemRepository>()
+                                .getAll(storeId: storeId)
+                                .first;
+                          },
+                          suggestionConfigurationBuilder: (_, item) =>
+                              SuggestionConfiguration(
                             title: item.name,
-                            removable: true,
-                          );
-                        },
-                        tagBuilder: (_, configuration, item) {
-                          final modifierGroupMenuItem = modifierGroupItemsState
-                              .modifierGroupItems
-                              .firstWhere((e) => e.menuItemId == item.id);
-                          return BlocProvider<EditModifierGroupItemCubit>(
-                            create: (context) => EditModifierGroupItemCubit(
-                              storeCubit: context.read<StoreCubit>(),
-                            )..seed(model: modifierGroupMenuItem),
-                            child: _ModifierGroupItem(
-                              modifierGroup: editModifierGroupState.group,
-                              menuItem: item,
-                              modifierGroupItem: modifierGroupMenuItem,
-                              // item: item,
+                          ),
+                          emptyBuilder: (context) {
+                            return const Padding(
+                              padding: EdgeInsets.all(20),
+                              child: Text('No menus to select'),
+                            );
+                          },
+                          onSelect: (context, item) {
+                            context
+                                .read<ModifierGroupItemsCubit>()
+                                .createModifierGroupItem(
+                                  item: item,
+                                  modifierGroup: group,
+                                );
+                          },
+                          onRemove: (context, item) {
+                            context
+                                .read<ModifierGroupItemsCubit>()
+                                .removeMenuItemModifierGroup(
+                                  item: item,
+                                  modifierGroup: group,
+                                );
+                          },
+                          tagConfigurationBuilder: (_, item) {
+                            return TagConfiguration(
+                              title: item.name,
+                              removable: true,
+                            );
+                          },
+                          tagBuilder: (_, configuration, item) {
+                            final modifierGroupMenuItem =
+                                modifierGroupItemsState.modifierGroupItems
+                                    .firstWhere((e) => e.menuItemId == item.id);
+                            return BlocProvider<EditModifierGroupItemCubit>(
+                              create: (context) => EditModifierGroupItemCubit(
+                                storeCubit: context.read<StoreCubit>(),
+                              )..seed(model: modifierGroupMenuItem),
+                              child: _ModifierGroupItem(
+                                modifierGroup: editModifierGroupState.group,
+                                menuItem: item,
+                                modifierGroupItem: modifierGroupMenuItem,
+                                // item: item,
+                              ),
+                            );
+                          },
+                          textFieldConfiguration: const TextFieldConfiguration(
+                            decoration: InputDecoration(
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.black,
+                              ),
+                              hintText: 'Add item',
                             ),
-                          );
-                        },
-                        textFieldConfiguration: const TextFieldConfiguration(
-                          decoration: InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.black,
-                            ),
-                            hintText: 'Add item',
                           ),
                         ),
-                      ),
-                      VerticalSpacing.medium(),
-                      DText.subtitle1('Rules'),
-                      Text(
-                        'Control how customers can select the items in this modifier group',
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      VerticalSpacing.small(),
-                      CheckboxListTile(
-                        controlAffinity: ListTileControlAffinity.leading,
-                        title: const Text(
-                          'Require customers to select an item?',
+                        VerticalSpacing.medium(),
+                        DText.subtitle1('Rules'),
+                        Text(
+                          'Control how customers can select the items in this modifier group',
+                          style: Theme.of(context).textTheme.caption,
                         ),
-                        value: !editModifierGroupState
-                            .group.quantityConstraints.minPermittedOptional,
-                        onChanged: (minPermittedOptional) {
-                          if (minPermittedOptional != null) {
-                            final quantityConstraints = editModifierGroupState
-                                .group.quantityConstraints;
-                            final updatedQuantityConstraints =
-                                quantityConstraints.copyWith(
-                              minPermittedOptional: !minPermittedOptional,
-                            );
-                            context
-                                .read<EditModifierGroupCubit>()
-                                .updateQuantityConstraints(
-                                  updatedQuantityConstraints,
-                                );
-                          }
-                        },
-                      ),
-                      VerticalSpacing.small(),
-                      if (editModifierGroupState
-                          .group.quantityConstraints.minPermittedOptional) ...[
-                        Row(
-                          children: [
-                            IntrinsicWidth(
-                              child: CheckboxListTile(
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                title: const Text(
-                                  "What's the maximum amount of items customers can select?",
-                                ),
-                                value: true,
-                                onChanged: (val) {
-                                  final quantityConstraints =
-                                      editModifierGroupState
-                                          .group.quantityConstraints;
-
-                                  final updatedQuantityConstraints =
-                                      quantityConstraints.copyWith(
-                                    minPermittedOptional: false,
+                        VerticalSpacing.small(),
+                        CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: const Text(
+                            'Require customers to select an item?',
+                          ),
+                          value: !editModifierGroupState
+                              .group.quantityConstraints.minPermittedOptional,
+                          onChanged: (minPermittedOptional) {
+                            if (minPermittedOptional != null) {
+                              final quantityConstraints = editModifierGroupState
+                                  .group.quantityConstraints;
+                              final updatedQuantityConstraints =
+                                  quantityConstraints.copyWith(
+                                minPermittedOptional: !minPermittedOptional,
+                              );
+                              context
+                                  .read<EditModifierGroupCubit>()
+                                  .updateQuantityConstraints(
+                                    updatedQuantityConstraints,
                                   );
+                            }
+                          },
+                        ),
+                        VerticalSpacing.small(),
+                        if (editModifierGroupState.group.quantityConstraints
+                            .minPermittedOptional) ...[
+                          Row(
+                            children: [
+                              IntrinsicWidth(
+                                child: CheckboxListTile(
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: const Text(
+                                    "What's the maximum amount of items customers can select?",
+                                  ),
+                                  value: true,
+                                  onChanged: (val) {
+                                    final quantityConstraints =
+                                        editModifierGroupState
+                                            .group.quantityConstraints;
 
-                                  context
-                                      .read<EditModifierGroupCubit>()
-                                      .updateQuantityConstraints(
-                                        updatedQuantityConstraints,
-                                      );
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Container(
-                              constraints: const BoxConstraints(maxWidth: 100),
-                              child: DTextFormField(
-                                theme: Themes.theme.textFormFieldThemeData,
-                                args: DTextFormFieldArgs(
-                                  controller: params
-                                      .quantityConstraintsOptionalMaxItemsController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
+                                    final updatedQuantityConstraints =
+                                        quantityConstraints.copyWith(
+                                      minPermittedOptional: false,
+                                    );
+
+                                    context
+                                        .read<EditModifierGroupCubit>()
+                                        .updateQuantityConstraints(
+                                          updatedQuantityConstraints,
+                                        );
+                                  },
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ] else ...[
-                        const Text(
-                          "What's the maximum amount of items customers can select?",
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              constraints: const BoxConstraints(maxWidth: 200),
-                              child: SizedBox(
-                                height: 60,
-                                child: DTextFormFieldThemeWrapper(
+                              const SizedBox(width: 12),
+                              Container(
+                                constraints:
+                                    const BoxConstraints(maxWidth: 100),
+                                child: DTextFormField(
                                   theme: Themes.theme.textFormFieldThemeData,
-                                  child: DropdownButtonFormField<MaxItemChoice>(
-                                    value: params.maxItemChoice.value,
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                    alignment: Alignment.centerLeft,
-                                    items: MaxItemChoice.values
-                                        .map(
-                                          (e) =>
-                                              DropdownMenuItem<MaxItemChoice>(
-                                            value: e,
-                                            child: Text(e.name),
-                                          ),
-                                        )
-                                        .toList(),
-                                    onChanged: (v) {
-                                      if (v != null) {
-                                        params.maxItemChoice.value = v;
-                                      }
-                                    },
+                                  args: DTextFormFieldArgs(
+                                    controller: params
+                                        .quantityConstraintsOptionalMaxItemsController,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 12),
-                            Container(
-                              constraints: const BoxConstraints(maxWidth: 100),
-                              child: DTextFormField(
-                                theme: Themes.theme.textFormFieldThemeData,
-                                args: DTextFormFieldArgs(
-                                  controller: params
-                                      .quantityConstraintsRequiredMaxItemsController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
+                            ],
+                          ),
+                        ] else ...[
+                          const Text(
+                            "What's the maximum amount of items customers can select?",
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                constraints:
+                                    const BoxConstraints(maxWidth: 200),
+                                child: SizedBox(
+                                  height: 60,
+                                  child: DTextFormFieldThemeWrapper(
+                                    theme: Themes.theme.textFormFieldThemeData,
+                                    child:
+                                        DropdownButtonFormField<MaxItemChoice>(
+                                      value: params.maxItemChoice.value,
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                      alignment: Alignment.centerLeft,
+                                      items: MaxItemChoice.values
+                                          .map(
+                                            (e) =>
+                                                DropdownMenuItem<MaxItemChoice>(
+                                              value: e,
+                                              child: Text(e.name),
+                                            ),
+                                          )
+                                          .toList(),
+                                      onChanged: (v) {
+                                        if (v != null) {
+                                          params.maxItemChoice.value = v;
+                                        }
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
+                              const SizedBox(width: 12),
+                              Container(
+                                constraints:
+                                    const BoxConstraints(maxWidth: 100),
+                                child: DTextFormField(
+                                  theme: Themes.theme.textFormFieldThemeData,
+                                  args: DTextFormFieldArgs(
+                                    controller: params
+                                        .quantityConstraintsRequiredMaxItemsController,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               );

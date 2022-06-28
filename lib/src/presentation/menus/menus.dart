@@ -1,8 +1,13 @@
 export 'categories/categories_tab.dart';
 export 'categories/views/update_category_sheet.dart';
 export 'ingredients/ingredients_tab.dart';
-export 'items/items_tab.dart';
-export 'items/widgets/update_menu_item_sheet.dart';
+export 'items/views/items_tab.dart';
+export 'items/views/update_menu_item_sheet.dart';
+export 'items/views/update_menu_item_sheet.dart';
+export 'items/widgets/menu_item_description_field.dart';
+export 'items/widgets/menu_item_name_field.dart';
+export 'items/widgets/menu_item_price_field.dart';
+export 'items/widgets/menu_item_tax_info_field.dart';
 export 'menu_preview/menu_preview_screen.dart';
 export 'menu_preview/widgets/compiled_menu_builder.dart';
 export 'menus/menus_tab.dart';

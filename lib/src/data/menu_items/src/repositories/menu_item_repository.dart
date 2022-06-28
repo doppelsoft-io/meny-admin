@@ -56,6 +56,7 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
   }) {
     return firebaseFirestore
         .menuItemEntitiesCollection(storeId: storeId)
+        .orderBy('createdAt', descending: false)
         .snapshots()
         .map(
           (doc) => doc.docs.map(MenuItemModel.fromSnapshot).toList(),
@@ -103,7 +104,10 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
     try {
       await firebaseFirestore
           .menuItemEntitiesDocument(storeId: storeId, itemId: resource.id!)
-          .set(resource.toJson(), SetOptions(merge: true));
+          .set(
+            resource.copyWith(updatedAt: DateTime.now()).toJson(),
+            SetOptions(merge: true),
+          );
     } catch (err) {
       _loggerService.log('(update): ${err.toString()}');
       throw UpdateMenuItemException(

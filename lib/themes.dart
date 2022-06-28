@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 class Themes {
   const Themes._();
 
-  static Color primaryColor = Colors.green;
+  static Color primaryColor = Colors.green.shade400;
 
   static TextTheme defaultTextTheme = _light.textTheme;
   static TextTheme textTheme =
@@ -40,6 +40,7 @@ class Themes {
       fillColor: MaterialStateProperty.all(primaryColor),
     ),
     textFormFieldThemeData: textFormFieldThemeData.copyWith(
+      iconColor: Colors.black,
       cursorColor: colorScheme.primary,
       errorColor: colorScheme.error,
       labelStyle: textTheme.bodyText1,
@@ -78,7 +79,6 @@ class Themes {
 
   static ThemeData defaultTheme = _light.copyWith(
     colorScheme: colorScheme,
-    // primaryColor: const Color.fromARGB(255, 48, 58, 48),
     primaryColor: primaryColor,
     backgroundColor: Colors.grey[100],
     indicatorColor: primaryColor,
@@ -142,6 +142,15 @@ class Themes {
       ),
     ),
     scaffoldBackgroundColor: Colors.white,
+    radioTheme: RadioThemeData(
+      fillColor: MaterialStateProperty.all(primaryColor),
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    ),
+    switchTheme: SwitchThemeData(
+      trackColor: MaterialStateProperty.all(Colors.grey.shade200),
+      thumbColor: MaterialStateProperty.all(primaryColor),
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    ),
     textTheme: textTheme,
     tabBarTheme: TabBarTheme(
       labelColor: Colors.black,

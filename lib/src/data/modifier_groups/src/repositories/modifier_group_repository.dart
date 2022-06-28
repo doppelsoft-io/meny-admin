@@ -82,7 +82,10 @@ class ModifierGroupRepository extends IResourcesRepository<ModifierGroupModel> {
           .doc(storeId)
           .collection(Paths.modifierGroups)
           .doc(resource.id)
-          .set(resource.toJson(), SetOptions(merge: true));
+          .set(
+            resource.copyWith(updatedAt: DateTime.now()).toJson(),
+            SetOptions(merge: true),
+          );
     } catch (err) {
       _loggerService.log('(update): ${err.toString()}');
       throw const UpdateModifierGroupException(

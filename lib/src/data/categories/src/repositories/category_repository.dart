@@ -92,7 +92,10 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
     try {
       await firebaseFirestore
           .categoryEntitiesDocument(storeId: storeId, categoryId: resource.id!)
-          .set(resource.toJson(), SetOptions(merge: true));
+          .set(
+            resource.copyWith(updatedAt: DateTime.now()).toJson(),
+            SetOptions(merge: true),
+          );
     } catch (err) {
       _loggerService.log('(update): ${err.toString()}');
       throw UpdateCategoryException(

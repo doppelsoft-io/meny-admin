@@ -24,15 +24,15 @@ class ResourcesCubit<M> extends Cubit<ResourcesState> {
   factory ResourcesCubit.use() {
     switch (M) {
       case MenuModel:
-        return ResourcesCubit(
+        return ResourcesCubit<M>(
           iResourcesRepository: Locator.instance<MenuRepository>(),
         );
       case CategoryModel:
-        return ResourcesCubit(
+        return ResourcesCubit<M>(
           iResourcesRepository: Locator.instance<CategoryRepository>(),
         );
       case MenuItemModel:
-        return ResourcesCubit(
+        return ResourcesCubit<M>(
           iResourcesRepository: Locator.instance<MenuItemRepository>(),
         );
       default:

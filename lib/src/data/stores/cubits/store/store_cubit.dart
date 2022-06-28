@@ -59,46 +59,52 @@ class StoreCubit extends Cubit<StoreState> {
   }
 
   Future<void> loadStoreForUser({required UserModel user}) async {
-    if (user == UserModel.empty()) {
-      emit(
-        StoreState.error(
-          store: state.store,
-          exception: const CustomException(message: 'User is null'),
-        ),
-      );
-    }
-    if (user.isAnonymous) {
-      final failureOrStore =
-          await _storeRepository.createEmptyStoreForUser(userId: user.id!);
-
-      emit(
-        failureOrStore.fold(
-          (failure) => StoreState.error(
+    try {
+      if (user == UserModel.empty()) {
+        emit(
+          StoreState.error(
             store: state.store,
-            exception: failure,
+            exception: const CustomException(message: 'User is null'),
           ),
-          (store) {
-            watchStore(store);
-            return StoreState.loaded(store: store);
-          },
-        ),
-      );
-    } else {
-      final failureOrStore =
-          await _storeRepository.getStoresForUser(userId: user.id!);
+        );
+      }
+      if (user.isAnonymous) {
+        final failureOrStore =
+            await _storeRepository.createEmptyStoreForUser(userId: user.id!);
 
-      emit(
-        failureOrStore.fold(
-          (failure) => StoreState.error(
-            store: state.store,
-            exception: failure,
+        emit(
+          failureOrStore.fold(
+            (failure) {
+              return StoreState.error(
+                store: state.store,
+                exception: failure,
+              );
+            },
+            (store) {
+              watchStore(store);
+              return StoreState.loaded(store: store);
+            },
           ),
-          (stores) {
-            watchStore(stores.first);
-            return StoreState.loaded(store: stores.first);
-          },
-        ),
-      );
+        );
+      } else {
+        final failureOrStore =
+            await _storeRepository.getStoresForUser(userId: user.id!);
+
+        emit(
+          failureOrStore.fold(
+            (failure) => StoreState.error(
+              store: state.store,
+              exception: failure,
+            ),
+            (stores) {
+              watchStore(stores.first);
+              return StoreState.loaded(store: stores.first);
+            },
+          ),
+        );
+      }
+    } catch (err) {
+      print('err $err');
     }
   }
 }
