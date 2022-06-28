@@ -18,6 +18,7 @@ import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/data/tags/tags.dart';
 import 'package:meny_admin/src/data/users/users.dart';
 import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_admin/themes.dart';
 
 class Locator {
   const Locator._();
@@ -32,6 +33,11 @@ class Locator {
       ..registerSingleton<FirebaseStorage>(FirebaseStorage.instance)
       ..registerSingleton<StoreCacheService>(StoreCacheService())
       ..registerSingleton<LoggerService>(const LoggerService())
+      ..registerSingleton<ToastService>(
+        ToastService(
+          colorScheme: Themes.colorScheme,
+        ),
+      )
       ..registerSingleton<AuthRepository>(
         AuthRepository(
           loggerService: const LoggerService(prepend: 'AuthRepository'),

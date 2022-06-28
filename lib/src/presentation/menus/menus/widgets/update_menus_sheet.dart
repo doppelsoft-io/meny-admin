@@ -2,6 +2,7 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/menus/menus.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/resources/widgets/delete_resource_button.dart';
@@ -86,7 +87,9 @@ class _UpdateMenusSheet extends HookWidget {
               controller.text = menu.name;
             },
             success: (_) {
-              ToastService.showNotification(const Text('MenuModel updated'));
+              Locator.instance<ToastService>().showNotification(
+                const Text('Menu updated'),
+              );
               Navigator.pop(context);
             },
             error: (_, exception) {
@@ -241,7 +244,7 @@ class _DeleteMenuButton extends StatelessWidget {
             ToastService.toast('Menu deleted');
           },
           error: (exception) {
-            ToastService.showNotification(
+            Locator.instance<ToastService>().showNotification(
               Text(exception.toString()),
               ToastType.error,
             );

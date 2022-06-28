@@ -2,10 +2,12 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/login/login.dart';
 import 'package:meny_admin/src/screens/signup_screen.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
+import 'package:meny_admin/themes.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class LoginScreen extends HookWidget {
@@ -60,7 +62,8 @@ class LoginScreen extends HookWidget {
               (user) {
                 /// Pop login screen
                 Navigator.of(context).pop();
-                ToastService.showNotification(const Text("You're logged in!"));
+                Locator.instance<ToastService>()
+                    .showNotification(const Text("You're logged in!"));
               },
             );
           },
@@ -91,49 +94,57 @@ class LoginScreen extends HookWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: Spacing.textFieldVerticalSpacing * 2),
-                  TextFormField(
-                    autocorrect: false,
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      label: Text('Email'),
-                      hintText: 'Enter your email address',
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    inputFormatters: [
-                      ValidatorInputFormatter(
-                        editingValidator: EmailEditingRegexValidator(),
+                  DTextFormField(
+                    theme: Themes.theme.textFormFieldThemeData,
+                    args: DTextFormFieldArgs(
+                      autocorrect: false,
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        label: Text('Email'),
+                        hintText: 'Enter your email address',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
-                    ],
-                    onFieldSubmitted: (value) {
-                      loginFormKey.value.currentState?.validate();
-                    },
-                    onEditingComplete: () {
-                      loginFormKey.value.currentState?.validate();
-                    },
-                    validator: (value) {
-                      if (value != null && value.isNotEmpty) {
-                        return EmailSubmitRegexValidator().isValid(value)
-                            ? null
-                            : 'Email is invalid';
-                      }
-                      return null;
-                    },
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      inputFormatters: [
+                        ValidatorInputFormatter(
+                          editingValidator: EmailEditingRegexValidator(),
+                        ),
+                      ],
+                      onFieldSubmitted: (value) {
+                        loginFormKey.value.currentState?.validate();
+                      },
+                      onEditingComplete: () {
+                        loginFormKey.value.currentState?.validate();
+                      },
+                      validator: (value) {
+                        if (value != null && value.isNotEmpty) {
+                          return EmailSubmitRegexValidator().isValid(value)
+                              ? null
+                              : 'Email is invalid';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
                   const SizedBox(height: Spacing.textFieldVerticalSpacing),
-                  TextFormField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      label: Text('Password'),
-                      hintText: 'Enter your password',
+                  DTextFormField(
+                    theme: Themes.theme.textFormFieldThemeData,
+                    args: DTextFormFieldArgs(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        label: Text('Password'),
+                        hintText: 'Enter your password',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                      ),
+                      onFieldSubmitted: (value) {
+                        loginFormKey.value.currentState?.validate();
+                      },
+                      onEditingComplete: () {
+                        loginFormKey.value.currentState?.validate();
+                      },
                     ),
-                    onFieldSubmitted: (value) {
-                      loginFormKey.value.currentState?.validate();
-                    },
-                    onEditingComplete: () {
-                      loginFormKey.value.currentState?.validate();
-                    },
                   ),
                   const SizedBox(height: Spacing.textFieldVerticalSpacing),
                   Row(

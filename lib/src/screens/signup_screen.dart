@@ -2,11 +2,13 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/auth/auth.dart';
 import 'package:meny_admin/src/data/signup/signup.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
+import 'package:meny_admin/themes.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class SignupScreen extends HookWidget {
@@ -80,7 +82,7 @@ class SignupScreen extends HookWidget {
                 /// Pop Login Screen
                 Navigator.of(context).pop();
 
-                ToastService.showNotification(
+                Locator.instance<ToastService>().showNotification(
                   const Text('Your sign up was successful!'),
                 );
               },
@@ -113,69 +115,81 @@ class SignupScreen extends HookWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: Spacing.textFieldVerticalSpacing * 2),
-                  TextFormField(
-                    autocorrect: false,
-                    autovalidateMode: AutovalidateMode.always,
-                    controller: storeNameController,
-                    decoration: const InputDecoration(
-                      label: Text('Business name'),
-                      hintText: 'Add the name of your business',
-                    ),
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (value) {
-                      signupFormKey.value.currentState?.validate();
-                    },
-                    onEditingComplete: () {
-                      signupFormKey.value.currentState?.validate();
-                    },
-                    validator: (value) {
-                      if (value == null) return null;
-                      if (value.isEmpty) return null;
-                      return value.isNotEmpty && value.trim().isNotEmpty
-                          ? null
-                          : 'You must provide a valid name';
-                    },
-                  ),
-                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
-                  TextFormField(
-                    autocorrect: false,
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      label: Text('Email'),
-                      hintText: 'Enter your email address',
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    inputFormatters: [
-                      ValidatorInputFormatter(
-                        editingValidator: EmailEditingRegexValidator(),
+                  DTextFormField(
+                    theme: Themes.theme.textFormFieldThemeData,
+                    args: DTextFormFieldArgs(
+                      autocorrect: false,
+                      autovalidateMode: AutovalidateMode.always,
+                      controller: storeNameController,
+                      decoration: const InputDecoration(
+                        label: Text('Business name'),
+                        hintText: 'Add the name of your business',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
-                    ],
-                    onFieldSubmitted: (value) {
-                      signupFormKey.value.currentState?.validate();
-                    },
-                    onEditingComplete: () {
-                      signupFormKey.value.currentState?.validate();
-                    },
-                    validator: (value) {
-                      if (value != null && value.isNotEmpty) {
-                        return EmailSubmitRegexValidator().isValid(value)
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (value) {
+                        signupFormKey.value.currentState?.validate();
+                      },
+                      onEditingComplete: () {
+                        signupFormKey.value.currentState?.validate();
+                      },
+                      validator: (value) {
+                        if (value == null) return null;
+                        if (value.isEmpty) return null;
+                        return value.isNotEmpty && value.trim().isNotEmpty
                             ? null
-                            : 'Email is invalid';
-                      }
-                      return null;
-                    },
+                            : 'You must provide a valid name';
+                      },
+                    ),
                   ),
                   const SizedBox(height: Spacing.textFieldVerticalSpacing),
-                  TextFormField(
-                    controller: passwordController,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
-                    textInputAction: TextInputAction.done,
-                    decoration: const InputDecoration(
-                      label: Text('Password'),
-                      hintText: 'Enter a password',
+                  DTextFormField(
+                    theme: Themes.theme.textFormFieldThemeData,
+                    args: DTextFormFieldArgs(
+                      autocorrect: false,
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        label: Text('Email'),
+                        hintText: 'Enter your email address',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      inputFormatters: [
+                        ValidatorInputFormatter(
+                          editingValidator: EmailEditingRegexValidator(),
+                        ),
+                      ],
+                      onFieldSubmitted: (value) {
+                        signupFormKey.value.currentState?.validate();
+                      },
+                      onEditingComplete: () {
+                        signupFormKey.value.currentState?.validate();
+                      },
+                      validator: (value) {
+                        if (value != null && value.isNotEmpty) {
+                          return EmailSubmitRegexValidator().isValid(value)
+                              ? null
+                              : 'Email is invalid';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
+                  DTextFormField(
+                    theme: Themes.theme.textFormFieldThemeData,
+                    args: DTextFormFieldArgs(
+                      controller: passwordController,
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: true,
+                      textInputAction: TextInputAction.done,
+                      decoration: const InputDecoration(
+                        label: Text('Password'),
+                        hintText: 'Enter a password',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                      ),
                     ),
                   ),
                   const SizedBox(height: Spacing.textFieldVerticalSpacing),

@@ -1,6 +1,7 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
@@ -62,8 +63,9 @@ class _CompiledMenuBuilder extends StatelessWidget {
                   listener: (context, state) {
                     state.maybeMap(
                       success: (_) {
-                        ToastService.showNotification(
+                        Locator.instance<ToastService>().showNotification(
                           const Text('Categories saved'),
+                          ToastType.error,
                         );
                       },
                       orElse: () {},
@@ -75,8 +77,9 @@ class _CompiledMenuBuilder extends StatelessWidget {
                   listener: (context, state) {
                     state.maybeMap(
                       success: (_) {
-                        ToastService.showNotification(
+                        Locator.instance<ToastService>().showNotification(
                           const Text('Items saved'),
+                          ToastType.error,
                         );
                       },
                       orElse: () {},

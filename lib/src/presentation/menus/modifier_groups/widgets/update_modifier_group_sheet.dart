@@ -817,7 +817,7 @@ class _DeleteModifierGroupButton extends StatelessWidget {
           },
           error: (exception) {
             Navigator.of(context).pop();
-            ToastService.showNotification(
+            Locator.instance<ToastService>().showNotification(
               Text(exception.toString()),
               ToastType.error,
             );

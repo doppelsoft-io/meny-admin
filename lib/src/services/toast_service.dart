@@ -7,19 +7,24 @@ enum ToastType {
 }
 
 class ToastService {
-  const ToastService._();
+  ToastService({required this.colorScheme});
+
+  final ColorScheme colorScheme;
 
   static void toast(String message) {
     lib.toast(message);
   }
 
-  static void showNotification(
+  void showNotification(
     Widget notification, [
     ToastType? type = ToastType.info,
   ]) {
     lib.showSimpleNotification(
       notification,
-      background: type == ToastType.error ? Colors.red : Colors.black,
+      background:
+          type == ToastType.error ? colorScheme.error : colorScheme.primary,
+      foreground:
+          type == ToastType.error ? colorScheme.onError : colorScheme.onPrimary,
       position: lib.NotificationPosition.bottom,
     );
   }
