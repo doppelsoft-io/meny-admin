@@ -46,17 +46,17 @@ class _MyStorePage extends HookWidget {
             tabs: tabs,
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
+        body: const Padding(
+          padding: EdgeInsets.symmetric(
             horizontal: Spacing.pageSpacing,
             vertical: Spacing.tablePadding,
           ),
           child: TabBarView(
-            physics: const NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             children: [
-              const MyStoreDetailsTab(),
-              Container(),
-              Container(),
+              MyStoreDetailsTab(),
+              MyStoreHoursTab(),
+              MyStoreLocationsTab(),
             ],
           ),
         ),
