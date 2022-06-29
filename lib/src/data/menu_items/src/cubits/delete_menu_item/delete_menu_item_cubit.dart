@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/constants/paths.dart';
@@ -13,14 +14,17 @@ part 'delete_menu_item_cubit.freezed.dart';
 
 class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
   DeleteMenuItemCubit({
-    FirebaseFirestore? firebaseFirestore,
     required StoreCubit storeCubit,
-  })  : _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
-        _storeCubit = storeCubit,
+    FirebaseFirestore? firebaseFirestore,
+    FirebaseStorage? firebaseStorage,
+  })  : _storeCubit = storeCubit,
+        _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
+        _firebaseStorage = firebaseStorage ?? Locator.instance(),
         super(const DeleteMenuItemState.initial());
 
-  final FirebaseFirestore _firebaseFirestore;
   final StoreCubit _storeCubit;
+  final FirebaseFirestore _firebaseFirestore;
+  final FirebaseStorage _firebaseStorage;
 
   Future<void> delete({
     required MenuItemModel item,
@@ -64,6 +68,10 @@ class DeleteMenuItemCubit extends Cubit<DeleteMenuItemState> {
       await batch.commit();
 
       emit(const _Success());
+
+      final storageRef = _firebaseStorage.ref();
+      final photoRef = storageRef.child('stores/$storeId/items/${item.id}');
+      await photoRef.delete();
     } catch (err) {
       emit(
         const _Error(
