@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/categories/categories.dart';
 import 'package:meny_admin/src/data/category_menu_items/category_menu_items.dart';
+import 'package:meny_admin/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny_admin/src/data/menu_categories/menu_categories.dart';
 import 'package:meny_admin/src/data/menu_items/menu_items.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
@@ -21,26 +21,30 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
     MenuItemRepository? menuItemRepository,
     MenuCategoryRepository? menuCategoryRepository,
     CategoryMenuItemsRepository? categoryMenuItemsRepository,
+    CompiledMenuRepository? compiledMenuRepository,
   })  : _storeCubit = storeCubit,
         _categoryRepository = categoryRepository ?? Locator.instance(),
         _menuItemRepository = menuItemRepository ?? Locator.instance(),
         _menuCategoryRepository = menuCategoryRepository ?? Locator.instance(),
         _categoryMenuItemsRepository =
             categoryMenuItemsRepository ?? Locator.instance(),
-        super(
-          CompiledMenuState.loading(
-            response: MenuResponse(MenuModel.empty(), <CategoryMenuItemMap>[]),
-          ),
-        );
+        _compiledMenuRepository = compiledMenuRepository ?? Locator.instance(),
+        super(_Loading(response: CompiledMenuModel.empty()));
 
   final StoreCubit _storeCubit;
   final CategoryRepository _categoryRepository;
   final MenuItemRepository _menuItemRepository;
   final MenuCategoryRepository _menuCategoryRepository;
   final CategoryMenuItemsRepository _categoryMenuItemsRepository;
+  final CompiledMenuRepository _compiledMenuRepository;
 
   Future<void> load({required MenuModel menu}) async {
     try {
+      final compiledMenu = CompiledMenuModel(
+        id: menu.id!,
+        name: menu.name,
+        description: menu.description,
+      );
       final storeId = _storeCubit.state.store.id!;
       final menuCategories = await _menuCategoryRepository.getForMenu(
         storeId: storeId,
@@ -78,23 +82,74 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
           );
 
           final menuItems = await Future.wait(categoryMenuItemFutures);
+          final compiledCategory = CompiledCategoryModel(
+            id: category.id!,
+            name: category.name,
+            position: index,
+            items: List.generate(menuItems.length, (i) {
+              final item = menuItems[i];
+              return CompiledMenuItemModel(
+                id: item.id!,
+                name: item.name,
+                position: i,
+                description: item.description,
+                priceInfo: item.priceInfo,
+                suspensionRules: item.suspensionRules,
+                imageUrl: item.imageUrl,
+                dietaryLabels: item.dietaryLabels,
+              );
+            }),
+          );
 
-          return CategoryMenuItemMap(category, menuItems);
+          return compiledCategory;
         },
       );
 
-      final categoryItemMaps = await Future.wait(categoryFutures);
+      final compiledCategories = await Future.wait(categoryFutures);
+
+      final updatedCompiledMenu = compiledMenu.copyWith(
+        categories: compiledCategories,
+      );
 
       emit(
-        CompiledMenuState.loaded(
-          response: MenuResponse(menu, categoryItemMaps),
+        _Loaded(
+          response: updatedCompiledMenu,
         ),
       );
     } on CustomException catch (failure) {
       emit(
-        CompiledMenuState.error(
+        _Error(
           response: state.response,
           exception: failure,
+        ),
+      );
+    }
+  }
+
+  void syncCategories(List<CompiledCategoryModel> categories) {
+    emit(
+      state.copyWith(
+        response: state.response.copyWith(
+          categories: categories,
+        ),
+      ),
+    );
+  }
+
+  Future<void> publish() async {
+    try {
+      emit(_Publishing(response: state.response));
+      final storeId = _storeCubit.state.store.id!;
+      await _compiledMenuRepository.publish(
+        storeId: storeId,
+        menu: state.response,
+      );
+      emit(_Published(response: state.response));
+    } on CustomException catch (err) {
+      emit(
+        _Error(
+          response: state.response,
+          exception: err,
         ),
       );
     }

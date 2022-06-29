@@ -1,16 +1,23 @@
+import 'dart:developer';
+
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meny_admin/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/menus/menus.dart';
+import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
-  const _MenuPreviewHeaderDelegate({required this.title});
+  const _MenuPreviewHeaderDelegate({
+    required this.title,
+    required this.onPublish,
+  });
 
   final String title;
+  final Function() onPublish;
 
   @override
   Widget build(
@@ -42,8 +49,8 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
+                  onPressed: onPublish,
                   child: const Text('Publish'),
-                  onPressed: () {},
                 ),
               ],
             ),
@@ -61,7 +68,7 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
-      false;
+      true;
 }
 
 class MenuPreviewScreenArgs {
@@ -104,21 +111,36 @@ class _MenuPreviewScreenState extends State<MenuPreviewScreen> {
           appBar: AppBar(
             title: const Text('Menu Preview'),
           ),
-          body: BlocProvider<CompiledMenuCubit>(
-            // create: (context) => CompiledMenuCubit()..load(menu: menu),
-            create: (context) => CompiledMenuCubit(
-              storeCubit: context.read<StoreCubit>(),
-            )..load(menu: widget.args.menu),
+          body: BlocListener<CompiledMenuCubit, CompiledMenuState>(
+            listener: (context, state) {
+              state.maybeWhen(
+                publishing: (_) {},
+                published: (_) {
+                  //
+                },
+                error: (_, exception) {
+                  DialogService.showErrorDialog(
+                    context: context,
+                    failure: CustomException(message: exception.toString()),
+                  );
+                },
+                orElse: () {},
+              );
+            },
             child: CustomScrollView(
               slivers: [
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: _MenuPreviewHeaderDelegate(
                     title: widget.args.menu.name,
+                    onPublish: () {
+                      log('JSON ${state.response.toJson()}');
+                      context.read<CompiledMenuCubit>().publish();
+                    },
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: CompiledMenuBuilder(menu: state.response.value1),
+                  child: CompiledMenuBuilder(menu: state.response),
                 ),
               ],
             ),

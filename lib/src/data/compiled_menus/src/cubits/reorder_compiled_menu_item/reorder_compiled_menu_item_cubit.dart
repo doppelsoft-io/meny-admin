@@ -16,14 +16,14 @@ class ReorderCompiledMenuItemCubit extends Cubit<ReorderCompiledMenuItemState> {
   })  : _storeCubit = storeCubit,
         _categoryMenuItemsRepository =
             categoryMenuItemsRepository ?? Locator.instance(),
-        super(const ReorderCompiledMenuItemState.initial());
+        super(const _Initial());
 
   final StoreCubit _storeCubit;
   final CategoryMenuItemsRepository _categoryMenuItemsRepository;
 
   Future<void> reorder({
-    required CategoryModel category,
-    required List<MenuItemModel> items,
+    required CompiledCategoryModel category,
+    required List<CompiledMenuItemModel> items,
   }) async {
     emit(const ReorderCompiledMenuItemState.reordering());
 
@@ -35,8 +35,8 @@ class ReorderCompiledMenuItemCubit extends Cubit<ReorderCompiledMenuItemState> {
           final item = items[index];
           final categoryMenuItem = await _categoryMenuItemsRepository.get(
             storeId: storeId,
-            categoryId: category.id!,
-            menuItemId: item.id!,
+            categoryId: category.id,
+            menuItemId: item.id,
           );
 
           return _categoryMenuItemsRepository.update(

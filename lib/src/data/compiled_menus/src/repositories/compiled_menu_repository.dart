@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/constants/paths.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -136,6 +137,22 @@ class CompiledMenuRepository {
           .set(item.toJson(), SetOptions(merge: true));
     } catch (err) {
       throw const CustomException(message: 'Error updating item');
+    }
+  }
+
+  Future<void> publish({
+    required String storeId,
+    required CompiledMenuModel menu,
+  }) async {
+    try {
+      await _firebaseFirestore
+          .collection(Paths.stores)
+          .doc(storeId)
+          .collection(Paths.compiledMenus)
+          .doc(menu.id)
+          .set(menu.copyWith(lastPublished: DateTime.now()).toJson());
+    } catch (err) {
+      throw const CustomException(message: 'Error publishing menu');
     }
   }
 }

@@ -14,7 +14,7 @@ class CompiledMenuBuilder extends StatelessWidget {
     required this.menu,
   }) : super(key: key);
 
-  final MenuModel menu;
+  final CompiledMenuModel menu;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
     required this.menu,
   }) : super(key: key);
 
-  final MenuModel menu;
+  final CompiledMenuModel menu;
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +53,9 @@ class _CompiledMenuBuilder extends StatelessWidget {
           error: (_, exception) => ErrorDisplay(
             exception: CustomException(message: exception.toString()),
           ),
-          loaded: (response) {
-            final data = response.value2;
+          orElse: () {
+            final categories =
+                List<CompiledCategoryModel>.from(state.response.categories);
 
             return MultiBlocListener(
               listeners: [
@@ -65,7 +66,6 @@ class _CompiledMenuBuilder extends StatelessWidget {
                       success: (_) {
                         Locator.instance<ToastService>().showNotification(
                           const Text('Categories saved'),
-                          ToastType.error,
                         );
                       },
                       orElse: () {},
@@ -79,7 +79,6 @@ class _CompiledMenuBuilder extends StatelessWidget {
                       success: (_) {
                         Locator.instance<ToastService>().showNotification(
                           const Text('Items saved'),
-                          ToastType.error,
                         );
                       },
                       orElse: () {},
@@ -91,13 +90,14 @@ class _CompiledMenuBuilder extends StatelessWidget {
                 key: const Key('main-one'),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: data.length,
+                itemCount: categories.length,
                 padding: EdgeInsets.zero,
-                itemBuilder: (context, i) {
-                  final category = data[i].value1;
-                  final items = data[i].value2;
+                itemBuilder: (context, categoryIndex) {
+                  final category = categories[categoryIndex];
+                  final items =
+                      List<CompiledMenuItemModel>.from(category.items);
                   return ReorderableListView.builder(
-                    key: Key(category.id!),
+                    key: Key(category.id),
                     shrinkWrap: true,
                     itemCount: items.length,
                     physics: const NeverScrollableScrollPhysics(),
@@ -112,10 +112,10 @@ class _CompiledMenuBuilder extends StatelessWidget {
                             ?.copyWith(fontWeight: FontWeight.w500),
                       ),
                     ),
-                    itemBuilder: (context, i) {
-                      final item = items[i];
+                    itemBuilder: (context, itemIndex) {
+                      final item = items[itemIndex];
                       return Container(
-                        key: Key(item.id!),
+                        key: Key(item.id),
                         padding: const EdgeInsets.all(Spacing.pageSpacing),
                         margin: const EdgeInsets.only(bottom: 12),
                         child: Row(
@@ -134,10 +134,11 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                       style:
                                           Theme.of(context).textTheme.subtitle1,
                                     ),
-                                    if (item.description.isNotEmpty) ...[
+                                    if (item.description != null &&
+                                        item.description!.isNotEmpty) ...[
                                       const SizedBox(height: 2),
                                       Text(
-                                        item.description,
+                                        item.description!,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge,
@@ -176,6 +177,16 @@ class _CompiledMenuBuilder extends StatelessWidget {
                             category: category,
                             items: items,
                           );
+
+                      final updatedCategories = categories
+                        ..remove(category)
+                        ..insert(
+                          categoryIndex,
+                          category.copyWith(items: items),
+                        );
+                      context
+                          .read<CompiledMenuCubit>()
+                          .syncCategories(updatedCategories);
                     },
                   );
                 },
@@ -183,17 +194,18 @@ class _CompiledMenuBuilder extends StatelessWidget {
                   if (oldIndex < newIndex) {
                     newIndex -= 1;
                   }
-                  final category = data.removeAt(oldIndex);
-                  data.insert(newIndex, category);
+                  final category = categories.removeAt(oldIndex);
+                  categories.insert(newIndex, category);
                   context.read<ReorderCompiledCategoryCubit>().reorder(
-                        menuId: menu.id!,
-                        categories: data.map((e) => e.value1).toList(),
+                        menuId: menu.id,
+                        categories: categories,
                       );
+
+                  context.read<CompiledMenuCubit>().syncCategories(categories);
                 },
               ),
             );
           },
-          orElse: () => const SizedBox.shrink(),
         );
       },
     );

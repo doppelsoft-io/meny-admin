@@ -22,9 +22,9 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
 
   Future<void> reorder({
     required String menuId,
-    required List<CategoryModel> categories,
+    required List<CompiledCategoryModel> categories,
   }) async {
-    emit(const ReorderCompiledCategoryState.reordering());
+    emit(const _Reordering());
 
     try {
       final storeId = _storeCubit.state.store.id!;
@@ -35,7 +35,7 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
           final menuCategory = await _menuCategoryRepository.get(
             storeId: storeId,
             menuId: menuId,
-            categoryId: category.id!,
+            categoryId: category.id,
           );
           return _menuCategoryRepository.update(
             storeId: storeId,
@@ -45,10 +45,10 @@ class ReorderCompiledCategoryCubit extends Cubit<ReorderCompiledCategoryState> {
       );
       await Future.wait(futures);
 
-      emit(const ReorderCompiledCategoryState.success());
+      emit(const _Success());
     } catch (err) {
       emit(
-        const ReorderCompiledCategoryState.error(
+        const _Error(
           exception: CustomException(message: 'Reordering failed'),
         ),
       );

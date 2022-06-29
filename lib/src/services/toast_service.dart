@@ -25,7 +25,6 @@ class ToastService {
           type == ToastType.error ? colorScheme.error : colorScheme.primary,
       foreground:
           type == ToastType.error ? colorScheme.onError : colorScheme.onPrimary,
-      position: lib.NotificationPosition.bottom,
     );
   }
 }

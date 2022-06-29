@@ -16,57 +16,33 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CompiledMenuState {
-  Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-      get response => throw _privateConstructorUsedError;
+  CompiledMenuModel get response => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)
-        loading,
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)
-        loaded,
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)
+    required TResult Function(CompiledMenuModel response) loading,
+    required TResult Function(CompiledMenuModel response) loaded,
+    required TResult Function(CompiledMenuModel response) publishing,
+    required TResult Function(CompiledMenuModel response) published,
+    required TResult Function(CompiledMenuModel response, Exception exception)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loading,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loaded,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)?
-        error,
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loading,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loaded,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)?
-        error,
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -74,6 +50,8 @@ mixin _$CompiledMenuState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Publishing value) publishing,
+    required TResult Function(_Published value) published,
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -81,6 +59,8 @@ mixin _$CompiledMenuState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
     TResult Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -88,6 +68,8 @@ mixin _$CompiledMenuState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
@@ -103,9 +85,9 @@ abstract class $CompiledMenuStateCopyWith<$Res> {
   factory $CompiledMenuStateCopyWith(
           CompiledMenuState value, $Res Function(CompiledMenuState) then) =
       _$CompiledMenuStateCopyWithImpl<$Res>;
-  $Res call(
-      {Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-          response});
+  $Res call({CompiledMenuModel response});
+
+  $CompiledMenuModelCopyWith<$Res> get response;
 }
 
 /// @nodoc
@@ -125,9 +107,15 @@ class _$CompiledMenuStateCopyWithImpl<$Res>
       response: response == freezed
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
-              as Tuple2<MenuModel,
-                  List<Tuple2<CategoryModel, List<MenuItemModel>>>>,
+              as CompiledMenuModel,
     ));
+  }
+
+  @override
+  $CompiledMenuModelCopyWith<$Res> get response {
+    return $CompiledMenuModelCopyWith<$Res>(_value.response, (value) {
+      return _then(_value.copyWith(response: value));
+    });
   }
 }
 
@@ -138,9 +126,10 @@ abstract class _$$_LoadingCopyWith<$Res>
           _$_Loading value, $Res Function(_$_Loading) then) =
       __$$_LoadingCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-          response});
+  $Res call({CompiledMenuModel response});
+
+  @override
+  $CompiledMenuModelCopyWith<$Res> get response;
 }
 
 /// @nodoc
@@ -161,8 +150,7 @@ class __$$_LoadingCopyWithImpl<$Res>
       response: response == freezed
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
-              as Tuple2<MenuModel,
-                  List<Tuple2<CategoryModel, List<MenuItemModel>>>>,
+              as CompiledMenuModel,
     ));
   }
 }
@@ -173,8 +161,7 @@ class _$_Loading implements _Loading {
   const _$_Loading({required this.response});
 
   @override
-  final Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-      response;
+  final CompiledMenuModel response;
 
   @override
   String toString() {
@@ -201,18 +188,11 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)
-        loading,
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)
-        loaded,
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)
+    required TResult Function(CompiledMenuModel response) loading,
+    required TResult Function(CompiledMenuModel response) loaded,
+    required TResult Function(CompiledMenuModel response) publishing,
+    required TResult Function(CompiledMenuModel response) published,
+    required TResult Function(CompiledMenuModel response, Exception exception)
         error,
   }) {
     return loading(response);
@@ -221,19 +201,11 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loading,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loaded,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)?
-        error,
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
   }) {
     return loading?.call(response);
   }
@@ -241,19 +213,11 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loading,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loaded,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)?
-        error,
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -267,6 +231,8 @@ class _$_Loading implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Publishing value) publishing,
+    required TResult Function(_Published value) published,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -277,6 +243,8 @@ class _$_Loading implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
     TResult Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -287,6 +255,8 @@ class _$_Loading implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -298,14 +268,11 @@ class _$_Loading implements _Loading {
 }
 
 abstract class _Loading implements CompiledMenuState {
-  const factory _Loading(
-      {required final Tuple2<MenuModel,
-              List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-          response}) = _$_Loading;
+  const factory _Loading({required final CompiledMenuModel response}) =
+      _$_Loading;
 
   @override
-  Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-      get response => throw _privateConstructorUsedError;
+  CompiledMenuModel get response => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -318,9 +285,10 @@ abstract class _$$_LoadedCopyWith<$Res>
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-          response});
+  $Res call({CompiledMenuModel response});
+
+  @override
+  $CompiledMenuModelCopyWith<$Res> get response;
 }
 
 /// @nodoc
@@ -341,8 +309,7 @@ class __$$_LoadedCopyWithImpl<$Res>
       response: response == freezed
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
-              as Tuple2<MenuModel,
-                  List<Tuple2<CategoryModel, List<MenuItemModel>>>>,
+              as CompiledMenuModel,
     ));
   }
 }
@@ -353,8 +320,7 @@ class _$_Loaded implements _Loaded {
   const _$_Loaded({required this.response});
 
   @override
-  final Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-      response;
+  final CompiledMenuModel response;
 
   @override
   String toString() {
@@ -381,18 +347,11 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)
-        loading,
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)
-        loaded,
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)
+    required TResult Function(CompiledMenuModel response) loading,
+    required TResult Function(CompiledMenuModel response) loaded,
+    required TResult Function(CompiledMenuModel response) publishing,
+    required TResult Function(CompiledMenuModel response) published,
+    required TResult Function(CompiledMenuModel response, Exception exception)
         error,
   }) {
     return loaded(response);
@@ -401,19 +360,11 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loading,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loaded,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)?
-        error,
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
   }) {
     return loaded?.call(response);
   }
@@ -421,19 +372,11 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loading,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loaded,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)?
-        error,
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -447,6 +390,8 @@ class _$_Loaded implements _Loaded {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Publishing value) publishing,
+    required TResult Function(_Published value) published,
     required TResult Function(_Error value) error,
   }) {
     return loaded(this);
@@ -457,6 +402,8 @@ class _$_Loaded implements _Loaded {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
     TResult Function(_Error value)? error,
   }) {
     return loaded?.call(this);
@@ -467,6 +414,8 @@ class _$_Loaded implements _Loaded {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -478,17 +427,336 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements CompiledMenuState {
-  const factory _Loaded(
-      {required final Tuple2<MenuModel,
-              List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-          response}) = _$_Loaded;
+  const factory _Loaded({required final CompiledMenuModel response}) =
+      _$_Loaded;
 
   @override
-  Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-      get response => throw _privateConstructorUsedError;
+  CompiledMenuModel get response => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_PublishingCopyWith<$Res>
+    implements $CompiledMenuStateCopyWith<$Res> {
+  factory _$$_PublishingCopyWith(
+          _$_Publishing value, $Res Function(_$_Publishing) then) =
+      __$$_PublishingCopyWithImpl<$Res>;
+  @override
+  $Res call({CompiledMenuModel response});
+
+  @override
+  $CompiledMenuModelCopyWith<$Res> get response;
+}
+
+/// @nodoc
+class __$$_PublishingCopyWithImpl<$Res>
+    extends _$CompiledMenuStateCopyWithImpl<$Res>
+    implements _$$_PublishingCopyWith<$Res> {
+  __$$_PublishingCopyWithImpl(
+      _$_Publishing _value, $Res Function(_$_Publishing) _then)
+      : super(_value, (v) => _then(v as _$_Publishing));
+
+  @override
+  _$_Publishing get _value => super._value as _$_Publishing;
+
+  @override
+  $Res call({
+    Object? response = freezed,
+  }) {
+    return _then(_$_Publishing(
+      response: response == freezed
+          ? _value.response
+          : response // ignore: cast_nullable_to_non_nullable
+              as CompiledMenuModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Publishing implements _Publishing {
+  const _$_Publishing({required this.response});
+
+  @override
+  final CompiledMenuModel response;
+
+  @override
+  String toString() {
+    return 'CompiledMenuState.publishing(response: $response)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Publishing &&
+            const DeepCollectionEquality().equals(other.response, response));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(response));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_PublishingCopyWith<_$_Publishing> get copyWith =>
+      __$$_PublishingCopyWithImpl<_$_Publishing>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(CompiledMenuModel response) loading,
+    required TResult Function(CompiledMenuModel response) loaded,
+    required TResult Function(CompiledMenuModel response) publishing,
+    required TResult Function(CompiledMenuModel response) published,
+    required TResult Function(CompiledMenuModel response, Exception exception)
+        error,
+  }) {
+    return publishing(response);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
+  }) {
+    return publishing?.call(response);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
+    required TResult orElse(),
+  }) {
+    if (publishing != null) {
+      return publishing(response);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Publishing value) publishing,
+    required TResult Function(_Published value) published,
+    required TResult Function(_Error value) error,
+  }) {
+    return publishing(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
+    TResult Function(_Error value)? error,
+  }) {
+    return publishing?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (publishing != null) {
+      return publishing(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Publishing implements CompiledMenuState {
+  const factory _Publishing({required final CompiledMenuModel response}) =
+      _$_Publishing;
+
+  @override
+  CompiledMenuModel get response => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PublishingCopyWith<_$_Publishing> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_PublishedCopyWith<$Res>
+    implements $CompiledMenuStateCopyWith<$Res> {
+  factory _$$_PublishedCopyWith(
+          _$_Published value, $Res Function(_$_Published) then) =
+      __$$_PublishedCopyWithImpl<$Res>;
+  @override
+  $Res call({CompiledMenuModel response});
+
+  @override
+  $CompiledMenuModelCopyWith<$Res> get response;
+}
+
+/// @nodoc
+class __$$_PublishedCopyWithImpl<$Res>
+    extends _$CompiledMenuStateCopyWithImpl<$Res>
+    implements _$$_PublishedCopyWith<$Res> {
+  __$$_PublishedCopyWithImpl(
+      _$_Published _value, $Res Function(_$_Published) _then)
+      : super(_value, (v) => _then(v as _$_Published));
+
+  @override
+  _$_Published get _value => super._value as _$_Published;
+
+  @override
+  $Res call({
+    Object? response = freezed,
+  }) {
+    return _then(_$_Published(
+      response: response == freezed
+          ? _value.response
+          : response // ignore: cast_nullable_to_non_nullable
+              as CompiledMenuModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Published implements _Published {
+  const _$_Published({required this.response});
+
+  @override
+  final CompiledMenuModel response;
+
+  @override
+  String toString() {
+    return 'CompiledMenuState.published(response: $response)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Published &&
+            const DeepCollectionEquality().equals(other.response, response));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(response));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_PublishedCopyWith<_$_Published> get copyWith =>
+      __$$_PublishedCopyWithImpl<_$_Published>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(CompiledMenuModel response) loading,
+    required TResult Function(CompiledMenuModel response) loaded,
+    required TResult Function(CompiledMenuModel response) publishing,
+    required TResult Function(CompiledMenuModel response) published,
+    required TResult Function(CompiledMenuModel response, Exception exception)
+        error,
+  }) {
+    return published(response);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
+  }) {
+    return published?.call(response);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
+    required TResult orElse(),
+  }) {
+    if (published != null) {
+      return published(response);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Publishing value) publishing,
+    required TResult Function(_Published value) published,
+    required TResult Function(_Error value) error,
+  }) {
+    return published(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
+    TResult Function(_Error value)? error,
+  }) {
+    return published?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (published != null) {
+      return published(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Published implements CompiledMenuState {
+  const factory _Published({required final CompiledMenuModel response}) =
+      _$_Published;
+
+  @override
+  CompiledMenuModel get response => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PublishedCopyWith<_$_Published> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -498,10 +766,10 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-          response,
-      Exception exception});
+  $Res call({CompiledMenuModel response, Exception exception});
+
+  @override
+  $CompiledMenuModelCopyWith<$Res> get response;
 }
 
 /// @nodoc
@@ -522,8 +790,7 @@ class __$$_ErrorCopyWithImpl<$Res> extends _$CompiledMenuStateCopyWithImpl<$Res>
       response: response == freezed
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
-              as Tuple2<MenuModel,
-                  List<Tuple2<CategoryModel, List<MenuItemModel>>>>,
+              as CompiledMenuModel,
       exception: exception == freezed
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
@@ -538,8 +805,7 @@ class _$_Error implements _Error {
   const _$_Error({required this.response, required this.exception});
 
   @override
-  final Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-      response;
+  final CompiledMenuModel response;
   @override
   final Exception exception;
 
@@ -571,18 +837,11 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)
-        loading,
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)
-        loaded,
-    required TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)
+    required TResult Function(CompiledMenuModel response) loading,
+    required TResult Function(CompiledMenuModel response) loaded,
+    required TResult Function(CompiledMenuModel response) publishing,
+    required TResult Function(CompiledMenuModel response) published,
+    required TResult Function(CompiledMenuModel response, Exception exception)
         error,
   }) {
     return error(response, exception);
@@ -591,19 +850,11 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loading,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loaded,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)?
-        error,
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
   }) {
     return error?.call(response, exception);
   }
@@ -611,19 +862,11 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loading,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response)?
-        loaded,
-    TResult Function(
-            Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-                response,
-            Exception exception)?
-        error,
+    TResult Function(CompiledMenuModel response)? loading,
+    TResult Function(CompiledMenuModel response)? loaded,
+    TResult Function(CompiledMenuModel response)? publishing,
+    TResult Function(CompiledMenuModel response)? published,
+    TResult Function(CompiledMenuModel response, Exception exception)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -637,6 +880,8 @@ class _$_Error implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Publishing value) publishing,
+    required TResult Function(_Published value) published,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -647,6 +892,8 @@ class _$_Error implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
     TResult Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -657,6 +904,8 @@ class _$_Error implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Publishing value)? publishing,
+    TResult Function(_Published value)? published,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -669,14 +918,11 @@ class _$_Error implements _Error {
 
 abstract class _Error implements CompiledMenuState {
   const factory _Error(
-      {required final Tuple2<MenuModel,
-              List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-          response,
+      {required final CompiledMenuModel response,
       required final Exception exception}) = _$_Error;
 
   @override
-  Tuple2<MenuModel, List<Tuple2<CategoryModel, List<MenuItemModel>>>>
-      get response => throw _privateConstructorUsedError;
+  CompiledMenuModel get response => throw _privateConstructorUsedError;
   Exception get exception => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

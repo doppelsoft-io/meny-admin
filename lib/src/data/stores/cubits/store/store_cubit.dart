@@ -104,7 +104,7 @@ class StoreCubit extends Cubit<StoreState> {
         );
       }
     } catch (err) {
-      print('err $err');
+      log('err $err');
     }
   }
 }

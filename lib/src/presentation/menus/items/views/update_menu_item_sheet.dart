@@ -218,7 +218,7 @@ class _ItemForm extends HookWidget {
         context.read<EditMenuItemCubit>().state.maybeWhen(
               loaded: (item) {
                 params.nameController.text = item.name;
-                params.descriptionController.text = item.description;
+                params.descriptionController.text = item.description ?? '';
                 params.priceController.text = (item.priceInfo.price / 100)
                     .toCurrency(excludeDollarSign: true);
                 if (item.imageUrl != null) {
