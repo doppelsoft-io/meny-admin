@@ -107,4 +107,6 @@ class StoreCubit extends Cubit<StoreState> {
       log('err $err');
     }
   }
+
+  void update(StoreModel store) => emit(state.copyWith(store: store));
 }

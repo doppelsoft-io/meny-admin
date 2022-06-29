@@ -10,8 +10,6 @@ class MenusPage extends StatelessWidget {
     const Tab(text: 'Menus'),
     const Tab(text: 'Categories'),
     const Tab(text: 'Items'),
-    const Tab(text: 'Ingredients'),
-    const Tab(text: 'Tags'),
     const Tab(text: 'Modifier Groups'),
   ];
 
@@ -46,8 +44,6 @@ class MenusPage extends StatelessWidget {
             MenusMenusTab(),
             MenusCategoriesTab(),
             MenusItemsTab(),
-            IngredientsTab(),
-            TagsTab(),
             ModifierGroupsTab(),
           ],
         ),

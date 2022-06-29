@@ -8,8 +8,7 @@ class Themes {
   static Color primaryColor = Colors.green.shade400;
 
   static TextTheme defaultTextTheme = _light.textTheme;
-  static TextTheme textTheme =
-      GoogleFonts.balooTextTheme(defaultTextTheme).copyWith(
+  static TextTheme textTheme = GoogleFonts.balooTextTheme().copyWith(
     bodyText1: GoogleFonts.hind(textStyle: defaultTextTheme.bodyText1),
     bodyText2: GoogleFonts.hind(textStyle: defaultTextTheme.bodyText2),
     caption: GoogleFonts.hind(textStyle: defaultTextTheme.caption),

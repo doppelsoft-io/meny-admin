@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/compiled_menus/compiled_menus.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/menus/menus.dart';
@@ -13,11 +12,22 @@ import 'package:qr_flutter/qr_flutter.dart';
 class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
   const _MenuPreviewHeaderDelegate({
     required this.title,
+    required this.publishing,
     required this.onPublish,
   });
 
   final String title;
+  final bool publishing;
   final Function() onPublish;
+
+  @override
+  double get maxExtent => 124;
+
+  @override
+  double get minExtent => 124;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate _) => true;
 
   @override
   Widget build(
@@ -35,22 +45,57 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headline3!.copyWith(
-                    color: Colors.black,
-                  ),
+            QrImage(
+              data: 'https://google.com',
+              size: 74,
+              padding: EdgeInsets.zero,
             ),
+            const SizedBox(width: 24),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 12),
+                DText.headline3(
+                  title,
+                  styleOverrides: const TextStyle(
+                    color: Colors.black,
+                    height: .9,
+                  ),
+                ),
+                TextButton.icon(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    alignment: Alignment.topCenter,
+                    visualDensity: VisualDensity.compact,
+                    // fixedSize: const Size(110, 48),
+                  ),
+                  onPressed: () {},
+                  icon: const Icon(Icons.remove_red_eye),
+                  label: const Text('View Online'),
+                ),
+              ],
+            ),
+            const Spacer(),
             Row(
               children: [
-                QrImage(
-                  data: 'https://google.com',
-                  size: 75,
-                ),
-                const SizedBox(width: 12),
-                ElevatedButton(
-                  onPressed: onPublish,
-                  child: const Text('Publish'),
+                SizedBox(
+                  width: 100,
+                  child: ElevatedButton(
+                    onPressed: onPublish,
+                    child: publishing
+                        ? SizedBox(
+                            height: 15,
+                            width: 15,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.green.shade50,
+                              ),
+                            ),
+                          )
+                        : const Text('Publish'),
+                  ),
                 ),
               ],
             ),
@@ -59,16 +104,6 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
       ),
     );
   }
-
-  @override
-  double get maxExtent => 100;
-
-  @override
-  double get minExtent => 100;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
-      true;
 }
 
 class MenuPreviewScreenArgs {
@@ -115,8 +150,12 @@ class _MenuPreviewScreenState extends State<MenuPreviewScreen> {
             listener: (context, state) {
               state.maybeWhen(
                 publishing: (_) {},
-                published: (_) {
-                  //
+                published: (menu) {
+                  Locator.instance<ToastService>().showOverlay(
+                    const Text(
+                      'Your menu has been published',
+                    ),
+                  );
                 },
                 error: (_, exception) {
                   DialogService.showErrorDialog(
@@ -133,8 +172,11 @@ class _MenuPreviewScreenState extends State<MenuPreviewScreen> {
                   pinned: true,
                   delegate: _MenuPreviewHeaderDelegate(
                     title: widget.args.menu.name,
+                    publishing: state.maybeWhen(
+                      publishing: (_) => true,
+                      orElse: () => false,
+                    ),
                     onPublish: () {
-                      log('JSON ${state.response.toJson()}');
                       context.read<CompiledMenuCubit>().publish();
                     },
                   ),

@@ -78,4 +78,16 @@ class StoreRepository {
       return left(const CustomException(message: 'Failed to create store'));
     }
   }
+
+  Future<void> update({required StoreModel store}) async {
+    try {
+      await _firebaseFirestore
+          .storesCollection()
+          .doc(store.id)
+          .update(store.toJson());
+    } catch (err) {
+      _loggerService.log('(update): ${err.toString()}');
+      throw const CustomException(message: 'Failed to update store.');
+    }
+  }
 }
