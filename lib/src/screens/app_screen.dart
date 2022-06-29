@@ -71,16 +71,7 @@ class _AppScreen extends HookWidget {
                 ),
               ),
               loaded: (store) {
-                final pages = {
-                  0: const MenusPage(),
-                  1: const OrdersPage(),
-                  2: const LocationsPage(),
-                  3: const StoreHoursPage(),
-                  4: const CustomersPage(),
-                  if (kDebugMode) ...{
-                    5: const DeveloperPage(),
-                  }
-                };
+                final pages = tabs.map((e) => e.value4).toList();
                 return Scaffold(
                   appBar: AppBar(
                     elevation: 1,
@@ -115,7 +106,7 @@ class _AppScreen extends HookWidget {
                     ],
                   ),
                   body: ScreenTypeLayout(
-                    mobile: pages[_selectedIndex.value]!,
+                    mobile: pages[_selectedIndex.value],
                     tablet: Row(
                       children: [
                         NavigationRail(
@@ -145,7 +136,7 @@ class _AppScreen extends HookWidget {
                           color: Colors.grey[200],
                           thickness: 7,
                         ),
-                        Expanded(child: pages[_selectedIndex.value]!),
+                        Expanded(child: pages[_selectedIndex.value]),
                       ],
                     ),
                     desktop: Row(
@@ -177,7 +168,7 @@ class _AppScreen extends HookWidget {
                           color: Colors.grey[200],
                           thickness: 7,
                         ),
-                        Expanded(child: pages[_selectedIndex.value]!),
+                        Expanded(child: pages[_selectedIndex.value]),
                       ],
                     ),
                   ),
