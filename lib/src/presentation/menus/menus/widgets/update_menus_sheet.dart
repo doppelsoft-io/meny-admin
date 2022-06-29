@@ -86,9 +86,9 @@ class _UpdateMenusSheet extends HookWidget {
             loaded: (menu) {
               controller.text = menu.name;
             },
-            success: (_) {
-              Locator.instance<ToastService>().showNotification(
-                const Text('Menu updated'),
+            success: (menu) {
+              Locator.instance<ToastService>().showOverlay(
+                Text('Your menu ${menu.name} has been saved'),
               );
               Navigator.pop(context);
             },
@@ -241,12 +241,15 @@ class _DeleteMenuButton extends StatelessWidget {
         deleteMenuState.maybeWhen(
           success: () {
             Navigator.of(context).pop();
-            ToastService.toast('Menu deleted');
+            Locator.instance<ToastService>().showOverlay(
+              const Text('Your menu has been deleted'),
+              ToastType.error,
+            );
           },
           error: (exception) {
-            Locator.instance<ToastService>().showNotification(
-              Text(exception.toString()),
-              ToastType.error,
+            DialogService.showErrorDialog(
+              context: context,
+              failure: CustomException(message: exception.toString()),
             );
           },
           orElse: () {},

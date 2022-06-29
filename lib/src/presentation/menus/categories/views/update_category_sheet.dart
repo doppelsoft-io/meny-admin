@@ -91,7 +91,12 @@ class _UpdateCategorySheet extends HookWidget {
       child: BlocConsumer<EditCategoryCubit, EditCategoryState>(
         listener: (context, editCategoryState) {
           editCategoryState.maybeWhen(
-            success: (_) => Navigator.pop(context),
+            success: (category) {
+              Navigator.pop(context);
+              Locator.instance<ToastService>().showOverlay(
+                Text('Your category ${category.name} has been saved'),
+              );
+            },
             error: (category, exception) {
               DialogService.showErrorDialog(
                 context: context,
@@ -308,15 +313,17 @@ class _DeleteCategoryButton extends StatelessWidget {
           success: () {
             Navigator.of(context).pop();
             if (category.name.isNotEmpty) {
-              ToastService.toast('Category deleted');
+              Locator.instance<ToastService>().showOverlay(
+                Text('Your category ${category.name} has been deleted'),
+                ToastType.error,
+              );
             }
           },
           error: (exception) {
             Navigator.of(context).pop();
-
-            Locator.instance<ToastService>().showNotification(
-              Text(exception.toString()),
-              ToastType.error,
+            DialogService.showErrorDialog(
+              context: context,
+              failure: CustomException(message: exception.toString()),
             );
           },
           orElse: () {},

@@ -214,7 +214,12 @@ class _UpdateModifierGroupSheet extends HookWidget {
         listenWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
         listener: (context, editModifierGroupState) {
           editModifierGroupState.maybeWhen(
-            success: (_) => Navigator.pop(context),
+            success: (group) {
+              Navigator.pop(context);
+              Locator.instance<ToastService>().showOverlay(
+                Text('Your modifier group ${group.name} has been saved'),
+              );
+            },
             error: (category, exception) {
               DialogService.showErrorDialog(
                 context: context,
@@ -621,11 +626,12 @@ class _ModifierGroupItem extends HookWidget {
     final priceDebouncer = DDebouncer(delay: const Duration(milliseconds: 300));
 
     void formatPrice(num price) {
-      controller
-        ..text = price.toCurrency(
+      TextEditingControllerHelper.setText(
+        controller,
+        price.toCurrency(
           excludeDollarSign: true,
-        )
-        ..selection = TextSelection.collapsed(offset: controller.text.length);
+        ),
+      );
     }
 
     useEffect(
@@ -812,14 +818,17 @@ class _DeleteModifierGroupButton extends StatelessWidget {
           success: () {
             Navigator.of(context).pop();
             if (group.name.isNotEmpty) {
-              ToastService.toast('Item deleted');
+              Locator.instance<ToastService>().showOverlay(
+                Text('Your modifier group ${group.name} has been deleted'),
+                ToastType.error,
+              );
             }
           },
           error: (exception) {
             Navigator.of(context).pop();
-            Locator.instance<ToastService>().showNotification(
-              Text(exception.toString()),
-              ToastType.error,
+            DialogService.showErrorDialog(
+              context: context,
+              failure: CustomException(message: exception.toString()),
             );
           },
           orElse: () {},

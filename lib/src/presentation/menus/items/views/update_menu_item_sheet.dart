@@ -126,7 +126,12 @@ class _UpdateMenuItemSheet extends HookWidget {
       child: BlocConsumer<EditMenuItemCubit, EditMenuItemState>(
         listener: (context, editMenuItemState) {
           editMenuItemState.maybeWhen(
-            success: (_) => Navigator.pop(context),
+            success: (item) {
+              Navigator.pop(context);
+              Locator.instance<ToastService>().showOverlay(
+                Text('Your item ${item.name} has been saved'),
+              );
+            },
             error: (category, exception) {
               DialogService.showErrorDialog(
                 context: context,
@@ -788,14 +793,17 @@ class _DeleteMenuItemButton extends StatelessWidget {
           success: () {
             Navigator.of(context).pop();
             if (item.name.isNotEmpty) {
-              ToastService.toast('Item deleted');
+              Locator.instance<ToastService>().showOverlay(
+                Text('Your item ${item.name} has been deleted'),
+                ToastType.error,
+              );
             }
           },
           error: (exception) {
             Navigator.of(context).pop();
-            Locator.instance<ToastService>().showNotification(
-              Text(exception.toString()),
-              ToastType.error,
+            DialogService.showErrorDialog(
+              context: context,
+              failure: CustomException(message: exception.toString()),
             );
           },
           orElse: () {},
