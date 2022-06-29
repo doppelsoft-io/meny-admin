@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/modifier_groups/modifier_groups.dart';
@@ -13,16 +12,13 @@ class EditModifierGroupCubit extends Cubit<EditModifierGroupState> {
   EditModifierGroupCubit({
     required StoreCubit storeCubit,
     ModifierGroupRepository? modifierGroupRepository,
-    FirebaseFirestore? firebaseFirestore,
   })  : _storeCubit = storeCubit,
         _modifierGroupRepository =
             modifierGroupRepository ?? Locator.instance(),
-        _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
         super(_Loading(group: ModifierGroupModel.empty()));
 
   final StoreCubit _storeCubit;
   final ModifierGroupRepository _modifierGroupRepository;
-  final FirebaseFirestore _firebaseFirestore;
 
   Future<void> loadItem(ModifierGroupModel group) async {
     if (group.id != null && group.id!.isNotEmpty) {
