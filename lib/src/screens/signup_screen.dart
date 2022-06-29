@@ -45,20 +45,20 @@ class SignupScreen extends HookWidget {
     final updatePassword = useValueListenable(passwordController);
 
     useEffect(() {
-      storeNameController
-        ..text = updateStoreName.text
-        ..selection =
-            TextSelection.collapsed(offset: storeNameController.text.length);
+      TextEditingControllerHelper.setText(
+        storeNameController,
+        updateStoreName.text,
+      );
 
-      emailController
-        ..text = updateEmail.text
-        ..selection =
-            TextSelection.collapsed(offset: emailController.text.length);
+      TextEditingControllerHelper.setText(
+        emailController,
+        updateEmail.text,
+      );
+      TextEditingControllerHelper.setText(
+        passwordController,
+        updatePassword.text,
+      );
 
-      passwordController
-        ..text = updatePassword.text
-        ..selection =
-            TextSelection.collapsed(offset: passwordController.text.length);
       return null;
     }, [
       updateStoreName,

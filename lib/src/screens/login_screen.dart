@@ -35,15 +35,15 @@ class LoginScreen extends HookWidget {
     final updatePassword = useValueListenable(passwordController);
 
     useEffect(() {
-      emailController
-        ..text = updateEmail.text
-        ..selection =
-            TextSelection.collapsed(offset: emailController.text.length);
+      TextEditingControllerHelper.setText(
+        emailController,
+        updateEmail.text,
+      );
 
-      passwordController
-        ..text = updatePassword.text
-        ..selection =
-            TextSelection.collapsed(offset: passwordController.text.length);
+      TextEditingControllerHelper.setText(
+        passwordController,
+        updatePassword.text,
+      );
       return null;
     }, [
       updateEmail,
