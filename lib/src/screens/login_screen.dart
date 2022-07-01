@@ -1,30 +1,30 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:meny_admin/app_router_web.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/login/login.dart';
-import 'package:meny_admin/src/screens/signup_screen.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
 import 'package:meny_admin/themes.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-class LoginScreen extends HookWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  static const String routeName = '/login';
-
-  static Route route() {
-    return MaterialPageRoute<Widget>(
-      builder: (context) {
-        return BlocProvider<LoginCubit>(
-          create: (context) => LoginCubit(),
-          child: const LoginScreen(),
-        );
-      },
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => LoginCubit(),
+      child: const _LoginScreen(),
     );
   }
+}
+
+class _LoginScreen extends HookWidget {
+  const _LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -184,9 +184,10 @@ class LoginScreen extends HookWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 24),
                   TextButton(
                     onPressed: () =>
-                        Navigator.of(context).pushNamed(SignupScreen.routeName),
+                        AutoRouter.of(context).push(const SignupScreenRoute()),
                     child: const Text("Don't have an account?"),
                   ),
                 ],

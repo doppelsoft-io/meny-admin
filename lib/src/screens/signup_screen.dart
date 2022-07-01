@@ -11,23 +11,22 @@ import 'package:meny_admin/src/utils/utils.dart';
 import 'package:meny_admin/themes.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-class SignupScreen extends HookWidget {
+class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
-  static const String routeName = '/signup';
-
-  static Route route() {
-    return MaterialPageRoute<Widget>(
-      builder: (context) {
-        return BlocProvider<SignupCubit>(
-          create: (context) => SignupCubit(
-            authCubit: context.read<AuthCubit>(),
-          ),
-          child: const SignupScreen(),
-        );
-      },
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => SignupCubit(
+        authCubit: context.read<AuthCubit>(),
+      ),
+      child: const _SignupScreen(),
     );
   }
+}
+
+class _SignupScreen extends HookWidget {
+  const _SignupScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -236,6 +235,7 @@ class SignupScreen extends HookWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 24),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Already have an account?'),
