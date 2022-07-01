@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "907023061822",
+    "project_id": "meny-admin-production",
+    "storage_bucket": "meny-admin-production.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907023061822:android:54d136c2ea9247f4bb526f",
+        "android_client_info": {
+          "package_name": "io.doppelsoft.meny"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "907023061822-i3rm99u01j6935o5k1a8eqr55n3sbcnm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEQETcehJJgg__wTrCMTbG_4vua3kOPsI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "907023061822-i3rm99u01j6935o5k1a8eqr55n3sbcnm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "907023061822-5r6lvebluh7mv1sh3oo0bm39hb7mb889.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.meny.admin.prod"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907023061822:android:9432741816ef0072bb526f",
+        "android_client_info": {
+          "package_name": "io.doppelsoft.menyAdmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "907023061822-i3rm99u01j6935o5k1a8eqr55n3sbcnm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEQETcehJJgg__wTrCMTbG_4vua3kOPsI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "907023061822-i3rm99u01j6935o5k1a8eqr55n3sbcnm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "907023061822-5r6lvebluh7mv1sh3oo0bm39hb7mb889.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.meny.admin.prod"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
