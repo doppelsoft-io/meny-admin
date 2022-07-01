@@ -47,7 +47,7 @@ class _MyStoreDetailsForm extends HookWidget {
         TextEditingControllerHelper.setText(storeNameController, store.name);
         return null;
       },
-      const [],
+      [store],
     );
 
     return Form(
