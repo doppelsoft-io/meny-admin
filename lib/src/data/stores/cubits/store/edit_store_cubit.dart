@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -14,10 +16,22 @@ class EditStoreCubit extends Cubit<EditStoreState> {
     StoreRepository? storeRepository,
   })  : _storeCubit = storeCubit,
         _storeRepository = storeRepository ?? Locator.instance(),
-        super(_Initial(store: StoreModel.empty()));
+        super(_Initial(store: StoreModel.empty())) {
+    _subscription?.cancel();
+    _subscription = _storeCubit.stream.listen((state) {
+      update(state.store);
+    });
+  }
 
   final StoreCubit _storeCubit;
   final StoreRepository _storeRepository;
+  StreamSubscription? _subscription;
+
+  @override
+  Future<void> close() {
+    _subscription?.cancel();
+    return super.close();
+  }
 
   void update(StoreModel store) => emit(state.copyWith(store: store));
 
