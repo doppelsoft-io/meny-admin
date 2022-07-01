@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.doppelsoft.meny_admin">
+    package="io.doppelsoft.menyAdmin">
    <application
         android:label="meny"
         android:icon="@mipmap/ic_launcher">

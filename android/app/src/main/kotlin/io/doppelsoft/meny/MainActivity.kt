@@ -1,4 +1,4 @@
-package io.doppelsoft.meny_admin
+package io.doppelsoft.menyAdmin
 
 import io.flutter.embedding.android.FlutterActivity
 
