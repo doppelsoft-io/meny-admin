@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "601796248290",
+    "project_id": "meny-admin-development",
+    "storage_bucket": "meny-admin-development.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601796248290:android:c55c939ada8555a33b14bb",
+        "android_client_info": {
+          "package_name": "io.doppelsoft.meny"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601796248290-f217o772lrp7b7l3p46icu7gp7irljth.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5v5EWNyV-F9_Abfsm6lZ2sdMYU7njM7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601796248290-f217o772lrp7b7l3p46icu7gp7irljth.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "601796248290-53qslb1k0g035c5kdcohsb6se35cb0ii.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.meny.development"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601796248290:android:2b8361e58cacf9693b14bb",
+        "android_client_info": {
+          "package_name": "io.doppelsoft.menyAdmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601796248290-f217o772lrp7b7l3p46icu7gp7irljth.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5v5EWNyV-F9_Abfsm6lZ2sdMYU7njM7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601796248290-f217o772lrp7b7l3p46icu7gp7irljth.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "601796248290-53qslb1k0g035c5kdcohsb6se35cb0ii.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.meny.development"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601796248290:android:3a6fce551e700c183b14bb",
+        "android_client_info": {
+          "package_name": "io.doppelsoft.meny_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601796248290-f217o772lrp7b7l3p46icu7gp7irljth.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5v5EWNyV-F9_Abfsm6lZ2sdMYU7njM7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601796248290-f217o772lrp7b7l3p46icu7gp7irljth.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "601796248290-53qslb1k0g035c5kdcohsb6se35cb0ii.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.meny.development"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
