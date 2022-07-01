@@ -26,12 +26,12 @@ class SplashScreen extends StatelessWidget {
         authState.maybeWhen(
           authenticated: (_) {
             Timer(const Duration(seconds: 1), () {
-              Navigator.of(context).pushNamed(AppScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(AppScreen.routeName);
             });
           },
           anonymous: (_) {
             Timer(const Duration(seconds: 1), () {
-              Navigator.of(context).pushNamed(AppScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(AppScreen.routeName);
             });
           },
           orElse: () {},
