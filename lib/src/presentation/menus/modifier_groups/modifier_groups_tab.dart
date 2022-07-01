@@ -20,8 +20,9 @@ class ModifierGroupsTab extends StatelessWidget {
       child: BlocListener<StoreCubit, StoreState>(
         listener: (context, state) {
           state.maybeWhen(
-            loaded: (store) =>
-                context.read<ModifierGroupsCubit>().load(storeId: store.id!),
+            loaded: (store) {
+              context.read<ModifierGroupsCubit>().load(storeId: store.id!);
+            },
             orElse: () {},
           );
         },

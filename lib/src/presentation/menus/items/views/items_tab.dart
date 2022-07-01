@@ -34,16 +34,21 @@ class _MenusItemsTab extends HookWidget {
     useEffect(
       () {
         final storeCubit = context.read<StoreCubit>();
-        final storeId = storeCubit.state.store.id!;
-        context.read<MenuItemsCubit>().load(storeId: storeId);
+        final storeId = storeCubit.state.store.id;
+        if (storeId != null) {
+          context.read<MenuItemsCubit>().load(storeId: storeId);
+        }
         return null;
       },
       const [],
     );
     return BlocListener<StoreCubit, StoreState>(
       listenWhen: (prev, curr) => prev.store != curr.store,
-      listener: (context, state) =>
-          context.read<MenuItemsCubit>()..load(storeId: state.store.id!),
+      listener: (context, state) {
+        if (state.store.id != null) {
+          context.read<MenuItemsCubit>().load(storeId: state.store.id!);
+        }
+      },
       child: menuItemsState.maybeWhen(
         loaded: (items) {
           return SingleChildScrollView(
