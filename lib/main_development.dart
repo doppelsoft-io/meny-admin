@@ -5,9 +5,13 @@ import 'package:meny_admin/app.dart';
 import 'package:meny_admin/firebase_options_dev.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_admin/web_url_strategy.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (UniversalPlatform.isWeb) configureUrl();
 
   // final localhost = UniversalPlatform.isAndroid ? '10.0.2.2' : 'localhost';
 
@@ -28,5 +32,5 @@ Future<void> main() async {
   await Locator.setup();
   await HiveService.configure();
 
-  runApp(const App(environment: AppEnvironment.development));
+  runApp(App(environment: AppEnvironment.development));
 }

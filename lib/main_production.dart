@@ -5,9 +5,14 @@ import 'package:meny_admin/app.dart';
 import 'package:meny_admin/firebase_options_prod.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_admin/web_url_strategy.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (UniversalPlatform.isWeb) configureUrl();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -15,5 +20,5 @@ Future<void> main() async {
   await Locator.setup();
   await HiveService.configure();
 
-  runApp(const App(environment: AppEnvironment.production));
+  runApp(App(environment: AppEnvironment.production));
 }
