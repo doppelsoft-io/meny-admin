@@ -8,12 +8,14 @@ class PageActionButton extends StatelessWidget {
     this.mobileTitle,
     this.iconData,
     required this.onPressed,
+    this.isDisabled = false,
   }) : super(key: key);
 
   final String title;
   final String? mobileTitle;
   final IconData? iconData;
   final Function() onPressed;
+  final bool isDisabled;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class PageActionButton extends StatelessWidget {
       tablet: ElevatedButton.icon(
         label: Text(mobileTitle ?? title),
         icon: Icon(iconData ?? Icons.add),
-        onPressed: onPressed,
+        onPressed: isDisabled ? null : onPressed,
         style: const ButtonStyle(
           visualDensity: VisualDensity.comfortable,
         ),
@@ -29,7 +31,7 @@ class PageActionButton extends StatelessWidget {
       mobile: ElevatedButton.icon(
         label: Text(mobileTitle ?? title),
         icon: Icon(iconData ?? Icons.add),
-        onPressed: onPressed,
+        onPressed: isDisabled ? null : onPressed,
         style: const ButtonStyle(
           visualDensity: VisualDensity.compact,
         ),
@@ -37,7 +39,7 @@ class PageActionButton extends StatelessWidget {
       desktop: ElevatedButton.icon(
         label: Text(title),
         icon: Icon(iconData ?? Icons.add),
-        onPressed: onPressed,
+        onPressed: isDisabled ? null : onPressed,
         style: const ButtonStyle(
           visualDensity: VisualDensity.standard,
         ),
