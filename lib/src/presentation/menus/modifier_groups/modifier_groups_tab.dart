@@ -10,8 +10,8 @@ import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
-class ModifierGroupsTab extends StatelessWidget {
-  const ModifierGroupsTab({Key? key}) : super(key: key);
+class MenusScreenModifierGroupsTab extends StatelessWidget {
+  const MenusScreenModifierGroupsTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +26,14 @@ class ModifierGroupsTab extends StatelessWidget {
             orElse: () {},
           );
         },
-        child: const _ModifierGroupsTab(),
+        child: const _MenusScreenModifierGroupsTab(),
       ),
     );
   }
 }
 
-class _ModifierGroupsTab extends HookWidget {
-  const _ModifierGroupsTab({Key? key}) : super(key: key);
+class _MenusScreenModifierGroupsTab extends HookWidget {
+  const _MenusScreenModifierGroupsTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,8 @@ class _ModifierGroupsTab extends HookWidget {
                         resource: ModifierGroupModel.empty(),
                       ),
                       () => AnalyticsService.track(
-                        message: Analytics.modifierGroupsTabNewTapped,
+                        message:
+                            Analytics.modifierGroupsTabModifierGroupSelected,
                       ),
                     );
                   },
@@ -79,7 +80,6 @@ class _ModifierGroupsTab extends HookWidget {
               ],
               columns: [
                 const DTableHeader(name: 'Name'),
-                // const DTableHeader(name: 'Price'),
                 const DTableHeader(name: 'Last Updated'),
               ],
               source: DTableDataSource(
@@ -89,7 +89,7 @@ class _ModifierGroupsTab extends HookWidget {
                     children: [
                       const Divider(height: kMinInteractiveDimension),
                       DText.bodyText1(
-                        'No modifier groups yet. Click "New" above to add a menu',
+                        'No modifier groups yet. Click "New" above to add a modifier group',
                       ),
                       const Divider(height: kMinInteractiveDimension),
                     ],
