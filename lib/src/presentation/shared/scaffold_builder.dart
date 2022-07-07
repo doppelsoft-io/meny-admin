@@ -26,6 +26,7 @@ class ScaffoldBuilder extends StatelessWidget {
   factory ScaffoldBuilder.loading() {
     return ScaffoldBuilder(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         centerTitle: false,
         iconTheme: const IconThemeData(color: Colors.black),
