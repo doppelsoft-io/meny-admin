@@ -44,7 +44,8 @@ class App extends StatelessWidget {
                 ),
               ),
             ),
-            maxWidth: 1600,
+            // maxWidth: 1200,
+            minWidth: 480,
             defaultScale: true,
             breakpoints: const [
               ResponsiveBreakpoint.resize(350, name: MOBILE),
