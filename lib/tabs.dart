@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meny_admin/src/presentation/menus/menus_page.dart';
+import 'package:meny_admin/src/presentation/menus/views/menus_screen.dart';
 
 import 'package:meny_admin/src/presentation/my_store/my_store.dart';
 
@@ -10,13 +10,13 @@ const tabs = <TabTypeDef>[
   TabTypeDef(
     FontAwesomeIcons.utensils,
     FontAwesomeIcons.utensils,
-    'Menus',
-    MenusPage(),
+    'Menu',
+    MenusScreen(),
   ),
   TabTypeDef(
     FontAwesomeIcons.store,
     FontAwesomeIcons.store,
-    'My Store',
+    'Store',
     MyStoreScreen(),
   ),
 ];
