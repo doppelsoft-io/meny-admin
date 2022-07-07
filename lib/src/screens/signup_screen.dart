@@ -6,6 +6,7 @@ import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/auth/auth.dart';
 import 'package:meny_admin/src/data/signup/signup.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
+import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
 import 'package:meny_admin/themes.dart';
@@ -92,8 +93,15 @@ class _SignupScreen extends HookWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Signup'),
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(
+              getValueForScreenType<double>(
+                context: context,
+                mobile: kToolbarHeight,
+                desktop: 76,
+              ),
+            ),
+            child: const AppHeader(),
           ),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(
