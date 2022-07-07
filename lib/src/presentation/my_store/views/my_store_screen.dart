@@ -24,6 +24,7 @@ class _MyStorePage extends HookWidget {
     ];
 
     return DefaultTabController(
+      animationDuration: Duration.zero,
       length: tabs.length,
       child: Scaffold(
         appBar: AppBar(
@@ -32,6 +33,7 @@ class _MyStorePage extends HookWidget {
           centerTitle: false,
           automaticallyImplyLeading: false,
           flexibleSpace: TabBar(
+            physics: const NeverScrollableScrollPhysics(),
             // onTap: (index) => ActionService.run(
             //   () => null,
             //   () => AnalyticsService.track(
