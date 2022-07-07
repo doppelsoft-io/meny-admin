@@ -2,6 +2,10 @@ part of 'edit_menu_cubit.dart';
 
 @freezed
 class EditMenuState with _$EditMenuState {
+  const factory EditMenuState.initial({
+    required MenuModel menu,
+  }) = _Initial;
+
   const factory EditMenuState.loading({
     required MenuModel menu,
   }) = _Loading;

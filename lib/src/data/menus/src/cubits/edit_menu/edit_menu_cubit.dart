@@ -14,31 +14,27 @@ class EditMenuCubit extends Cubit<EditMenuState> {
     MenuRepository? menuRepository,
   })  : _storeCubit = storeCubit,
         _menuRepository = menuRepository ?? Locator.instance(),
-        super(_Loading(menu: MenuModel.empty()));
+        super(_Initial(menu: MenuModel.empty()));
 
   final MenuRepository _menuRepository;
   final StoreCubit _storeCubit;
 
-  Future<void> loadMenu({required MenuModel menu}) async {
-    if (menu.id != null && menu.id!.isNotEmpty) {
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+  Future<void> loadMenu({required String id}) async {
+    emit(_Loading(menu: state.menu));
+    try {
+      final storeId = _storeCubit.state.store.id!;
+      final menu = await _menuRepository.get(
+        storeId: storeId,
+        id: id,
+      );
       emit(_Loaded(menu: menu));
-    } else {
-      try {
-        final storeId = _storeCubit.state.store.id!;
-        final newMenu = await _menuRepository.create(
-          storeId: storeId,
-          resource: menu.copyWith(createdAt: DateTime.now()),
-        );
-        emit(_Loaded(menu: newMenu));
-      } on CreateMenuException catch (err) {
-        emit(
-          _Error(
-            menu: menu,
-            exception: err,
-          ),
-        );
-      }
+    } on GetMenuException catch (err) {
+      emit(
+        _Error(
+          menu: state.menu,
+          exception: err,
+        ),
+      );
     }
   }
 

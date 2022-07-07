@@ -19,6 +19,7 @@ mixin _$EditMenuState {
   MenuModel get menu => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(MenuModel menu) initial,
     required TResult Function(MenuModel menu) loading,
     required TResult Function(MenuModel menu) loaded,
     required TResult Function(MenuModel menu) updating,
@@ -28,6 +29,7 @@ mixin _$EditMenuState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -37,6 +39,7 @@ mixin _$EditMenuState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -47,6 +50,7 @@ mixin _$EditMenuState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
@@ -56,6 +60,7 @@ mixin _$EditMenuState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
@@ -65,6 +70,7 @@ mixin _$EditMenuState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
@@ -116,6 +122,169 @@ class _$EditMenuStateCopyWithImpl<$Res>
       return _then(_value.copyWith(menu: value));
     });
   }
+}
+
+/// @nodoc
+abstract class _$$_InitialCopyWith<$Res>
+    implements $EditMenuStateCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
+  @override
+  $Res call({MenuModel menu});
+
+  @override
+  $MenuModelCopyWith<$Res> get menu;
+}
+
+/// @nodoc
+class __$$_InitialCopyWithImpl<$Res> extends _$EditMenuStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
+
+  @override
+  _$_Initial get _value => super._value as _$_Initial;
+
+  @override
+  $Res call({
+    Object? menu = freezed,
+  }) {
+    return _then(_$_Initial(
+      menu: menu == freezed
+          ? _value.menu
+          : menu // ignore: cast_nullable_to_non_nullable
+              as MenuModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Initial implements _Initial {
+  const _$_Initial({required this.menu});
+
+  @override
+  final MenuModel menu;
+
+  @override
+  String toString() {
+    return 'EditMenuState.initial(menu: $menu)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Initial &&
+            const DeepCollectionEquality().equals(other.menu, menu));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(menu));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(MenuModel menu) initial,
+    required TResult Function(MenuModel menu) loading,
+    required TResult Function(MenuModel menu) loaded,
+    required TResult Function(MenuModel menu) updating,
+    required TResult Function(MenuModel menu) success,
+    required TResult Function(MenuModel menu, Exception exception) error,
+  }) {
+    return initial(menu);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
+    TResult Function(MenuModel menu)? loading,
+    TResult Function(MenuModel menu)? loaded,
+    TResult Function(MenuModel menu)? updating,
+    TResult Function(MenuModel menu)? success,
+    TResult Function(MenuModel menu, Exception exception)? error,
+  }) {
+    return initial?.call(menu);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
+    TResult Function(MenuModel menu)? loading,
+    TResult Function(MenuModel menu)? loaded,
+    TResult Function(MenuModel menu)? updating,
+    TResult Function(MenuModel menu)? success,
+    TResult Function(MenuModel menu, Exception exception)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(menu);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Updating value) updating,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Error value) error,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Updating value)? updating,
+    TResult Function(_Success value)? success,
+    TResult Function(_Error value)? error,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Updating value)? updating,
+    TResult Function(_Success value)? success,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Initial implements EditMenuState {
+  const factory _Initial({required final MenuModel menu}) = _$_Initial;
+
+  @override
+  MenuModel get menu => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -186,6 +355,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(MenuModel menu) initial,
     required TResult Function(MenuModel menu) loading,
     required TResult Function(MenuModel menu) loaded,
     required TResult Function(MenuModel menu) updating,
@@ -198,6 +368,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -210,6 +381,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -226,6 +398,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
@@ -238,6 +411,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
@@ -250,6 +424,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
@@ -342,6 +517,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(MenuModel menu) initial,
     required TResult Function(MenuModel menu) loading,
     required TResult Function(MenuModel menu) loaded,
     required TResult Function(MenuModel menu) updating,
@@ -354,6 +530,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -366,6 +543,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -382,6 +560,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
@@ -394,6 +573,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
@@ -406,6 +586,7 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
@@ -500,6 +681,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(MenuModel menu) initial,
     required TResult Function(MenuModel menu) loading,
     required TResult Function(MenuModel menu) loaded,
     required TResult Function(MenuModel menu) updating,
@@ -512,6 +694,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -524,6 +707,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -540,6 +724,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
@@ -552,6 +737,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
@@ -564,6 +750,7 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
@@ -657,6 +844,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(MenuModel menu) initial,
     required TResult Function(MenuModel menu) loading,
     required TResult Function(MenuModel menu) loaded,
     required TResult Function(MenuModel menu) updating,
@@ -669,6 +857,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -681,6 +870,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -697,6 +887,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
@@ -709,6 +900,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
@@ -721,6 +913,7 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
@@ -822,6 +1015,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(MenuModel menu) initial,
     required TResult Function(MenuModel menu) loading,
     required TResult Function(MenuModel menu) loaded,
     required TResult Function(MenuModel menu) updating,
@@ -834,6 +1028,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -846,6 +1041,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(MenuModel menu)? initial,
     TResult Function(MenuModel menu)? loading,
     TResult Function(MenuModel menu)? loaded,
     TResult Function(MenuModel menu)? updating,
@@ -862,6 +1058,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Updating value) updating,
@@ -874,6 +1071,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
@@ -886,6 +1084,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Updating value)? updating,
