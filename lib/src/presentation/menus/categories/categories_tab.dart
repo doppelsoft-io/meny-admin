@@ -10,19 +10,19 @@ import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
-class MenusCategoriesTab extends StatelessWidget {
-  const MenusCategoriesTab({Key? key}) : super(key: key);
+class MenusScreenCategoriesTab extends StatelessWidget {
+  const MenusScreenCategoriesTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ResourcesCubit>(
       create: (context) => ResourcesCubit<CategoryModel>.use(),
-      child: _MenusCategoriesTab(),
+      child: _MenusScreenCategoriesTab(),
     );
   }
 }
 
-class _MenusCategoriesTab extends HookWidget {
+class _MenusScreenCategoriesTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final categoriesState = context.watch<ResourcesCubit>().state;
