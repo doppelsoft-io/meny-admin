@@ -28,30 +28,47 @@ class AppHeader extends StatelessWidget {
       mobile: AppBar(
         elevation: 1,
         automaticallyImplyLeading: false,
-        title: Text(title),
+        title: GestureDetector(
+          onTap: () {
+            AutoRouter.of(context).pushAndPopUntil(
+              const AppScreenRoute(),
+              predicate: (Route<dynamic> route) => false,
+            );
+          },
+          child: Text(title),
+        ),
         centerTitle: false,
         actions: const [
           Center(child: AuthActions()),
         ],
       ),
-      desktop: Container(
-        height: 76,
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        color: Themes.colorScheme.primary,
-        child: Row(
-          children: [
-            DText.headline4(
-              title,
-              styleOverrides: TextStyle(
-                color: Themes.colorScheme.onPrimary,
+      desktop: Material(
+        color: Themes.colorScheme.onPrimary,
+        elevation: 1,
+        child: Container(
+          height: 76,
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          decoration: const BoxDecoration(),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  AutoRouter.of(context).pushAndPopUntil(
+                    const AppScreenRoute(),
+                    predicate: (Route<dynamic> route) => false,
+                  );
+                },
+                child: DText.headline4(
+                  title,
+                  styleOverrides: TextStyle(
+                    color: Themes.colorScheme.primary,
+                  ),
+                ),
               ),
-            ),
-            const Spacer(),
-            const Padding(
-              padding: EdgeInsets.only(right: 24),
-              child: AuthActions(),
-            ),
-          ],
+              const Spacer(),
+              const AuthActions(),
+            ],
+          ),
         ),
       ),
     );
@@ -83,17 +100,10 @@ class AuthActions extends HookWidget {
           onPressed: () {
             AutoRouter.of(context).push(const LoginScreenRoute());
           },
-          child: Text(
+          child: DText.subtitle1(
             'Log in',
-            style: TextStyle(
-              color: getValueForScreenType<Color>(
-                context: context,
-                mobile: Themes.colorScheme.primary,
-                desktop: Themes.colorScheme.onPrimary,
-              ),
-              // color: UniversalPlatform.isDesktop
-              //     ? Themes.colorScheme.onPrimary
-              //     : Themes.colorScheme.primary,
+            styleOverrides: TextStyle(
+              color: Themes.colorScheme.primary,
             ),
           ),
         );
