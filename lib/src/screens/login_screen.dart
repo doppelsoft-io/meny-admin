@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:meny_admin/app_router_web.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/login/login.dart';
+import 'package:meny_admin/src/presentation/shared/app_header.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
 import 'package:meny_admin/themes.dart';
@@ -72,8 +73,15 @@ class _LoginScreen extends HookWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Log In'),
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(
+              getValueForScreenType<double>(
+                context: context,
+                mobile: kToolbarHeight,
+                desktop: 76,
+              ),
+            ),
+            child: const AppHeader(),
           ),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(
