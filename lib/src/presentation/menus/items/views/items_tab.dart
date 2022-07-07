@@ -10,8 +10,8 @@ import 'package:meny_admin/src/presentation/shared/shared.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
-class MenusItemsTab extends StatelessWidget {
-  const MenusItemsTab({Key? key}) : super(key: key);
+class MenusScreenItemsTab extends StatelessWidget {
+  const MenusScreenItemsTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +21,12 @@ class MenusItemsTab extends StatelessWidget {
           create: (context) => MenuItemsCubit(),
         ),
       ],
-      child: _MenusItemsTab(),
+      child: _MenusScreenItemsTab(),
     );
   }
 }
 
-class _MenusItemsTab extends HookWidget {
+class _MenusScreenItemsTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final menuItemsState = context.watch<MenuItemsCubit>().state;
