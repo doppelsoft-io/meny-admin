@@ -66,6 +66,9 @@ class _MyStoreDetailsForm extends HookWidget {
                 value,
                 message: 'Please enter a name for your store',
               ),
+              decoration: const InputDecoration(
+                hintText: 'Add a name for your store',
+              ),
             ),
           ),
         ],
