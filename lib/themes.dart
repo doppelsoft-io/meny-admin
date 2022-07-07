@@ -94,7 +94,7 @@ class Themes {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        // visualDensity: VisualDensity.adaptivePlatformDensity,
+        visualDensity: VisualDensity.standard,
         shape: MaterialStateProperty.resolveWith<RoundedRectangleBorder>(
           (states) {
             return RoundedRectangleBorder(
@@ -122,22 +122,23 @@ class Themes {
       horizontalMargin: 5,
     ),
     navigationRailTheme: NavigationRailThemeData(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.white,
+      indicatorColor: Colors.white,
       selectedIconTheme: IconThemeData(
-        size: 28,
+        size: 16,
         color: primaryColor,
       ),
-      selectedLabelTextStyle: secondaryTextStyle.copyWith(
+      selectedLabelTextStyle: textTheme.headline5!.copyWith(
         color: primaryColor,
-        fontWeight: FontWeight.w700,
+        fontSize: 16,
       ),
       unselectedIconTheme: IconThemeData(
-        size: 28,
+        size: 16,
         color: Colors.grey[700],
       ),
-      unselectedLabelTextStyle: secondaryTextStyle.copyWith(
+      unselectedLabelTextStyle: textTheme.headline5!.copyWith(
         color: Colors.grey[700],
-        fontWeight: FontWeight.w700,
+        fontSize: 16,
       ),
     ),
     scaffoldBackgroundColor: Colors.white,
