@@ -19,27 +19,21 @@ class EditMenuItemCubit extends Cubit<EditMenuItemState> {
   final MenuItemRepository _menuItemRepository;
   final StoreCubit _storeCubit;
 
-  Future<void> loadItem(MenuItemModel item) async {
-    if (item.id != null && item.id!.isNotEmpty) {
-      /// Needed to trigger loaded event in listener
-      await Future<void>.delayed(const Duration(milliseconds: 300));
-      emit(_Loaded(item: item));
-    } else {
-      try {
-        final storeId = _storeCubit.state.store.id!;
-        final newItem = await _menuItemRepository.create(
-          storeId: storeId,
-          resource: item.copyWith(createdAt: DateTime.now()),
-        );
-        emit(_Loaded(item: newItem));
-      } on CreateMenuItemException catch (err) {
-        emit(
-          _Error(
-            item: item,
-            exception: err,
-          ),
-        );
-      }
+  Future<void> loadItem({required String id}) async {
+    try {
+      final storeId = _storeCubit.state.store.id!;
+      final newItem = await _menuItemRepository.get(
+        storeId: storeId,
+        id: id,
+      );
+      emit(_Loaded(item: newItem));
+    } on CreateMenuItemException catch (err) {
+      emit(
+        _Error(
+          item: state.item,
+          exception: err,
+        ),
+      );
     }
   }
 

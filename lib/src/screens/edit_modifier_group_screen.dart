@@ -9,7 +9,6 @@ import 'package:meny_admin/src/data/modifier_group_items/modifier_group_items.da
 import 'package:meny_admin/src/data/modifier_groups/modifier_groups.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
-import 'package:meny_admin/src/presentation/sheet_args.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
 import 'package:meny_admin/themes.dart';
@@ -31,8 +30,8 @@ extension MaxItemChoiceX on MaxItemChoice {
   }
 }
 
-class UpdateModifierGroupSheetParams {
-  UpdateModifierGroupSheetParams({
+class EditModifierGroupScreenParams {
+  EditModifierGroupScreenParams({
     required this.nameController,
     required this.descriptionController,
     required this.priceController,
@@ -69,64 +68,45 @@ class UpdateModifierGroupSheetParams {
   }
 }
 
-class UpdateModifierGroupSheet extends StatelessWidget {
-  const UpdateModifierGroupSheet({
+class EditModifierGroupScreen extends StatelessWidget {
+  const EditModifierGroupScreen({
     Key? key,
-    required this.resource,
+    required this.id,
   }) : super(key: key);
 
-  final ModifierGroupModel resource;
+  final String id;
 
-  static const String routeName = '/updateModifierGroup';
+  static const String routeName = 'edit-modifier-group';
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  static Route route(SheetArgs args) {
-    return MaterialPageRoute<Widget>(
-      fullscreenDialog: true,
-      builder: (context) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider<EditModifierGroupCubit>(
-              create: (context) => EditModifierGroupCubit(
-                storeCubit: context.read<StoreCubit>(),
-              )..loadItem(args.resource as ModifierGroupModel),
-            ),
-            BlocProvider<ModifierGroupItemsCubit>(
-              create: (context) => ModifierGroupItemsCubit(
-                storeCubit: context.read<StoreCubit>(),
-              ),
-            ),
-            BlocProvider<DeleteModifierGroupCubit>(
-              create: (context) => DeleteModifierGroupCubit(
-                storeCubit: context.read<StoreCubit>(),
-              ),
-            ),
-          ],
-          child: const _UpdateModifierGroupSheet(),
-        );
-      },
-    );
-  }
-
-  static Future<Object?> open({
-    required BuildContext context,
-    required ModifierGroupModel resource,
-  }) {
-    return Navigator.of(context).pushNamed(
-      UpdateModifierGroupSheet.routeName,
-      arguments: SheetArgs(resource: resource),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<EditModifierGroupCubit>(
+          create: (context) => EditModifierGroupCubit(
+            storeCubit: context.read<StoreCubit>(),
+          )..loadItem(id: id),
+        ),
+        BlocProvider<ModifierGroupItemsCubit>(
+          create: (context) => ModifierGroupItemsCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
+        ),
+        BlocProvider<DeleteModifierGroupCubit>(
+          create: (context) => DeleteModifierGroupCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
+        ),
+      ],
+      child: const _EditModifierGroupScreen(),
+    );
   }
 }
 
-class _UpdateModifierGroupSheet extends HookWidget {
-  const _UpdateModifierGroupSheet({Key? key}) : super(key: key);
+class _EditModifierGroupScreen extends HookWidget {
+  const _EditModifierGroupScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +117,7 @@ class _UpdateModifierGroupSheet extends HookWidget {
     final deleteModifierGroupState =
         context.watch<DeleteModifierGroupCubit>().state;
 
-    final params = UpdateModifierGroupSheetParams(
+    final params = EditModifierGroupScreenParams(
       nameController:
           useTextEditingController(text: editModifierGroupState.group.name),
       descriptionController: useTextEditingController(),
@@ -272,7 +252,7 @@ class _UpdateModifierGroupSheet extends HookWidget {
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
-                          final isValid = UpdateModifierGroupSheet
+                          final isValid = EditModifierGroupScreen
                               ._formKey.currentState!
                               .validate();
 
@@ -293,7 +273,7 @@ class _UpdateModifierGroupSheet extends HookWidget {
                 body: SingleChildScrollView(
                   padding: const EdgeInsets.all(Spacing.pageSpacing),
                   child: Form(
-                    key: UpdateModifierGroupSheet._formKey,
+                    key: EditModifierGroupScreen._formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -541,7 +521,7 @@ class _UpdateModifierGroupSheet extends HookWidget {
 
   void _setInitialValues(
     BuildContext context,
-    UpdateModifierGroupSheetParams params,
+    EditModifierGroupScreenParams params,
   ) {
     context.read<EditModifierGroupCubit>().state.maybeWhen(
           loaded: (group) {

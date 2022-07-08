@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:meny_admin/src/data/menus/menus.dart';
+import 'package:meny_admin/src/data/menu_items/menu_items.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
 
-class NewMenuButton extends StatelessWidget {
-  const NewMenuButton({Key? key}) : super(key: key);
+class NewMenuItemButton extends StatelessWidget {
+  const NewMenuItemButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: context.read<CreateMenuCubit>(),
-      child: const _NewMenuButton(),
+      value: context.read<CreateMenuItemCubit>(),
+      child: const _NewMenuItemButton(),
     );
   }
 }
 
-class _NewMenuButton extends HookWidget {
-  const _NewMenuButton({Key? key}) : super(key: key);
+class _NewMenuItemButton extends HookWidget {
+  const _NewMenuItemButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final createMenuState = context.watch<CreateMenuCubit>().state;
+    final state = context.watch<CreateMenuItemCubit>().state;
 
     return PageActionButton(
       title: 'New',
-      isDisabled: createMenuState.maybeWhen(
+      isDisabled: state.maybeWhen(
         orElse: () => false,
         creating: (_) => true,
       ),
       onPressed: () {
-        context.read<CreateMenuCubit>().create();
+        context.read<CreateMenuItemCubit>().create();
       },
     );
   }

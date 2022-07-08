@@ -7,7 +7,6 @@ import 'package:meny_admin/src/data/ingredients/ingredients.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/menus/menus.dart';
 import 'package:meny_admin/src/services/services.dart';
-import 'package:meny_core/meny_core.dart';
 
 class IngredientsTab extends StatelessWidget {
   const IngredientsTab({Key? key}) : super(key: key);
@@ -56,12 +55,13 @@ class _IngredientsTab extends HookWidget {
             delegate: MenusPagePersistentHeaderDelegate(
               title: 'Ingredients',
               onNewPressed: () => ActionService.run(
-                () => UpdateMenuItemSheet.open(
-                  context: context,
-                  resource: MenuItemModel.empty().copyWith(
-                    type: MenuItemType.ingredient,
-                  ),
-                ),
+                // () => UpdateMenuItemSheet.open(
+                //   context: context,
+                //   resource: MenuItemModel.empty().copyWith(
+                //     type: MenuItemType.ingredient,
+                //   ),
+                // ),
+                () {},
                 () => AnalyticsService.track(
                   message: Analytics.ingredientsTabNewTapped,
                 ),
@@ -114,10 +114,11 @@ class _IngredientsTab extends HookWidget {
                         (e) => DataRow(
                           onSelectChanged: (selected) {
                             ActionService.run(
-                              () => UpdateMenuItemSheet.open(
-                                context: context,
-                                resource: e,
-                              ),
+                              // () => UpdateMenuItemSheet.open(
+                              //   context: context,
+                              //   resource: e,
+                              // ),
+                              () {},
                               () => AnalyticsService.track(
                                 message:
                                     Analytics.ingredientsTabIngredientSelected,

@@ -2,21 +2,30 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/data/modifier_groups/modifier_groups.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
-import 'package:meny_admin/src/presentation/menus/menus.dart';
-import 'package:meny_admin/src/presentation/shared/shared.dart';
+import 'package:meny_admin/src/presentation/menus/modifier_groups/widgets/new_modifier_group_button.dart';
+import 'package:meny_admin/src/screens/screens.dart';
 import 'package:meny_admin/src/services/services.dart';
-import 'package:meny_core/meny_core.dart';
 
 class MenusScreenModifierGroupsTab extends StatelessWidget {
   const MenusScreenModifierGroupsTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ModifierGroupsCubit>(
-      create: (context) => ModifierGroupsCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ModifierGroupsCubit>(
+          create: (context) => ModifierGroupsCubit(),
+        ),
+        BlocProvider<CreateModifierGroupCubit>(
+          create: (context) => CreateModifierGroupCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
+        ),
+      ],
       child: BlocListener<StoreCubit, StoreState>(
         listener: (context, state) {
           state.maybeWhen(
@@ -50,100 +59,119 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
       },
       const [],
     );
-    return SingleChildScrollView(
-      child: modifierGroupsState.maybeWhen(
-        loading: (_) => Column(
-          children: const [
-            LinearProgressIndicator(),
-          ],
-        ),
-        loaded: (modifierGroups) {
-          return DTable(
-            args: DTableArgs(
-              header: DText.headline5('Modifier Groups'),
-              actions: [
-                PageActionButton(
-                  title: 'New',
-                  onPressed: () {
-                    ActionService.run(
-                      () => UpdateModifierGroupSheet.open(
-                        context: context,
-                        resource: ModifierGroupModel.empty(),
-                      ),
-                      () => AnalyticsService.track(
-                        message:
-                            Analytics.modifierGroupsTabModifierGroupSelected,
-                      ),
+    return BlocListener<CreateModifierGroupCubit, CreateModifierGroupState>(
+      listener: (context, state) {
+        state.maybeWhen(
+          orElse: () {},
+          creating: (_) {
+            showDialog<void>(
+              context: context,
+              useRootNavigator: false,
+              barrierDismissible: false,
+              barrierColor: Colors.black12,
+              builder: (_) => WillPopScope(
+                onWillPop: () async => false,
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            );
+          },
+          created: (menu) {
+            Navigator.of(context).pop();
+            GoRouter.of(context).pushNamed(
+              EditModifierGroupScreen.routeName,
+              params: {
+                'id': menu.id!,
+              },
+            );
+          },
+        );
+      },
+      child: SingleChildScrollView(
+        child: modifierGroupsState.maybeWhen(
+          loading: (_) => Column(
+            children: const [
+              LinearProgressIndicator(),
+            ],
+          ),
+          loaded: (modifierGroups) {
+            return DTable(
+              args: DTableArgs(
+                header: DText.headline5('Modifier Groups'),
+                actions: [
+                  const NewModifierGroupButton(),
+                ],
+                columns: [
+                  const DTableHeader(name: 'Name'),
+                  const DTableHeader(name: 'Last Updated'),
+                ],
+                source: DTableDataSource(
+                  emptyBuilder: (_) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Divider(height: kMinInteractiveDimension),
+                        DText.bodyText1(
+                          'No modifier groups yet. Click "New" above to add a modifier group',
+                        ),
+                        const Divider(height: kMinInteractiveDimension),
+                      ],
                     );
                   },
-                ),
-              ],
-              columns: [
-                const DTableHeader(name: 'Name'),
-                const DTableHeader(name: 'Last Updated'),
-              ],
-              source: DTableDataSource(
-                emptyBuilder: (_) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Divider(height: kMinInteractiveDimension),
-                      DText.bodyText1(
-                        'No modifier groups yet. Click "New" above to add a modifier group',
-                      ),
-                      const Divider(height: kMinInteractiveDimension),
-                    ],
-                  );
-                },
-                rows: modifierGroups
-                    .map(
-                      (e) => DTableRow(
-                        onSelectChanged: (selected) {
-                          ActionService.run(
-                            () => UpdateModifierGroupSheet.open(
-                              context: context,
-                              resource: e,
-                            ),
-                            () => AnalyticsService.track(
-                              message: Analytics
-                                  .modifierGroupsTabModifierGroupSelected,
-                              params: {
-                                'groupId': e.id!,
-                                'groupName': e.name,
+                  rows: modifierGroups
+                      .map(
+                        (e) => DTableRow(
+                          onSelectChanged: (selected) {
+                            ActionService.run(
+                              () {
+                                GoRouter.of(context).goNamed(
+                                  EditModifierGroupScreen.routeName,
+                                  params: {'id': e.id!},
+                                );
+                              },
+                              () => AnalyticsService.track(
+                                message: Analytics
+                                    .modifierGroupsTabModifierGroupSelected,
+                                params: {
+                                  'groupId': e.id!,
+                                  'groupName': e.name,
+                                },
+                              ),
+                            );
+                          },
+                          cells: [
+                            DTableCell(
+                              builder: () {
+                                return DText.bodyText1(e.name);
                               },
                             ),
-                          );
-                        },
-                        cells: [
-                          DTableCell(
-                            builder: () {
-                              return DText.bodyText1(e.name);
-                            },
-                          ),
-                          // DTableCell(
-                          //   builder: () {
-                          //     return DText.bodyText1(
-                          //       (e.priceInfo.price / 100).toCurrency(),
-                          //     );
-                          //   },
-                          // ),
-                          DTableCell(
-                            builder: () {
-                              return DText.bodyText1(
-                                e.updatedAt?.formatWith('MM/dd/yy @ h:mm a') ??
-                                    '',
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    )
-                    .toList(),
+                            // DTableCell(
+                            //   builder: () {
+                            //     return DText.bodyText1(
+                            //       (e.priceInfo.price / 100).toCurrency(),
+                            //     );
+                            //   },
+                            // ),
+                            DTableCell(
+                              builder: () {
+                                return DText.bodyText1(
+                                  e.updatedAt
+                                          ?.formatWith('MM/dd/yy @ h:mm a') ??
+                                      '',
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
-            ),
-          );
-        },
-        orElse: SizedBox.shrink,
+            );
+          },
+          orElse: SizedBox.shrink,
+        ),
       ),
     );
   }

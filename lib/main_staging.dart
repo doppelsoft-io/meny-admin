@@ -13,6 +13,8 @@ Future<void> main() async {
 
   if (UniversalPlatform.isWeb) configureUrl();
 
+  // GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -20,5 +22,5 @@ Future<void> main() async {
   await Locator.setup();
   await HiveService.configure();
 
-  runApp(App(environment: AppEnvironment.staging));
+  runApp(const App(environment: AppEnvironment.staging));
 }

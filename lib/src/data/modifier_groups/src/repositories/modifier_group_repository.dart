@@ -37,6 +37,24 @@ class ModifierGroupRepository extends IResourcesRepository<ModifierGroupModel> {
 
   final LoggerService _loggerService;
 
+  Future<ModifierGroupModel> get({
+    required String storeId,
+    required String id,
+  }) async {
+    try {
+      final snap = await firebaseFirestore
+          .collection(Paths.stores)
+          .doc(storeId)
+          .collection(path)
+          .doc(id)
+          .get();
+      return ModifierGroupModel.fromSnapshot(snap);
+    } catch (err) {
+      _loggerService.log('(get): ${err.toString()}');
+      throw const GetModifierGroupException(message: 'Failed to retrieve menu');
+    }
+  }
+
   @override
   Stream<List<ModifierGroupModel>> getAll({required String storeId}) {
     return firebaseFirestore

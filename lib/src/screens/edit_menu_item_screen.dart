@@ -6,20 +6,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/categories/categories.dart';
 import 'package:meny_admin/src/data/category_menu_items/category_menu_items.dart';
-import 'package:meny_admin/src/data/menu_item_modifier_groups/cubits/menu_item_modifier_groups_cubit.dart';
+import 'package:meny_admin/src/data/menu_item_modifier_groups/menu_item_modifier_groups.dart';
 import 'package:meny_admin/src/data/menu_items/menu_items.dart';
 import 'package:meny_admin/src/data/modifier_groups/modifier_groups.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/menus/menus.dart';
-import 'package:meny_admin/src/presentation/resources/widgets/delete_resource_button.dart';
+import 'package:meny_admin/src/presentation/resources/resources.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
-import 'package:meny_admin/src/presentation/sheet_args.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
-class UpdateMenuItemSheetParams {
-  UpdateMenuItemSheetParams({
+class EditMenuItemSheetParams {
+  EditMenuItemSheetParams({
     required this.nameController,
     required this.descriptionController,
     required this.priceController,
@@ -32,74 +31,94 @@ class UpdateMenuItemSheetParams {
   final TextEditingController taxRateController;
 }
 
-class UpdateMenuItemSheet extends StatelessWidget {
-  const UpdateMenuItemSheet({
+class EditMenuItemScreen extends StatelessWidget {
+  const EditMenuItemScreen({
     Key? key,
-    required this.resource,
+    required this.id,
   }) : super(key: key);
 
-  final MenuItemModel resource;
-
-  static const String routeName = '/updateMenuItem';
+  static const String routeName = 'edit-menu-item';
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  static Route route(SheetArgs args) {
-    return MaterialPageRoute<Widget>(
-      fullscreenDialog: true,
-      builder: (context) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider<EditMenuItemCubit>(
-              create: (context) => EditMenuItemCubit(
-                storeCubit: context.read<StoreCubit>(),
-              )..loadItem(args.resource as MenuItemModel),
-            ),
-            BlocProvider<CategoryMenuItemsCubit>(
-              create: (context) => CategoryMenuItemsCubit(
-                storeCubit: context.read<StoreCubit>(),
-              ),
-            ),
-            BlocProvider<DeleteMenuItemCubit>(
-              create: (context) => DeleteMenuItemCubit(
-                storeCubit: context.read<StoreCubit>(),
-              ),
-            ),
-            BlocProvider<MenuItemModifierGroupsCubit>(
-              create: (context) => MenuItemModifierGroupsCubit(
-                storeCubit: context.read<StoreCubit>(),
-              ),
-            ),
-            BlocProvider<ImageUploadCubit>(
-              create: (context) => ImageUploadCubit(
-                storeCubit: context.read<StoreCubit>(),
-              ),
-            ),
-          ],
-          child: const _UpdateMenuItemSheet(),
-        );
-      },
-    );
-  }
-
-  static Future<Object?> open({
-    required BuildContext context,
-    required MenuItemModel resource,
-  }) {
-    return Navigator.of(context).pushNamed(
-      UpdateMenuItemSheet.routeName,
-      arguments: SheetArgs(resource: resource),
-    );
-  }
+  final String id;
 
   @override
   Widget build(BuildContext context) {
-    return const _UpdateMenuItemSheet();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<EditMenuItemCubit>(
+          create: (context) => EditMenuItemCubit(
+            storeCubit: context.read<StoreCubit>(),
+          )..loadItem(id: id),
+        ),
+        BlocProvider<CategoryMenuItemsCubit>(
+          create: (context) => CategoryMenuItemsCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
+        ),
+        BlocProvider<DeleteMenuItemCubit>(
+          create: (context) => DeleteMenuItemCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
+        ),
+        BlocProvider<MenuItemModifierGroupsCubit>(
+          create: (context) => MenuItemModifierGroupsCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
+        ),
+        BlocProvider<ImageUploadCubit>(
+          create: (context) => ImageUploadCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
+        ),
+      ],
+      child: const _EditMenuItemScreen(),
+    );
   }
 }
 
-class _UpdateMenuItemSheet extends HookWidget {
-  const _UpdateMenuItemSheet({Key? key}) : super(key: key);
+class _EditMenuItemScreen extends HookWidget {
+  const _EditMenuItemScreen({Key? key}) : super(key: key);
+
+  Future<bool> _onWillPop(BuildContext context) {
+    final item = context.read<EditMenuItemCubit>().state.item;
+    final categories = context.read<CategoryMenuItemsCubit>().state.categories;
+    final modifierGroups =
+        context.read<MenuItemModifierGroupsCubit>().state.groups;
+
+    if (item.name.isEmpty) {
+      showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Close without saving?'),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text('YES'),
+              ),
+              OutlinedButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('NO'),
+              ),
+            ],
+          );
+        },
+      ).then((value) {
+        if (value != null && value) {
+          context.read<DeleteMenuItemCubit>().delete(
+                item: item,
+                categories: categories,
+                modifierGroups: modifierGroups,
+              );
+          return Future.value(true);
+        }
+        return Future.value(false);
+      });
+    }
+    return Future.value(true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,18 +126,11 @@ class _UpdateMenuItemSheet extends HookWidget {
     final deleteMenuItemState = context.watch<DeleteMenuItemCubit>().state;
     final imageUploadState = context.watch<ImageUploadCubit>().state;
     final item = editMenuItemState.item;
-    final params = UpdateMenuItemSheetParams(
+    final params = EditMenuItemSheetParams(
       nameController: useTextEditingController(),
       descriptionController: useTextEditingController(),
       priceController: useTextEditingController(),
       taxRateController: useTextEditingController(),
-    );
-
-    useEffect(
-      () {
-        return null;
-      },
-      const [],
     );
 
     return WillPopScope(
@@ -161,45 +173,6 @@ class _UpdateMenuItemSheet extends HookWidget {
       ),
     );
   }
-
-  Future<bool> _onWillPop(BuildContext context) {
-    final item = context.read<EditMenuItemCubit>().state.item;
-    final categories = context.read<CategoryMenuItemsCubit>().state.categories;
-    final modifierGroups =
-        context.read<MenuItemModifierGroupsCubit>().state.groups;
-
-    if (item.name.isEmpty) {
-      showDialog<bool>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Close without saving?'),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('YES'),
-              ),
-              OutlinedButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('NO'),
-              ),
-            ],
-          );
-        },
-      ).then((value) {
-        if (value != null && value) {
-          context.read<DeleteMenuItemCubit>().delete(
-                item: item,
-                categories: categories,
-                modifierGroups: modifierGroups,
-              );
-          return Future.value(true);
-        }
-        return Future.value(false);
-      });
-    }
-    return Future.value(true);
-  }
 }
 
 class _ItemForm extends HookWidget {
@@ -210,7 +183,7 @@ class _ItemForm extends HookWidget {
   }) : super(key: key);
 
   final MenuItemModel item;
-  final UpdateMenuItemSheetParams params;
+  final EditMenuItemSheetParams params;
 
   @override
   Widget build(BuildContext context) {
@@ -271,7 +244,7 @@ class _ItemForm extends HookWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     final isValid =
-                        UpdateMenuItemSheet._formKey.currentState!.validate();
+                        EditMenuItemScreen._formKey.currentState!.validate();
                     if (!isValid) return;
 
                     final now = DateTime.now();
@@ -304,7 +277,7 @@ class _ItemForm extends HookWidget {
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(Spacing.pageSpacing),
             child: Form(
-              key: UpdateMenuItemSheet._formKey,
+              key: EditMenuItemScreen._formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -434,90 +407,121 @@ class _ItemForm extends HookWidget {
   }
 }
 
-class _DietaryLabels extends StatelessWidget {
-  const _DietaryLabels({
+class _DeleteMenuItemButton extends StatelessWidget {
+  const _DeleteMenuItemButton({
     Key? key,
     required this.item,
   }) : super(key: key);
 
   final MenuItemModel item;
 
-  IconData _getIcon(DietaryLabel label) {
-    switch (label) {
-      case DietaryLabel.vegan:
-        return FontAwesomeIcons.egg;
-      case DietaryLabel.vegetarian:
-        return FontAwesomeIcons.leaf;
-      case DietaryLabel.glutenFree:
-        return FontAwesomeIcons.wheatAwn;
-    }
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<DeleteMenuItemCubit, DeleteMenuItemState>(
+      listener: (context, deleteMenuItemState) {
+        deleteMenuItemState.maybeWhen(
+          success: () {
+            Navigator.of(context).pop();
+            if (item.name.isNotEmpty) {
+              Locator.instance<ToastService>().showOverlay(
+                Text('Your item ${item.name} has been deleted'),
+                ToastType.error,
+              );
+            }
+          },
+          error: (exception) {
+            Navigator.of(context).pop();
+            DialogService.showErrorDialog(
+              context: context,
+              failure: CustomException(message: exception.toString()),
+            );
+          },
+          orElse: () {},
+        );
+      },
+      builder: (context, deleteMenuItemState) {
+        final categories =
+            context.watch<CategoryMenuItemsCubit>().state.categories;
+        final modifierGroups =
+            context.watch<MenuItemModifierGroupsCubit>().state.groups;
+
+        return DeleteResourceButton(
+          args: DeleteResourceButtonArgs(
+            onPressed: deleteMenuItemState.maybeWhen(
+              deleting: () => null,
+              orElse: () => () async {
+                final result = await DConfirmDialog.open<bool>(
+                  context,
+                  args: DConfirmDialogArgs(
+                    title: Text('Delete ${item.name}?'),
+                    content: Text(
+                      'This will remove this item from all menus',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    confirmArgs: DConfirmDialogConfirmArgs(
+                      buttonStyle: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).errorColor,
+                      ),
+                    ),
+                  ),
+                );
+                if (result != null && result) {
+                  // ignore: use_build_context_synchronously
+                  await context.read<DeleteMenuItemCubit>().delete(
+                        item: item,
+                        categories: categories,
+                        modifierGroups: modifierGroups,
+                      );
+                }
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
+}
+
+class _ImageUpload extends StatelessWidget {
+  const _ImageUpload({
+    Key? key,
+    required this.item,
+  }) : super(key: key);
+
+  final MenuItemModel item;
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 12,
-      children: DietaryLabel.values
-          .map(
-            (e) => Builder(
-              builder: (context) {
-                final colorScheme = Theme.of(context).colorScheme;
-                final dietaryLabels = item.dietaryLabels ?? [];
-                final isSelected = dietaryLabels.contains(e);
-
-                return GestureDetector(
-                  onTap: () {
-                    if (isSelected) {
-                      final updatedLabels = List<DietaryLabel>.from(
-                        dietaryLabels,
-                      )..removeWhere((l) => l == e);
-
-                      final updatedItem = item.copyWith(
-                        dietaryLabels: updatedLabels,
-                      );
-                      context.read<EditMenuItemCubit>().update(
-                            updatedItem,
-                            save: false,
-                          );
-                    } else {
-                      final updatedLabels = List<DietaryLabel>.from(
-                        dietaryLabels,
-                      )..add(e);
-
-                      final updatedItem = item.copyWith(
-                        dietaryLabels: updatedLabels,
-                      );
-                      context.read<EditMenuItemCubit>().update(
-                            updatedItem,
-                            save: false,
-                          );
-                    }
-                  },
-                  child: Chip(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    backgroundColor: isSelected
-                        ? colorScheme.primary
-                        : colorScheme.onBackground,
-                    label: Text(e.stringify()),
-                    avatar: Icon(
-                      _getIcon(e),
-                      color: isSelected ? colorScheme.onPrimary : Colors.black,
-                      size: 16,
-                    ),
-                    labelStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(
-                          fontWeight: FontWeight.w100,
-                          color:
-                              isSelected ? colorScheme.onPrimary : Colors.black,
-                        ),
-                  ),
-                );
-              },
+    return BlocConsumer<ImageUploadCubit, ImageUploadState>(
+      listener: (context, state) {
+        state.maybeWhen(
+          picked: (file, url) =>
+              context.read<ImageUploadCubit>().upload(item: item),
+          orElse: () {},
+        );
+      },
+      builder: (context, state) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DImageUploadCard(
+              url: state.url,
+              processing: state.maybeWhen(
+                uploading: (_, __) => true,
+                orElse: () => false,
+              ),
+              onTap: () => context.read<ImageUploadCubit>().pick(),
+              emptyBuilder: () => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Center(child: Icon(Icons.image)),
+                  Text('Click to upload')
+                ],
+              ),
             ),
-          )
-          .toList(),
+          ],
+        );
+      },
     );
   }
 }
@@ -733,121 +737,90 @@ class _ModifierGroupSelector extends StatelessWidget {
   }
 }
 
-class _ImageUpload extends StatelessWidget {
-  const _ImageUpload({
+class _DietaryLabels extends StatelessWidget {
+  const _DietaryLabels({
     Key? key,
     required this.item,
   }) : super(key: key);
 
   final MenuItemModel item;
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<ImageUploadCubit, ImageUploadState>(
-      listener: (context, state) {
-        state.maybeWhen(
-          picked: (file, url) =>
-              context.read<ImageUploadCubit>().upload(item: item),
-          orElse: () {},
-        );
-      },
-      builder: (context, state) {
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            DImageUploadCard(
-              url: state.url,
-              processing: state.maybeWhen(
-                uploading: (_, __) => true,
-                orElse: () => false,
-              ),
-              onTap: () => context.read<ImageUploadCubit>().pick(),
-              emptyBuilder: () => Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Center(child: Icon(Icons.image)),
-                  Text('Click to upload')
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    );
+  IconData _getIcon(DietaryLabel label) {
+    switch (label) {
+      case DietaryLabel.vegan:
+        return FontAwesomeIcons.egg;
+      case DietaryLabel.vegetarian:
+        return FontAwesomeIcons.leaf;
+      case DietaryLabel.glutenFree:
+        return FontAwesomeIcons.wheatAwn;
+    }
   }
-}
-
-class _DeleteMenuItemButton extends StatelessWidget {
-  const _DeleteMenuItemButton({
-    Key? key,
-    required this.item,
-  }) : super(key: key);
-
-  final MenuItemModel item;
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<DeleteMenuItemCubit, DeleteMenuItemState>(
-      listener: (context, deleteMenuItemState) {
-        deleteMenuItemState.maybeWhen(
-          success: () {
-            Navigator.of(context).pop();
-            if (item.name.isNotEmpty) {
-              Locator.instance<ToastService>().showOverlay(
-                Text('Your item ${item.name} has been deleted'),
-                ToastType.error,
-              );
-            }
-          },
-          error: (exception) {
-            Navigator.of(context).pop();
-            DialogService.showErrorDialog(
-              context: context,
-              failure: CustomException(message: exception.toString()),
-            );
-          },
-          orElse: () {},
-        );
-      },
-      builder: (context, deleteMenuItemState) {
-        final categories =
-            context.watch<CategoryMenuItemsCubit>().state.categories;
-        final modifierGroups =
-            context.watch<MenuItemModifierGroupsCubit>().state.groups;
+    return Wrap(
+      spacing: 12,
+      children: DietaryLabel.values
+          .map(
+            (e) => Builder(
+              builder: (context) {
+                final colorScheme = Theme.of(context).colorScheme;
+                final dietaryLabels = item.dietaryLabels ?? [];
+                final isSelected = dietaryLabels.contains(e);
 
-        return DeleteResourceButton(
-          args: DeleteResourceButtonArgs(
-            onPressed: deleteMenuItemState.maybeWhen(
-              deleting: () => null,
-              orElse: () => () async {
-                final result = await DConfirmDialog.open<bool>(
-                  context,
-                  args: DConfirmDialogArgs(
-                    title: Text('Delete ${item.name}?'),
-                    content: Text(
-                      'This will remove this item from all menus',
-                      style: Theme.of(context).textTheme.bodyText1,
+                return GestureDetector(
+                  onTap: () {
+                    if (isSelected) {
+                      final updatedLabels = List<DietaryLabel>.from(
+                        dietaryLabels,
+                      )..removeWhere((l) => l == e);
+
+                      final updatedItem = item.copyWith(
+                        dietaryLabels: updatedLabels,
+                      );
+                      context.read<EditMenuItemCubit>().update(
+                            updatedItem,
+                            save: false,
+                          );
+                    } else {
+                      final updatedLabels = List<DietaryLabel>.from(
+                        dietaryLabels,
+                      )..add(e);
+
+                      final updatedItem = item.copyWith(
+                        dietaryLabels: updatedLabels,
+                      );
+                      context.read<EditMenuItemCubit>().update(
+                            updatedItem,
+                            save: false,
+                          );
+                    }
+                  },
+                  child: Chip(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    backgroundColor: isSelected
+                        ? colorScheme.primary
+                        : colorScheme.onBackground,
+                    label: Text(e.stringify()),
+                    avatar: Icon(
+                      _getIcon(e),
+                      color: isSelected ? colorScheme.onPrimary : Colors.black,
+                      size: 16,
                     ),
-                    confirmArgs: DConfirmDialogConfirmArgs(
-                      buttonStyle: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).errorColor,
-                      ),
-                    ),
+                    labelStyle: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(
+                          fontWeight: FontWeight.w100,
+                          color:
+                              isSelected ? colorScheme.onPrimary : Colors.black,
+                        ),
                   ),
                 );
-                if (result != null && result) {
-                  // ignore: use_build_context_synchronously
-                  await context.read<DeleteMenuItemCubit>().delete(
-                        item: item,
-                        categories: categories,
-                        modifierGroups: modifierGroups,
-                      );
-                }
               },
             ),
-          ),
-        );
-      },
+          )
+          .toList(),
     );
   }
 }

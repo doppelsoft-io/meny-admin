@@ -1,12 +1,12 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:meny_admin/app_router_web.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/login/login.dart';
 import 'package:meny_admin/src/presentation/shared/app_header.dart';
+import 'package:meny_admin/src/screens/signup_screen.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
 import 'package:meny_admin/themes.dart';
@@ -14,6 +14,8 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  static const String routeName = 'login';
 
   @override
   Widget build(BuildContext context) {
@@ -194,8 +196,9 @@ class _LoginScreen extends HookWidget {
                   ),
                   const SizedBox(height: 24),
                   TextButton(
-                    onPressed: () =>
-                        AutoRouter.of(context).push(const SignupScreenRoute()),
+                    onPressed: () {
+                      GoRouter.of(context).pushNamed(SignupScreen.routeName);
+                    },
                     child: const Text("Don't have an account?"),
                   ),
                 ],

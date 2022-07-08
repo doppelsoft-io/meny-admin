@@ -1,5 +1,6 @@
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:go_router/go_router.dart';
 
 void configureUrl() {
-  setUrlStrategy(PathUrlStrategy());
+  // setUrlStrategy(PathUrlStrategy());
+  GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
 }

@@ -106,6 +106,7 @@ class Themes {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
+        visualDensity: VisualDensity.standard,
         side: MaterialStateProperty.all(BorderSide(color: Colors.grey[300]!)),
         shape: MaterialStateProperty.resolveWith<RoundedRectangleBorder>(
           (states) => RoundedRectangleBorder(
@@ -137,6 +138,28 @@ class Themes {
         color: Colors.grey[700],
       ),
       unselectedLabelTextStyle: textTheme.headline5!.copyWith(
+        color: Colors.grey[700],
+        fontSize: 16,
+      ),
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: Colors.white,
+      showSelectedLabels: true,
+      showUnselectedLabels: true,
+      selectedIconTheme: IconThemeData(
+        size: 16,
+        color: primaryColor,
+      ),
+      selectedItemColor: primaryColor,
+      selectedLabelStyle: textTheme.headline5!.copyWith(
+        color: primaryColor,
+        fontSize: 16,
+      ),
+      unselectedIconTheme: IconThemeData(
+        size: 16,
+        color: Colors.grey[700],
+      ),
+      unselectedLabelStyle: textTheme.headline5!.copyWith(
         color: Colors.grey[700],
         fontSize: 16,
       ),

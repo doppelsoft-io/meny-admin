@@ -20,16 +20,6 @@ class CustomRouter {
         return OnboardingScreen.route();
       case SignupScreen.routeName:
         return SignupScreen.route();
-      case LoginScreen.routeName:
-        return LoginScreen.route();
-      case UpdateMenusSheet.routeName:
-        return UpdateMenusSheet.route(settings.arguments! as SheetArgs);
-      case UpdateCategorySheet.routeName:
-        return UpdateCategorySheet.route(settings.arguments! as SheetArgs);
-      case UpdateMenuItemSheet.routeName:
-        return UpdateMenuItemSheet.route(settings.arguments! as SheetArgs);
-      case UpdateModifierGroupSheet.routeName:
-        return UpdateModifierGroupSheet.route(settings.arguments! as SheetArgs);
       case UpdateTagSheet.routeName:
         return UpdateTagSheet.route(settings.arguments! as SheetArgs);
       case MenuPreviewScreen.routeName:

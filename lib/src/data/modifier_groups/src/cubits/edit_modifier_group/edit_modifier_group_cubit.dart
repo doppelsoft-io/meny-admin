@@ -20,27 +20,21 @@ class EditModifierGroupCubit extends Cubit<EditModifierGroupState> {
   final StoreCubit _storeCubit;
   final ModifierGroupRepository _modifierGroupRepository;
 
-  Future<void> loadItem(ModifierGroupModel group) async {
-    if (group.id != null && group.id!.isNotEmpty) {
-      /// Needed to trigger loaded event in listener
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+  Future<void> loadItem({required String id}) async {
+    try {
+      final storeId = _storeCubit.state.store.id!;
+      final group = await _modifierGroupRepository.get(
+        storeId: storeId,
+        id: id,
+      );
       emit(_Loaded(group: group));
-    } else {
-      try {
-        final storeId = _storeCubit.state.store.id!;
-        final newItem = await _modifierGroupRepository.create(
-          storeId: storeId,
-          resource: group.copyWith(createdAt: DateTime.now()),
-        );
-        emit(_Loaded(group: newItem));
-      } on CreateModifierGroupException catch (err) {
-        emit(
-          _Error(
-            group: group,
-            exception: err,
-          ),
-        );
-      }
+    } on CreateModifierGroupException catch (err) {
+      emit(
+        _Error(
+          group: state.group,
+          exception: err,
+        ),
+      );
     }
   }
 

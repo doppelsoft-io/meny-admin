@@ -4,83 +4,107 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/categories/categories.dart';
+import 'package:meny_admin/src/data/categories/src/cubits/create_category/create_category_cubit.dart';
 import 'package:meny_admin/src/data/menu_categories/menu_categories.dart';
 import 'package:meny_admin/src/data/menus/menus.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
-import 'package:meny_admin/src/presentation/resources/widgets/delete_resource_button.dart';
+import 'package:meny_admin/src/presentation/resources/resources.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
-import 'package:meny_admin/src/presentation/sheet_args.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
-class UpdateCategorySheet extends StatelessWidget {
-  const UpdateCategorySheet({
+class EditCategoryScreen extends StatelessWidget {
+  const EditCategoryScreen({
     Key? key,
-    required this.resource,
+    required this.id,
   }) : super(key: key);
 
-  final CategoryModel resource;
+  static const String routeName = 'edit-category';
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  static const String routeName = '/updateCategorySheet';
-
-  static Route route(SheetArgs? args) {
-    return MaterialPageRoute<Widget>(
-      fullscreenDialog: true,
-      builder: (_) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider<EditCategoryCubit>(
-              create: (context) => EditCategoryCubit(
-                storeCubit: context.read<StoreCubit>(),
-              )..loadCategory(args!.resource as CategoryModel),
-            ),
-            BlocProvider<DeleteCategoryCubit>(
-              create: (context) => DeleteCategoryCubit(
-                storeCubit: context.read<StoreCubit>(),
-              ),
-            ),
-            BlocProvider<MenuCategoriesCubit>(
-              create: (context) => MenuCategoriesCubit(
-                storeCubit: context.read<StoreCubit>(),
-              ),
-            ),
-          ],
-          child: const _UpdateCategorySheet(),
-        );
-      },
-    );
-  }
-
-  static Future<Object?> open({
-    required BuildContext context,
-    required CategoryModel resource,
-  }) {
-    return Navigator.of(context).pushNamed(
-      UpdateCategorySheet.routeName,
-      arguments: SheetArgs(resource: resource),
-    );
-  }
+  final String id;
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CreateCategoryCubit>(
+          create: (context) => CreateCategoryCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
+        ),
+        BlocProvider<EditCategoryCubit>(
+          create: (context) => EditCategoryCubit(
+            storeCubit: context.read<StoreCubit>(),
+          )..loadCategory(id: id),
+        ),
+        BlocProvider<DeleteCategoryCubit>(
+          create: (context) => DeleteCategoryCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
+        ),
+        BlocProvider<MenuCategoriesCubit>(
+          create: (context) => MenuCategoriesCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
+        ),
+      ],
+      child: const _EditCategoryScreen(),
+    );
   }
 }
 
-class _UpdateCategorySheet extends HookWidget {
-  const _UpdateCategorySheet({Key? key}) : super(key: key);
+class _EditCategoryScreen extends HookWidget {
+  const _EditCategoryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final createCategoryState = context.watch<CreateCategoryCubit>().state;
     final editCategoryState = context.watch<EditCategoryCubit>().state;
     final menuCategoriesState = context.watch<MenuCategoriesCubit>().state;
     final deleteCategoryState = context.watch<DeleteCategoryCubit>().state;
     final controller = useTextEditingController(
       text: editCategoryState.category.name,
     );
+
+    Future<bool> _onWillPop({
+      required BuildContext context,
+      required List<MenuModel> menus,
+      required CategoryModel category,
+    }) {
+      if (category.name.isEmpty) {
+        showDialog<bool>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Close without saving?'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('YES'),
+                ),
+                OutlinedButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('NO'),
+                ),
+              ],
+            );
+          },
+        ).then((value) {
+          if (value != null && value) {
+            context.read<DeleteCategoryCubit>().delete(
+                  category: category,
+                  menus: menus,
+                );
+            return Future.value(true);
+          }
+          return Future.value(value);
+        });
+      }
+      return Future.value(true);
+    }
 
     return WillPopScope(
       onWillPop: () => _onWillPop(
@@ -154,7 +178,7 @@ class _UpdateCategorySheet extends HookWidget {
                         Center(
                           child: ElevatedButton(
                             onPressed: () {
-                              final isValid = UpdateCategorySheet
+                              final isValid = EditCategoryScreen
                                   ._formKey.currentState!
                                   .validate();
                               if (!isValid) return;
@@ -174,7 +198,7 @@ class _UpdateCategorySheet extends HookWidget {
                     body: SingleChildScrollView(
                       padding: const EdgeInsets.all(24),
                       child: Form(
-                        key: UpdateCategorySheet._formKey,
+                        key: EditCategoryScreen._formKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -255,43 +279,6 @@ class _UpdateCategorySheet extends HookWidget {
         },
       ),
     );
-  }
-
-  Future<bool> _onWillPop({
-    required BuildContext context,
-    required List<MenuModel> menus,
-    required CategoryModel category,
-  }) {
-    if (category.name.isEmpty) {
-      showDialog<bool>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Close without saving?'),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('YES'),
-              ),
-              OutlinedButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('NO'),
-              ),
-            ],
-          );
-        },
-      ).then((value) {
-        if (value != null && value) {
-          context.read<DeleteCategoryCubit>().delete(
-                category: category,
-                menus: menus,
-              );
-          return Future.value(true);
-        }
-        return Future.value(value);
-      });
-    }
-    return Future.value(true);
   }
 }
 

@@ -19,27 +19,22 @@ class EditCategoryCubit extends Cubit<EditCategoryState> {
   final CategoryRepository _categoryRepository;
   final StoreCubit _storeCubit;
 
-  Future<void> loadCategory(CategoryModel category) async {
-    if (category.id != null && category.id!.isNotEmpty) {
-      /// Needed to trigger loaded event in listener
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+  Future<void> loadCategory({required String id}) async {
+    emit(_Loading(category: state.category));
+    try {
+      final storeId = _storeCubit.state.store.id!;
+      final category = await _categoryRepository.get(
+        storeId: storeId,
+        id: id,
+      );
       emit(_Loaded(category: category));
-    } else {
-      try {
-        final storeId = _storeCubit.state.store.id!;
-        final newCategory = await _categoryRepository.create(
-          storeId: storeId,
-          resource: category.copyWith(createdAt: DateTime.now()),
-        );
-        emit(_Loaded(category: newCategory));
-      } on CreateCategoryException catch (err) {
-        emit(
-          _Error(
-            category: category,
-            exception: err,
-          ),
-        );
-      }
+    } on GetCategoryException catch (err) {
+      emit(
+        _Error(
+          category: state.category,
+          exception: err,
+        ),
+      );
     }
   }
 

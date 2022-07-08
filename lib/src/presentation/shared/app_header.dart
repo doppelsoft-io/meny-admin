@@ -1,13 +1,13 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meny_admin/app_router_web.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/auth/auth.dart';
 import 'package:meny_admin/src/data/stores/cubits/cubits.dart';
+import 'package:meny_admin/src/screens/screens.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/themes.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -30,10 +30,7 @@ class AppHeader extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: GestureDetector(
           onTap: () {
-            AutoRouter.of(context).pushAndPopUntil(
-              const AppScreenRoute(),
-              predicate: (Route<dynamic> route) => false,
-            );
+            GoRouter.of(context).go('/');
           },
           child: Text(title),
         ),
@@ -53,10 +50,7 @@ class AppHeader extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  AutoRouter.of(context).pushAndPopUntil(
-                    const AppScreenRoute(),
-                    predicate: (Route<dynamic> route) => false,
-                  );
+                  GoRouter.of(context).go('/');
                 },
                 child: DText.headline4(
                   title,
@@ -96,14 +90,17 @@ class AuthActions extends HookWidget {
         );
       },
       orElse: () {
-        return TextButton(
-          onPressed: () {
-            AutoRouter.of(context).push(const LoginScreenRoute());
-          },
-          child: DText.subtitle1(
-            'Log in',
-            styleOverrides: TextStyle(
-              color: Themes.colorScheme.primary,
+        return Visibility(
+          visible: GoRouter.of(context).location != '/${LoginScreen.routeName}',
+          child: TextButton(
+            onPressed: () {
+              GoRouter.of(context).pushNamed(LoginScreen.routeName);
+            },
+            child: DText.subtitle1(
+              'Log in',
+              styleOverrides: TextStyle(
+                color: Themes.colorScheme.primary,
+              ),
             ),
           ),
         );

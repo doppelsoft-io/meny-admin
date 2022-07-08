@@ -2,6 +2,7 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/data/auth/auth.dart';
 import 'package:meny_admin/src/data/signup/signup.dart';
@@ -14,6 +15,21 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
+
+  static const String routeName = 'signup';
+
+  static Route route() {
+    return MaterialPageRoute<Widget>(
+      builder: (context) {
+        return BlocProvider<SignupCubit>(
+          create: (context) => SignupCubit(
+            authCubit: context.read<AuthCubit>(),
+          ),
+          child: const SignupScreen(),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +261,7 @@ class _SignupScreen extends HookWidget {
                   ),
                   const SizedBox(height: 24),
                   TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => GoRouter.of(context).pop(),
                     child: const Text('Already have an account?'),
                   ),
                 ],

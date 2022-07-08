@@ -14,6 +14,14 @@ import 'package:responsive_builder/responsive_builder.dart';
 class AppScreen extends StatelessWidget {
   const AppScreen({Key? key}) : super(key: key);
 
+  static const String routeName = '/app';
+
+  static Route route() {
+    return MaterialPageRoute<Widget>(
+      builder: (_) => _AppScreen(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return _AppScreen();
@@ -61,55 +69,52 @@ class _AppScreen extends HookWidget {
                       child: AppHeader(),
                     ),
                     body: pages[_selectedIndex.value],
-                  ),
-                  desktop: Scaffold(
-                    appBar: const PreferredSize(
-                      preferredSize: Size.fromHeight(76),
-                      child: AppHeader(),
-                    ),
-                    body: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: NavigationRail(
-                            extended: getValueForScreenType<bool>(
-                              context: context,
-                              mobile: false,
-                              tablet: true,
+                    bottomNavigationBar: BottomNavigationBar(
+                      currentIndex: _selectedIndex.value,
+                      type: BottomNavigationBarType.fixed,
+                      onTap: (index) {
+                        _selectedIndex.value = index;
+                      },
+                      items: tabs
+                          .map(
+                            (tuple) => BottomNavigationBarItem(
+                              icon: Icon(tuple.value1),
+                              activeIcon: Icon(tuple.value2),
+                              label: tuple.value3,
                             ),
-                            selectedIndex: _selectedIndex.value,
-                            onDestinationSelected: (value) {
-                              _selectedIndex.value = value;
-                              // tabsRouter.setActiveIndex(value);
-                              ActionService.run(
-                                () => _selectedIndex.value = value,
-                                () => AnalyticsService.track(
-                                  message: Analytics.tabTapped,
-                                  params: {
-                                    'tab': pages[value].toString(),
-                                  },
-                                ),
-                              );
-                            },
-                            destinations: tabs
-                                .map(
-                                  (tuple) => NavigationRailDestination(
-                                    icon: Icon(tuple.value1),
-                                    selectedIcon: Icon(tuple.value2),
-                                    label: Text(tuple.value3),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ),
-                        VerticalDivider(
-                          width: 3,
-                          color: Colors.grey[200],
-                          thickness: 7,
-                        ),
-                        Expanded(child: pages[_selectedIndex.value]),
-                      ],
+                          )
+                          .toList(),
                     ),
+                  ),
+                  tablet: _DesktopLayout(
+                    onSelect: (index) {
+                      ActionService.run(
+                        () => _selectedIndex.value = index,
+                        () => AnalyticsService.track(
+                          message: Analytics.tabTapped,
+                          params: {
+                            'tab': pages[index].toString(),
+                          },
+                        ),
+                      );
+                    },
+                    selectedIndex: _selectedIndex.value,
+                    child: pages[_selectedIndex.value],
+                  ),
+                  desktop: _DesktopLayout(
+                    onSelect: (index) {
+                      ActionService.run(
+                        () => _selectedIndex.value = index,
+                        () => AnalyticsService.track(
+                          message: Analytics.tabTapped,
+                          params: {
+                            'tab': pages[index].toString(),
+                          },
+                        ),
+                      );
+                    },
+                    selectedIndex: _selectedIndex.value,
+                    child: pages[_selectedIndex.value],
                   ),
                 );
               },
@@ -118,6 +123,60 @@ class _AppScreen extends HookWidget {
           },
         );
       },
+    );
+  }
+}
+
+class _DesktopLayout extends StatelessWidget {
+  const _DesktopLayout({
+    Key? key,
+    required this.selectedIndex,
+    required this.onSelect,
+    required this.child,
+  }) : super(key: key);
+
+  final int selectedIndex;
+  final Function(int) onSelect;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(76),
+        child: AppHeader(),
+      ),
+      body: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: NavigationRail(
+              extended: getValueForScreenType<bool>(
+                context: context,
+                mobile: false,
+                tablet: false,
+              ),
+              selectedIndex: selectedIndex,
+              onDestinationSelected: onSelect,
+              destinations: tabs
+                  .map(
+                    (tuple) => NavigationRailDestination(
+                      icon: Icon(tuple.value1),
+                      selectedIcon: Icon(tuple.value2),
+                      label: Text(tuple.value3),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+          VerticalDivider(
+            width: 3,
+            color: Colors.grey[200],
+            thickness: 7,
+          ),
+          Expanded(child: child),
+        ],
+      ),
     );
   }
 }

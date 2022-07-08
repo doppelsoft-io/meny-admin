@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +14,10 @@ import 'package:meny_core/meny_core.dart';
 class EditMenuScreen extends StatelessWidget {
   const EditMenuScreen({
     Key? key,
-    @PathParam('id') required this.id,
+    required this.id,
   }) : super(key: key);
+
+  static const String routeName = 'edit-menu';
 
   final String id;
 
@@ -86,7 +87,7 @@ class _EditMenuScreen extends HookWidget {
                 appBar: AppBar(
                   elevation: 0,
                   iconTheme: const IconThemeData(color: Colors.black),
-                  leading: const AutoLeadingButton(),
+                  // leading: const AutoLeadingButton(),
                   backgroundColor: Colors.white,
                   title: const Text(
                     'Edit Menu',

@@ -32,5 +32,5 @@ Future<void> main() async {
   await Locator.setup();
   await HiveService.configure();
 
-  runApp(App(environment: AppEnvironment.development));
+  runApp(const App(environment: AppEnvironment.development));
 }
