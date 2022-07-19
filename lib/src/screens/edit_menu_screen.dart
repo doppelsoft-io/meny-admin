@@ -1,4 +1,5 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -110,7 +111,9 @@ class _EditMenuScreen extends HookWidget {
                     ),
                   ),
                   actions: [
-                    Center(child: _DeleteMenuButton(menu: editMenuState.menu)),
+                    Center(
+                      child: _DeleteMenuButton(menu: editMenuState.menu),
+                    ),
                     HorizontalSpacing.small(),
                     Center(
                       child: ElevatedButton(

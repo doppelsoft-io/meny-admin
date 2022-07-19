@@ -34,7 +34,7 @@ class ToastService {
             ).transform(progress),
             child: SafeArea(
               child: DefaultTextStyle(
-                style: Themes.textStyle,
+                style: Themes.textStyle.copyWith(color: colorScheme.onPrimary),
                 child: Center(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(4),

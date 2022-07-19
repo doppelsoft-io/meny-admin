@@ -16,6 +16,8 @@ dependencies:
   dartz: ^0.10.1
   doppelsoft_core:
     path: ../doppelsoft-core
+  doppelsoft_ui:
+    path: ../doppelsoft-ui
   equatable: ^2.0.3
   firebase_auth: ^3.3.17
   firebase_core: ^1.1.1
