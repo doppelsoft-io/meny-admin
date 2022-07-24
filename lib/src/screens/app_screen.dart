@@ -16,12 +16,6 @@ class AppScreen extends StatelessWidget {
 
   static const String routeName = '/app';
 
-  static Route route() {
-    return MaterialPageRoute<Widget>(
-      builder: (_) => _AppScreen(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return _AppScreen();
@@ -155,6 +149,7 @@ class _DesktopLayout extends StatelessWidget {
                 context: context,
                 mobile: false,
                 tablet: false,
+                desktop: true,
               ),
               selectedIndex: selectedIndex,
               onDestinationSelected: onSelect,

@@ -1,4 +1,5 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -71,7 +72,7 @@ class _IngredientsTab extends HookWidget {
         ];
       },
       body: Padding(
-        padding: const EdgeInsets.all(Spacing.pageSpacing),
+        padding: const EdgeInsets.all(DSSpacing.medium),
         child: ingredientsState.maybeWhen(
           loading: (_) => Column(
             children: const [

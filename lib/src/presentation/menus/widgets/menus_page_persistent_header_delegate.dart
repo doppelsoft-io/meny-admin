@@ -1,4 +1,4 @@
-import 'package:doppelsoft_core/doppelsoft_core.dart';
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
 
@@ -21,7 +21,7 @@ class MenusPagePersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
       decoration: const BoxDecoration(
         color: Colors.white,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: Spacing.pageSpacing),
+      padding: const EdgeInsets.symmetric(horizontal: DSSpacing.medium),
       height: maxExtent,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,

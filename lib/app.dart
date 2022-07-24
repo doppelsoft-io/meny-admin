@@ -38,11 +38,12 @@ class App extends StatelessWidget {
           routeInformationParser: router.routeInformationParser,
           routerDelegate: router.routerDelegate,
           theme: Themes.defaultTheme,
+          debugShowCheckedModeBanner: false,
           builder: (context, widget) => ResponsiveWrapper.builder(
             BouncingScrollWrapper.builder(
               context,
-              DUnfocus(
-                child: TextScaleFactorClamper(
+              DSUnfocus(
+                child: DSTextScaleFactorClamper(
                   child: Unfocus(child: widget!),
                 ),
               ),

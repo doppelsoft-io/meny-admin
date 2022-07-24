@@ -1,4 +1,4 @@
-import 'package:doppelsoft_core/doppelsoft_core.dart';
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 
 class DeveloperPage extends StatelessWidget {
@@ -7,7 +7,7 @@ class DeveloperPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(Spacing.pageSpacing),
+      padding: const EdgeInsets.all(DSSpacing.medium),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

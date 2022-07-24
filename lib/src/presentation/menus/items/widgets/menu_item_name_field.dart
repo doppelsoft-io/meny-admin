@@ -27,9 +27,9 @@ class _MenuItemNameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DTextFormField(
+    return DSTextFormField(
       theme: Themes.theme.textFormFieldThemeData,
-      args: DTextFormFieldArgs(
+      args: DSTextFormFieldArgs(
         controller: controller,
         autofocus: true,
         autocorrect: false,

@@ -103,107 +103,101 @@ class _MenusScreenMenusTab extends HookWidget {
             return const SizedBox.shrink();
           },
           orElse: () {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DTable(
-                  args: DTableArgs(
-                    header: DText.headline5('Menus'),
-                    actions: [
-                      const NewMenuButton(),
-                    ],
-                    columns: [
-                      const DTableHeader(name: 'Name'),
-                      const DTableHeader(name: 'Last Updated'),
-                      const DTableHeader(name: 'Actions'),
-                    ],
-                    source: DTableDataSource(
-                      emptyBuilder: (context) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Divider(height: kMinInteractiveDimension),
-                            DText.bodyText1(
-                              'No menus yet. Click "New" above to add a menu',
-                            ),
-                            const Divider(height: kMinInteractiveDimension),
-                          ],
-                        );
-                      },
-                      rows: menus
-                          .map(
-                            (e) => DTableRow(
-                              onSelectChanged: (selected) {
-                                ActionService.run(
-                                  () {
-                                    GoRouter.of(context).goNamed(
-                                      EditMenuScreen.routeName,
-                                      params: {
-                                        'id': e.id!,
-                                      },
-                                    );
+            return DSTable(
+              args: DSTableArgs(
+                header: DSText.headline5('Menus'),
+                actions: [
+                  const NewMenuButton(),
+                ],
+                columns: [
+                  const DSTableHeader(name: 'Name'),
+                  const DSTableHeader(name: 'Last Updated'),
+                  const DSTableHeader(name: 'Actions'),
+                ],
+                source: DSTableDataSource(
+                  emptyBuilder: (context) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Divider(height: kMinInteractiveDimension),
+                        DSText.bodyText1(
+                          'No menus yet. Click "New" above to add a menu',
+                        ),
+                        const Divider(height: kMinInteractiveDimension),
+                      ],
+                    );
+                  },
+                  rows: menus
+                      .map(
+                        (e) => DSTableRow(
+                          onSelectChanged: (selected) {
+                            ActionService.run(
+                              () {
+                                GoRouter.of(context).goNamed(
+                                  EditMenuScreen.routeName,
+                                  params: {
+                                    'id': e.id!,
                                   },
-                                  () => AnalyticsService.track(
-                                    message: Analytics.menusTabItemSelected,
-                                  ),
                                 );
                               },
-                              cells: [
-                                DTableCell(
-                                  builder: () => DText.bodyText1(e.name),
-                                ),
-                                DTableCell(
-                                  builder: () {
-                                    return DText.bodyText1(
-                                      e.updatedAt?.formatWith(
-                                            'MM/dd/yy @ h:mm a',
-                                          ) ??
-                                          '',
-                                    );
-                                  },
-                                ),
-                                DTableCell(
-                                  builder: () {
-                                    return Row(
-                                      children: [
-                                        TextButton(
-                                          style: ButtonStyle(
-                                            alignment: Alignment.center,
-                                            padding: MaterialStateProperty.all(
-                                              EdgeInsets.zero,
-                                            ),
-                                          ),
-                                          child: const Text('Preview'),
-                                          onPressed: () => ActionService.run(
-                                            () =>
-                                                Navigator.of(context).pushNamed(
-                                              MenuPreviewScreen.routeName,
-                                              arguments: MenuPreviewScreenArgs(
-                                                menu: e,
-                                              ),
-                                            ),
-                                            () => AnalyticsService.track(
-                                              message: Analytics
-                                                  .menusTabPreviewTapped,
-                                              params: {
-                                                'menuId': e.id!,
-                                                'menuName': e.name,
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ),
-                              ],
+                              () => AnalyticsService.track(
+                                message: Analytics.menusTabItemSelected,
+                              ),
+                            );
+                          },
+                          cells: [
+                            DSTableCell(
+                              builder: () => DSText.bodyText1(e.name),
                             ),
-                          )
-                          .toList(),
-                    ),
-                  ),
+                            DSTableCell(
+                              builder: () {
+                                return DSText.bodyText1(
+                                  e.updatedAt?.formatWith(
+                                        'MM/dd/yy @ h:mm a',
+                                      ) ??
+                                      '',
+                                );
+                              },
+                            ),
+                            DSTableCell(
+                              builder: () {
+                                return Row(
+                                  children: [
+                                    TextButton(
+                                      style: ButtonStyle(
+                                        alignment: Alignment.center,
+                                        padding: MaterialStateProperty.all(
+                                          EdgeInsets.zero,
+                                        ),
+                                      ),
+                                      child: const Text('Preview'),
+                                      onPressed: () => ActionService.run(
+                                        () => GoRouter.of(context).goNamed(
+                                          MenuPreviewScreen.routeName,
+                                          params: {
+                                            'id': e.id!,
+                                          },
+                                        ),
+                                        () => AnalyticsService.track(
+                                          message:
+                                              Analytics.menusTabPreviewTapped,
+                                          params: {
+                                            'menuId': e.id!,
+                                            'menuName': e.name,
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                      .toList(),
                 ),
-              ],
+              ),
             );
           },
         ),

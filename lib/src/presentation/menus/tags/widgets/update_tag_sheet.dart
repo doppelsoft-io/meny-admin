@@ -120,7 +120,7 @@ class _UpdateTagSheet extends HookWidget {
                 centerTitle: false,
                 actions: [
                   Center(child: _DeleteTagButton(tag: editTagState.tag)),
-                  HorizontalSpacing.small(),
+                  DSHorizontalSpacing.small(),
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
@@ -132,7 +132,7 @@ class _UpdateTagSheet extends HookWidget {
                       child: const Text('Save'),
                     ),
                   ),
-                  HorizontalSpacing.medium(),
+                  DSHorizontalSpacing.medium(),
                 ],
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(8),
@@ -150,15 +150,15 @@ class _UpdateTagSheet extends HookWidget {
                 ),
               ),
               body: SingleChildScrollView(
-                padding: const EdgeInsets.all(Spacing.pageSpacing),
+                padding: const EdgeInsets.all(DSSpacing.medium),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DText.subtitle1('Name'),
-                    VerticalSpacing.smallest(),
-                    DTextFormField(
+                    DSText.subtitle1('Name'),
+                    DSVerticalSpacing.smallest(),
+                    DSTextFormField(
                       theme: Themes.theme.textFormFieldThemeData,
-                      args: DTextFormFieldArgs(
+                      args: DSTextFormFieldArgs(
                         autofocus: true,
                         controller: params.nameController,
                         decoration: const InputDecoration(
@@ -231,15 +231,15 @@ class _DeleteTagButton extends StatelessWidget {
             return null;
           },
           orElse: () => () async {
-            final result = await DConfirmDialog.open<bool>(
+            final result = await DSConfirmDialog.open<bool>(
               context,
-              args: DConfirmDialogArgs(
+              args: DSConfirmDialogArgs(
                 title: Text('Delete ${tag.name}?'),
                 content: Text(
                   'This will remove this tag from all menus or menu items',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                confirmArgs: DConfirmDialogConfirmArgs(
+                confirmArgs: DSConfirmDialogConfirmArgs(
                   buttonStyle: ElevatedButton.styleFrom(
                     primary: Theme.of(context).errorColor,
                   ),

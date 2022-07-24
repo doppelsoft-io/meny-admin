@@ -31,7 +31,7 @@ class _MyStoreLocationsTab extends HookWidget {
               children: [
                 Row(
                   children: [
-                    DText.headline5('Store Locations'),
+                    DSText.headline5('Store Locations'),
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {},
@@ -39,7 +39,7 @@ class _MyStoreLocationsTab extends HookWidget {
                     ),
                   ],
                 ),
-                VerticalSpacing.medium(),
+                DSVerticalSpacing.medium(),
               ],
             ),
           );

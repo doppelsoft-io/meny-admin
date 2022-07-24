@@ -31,7 +31,7 @@ class _MyStoreHoursTab extends HookWidget {
               children: [
                 Row(
                   children: [
-                    DText.headline5('Store Hours'),
+                    DSText.headline5('Store Hours'),
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {},
@@ -39,7 +39,7 @@ class _MyStoreHoursTab extends HookWidget {
                     ),
                   ],
                 ),
-                VerticalSpacing.medium(),
+                DSVerticalSpacing.medium(),
               ],
             ),
           );

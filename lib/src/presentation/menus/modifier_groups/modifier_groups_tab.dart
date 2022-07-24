@@ -97,23 +97,23 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
             ],
           ),
           loaded: (modifierGroups) {
-            return DTable(
-              args: DTableArgs(
-                header: DText.headline5('Modifier Groups'),
+            return DSTable(
+              args: DSTableArgs(
+                header: DSText.headline5('Modifier Groups'),
                 actions: [
                   const NewModifierGroupButton(),
                 ],
                 columns: [
-                  const DTableHeader(name: 'Name'),
-                  const DTableHeader(name: 'Last Updated'),
+                  const DSTableHeader(name: 'Name'),
+                  const DSTableHeader(name: 'Last Updated'),
                 ],
-                source: DTableDataSource(
+                source: DSTableDataSource(
                   emptyBuilder: (_) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Divider(height: kMinInteractiveDimension),
-                        DText.bodyText1(
+                        DSText.bodyText1(
                           'No modifier groups yet. Click "New" above to add a modifier group',
                         ),
                         const Divider(height: kMinInteractiveDimension),
@@ -122,7 +122,7 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                   },
                   rows: modifierGroups
                       .map(
-                        (e) => DTableRow(
+                        (e) => DSTableRow(
                           onSelectChanged: (selected) {
                             ActionService.run(
                               () {
@@ -142,21 +142,21 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                             );
                           },
                           cells: [
-                            DTableCell(
+                            DSTableCell(
                               builder: () {
-                                return DText.bodyText1(e.name);
+                                return DSText.bodyText1(e.name);
                               },
                             ),
-                            // DTableCell(
+                            // DSTableCell(
                             //   builder: () {
-                            //     return DText.bodyText1(
+                            //     return DSText.bodyText1(
                             //       (e.priceInfo.price / 100).toCurrency(),
                             //     );
                             //   },
                             // ),
-                            DTableCell(
+                            DSTableCell(
                               builder: () {
-                                return DText.bodyText1(
+                                return DSText.bodyText1(
                                   e.updatedAt
                                           ?.formatWith('MM/dd/yy @ h:mm a') ??
                                       '',

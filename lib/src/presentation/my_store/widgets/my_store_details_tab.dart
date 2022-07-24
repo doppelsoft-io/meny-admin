@@ -59,7 +59,7 @@ class _MyStoreDetailsTab extends HookWidget {
               children: [
                 Row(
                   children: [
-                    DText.headline5('Store Details'),
+                    DSText.headline5('Store Details'),
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
@@ -82,7 +82,7 @@ class _MyStoreDetailsTab extends HookWidget {
                     ),
                   ],
                 ),
-                VerticalSpacing.medium(),
+                DSVerticalSpacing.medium(),
                 MyStoreDetailsForm(
                   store: store,
                   onNameChanged: (name) {

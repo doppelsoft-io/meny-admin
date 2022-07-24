@@ -76,12 +76,12 @@ class _MenusScreenItemsTab extends HookWidget {
                   ),
                 );
               },
-              created: (menu) {
+              created: (item) {
                 Navigator.of(context).pop();
                 GoRouter.of(context).pushNamed(
                   EditMenuItemScreen.routeName,
                   params: {
-                    'id': menu.id!,
+                    'id': item.id!,
                   },
                 );
               },
@@ -92,28 +92,28 @@ class _MenusScreenItemsTab extends HookWidget {
       child: menuItemsState.maybeWhen(
         loaded: (items) {
           return SingleChildScrollView(
-            child: DTable(
-              theme: DTableThemeData.fallback().copyWith(
+            child: DSTable(
+              theme: DSTableThemeData.fallback().copyWith(
                 rowHeight: 64,
               ),
-              args: DTableArgs(
-                header: DText.headline5('Items'),
+              args: DSTableArgs(
+                header: DSText.headline5('Items'),
                 actions: [
                   const NewMenuItemButton(),
                 ],
                 columns: [
-                  const DTableHeader(name: 'Photo'),
-                  const DTableHeader(name: 'Name'),
-                  const DTableHeader(name: 'Price'),
-                  const DTableHeader(name: 'Last Updated'),
+                  const DSTableHeader(name: 'Photo'),
+                  const DSTableHeader(name: 'Name'),
+                  const DSTableHeader(name: 'Price'),
+                  const DSTableHeader(name: 'Last Updated'),
                 ],
-                source: DTableDataSource(
+                source: DSTableDataSource(
                   emptyBuilder: (context) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Divider(height: kMinInteractiveDimension),
-                        DText.bodyText1(
+                        DSText.bodyText1(
                           'No items yet. Click "New" above to add an item',
                         ),
                         const Divider(height: kMinInteractiveDimension),
@@ -122,7 +122,7 @@ class _MenusScreenItemsTab extends HookWidget {
                   },
                   rows: items
                       .map(
-                        (i) => DTableRow(
+                        (i) => DSTableRow(
                           onSelectChanged: (selected) {
                             ActionService.run(
                               () {
@@ -144,7 +144,7 @@ class _MenusScreenItemsTab extends HookWidget {
                             );
                           },
                           cells: [
-                            DTableCell(
+                            DSTableCell(
                               builder: () {
                                 return DImageUploadCard(
                                   theme: DImageUploadCardThemeData.thumbnail(),
@@ -152,21 +152,21 @@ class _MenusScreenItemsTab extends HookWidget {
                                 );
                               },
                             ),
-                            DTableCell(
+                            DSTableCell(
                               builder: () {
-                                return DText.bodyText1(i.name);
+                                return DSText.bodyText1(i.name);
                               },
                             ),
-                            DTableCell(
+                            DSTableCell(
                               builder: () {
-                                return DText.bodyText1(
+                                return DSText.bodyText1(
                                   (i.priceInfo.price / 100).toCurrency(),
                                 );
                               },
                             ),
-                            DTableCell(
+                            DSTableCell(
                               builder: () {
-                                return DText.bodyText1(
+                                return DSText.bodyText1(
                                   i.updatedAt?.formatWith(
                                         'MM/dd/yy @ h:mm a',
                                       ) ??

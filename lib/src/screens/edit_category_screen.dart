@@ -175,7 +175,7 @@ class _EditCategoryScreen extends HookWidget {
                             menus: menuCategoriesState.menus,
                           ),
                         ),
-                        HorizontalSpacing.small(),
+                        DSHorizontalSpacing.small(),
                         Center(
                           child: ElevatedButton(
                             onPressed: () {
@@ -193,7 +193,7 @@ class _EditCategoryScreen extends HookWidget {
                             child: const Text('Save'),
                           ),
                         ),
-                        HorizontalSpacing.medium(),
+                        DSHorizontalSpacing.medium(),
                       ],
                     ),
                     body: SingleChildScrollView(
@@ -203,11 +203,11 @@ class _EditCategoryScreen extends HookWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            DText.subtitle1('Name'),
-                            VerticalSpacing.smallest(),
-                            DTextFormField(
+                            DSText.subtitle1('Name'),
+                            DSVerticalSpacing.smallest(),
+                            DSTextFormField(
                               theme: Themes.theme.textFormFieldThemeData,
-                              args: DTextFormFieldArgs(
+                              args: DSTextFormFieldArgs(
                                 controller: controller,
                                 autofocus: true,
                                 decoration: const InputDecoration(
@@ -221,10 +221,11 @@ class _EditCategoryScreen extends HookWidget {
                                 ),
                               ),
                             ),
-                            VerticalSpacing.large(),
-                            DText.subtitle1('Add to menu'),
-                            VerticalSpacing.smallest(),
+                            DSVerticalSpacing.large(),
+                            DSText.subtitle1('Add to menu'),
+                            DSVerticalSpacing.smallest(),
                             TagSelector<MenuModel>(
+                              context: context,
                               initialItems: menuCategoriesState.menus,
                               fetchSuggestions: () async {
                                 final storeId =
@@ -323,15 +324,15 @@ class _DeleteCategoryButton extends StatelessWidget {
             onPressed: deleteCategoryState.maybeWhen(
               deleting: () => null,
               orElse: () => () async {
-                final value = await DConfirmDialog.open<bool>(
+                final value = await DSConfirmDialog.open<bool>(
                   context,
-                  args: DConfirmDialogArgs(
+                  args: DSConfirmDialogArgs(
                     title: Text('Delete ${category.name}?'),
                     content: Text(
                       'This will remove this category from all menus.\nNote: this will NOT delete any menu items that were in this category',
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    confirmArgs: DConfirmDialogConfirmArgs(
+                    confirmArgs: DSConfirmDialogConfirmArgs(
                       buttonStyle: ElevatedButton.styleFrom(
                         primary: Theme.of(context).errorColor,
                       ),

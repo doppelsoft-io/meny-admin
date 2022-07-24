@@ -94,23 +94,23 @@ class _MenusScreenCategoriesTab extends HookWidget {
         ),
       ],
       child: SingleChildScrollView(
-        child: DTable(
-          args: DTableArgs(
-            header: DText.headline5('Categories'),
+        child: DSTable(
+          args: DSTableArgs(
+            header: DSText.headline5('Categories'),
             actions: [
               const NewCategoryButton(),
             ],
             columns: [
-              const DTableHeader(name: 'Name'),
-              const DTableHeader(name: 'Last Updated'),
+              const DSTableHeader(name: 'Name'),
+              const DSTableHeader(name: 'Last Updated'),
             ],
-            source: DTableDataSource(
+            source: DSTableDataSource(
               emptyBuilder: (context) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Divider(height: kMinInteractiveDimension),
-                    DText.bodyText1(
+                    DSText.bodyText1(
                       'No categories yet. Click "New" above to add a category',
                     ),
                     const Divider(height: kMinInteractiveDimension),
@@ -119,7 +119,7 @@ class _MenusScreenCategoriesTab extends HookWidget {
               },
               rows: categories
                   .map(
-                    (e) => DTableRow(
+                    (e) => DSTableRow(
                       onSelectChanged: (selected) => ActionService.run(
                         // () => UpdateCategorySheet.open(
                         //   context: context,
@@ -140,14 +140,14 @@ class _MenusScreenCategoriesTab extends HookWidget {
                         ),
                       ),
                       cells: [
-                        DTableCell(
+                        DSTableCell(
                           builder: () {
-                            return DText.bodyText1(e.name);
+                            return DSText.bodyText1(e.name);
                           },
                         ),
-                        DTableCell(
+                        DSTableCell(
                           builder: () {
-                            return DText.bodyText1(
+                            return DSText.bodyText1(
                               e.updatedAt?.formatWith('MM/dd/yy @ h:mm a') ??
                                   '',
                             );

@@ -272,17 +272,17 @@ class _EditModifierGroupScreen extends HookWidget {
                   ],
                 ),
                 body: SingleChildScrollView(
-                  padding: const EdgeInsets.all(Spacing.pageSpacing),
+                  padding: const EdgeInsets.all(DSSpacing.medium),
                   child: Form(
                     key: EditModifierGroupScreen._formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DText.subtitle1('Name'),
-                        VerticalSpacing.smallest(),
-                        DTextFormField(
+                        DSText.subtitle1('Name'),
+                        DSVerticalSpacing.smallest(),
+                        DSTextFormField(
                           theme: Themes.theme.textFormFieldThemeData,
-                          args: DTextFormFieldArgs(
+                          args: DSTextFormFieldArgs(
                             controller: params.nameController,
                             decoration: const InputDecoration(
                               hintText: 'Enter a name',
@@ -297,10 +297,11 @@ class _EditModifierGroupScreen extends HookWidget {
                             ),
                           ),
                         ),
-                        VerticalSpacing.medium(),
-                        DText.subtitle1('Items'),
-                        VerticalSpacing.smallest(),
+                        DSVerticalSpacing.medium(),
+                        DSText.subtitle1('Items'),
+                        DSVerticalSpacing.smallest(),
                         TagSelector<MenuItemModel>(
+                          context: context,
                           initialItems: modifierGroupItemsState.items,
                           fetchSuggestions: () async {
                             final storeId =
@@ -369,13 +370,13 @@ class _EditModifierGroupScreen extends HookWidget {
                             ),
                           ),
                         ),
-                        VerticalSpacing.medium(),
-                        DText.subtitle1('Rules'),
+                        DSVerticalSpacing.medium(),
+                        DSText.subtitle1('Rules'),
                         Text(
                           'Control how customers can select the items in this modifier group',
                           style: Theme.of(context).textTheme.caption,
                         ),
-                        VerticalSpacing.small(),
+                        DSVerticalSpacing.small(),
                         CheckboxListTile(
                           controlAffinity: ListTileControlAffinity.leading,
                           title: const Text(
@@ -399,7 +400,7 @@ class _EditModifierGroupScreen extends HookWidget {
                             }
                           },
                         ),
-                        VerticalSpacing.small(),
+                        DSVerticalSpacing.small(),
                         if (editModifierGroupState.group.quantityConstraints
                             .minPermittedOptional) ...[
                           Row(
@@ -434,9 +435,9 @@ class _EditModifierGroupScreen extends HookWidget {
                               Container(
                                 constraints:
                                     const BoxConstraints(maxWidth: 100),
-                                child: DTextFormField(
+                                child: DSTextFormField(
                                   theme: Themes.theme.textFormFieldThemeData,
-                                  args: DTextFormFieldArgs(
+                                  args: DSTextFormFieldArgs(
                                     controller: params
                                         .quantityConstraintsOptionalMaxItemsController,
                                     keyboardType: TextInputType.number,
@@ -459,7 +460,7 @@ class _EditModifierGroupScreen extends HookWidget {
                                     const BoxConstraints(maxWidth: 200),
                                 child: SizedBox(
                                   height: 60,
-                                  child: DTextFormFieldThemeWrapper(
+                                  child: DSTextFormFieldThemeWrapper(
                                     theme: Themes.theme.textFormFieldThemeData,
                                     child:
                                         DropdownButtonFormField<MaxItemChoice>(
@@ -493,9 +494,9 @@ class _EditModifierGroupScreen extends HookWidget {
                               Container(
                                 constraints:
                                     const BoxConstraints(maxWidth: 100),
-                                child: DTextFormField(
+                                child: DSTextFormField(
                                   theme: Themes.theme.textFormFieldThemeData,
-                                  args: DTextFormFieldArgs(
+                                  args: DSTextFormFieldArgs(
                                     controller: params
                                         .quantityConstraintsRequiredMaxItemsController,
                                     keyboardType: TextInputType.number,
@@ -604,7 +605,8 @@ class _ModifierGroupItem extends HookWidget {
   Widget build(BuildContext context) {
     final focusNode = useFocusNode();
     final controller = useTextEditingController();
-    final priceDebouncer = DDebouncer(delay: const Duration(milliseconds: 300));
+    final priceDebouncer =
+        DSDebouncer(delay: const Duration(milliseconds: 300));
 
     void formatPrice(num price) {
       TextEditingControllerHelper.setText(
@@ -654,9 +656,9 @@ class _ModifierGroupItem extends HookWidget {
           Container(
             width: 200,
             padding: const EdgeInsets.all(8),
-            child: DTextFormField(
+            child: DSTextFormField(
               theme: Themes.theme.textFormFieldThemeData,
-              args: DTextFormFieldArgs(
+              args: DSTextFormFieldArgs(
                 controller: controller,
                 focusNode: focusNode,
                 onChanged: (price) {

@@ -25,10 +25,10 @@ class PageSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            DText.subtitle1(title),
+            DSText.subtitle1(title),
             if (caption != null) ...[
               const SizedBox(width: 5),
-              DText.caption(caption!),
+              DSText.caption(caption!),
             ],
             if (onInfoTapped != null) ...[
               const SizedBox(width: 5),
@@ -42,10 +42,10 @@ class PageSection extends StatelessWidget {
             ]
           ],
         ),
-        if (subtitle != null) DText.caption(subtitle!),
-        VerticalSpacing.smallest(),
+        if (subtitle != null) DSText.caption(subtitle!),
+        DSVerticalSpacing.smallest(),
         child,
-        VerticalSpacing.large(),
+        DSVerticalSpacing.large(),
       ],
     );
   }

@@ -56,11 +56,11 @@ class _MyStoreDetailsForm extends HookWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DText.subtitle1('Name'),
-          VerticalSpacing.smallest(),
-          DTextFormField(
+          DSText.subtitle1('Name'),
+          DSVerticalSpacing.smallest(),
+          DSTextFormField(
             theme: Themes.theme.textFormFieldThemeData,
-            args: DTextFormFieldArgs(
+            args: DSTextFormFieldArgs(
               controller: storeNameController,
               onChanged: onNameChanged,
               validator: (value) => FormValidatorHelper.validateExists(

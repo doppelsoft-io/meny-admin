@@ -29,9 +29,9 @@ class _MenuItemTaxInfoField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 225,
-      child: DTextFormField(
+      child: DSTextFormField(
         theme: Themes.theme.textFormFieldThemeData,
-        args: DTextFormFieldArgs(
+        args: DSTextFormFieldArgs(
           keyboardType: const TextInputType.numberWithOptions(
             decimal: true,
           ),

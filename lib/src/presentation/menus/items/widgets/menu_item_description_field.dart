@@ -26,12 +26,12 @@ class _MenuItemDescriptionField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DTextFormField(
+    return DSTextFormField(
       theme: Themes.theme.textFormFieldThemeData.copyWith(
         maxLines: 3,
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
-      args: DTextFormFieldArgs(
+      args: DSTextFormFieldArgs(
         controller: controller,
         autocorrect: false,
         decoration: const InputDecoration(

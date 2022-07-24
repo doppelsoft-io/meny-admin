@@ -9,6 +9,7 @@ import 'package:meny_admin/src/data/auth/auth.dart';
 import 'package:meny_admin/src/data/signup/signup.dart';
 import 'package:meny_admin/src/data/stores/stores.dart';
 import 'package:meny_admin/src/presentation/shared/shared.dart';
+import 'package:meny_admin/src/screens/screens.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
 import 'package:meny_admin/themes.dart';
@@ -124,148 +125,156 @@ class _SignupScreen extends HookWidget {
             padding: EdgeInsets.all(
               getValueForScreenType<double>(
                 context: context,
-                mobile: Spacing.formPadding / 2,
-                tablet: Spacing.formPadding,
-                desktop: Spacing.formPadding,
+                mobile: DSSpacing.small,
+                tablet: DSSpacing.medium,
+                desktop: DSSpacing.medium,
               ),
             ),
-            child: Form(
-              key: signupFormKey.value,
-              child: Column(
-                children: [
-                  Text(
-                    'Create an account to save and publish your menus',
-                    style: Theme.of(context).textTheme.headline5,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: Spacing.textFieldVerticalSpacing * 2),
-                  DTextFormField(
-                    theme: Themes.theme.textFormFieldThemeData,
-                    args: DTextFormFieldArgs(
-                      autocorrect: false,
-                      autovalidateMode: AutovalidateMode.always,
-                      controller: storeNameController,
-                      decoration: const InputDecoration(
-                        label: Text('Business name'),
-                        hintText: 'Add the name of your business',
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                      ),
-                      keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (value) {
-                        signupFormKey.value.currentState?.validate();
-                      },
-                      onEditingComplete: () {
-                        signupFormKey.value.currentState?.validate();
-                      },
-                      validator: (value) {
-                        if (value == null) return null;
-                        if (value.isEmpty) return null;
-                        return value.isNotEmpty && value.trim().isNotEmpty
-                            ? null
-                            : 'You must provide a valid name';
-                      },
+            child: DSBlock(
+              child: Form(
+                key: signupFormKey.value,
+                child: Column(
+                  children: [
+                    Text(
+                      'Create an account to save and publish your menus',
+                      style: Theme.of(context).textTheme.headline5,
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
-                  DTextFormField(
-                    theme: Themes.theme.textFormFieldThemeData,
-                    args: DTextFormFieldArgs(
-                      autocorrect: false,
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        label: Text('Email'),
-                        hintText: 'Enter your email address',
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      inputFormatters: [
-                        ValidatorInputFormatter(
-                          editingValidator: EmailEditingRegexValidator(),
+                    DSVerticalSpacing.medium(),
+                    DSTextFormField(
+                      theme: Themes.theme.textFormFieldThemeData,
+                      args: DSTextFormFieldArgs(
+                        autocorrect: false,
+                        autovalidateMode: AutovalidateMode.always,
+                        controller: storeNameController,
+                        decoration: const InputDecoration(
+                          label: Text('Business name'),
+                          hintText: 'Add the name of your business',
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
                         ),
-                      ],
-                      onFieldSubmitted: (value) {
-                        signupFormKey.value.currentState?.validate();
-                      },
-                      onEditingComplete: () {
-                        signupFormKey.value.currentState?.validate();
-                      },
-                      validator: (value) {
-                        if (value != null && value.isNotEmpty) {
-                          return EmailSubmitRegexValidator().isValid(value)
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (value) {
+                          signupFormKey.value.currentState?.validate();
+                        },
+                        onEditingComplete: () {
+                          signupFormKey.value.currentState?.validate();
+                        },
+                        validator: (value) {
+                          if (value == null) return null;
+                          if (value.isEmpty) return null;
+                          return value.isNotEmpty && value.trim().isNotEmpty
                               ? null
-                              : 'Email is invalid';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
-                  DTextFormField(
-                    theme: Themes.theme.textFormFieldThemeData,
-                    args: DTextFormFieldArgs(
-                      controller: passwordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: true,
-                      textInputAction: TextInputAction.done,
-                      decoration: const InputDecoration(
-                        label: Text('Password'),
-                        hintText: 'Enter a password',
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                              : 'You must provide a valid name';
+                        },
                       ),
                     ),
-                  ),
-                  const SizedBox(height: Spacing.textFieldVerticalSpacing),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: [
-                            storeNameController.text,
-                            emailController.text,
-                            passwordController.text
-                          ].any((value) => value.isEmpty)
-                              ? null
-                              : () {
-                                  final isValid = signupFormKey
-                                      .value.currentState!
-                                      .validate();
-                                  if (isValid) {
-                                    final store =
-                                        context.read<StoreCubit>().state.store;
-                                    context.read<SignupCubit>().handleSignUp(
-                                          store: store.copyWith(
-                                            name:
-                                                storeNameController.text.trim(),
-                                          ),
-                                          email: emailController.text.trim(),
-                                          password:
-                                              passwordController.text.trim(),
-                                        );
-                                  }
-                                },
-                          child: state.maybeMap(
-                            signingIn: (_) => SizedBox(
-                              height: 18,
-                              width: 18,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.green.shade50,
-                              ),
-                            ),
-                            orElse: () => const Text('Sign Up'),
+                    DSVerticalSpacing.small(),
+                    DSTextFormField(
+                      theme: Themes.theme.textFormFieldThemeData,
+                      args: DSTextFormFieldArgs(
+                        autocorrect: false,
+                        controller: emailController,
+                        decoration: const InputDecoration(
+                          label: Text('Email'),
+                          hintText: 'Enter your email address',
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        inputFormatters: [
+                          ValidatorInputFormatter(
+                            editingValidator: EmailEditingRegexValidator(),
                           ),
+                        ],
+                        onFieldSubmitted: (value) {
+                          signupFormKey.value.currentState?.validate();
+                        },
+                        onEditingComplete: () {
+                          signupFormKey.value.currentState?.validate();
+                        },
+                        validator: (value) {
+                          if (value != null && value.isNotEmpty) {
+                            return EmailSubmitRegexValidator().isValid(value)
+                                ? null
+                                : 'Email is invalid';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    DSVerticalSpacing.small(),
+                    DSTextFormField(
+                      theme: Themes.theme.textFormFieldThemeData,
+                      args: DSTextFormFieldArgs(
+                        controller: passwordController,
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: true,
+                        textInputAction: TextInputAction.done,
+                        decoration: const InputDecoration(
+                          label: Text('Password'),
+                          hintText: 'Enter a password',
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  TextButton(
-                    onPressed: () => GoRouter.of(context).pop(),
-                    child: const Text('Already have an account?'),
-                  ),
-                ],
+                    ),
+                    DSVerticalSpacing.small(),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize:
+                              const Size.fromHeight(kMinInteractiveDimension),
+                        ),
+                        onPressed: [
+                          storeNameController.text,
+                          emailController.text,
+                          passwordController.text
+                        ].any((value) => value.isEmpty)
+                            ? null
+                            : () {
+                                final isValid = signupFormKey
+                                    .value.currentState!
+                                    .validate();
+                                if (isValid) {
+                                  final store =
+                                      context.read<StoreCubit>().state.store;
+                                  context.read<SignupCubit>().handleSignUp(
+                                        store: store.copyWith(
+                                          name: storeNameController.text.trim(),
+                                        ),
+                                        email: emailController.text.trim(),
+                                        password:
+                                            passwordController.text.trim(),
+                                      );
+                                }
+                              },
+                        child: state.maybeMap(
+                          signingIn: (_) => SizedBox(
+                            height: 18,
+                            width: 18,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.green.shade50,
+                            ),
+                          ),
+                          orElse: () => const Text('Sign Up'),
+                        ),
+                      ),
+                    ),
+                    DSVerticalSpacing.medium(),
+                    TextButton(
+                      onPressed: () {
+                        if (GoRouter.of(context).canPop()) {
+                          GoRouter.of(context).pop();
+                        } else {
+                          GoRouter.of(context).pushNamed(LoginScreen.routeName);
+                        }
+                      },
+                      child: const Text('Already have an account?'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
