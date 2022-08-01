@@ -29,12 +29,12 @@ class Themes {
     brightness: Brightness.dark,
   );
 
-  static final textFormFieldThemeData = DTextFormFieldThemeData.fallback();
+  static final textFormFieldThemeData = DSTextFormFieldThemeData.fallback();
 
-  static final DTheme theme = DTheme(
+  static final DSTheme theme = DSTheme(
     textTheme: textTheme,
     colorScheme: colorScheme,
-    checkboxThemeData: DCheckboxThemeData.fallback().copyWith(
+    checkboxThemeData: DSCheckboxThemeData.fallback().copyWith(
       contentPadding: EdgeInsets.zero,
       fillColor: MaterialStateProperty.all(primaryColor),
     ),
@@ -93,25 +93,27 @@ class Themes {
       checkColor: MaterialStateProperty.all(colorScheme.onPrimary),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
+      style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.standard,
-        shape: MaterialStateProperty.resolveWith<RoundedRectangleBorder>(
-          (states) {
-            return RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(2),
-            );
-          },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2),
         ),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
-      style: ButtonStyle(
+      style: OutlinedButton.styleFrom(
         visualDensity: VisualDensity.standard,
-        side: MaterialStateProperty.all(BorderSide(color: Colors.grey[300]!)),
-        shape: MaterialStateProperty.resolveWith<RoundedRectangleBorder>(
-          (states) => RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(2),
-          ),
+        side: BorderSide(color: Colors.grey[300]!),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2),
+        ),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        visualDensity: VisualDensity.standard,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2),
         ),
       ),
     ),

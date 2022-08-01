@@ -4,19 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meny_admin/src/constants/paths.dart';
-import 'package:meny_admin/src/data/auth/auth.dart';
-import 'package:meny_admin/src/data/categories/categories.dart';
-import 'package:meny_admin/src/data/category_menu_items/category_menu_items.dart';
-import 'package:meny_admin/src/data/compiled_menus/compiled_menus.dart';
-import 'package:meny_admin/src/data/menu_categories/menu_categories.dart';
-import 'package:meny_admin/src/data/menu_item_modifier_groups/menu_item_modifier_groups.dart';
-import 'package:meny_admin/src/data/menu_items/menu_items.dart';
-import 'package:meny_admin/src/data/menus/menus.dart';
-import 'package:meny_admin/src/data/modifier_group_items/modifier_group_items.dart';
-import 'package:meny_admin/src/data/modifier_groups/modifier_groups.dart';
-import 'package:meny_admin/src/data/stores/stores.dart';
-import 'package:meny_admin/src/data/tags/tags.dart';
-import 'package:meny_admin/src/data/users/users.dart';
+import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/themes.dart';
 
@@ -96,9 +84,6 @@ class Locator {
       )
       ..registerSingleton<ModifierGroupItemRepository>(
         ModifierGroupItemRepository(),
-      )
-      ..registerSingleton<TagRepository>(
-        TagRepository(),
       );
   }
 }
