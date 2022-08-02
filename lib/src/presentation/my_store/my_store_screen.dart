@@ -1,6 +1,6 @@
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:meny_admin/src/constants/spacing.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 
 class MyStoreScreen extends StatelessWidget {
@@ -50,8 +50,8 @@ class _MyStorePage extends HookWidget {
         ),
         body: const Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: Spacing.pageSpacing,
-            vertical: Spacing.tablePadding,
+            horizontal: DSSpacing.medium,
+            vertical: DSSpacing.large,
           ),
           child: TabBarView(
             physics: NeverScrollableScrollPhysics(),
