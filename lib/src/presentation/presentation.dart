@@ -36,4 +36,3 @@ export 'widgets/page_section.dart';
 export 'widgets/page_title.dart';
 export 'widgets/scaffold_builder.dart';
 export 'widgets/tag_selector/tag_selector.dart';
-export 'widgets/tag_selector_modal/tag_selector_modal.dart';
