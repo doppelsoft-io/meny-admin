@@ -20,11 +20,6 @@ class CategoriesTab extends StatelessWidget {
         BlocProvider<ResourcesCubit>(
           create: (context) => ResourcesCubit<CategoryModel>.use(),
         ),
-        BlocProvider<CreateCategoryCubit>(
-          create: (context) => CreateCategoryCubit(
-            storeCubit: context.read<StoreCubit>(),
-          ),
-        ),
       ],
       child: _MenusScreenCategoriesTab(),
     );
@@ -59,105 +54,88 @@ class _MenusScreenCategoriesTab extends HookWidget {
             }
           },
         ),
-        BlocListener<CreateCategoryCubit, CreateCategoryState>(
-          listener: (context, state) {
-            state.maybeWhen(
-              orElse: () {},
-              creating: (_) {
-                showDialog<void>(
-                  context: context,
-                  useRootNavigator: false,
-                  barrierDismissible: false,
-                  barrierColor: Colors.black12,
-                  builder: (_) => WillPopScope(
-                    onWillPop: () async => false,
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-                );
-              },
-              created: (menu) {
-                Navigator.of(context).pop();
-                GoRouter.of(context).pushNamed(
-                  EditCategoryScreen.routeName,
-                  params: {
-                    'id': menu.id!,
-                  },
-                );
-              },
-            );
-          },
-        ),
       ],
-      child: SingleChildScrollView(
-        child: DSTable(
-          args: DSTableArgs(
-            header: DSText.headline5('Categories'),
-            actions: [
-              const NewCategoryButton(),
-            ],
-            columns: [
-              const DSTableHeader(name: 'Name'),
-              const DSTableHeader(name: 'Last Updated'),
-            ],
-            source: DSTableDataSource(
-              emptyBuilder: (context) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Divider(height: kMinInteractiveDimension),
-                    DSText.bodyText1(
-                      'No categories yet. Click "New" above to add a category',
-                    ),
-                    const Divider(height: kMinInteractiveDimension),
-                  ],
-                );
-              },
-              rows: categories
-                  .map(
-                    (e) => DSTableRow(
-                      onSelectChanged: (selected) => ActionService.run(
-                        // () => UpdateCategorySheet.open(
-                        //   context: context,
-                        //   resource: e,
-                        // ),
-                        () {
-                          GoRouter.of(context).goNamed(
-                            EditCategoryScreen.routeName,
-                            params: {'id': e.id!},
-                          );
-                        },
-                        () => AnalyticsService.track(
-                          message: Analytics.categoriesTabItemSelected,
-                          params: {
-                            'categoryId': e.id!,
-                            'categoryName': e.name,
-                          },
-                        ),
-                      ),
-                      cells: [
-                        DSTableCell(
-                          builder: () {
-                            return DSText.bodyText1(e.name);
-                          },
-                        ),
-                        DSTableCell(
-                          builder: () {
-                            return DSText.bodyText1(
-                              e.updatedAt?.formatWith('MM/dd/yy @ h:mm a') ??
-                                  '',
+      child: categoriesState is ResourcesLoading
+          ? Column(
+              children: const [
+                LinearProgressIndicator(),
+              ],
+            )
+          : SingleChildScrollView(
+              child: categories.isEmpty
+                  ? const NoResultsTable(
+                      headline: 'Categories',
+                      title: 'No categories yet',
+                      message: 'Click "New" to create one!',
+                      actions: [NewCategoryButton()],
+                    )
+                  : DSTable(
+                      args: DSTableArgs(
+                        header: DSText.headline5('Categories'),
+                        actions: [
+                          const NewCategoryButton(),
+                        ],
+                        columns: [
+                          const DSTableHeader(name: 'Name'),
+                          const DSTableHeader(name: 'Last Updated'),
+                        ],
+                        source: DSTableDataSource(
+                          emptyBuilder: (context) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Divider(height: kMinInteractiveDimension),
+                                DSText.bodyText1(
+                                  'No categories yet. Click "New" above to add a category',
+                                ),
+                                const Divider(height: kMinInteractiveDimension),
+                              ],
                             );
                           },
+                          rows: categories
+                              .map(
+                                (e) => DSTableRow(
+                                  onSelectChanged: (selected) =>
+                                      ActionService.run(
+                                    () {
+                                      GoRouter.of(context).goNamed(
+                                        EditCategoryScreen.routeName,
+                                        params: {'id': e.id!},
+                                      );
+                                    },
+                                    () => AnalyticsService.track(
+                                      message:
+                                          Analytics.categoriesTabItemSelected,
+                                      params: {
+                                        'categoryId': e.id!,
+                                        'categoryName': e.name,
+                                      },
+                                    ),
+                                  ),
+                                  cells: [
+                                    DSTableCell(
+                                      builder: () {
+                                        return DSText.bodyText1(e.name);
+                                      },
+                                    ),
+                                    DSTableCell(
+                                      builder: () {
+                                        return DSText.bodyText1(
+                                          e.updatedAt?.formatWith(
+                                                'MM/dd/yy @ h:mm a',
+                                              ) ??
+                                              '',
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              )
+                              .toList(),
                         ),
-                      ],
+                      ),
                     ),
-                  )
-                  .toList(),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

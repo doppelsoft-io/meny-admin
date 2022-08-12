@@ -42,6 +42,7 @@ class ResourcesCubit<M> extends Cubit<ResourcesState> {
   StreamSubscription? _indexSubscription;
 
   Future<void> load({required String storeId}) async {
+    emit(ResourcesLoading());
     await _indexSubscription?.cancel();
     _indexSubscription =
         _iResourcesRepository.getAll(storeId: storeId).listen((resources) {

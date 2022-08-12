@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:meny_admin/src/application/application.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 
 class NewMenuItemButton extends StatelessWidget {
@@ -9,10 +8,7 @@ class NewMenuItemButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: context.read<CreateMenuItemCubit>(),
-      child: const _NewMenuItemButton(),
-    );
+    return const _NewMenuItemButton();
   }
 }
 
@@ -21,16 +17,10 @@ class _NewMenuItemButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<CreateMenuItemCubit>().state;
-
     return PageActionButton(
       title: 'New',
-      isDisabled: state.maybeWhen(
-        orElse: () => false,
-        creating: (_) => true,
-      ),
       onPressed: () {
-        context.read<CreateMenuItemCubit>().create();
+        GoRouter.of(context).pushNamed(CreateMenuItemScreen.routeName);
       },
     );
   }

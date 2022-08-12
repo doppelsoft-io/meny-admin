@@ -27,11 +27,17 @@ final router = GoRouter(
       },
       routes: [
         GoRoute(
+          name: CreateMenuScreen.routeName,
+          path: 'create-menu',
+          pageBuilder: (_, state) => const MaterialPage(
+            fullscreenDialog: true,
+            child: CreateMenuScreen(),
+          ),
+        ),
+        GoRoute(
           name: EditMenuScreen.routeName,
           path: 'menus/:id',
-          builder: (context, state) {
-            return EditMenuScreen(id: state.params['id']!);
-          },
+          builder: (_, state) => EditMenuScreen(id: state.params['id']!),
         ),
         GoRoute(
           name: MenuPreviewScreen.routeName,
@@ -41,6 +47,14 @@ final router = GoRouter(
           },
         ),
         GoRoute(
+          name: CreateCategoryScreen.routeName,
+          path: 'create-category',
+          pageBuilder: (_, state) => const MaterialPage(
+            fullscreenDialog: true,
+            child: CreateCategoryScreen(),
+          ),
+        ),
+        GoRoute(
           name: EditCategoryScreen.routeName,
           path: 'categories/:id',
           builder: (context, state) {
@@ -48,11 +62,27 @@ final router = GoRouter(
           },
         ),
         GoRoute(
+          name: CreateMenuItemScreen.routeName,
+          path: 'create-item',
+          pageBuilder: (_, state) => const MaterialPage(
+            fullscreenDialog: true,
+            child: CreateMenuItemScreen(),
+          ),
+        ),
+        GoRoute(
           name: EditMenuItemScreen.routeName,
           path: 'items/:id',
           builder: (context, state) {
             return EditMenuItemScreen(id: state.params['id']!);
           },
+        ),
+        GoRoute(
+          name: CreateModifierGroupScreen.routeName,
+          path: 'create-modifier-group',
+          pageBuilder: (_, state) => const MaterialPage(
+            fullscreenDialog: true,
+            child: CreateModifierGroupScreen(),
+          ),
         ),
         GoRoute(
           name: EditModifierGroupScreen.routeName,

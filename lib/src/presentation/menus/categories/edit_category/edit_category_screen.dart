@@ -336,7 +336,7 @@ class _DeleteCategoryButton extends StatelessWidget {
                 final value = await DSConfirmDialog.open<bool>(
                   context,
                   args: DSConfirmDialogArgs(
-                    title: Text('Delete ${category.name}?'),
+                    title: 'Delete ${category.name}?',
                     content: Text(
                       'This will remove this category from all menus.\nNote: this will NOT delete any menu items that were in this category',
                       style: Theme.of(context).textTheme.bodyText1,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:meny_admin/src/application/application.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 
 class NewMenuButton extends StatelessWidget {
@@ -9,10 +8,11 @@ class NewMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: context.read<CreateMenuCubit>(),
-      child: const _NewMenuButton(),
-    );
+    // return BlocProvider.value(
+    //   value: context.read<CreateMenuCubit>(),
+    //   child: const _NewMenuButton(),
+    // );
+    return const _NewMenuButton();
   }
 }
 
@@ -21,16 +21,17 @@ class _NewMenuButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final createMenuState = context.watch<CreateMenuCubit>().state;
+    // final createMenuState = context.watch<CreateMenuCubit>().state;
 
     return PageActionButton(
       title: 'New',
-      isDisabled: createMenuState.maybeWhen(
-        orElse: () => false,
-        creating: (_) => true,
-      ),
+      // isDisabled: createMenuState.maybeWhen(
+      //   orElse: () => false,
+      //   creating: (_) => true,
+      // ),
       onPressed: () {
-        context.read<CreateMenuCubit>().create();
+        // context.read<CreateMenuCubit>().create();
+        GoRouter.of(context).pushNamed(CreateMenuScreen.routeName);
       },
     );
   }

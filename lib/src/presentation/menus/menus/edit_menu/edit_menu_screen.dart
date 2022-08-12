@@ -86,7 +86,6 @@ class _EditMenuScreen extends HookWidget {
                 appBar: AppBar(
                   elevation: 0,
                   iconTheme: const IconThemeData(color: Colors.black),
-                  // leading: const AutoLeadingButton(),
                   backgroundColor: Colors.white,
                   title: const Text(
                     'Edit Menu',
@@ -109,27 +108,41 @@ class _EditMenuScreen extends HookWidget {
                     ),
                   ),
                   actions: [
-                    Center(
-                      child: _DeleteMenuButton(menu: editMenuState.menu),
+                    DeleteMenuButton(
+                      onDelete: (_) async {
+                        final result = await DSConfirmDialog.open<bool>(
+                          context,
+                          args: DSConfirmDialogArgs(
+                            title: 'Delete ${editMenuState.menu.name}?',
+                            content: Text(
+                              'This will delete this menu. No categories or items will be affected.',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          ),
+                        );
+                        if (result != null && result) {
+                          // ignore: use_build_context_synchronously
+                          await context
+                              .read<DeleteMenuCubit>()
+                              .delete(menu: editMenuState.menu);
+                        }
+                      },
                     ),
                     DSHorizontalSpacing.small(),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          final isValid =
-                              EditMenuScreen._formKey.currentState!.validate();
+                    SaveMenuButton(
+                      onSave: (_) {
+                        final isValid =
+                            EditMenuScreen._formKey.currentState!.validate();
 
-                          if (!isValid) return;
+                        if (!isValid) return;
 
-                          context.read<EditMenuCubit>().update(
-                                editMenuState.menu.copyWith(
-                                  name: controller.text,
-                                  updatedAt: DateTime.now(),
-                                ),
-                              );
-                        },
-                        child: const Text('Save'),
-                      ),
+                        context.read<EditMenuCubit>().update(
+                              editMenuState.menu.copyWith(
+                                name: controller.text,
+                                updatedAt: DateTime.now(),
+                              ),
+                            );
+                      },
                     ),
                     DSHorizontalSpacing.medium(),
                   ],
@@ -195,7 +208,7 @@ class _EditMenuScreen extends HookWidget {
         builder: (BuildContext context) {
           return DSConfirmDialog(
             args: DSConfirmDialogArgs(
-              title: const Text('Close without saving?'),
+              title: 'Close without saving?',
               content: const SizedBox.shrink(),
               cancelArgs: DSConfirmDialogCancelArgs(
                 text: 'NO',
@@ -220,69 +233,5 @@ class _EditMenuScreen extends HookWidget {
       });
     }
     return Future.value(true);
-  }
-}
-
-class _DeleteMenuButton extends StatelessWidget {
-  const _DeleteMenuButton({
-    Key? key,
-    required this.menu,
-  }) : super(key: key);
-
-  final MenuModel menu;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<DeleteMenuCubit, DeleteMenuState>(
-      listener: (context, deleteMenuState) {
-        deleteMenuState.maybeWhen(
-          success: () {
-            Navigator.of(context).pop();
-            Locator.instance<ToastService>().showOverlay(
-              const Text('Your menu has been deleted'),
-              ToastType.error,
-            );
-          },
-          error: (exception) {
-            DialogService.showErrorDialog(
-              context: context,
-              failure: CustomException(message: exception.toString()),
-            );
-          },
-          orElse: () {},
-        );
-      },
-      builder: (context, deleteMenuState) {
-        return DeleteResourceButton(
-          args: DeleteResourceButtonArgs(
-            onPressed: deleteMenuState.maybeWhen(
-              deleting: () => null,
-              orElse: () => () async {
-                final result = await DSConfirmDialog.open<bool>(
-                  context,
-                  args: DSConfirmDialogArgs(
-                    title: Text('Delete ${menu.name}?'),
-                    content: Text(
-                      'This will delete this menu. No categories or items will be affected.',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    confirmArgs: DSConfirmDialogConfirmArgs(
-                      text: 'YES',
-                      // buttonStyle: ElevatedButton.styleFrom(
-                      //   primary: Theme.of(context).errorColor,
-                      // ),
-                    ),
-                  ),
-                );
-                if (result != null && result) {
-                  // ignore: use_build_context_synchronously
-                  await context.read<DeleteMenuCubit>().delete(menu: menu);
-                }
-              },
-            ),
-          ),
-        );
-      },
-    );
   }
 }

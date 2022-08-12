@@ -19,11 +19,6 @@ class ModifierGroupsTab extends StatelessWidget {
         BlocProvider<ModifierGroupsCubit>(
           create: (context) => ModifierGroupsCubit(),
         ),
-        BlocProvider<CreateModifierGroupCubit>(
-          create: (context) => CreateModifierGroupCubit(
-            storeCubit: context.read<StoreCubit>(),
-          ),
-        ),
       ],
       child: BlocListener<StoreCubit, StoreState>(
         listener: (context, state) {
@@ -46,8 +41,6 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final modifierGroupsState = context.watch<ModifierGroupsCubit>().state;
-    final createModifierGroupState =
-        context.watch<CreateModifierGroupCubit>().state;
 
     useEffect(
       () {
@@ -60,128 +53,92 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
       },
       const [],
     );
-    return BlocConsumer<CreateModifierGroupCubit, CreateModifierGroupState>(
-      listener: (context, state) {
-        state.maybeWhen(
-          orElse: () {},
-          creating: (_) {
-            showDialog<void>(
-              context: context,
-              useRootNavigator: false,
-              barrierDismissible: false,
-              barrierColor: Colors.black12,
-              builder: (_) => WillPopScope(
-                onWillPop: () async => false,
-                child: const Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            );
-          },
-          created: (menu) {
-            Navigator.of(context).pop();
-            GoRouter.of(context).pushNamed(
-              EditModifierGroupScreen.routeName,
-              params: {
-                'id': menu.id!,
-              },
-            );
-          },
-        );
-      },
-      builder: (context, createModifierGroupState) {
-        return createModifierGroupState.maybeWhen(
-          creating: (_) => const SizedBox.shrink(),
-          orElse: () {
-            return SingleChildScrollView(
-              child: modifierGroupsState.maybeWhen(
-                loading: (_) => Column(
-                  children: const [
-                    LinearProgressIndicator(),
-                  ],
-                ),
-                loaded: (modifierGroups) {
-                  return DSTable(
-                    args: DSTableArgs(
-                      header: DSText.headline5('Modifier Groups'),
-                      actions: [
-                        const NewModifierGroupButton(),
-                      ],
-                      columns: [
-                        const DSTableHeader(name: 'Name'),
-                        const DSTableHeader(name: 'Last Updated'),
-                      ],
-                      source: DSTableDataSource(
-                        emptyBuilder: (_) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Divider(height: kMinInteractiveDimension),
-                              DSText.bodyText1(
-                                'No modifier groups yet. Click "New" above to add a modifier group',
-                              ),
-                              const Divider(height: kMinInteractiveDimension),
-                            ],
-                          );
-                        },
-                        rows: modifierGroups
-                            .map(
-                              (e) => DSTableRow(
-                                onSelectChanged: (selected) {
-                                  ActionService.run(
-                                    () {
-                                      GoRouter.of(context).goNamed(
-                                        EditModifierGroupScreen.routeName,
-                                        params: {'id': e.id!},
-                                      );
-                                    },
-                                    () => AnalyticsService.track(
-                                      message: Analytics
-                                          .modifierGroupsTabModifierGroupSelected,
-                                      params: {
-                                        'groupId': e.id!,
-                                        'groupName': e.name,
-                                      },
-                                    ),
-                                  );
-                                },
-                                cells: [
-                                  DSTableCell(
-                                    builder: () {
-                                      return DSText.bodyText1(e.name);
+    return SingleChildScrollView(
+      child: modifierGroupsState.maybeWhen(
+        loading: (_) {
+          return Column(
+            children: const [
+              LinearProgressIndicator(),
+            ],
+          );
+        },
+        orElse: () {
+          return modifierGroupsState.groups.isEmpty
+              ? const NoResultsTable(
+                  headline: 'Modifier Groups',
+                  title: 'No modifier groups yet',
+                  message: 'Click "New" to create one!',
+                  actions: [NewModifierGroupButton()],
+                )
+              : DSTable(
+                  args: DSTableArgs(
+                    header: DSText.headline5('Modifier Groups'),
+                    actions: [
+                      const NewModifierGroupButton(),
+                    ],
+                    columns: [
+                      const DSTableHeader(name: 'Name'),
+                      const DSTableHeader(name: 'Last Updated'),
+                    ],
+                    source: DSTableDataSource(
+                      emptyBuilder: (_) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Divider(height: kMinInteractiveDimension),
+                            DSText.bodyText1(
+                              'No modifier groups yet. Click "New" above to add a modifier group',
+                            ),
+                            const Divider(height: kMinInteractiveDimension),
+                          ],
+                        );
+                      },
+                      rows: modifierGroupsState.groups
+                          .map(
+                            (e) => DSTableRow(
+                              onSelectChanged: (selected) {
+                                ActionService.run(
+                                  () {
+                                    GoRouter.of(context).goNamed(
+                                      EditModifierGroupScreen.routeName,
+                                      params: {'id': e.id!},
+                                    );
+                                  },
+                                  () => AnalyticsService.track(
+                                    message: Analytics
+                                        .modifierGroupsTabModifierGroupSelected,
+                                    params: {
+                                      'groupId': e.id!,
+                                      'groupName': e.name,
                                     },
                                   ),
-                                  // DSTableCell(
-                                  //   builder: () {
-                                  //     return DSText.bodyText1(
-                                  //       (e.priceInfo.price / 100).toCurrency(),
-                                  //     );
-                                  //   },
-                                  // ),
-                                  DSTableCell(
-                                    builder: () {
-                                      return DSText.bodyText1(
-                                        e.updatedAt?.formatWith(
-                                              'MM/dd/yy @ h:mm a',
-                                            ) ??
-                                            '',
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            )
-                            .toList(),
-                      ),
+                                );
+                              },
+                              cells: [
+                                DSTableCell(
+                                  builder: () {
+                                    return DSText.bodyText1(e.name);
+                                  },
+                                ),
+                                DSTableCell(
+                                  builder: () {
+                                    return DSText.bodyText1(
+                                      e.updatedAt?.formatWith(
+                                            'MM/dd/yy @ h:mm a',
+                                          ) ??
+                                          '',
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          )
+                          .toList(),
                     ),
-                  );
-                },
-                orElse: SizedBox.shrink,
-              ),
-            );
-          },
-        );
-      },
+                  ),
+                );
+        },
+      ),
     );
   }
 }

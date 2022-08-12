@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:meny_admin/src/application/application.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 
 class NewModifierGroupButton extends StatelessWidget {
@@ -9,10 +8,7 @@ class NewModifierGroupButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: context.read<CreateModifierGroupCubit>(),
-      child: const _NewModifierGroupButton(),
-    );
+    return const _NewModifierGroupButton();
   }
 }
 
@@ -21,16 +17,10 @@ class _NewModifierGroupButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final createMenuState = context.watch<CreateModifierGroupCubit>().state;
-
     return PageActionButton(
       title: 'New',
-      isDisabled: createMenuState.maybeWhen(
-        orElse: () => false,
-        creating: (_) => true,
-      ),
       onPressed: () {
-        context.read<CreateModifierGroupCubit>().create();
+        GoRouter.of(context).pushNamed(CreateModifierGroupScreen.routeName);
       },
     );
   }

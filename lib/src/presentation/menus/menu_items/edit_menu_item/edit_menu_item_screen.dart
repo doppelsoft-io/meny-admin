@@ -461,7 +461,7 @@ class _DeleteMenuItemButton extends StatelessWidget {
                     // buttonStyle: ElevatedButton.styleFrom(
                     //   primary: Theme.of(context).errorColor,
                     // ),
-                    title: Text('Delete ${item.name}?'),
+                    title: 'Delete ${item.name}?',
                     content: Text(
                       'This will remove this item from all menus',
                       style: Theme.of(context).textTheme.bodyText1,

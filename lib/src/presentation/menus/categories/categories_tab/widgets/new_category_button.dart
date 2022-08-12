@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:meny_admin/src/application/application.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 
 class NewCategoryButton extends StatelessWidget {
@@ -9,10 +8,7 @@ class NewCategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: context.read<CreateCategoryCubit>(),
-      child: const _NewCategoryButton(),
-    );
+    return const _NewCategoryButton();
   }
 }
 
@@ -21,16 +17,10 @@ class _NewCategoryButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final createCategoryState = context.watch<CreateCategoryCubit>().state;
-
     return PageActionButton(
       title: 'New',
-      isDisabled: createCategoryState.maybeWhen(
-        orElse: () => false,
-        creating: (_) => true,
-      ),
       onPressed: () {
-        context.read<CreateCategoryCubit>().create();
+        GoRouter.of(context).pushNamed(CreateCategoryScreen.routeName);
       },
     );
   }
