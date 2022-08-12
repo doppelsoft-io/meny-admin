@@ -1,9 +1,63 @@
 rules_version = '2';
-service cloud.firestore {
+service cloud.firestore { 
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2022, 1, 29);
+    function loggedIn(){
+    	return request.auth.uid != null;
     }
+    
+    function userBelongsToStore(storeId){
+    	// return request.auth.uid in request.resource.data.users;
+      return request.auth.uid in get(/databases/$(database)/documents/stores/$(storeId)).data.users;
+    }
+    
+    function isStoreOwner(storeId){
+    	return request.auth.uid in request.resource.data.users && request.resource.data.owner == request.auth.uid;
+    }
+    
+    function hasName(){
+      return request.resource.data.name !=null;
+    }
+    
+    match /stores/{storeId} {
+			allow create, list: if loggedIn();
+			allow read: if loggedIn() && userBelongsToStore(storeId);
+      allow write: if loggedIn() && isStoreOwner(storeId);
+    }
+    
+  	match /stores/{storeId}/menus/{menuId} {
+  		allow list, read, create, delete: if loggedIn() && userBelongsToStore(storeId);
+      allow update: if loggedIn() && userBelongsToStore(storeId) && hasName();
+  	}
+    
+  	match /stores/{storeId}/categories/{categoryId} {    	
+  		allow list, read, create, delete: if loggedIn() && userBelongsToStore(storeId);
+      allow update: if loggedIn() && userBelongsToStore(storeId) && hasName();
+  	}
+   
+  	match /stores/{storeId}/menu_items/{itemId} {      
+  		allow list, read, create, delete: if loggedIn() && userBelongsToStore(storeId);
+      allow update: if loggedIn() && userBelongsToStore(storeId) && hasName();
+  	}
+    
+  	match /stores/{storeId}/modifier_groups/{itemId} {
+  		allow list, read, create, delete: if loggedIn() && userBelongsToStore(storeId);
+      allow update: if loggedIn() && userBelongsToStore(storeId) && hasName();
+  	}
+    
+  	match /stores/{storeId}/category_menu_items/{itemId} {
+  		allow list, read, write, delete: if loggedIn() && userBelongsToStore(storeId);
+  	}
+    
+  	match /stores/{storeId}/menu_categories/{itemId} {
+  		allow list, read, write, delete: if loggedIn() && userBelongsToStore(storeId);
+  	}
+    
+  	match /stores/{storeId}/menu_item_modifier_groups/{itemId} {
+  		allow list, read, write, delete: if loggedIn() && userBelongsToStore(storeId);
+  	}
+    
+    match /stores/{storeId}/modifier_group_items/{itemId} {
+  		allow list, read, write, delete: if loggedIn() && userBelongsToStore(storeId);
+  	}
   }
 }
