@@ -48,26 +48,20 @@ class _MenusScreenItemsTab extends HookWidget {
         ),
       ],
       child: menuItemsState.maybeWhen(
-        loading: (_) {
-          return Column(
-            children: const [
-              LinearProgressIndicator(),
-            ],
-          );
-        },
+        loading: (_) => const LoadingTable(),
         orElse: () {
-          return SingleChildScrollView(
-            child: menuItemsState.items.isEmpty
-                ? const NoResultsTable(
-                    headline: 'Items',
-                    title: 'No menu items yet',
-                    message: 'Click "New" to create one!',
-                    actions: [NewMenuItemButton()],
-                  )
-                : MenuItemsTable(
+          return menuItemsState.items.isEmpty
+              ? const NoResultsTable(
+                  headline: 'Items',
+                  title: 'No menu items yet',
+                  message: 'Click "New" to create one!',
+                  actions: [NewMenuItemButton()],
+                )
+              : SingleChildScrollView(
+                  child: MenuItemsTable(
                     items: menuItemsState.items,
                   ),
-          );
+                );
         },
       ),
     );

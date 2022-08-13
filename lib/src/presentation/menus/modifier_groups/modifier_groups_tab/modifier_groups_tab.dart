@@ -53,24 +53,18 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
       },
       const [],
     );
-    return SingleChildScrollView(
-      child: modifierGroupsState.maybeWhen(
-        loading: (_) {
-          return Column(
-            children: const [
-              LinearProgressIndicator(),
-            ],
-          );
-        },
-        orElse: () {
-          return modifierGroupsState.groups.isEmpty
-              ? const NoResultsTable(
-                  headline: 'Modifier Groups',
-                  title: 'No modifier groups yet',
-                  message: 'Click "New" to create one!',
-                  actions: [NewModifierGroupButton()],
-                )
-              : DSTable(
+    return modifierGroupsState.maybeWhen(
+      loading: (_) => const LoadingTable(),
+      loaded: (groups) {
+        return groups.isEmpty
+            ? const NoResultsTable(
+                headline: 'Modifier Groups',
+                title: 'No modifier groups yet',
+                message: 'Click "New" to create one!',
+                actions: [NewModifierGroupButton()],
+              )
+            : SingleChildScrollView(
+                child: DSTable(
                   args: DSTableArgs(
                     header: DSText.headline5('Modifier Groups'),
                     actions: [
@@ -93,7 +87,7 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                           ],
                         );
                       },
-                      rows: modifierGroupsState.groups
+                      rows: groups
                           .map(
                             (e) => DSTableRow(
                               onSelectChanged: (selected) {
@@ -136,9 +130,10 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                           .toList(),
                     ),
                   ),
-                );
-        },
-      ),
+                ),
+              );
+      },
+      orElse: SizedBox.shrink,
     );
   }
 }

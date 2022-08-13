@@ -13,17 +13,14 @@ class EditMenuItemCubit extends Cubit<EditMenuItemState> {
     MenuItemRepository? menuItemRepository,
     required String itemId,
     required StoreCubit storeCubit,
-    required AuthCubit authCubit,
   })  : _itemId = itemId,
         _menuItemRepository = menuItemRepository ?? Locator.instance(),
         _storeCubit = storeCubit,
-        _authCubit = authCubit,
         super(_Loading(item: MenuItemModel.empty())) {
     loadItem(id: _itemId);
   }
 
   final String _itemId;
-  final AuthCubit _authCubit;
   final StoreCubit _storeCubit;
   final MenuItemRepository _menuItemRepository;
 

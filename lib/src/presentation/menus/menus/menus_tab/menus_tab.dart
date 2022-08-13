@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
-import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
-import 'package:meny_core/meny_core.dart';
 
 class MenusTab extends StatelessWidget {
   const MenusTab({Key? key}) : super(key: key);
@@ -14,10 +11,8 @@ class MenusTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ResourcesCubit>(
-          create: (context) => ResourcesCubit<MenuModel>(
-            iResourcesRepository: Locator.instance<MenuRepository>(),
-          ),
+        BlocProvider<MenusCubit>(
+          create: (context) => MenusCubit(),
         ),
       ],
       child: _MenusScreenMenusTab(),
@@ -28,15 +23,14 @@ class MenusTab extends StatelessWidget {
 class _MenusScreenMenusTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final menusState = context.watch<ResourcesCubit>().state;
-    final menus = List<MenuModel>.from(menusState.resources);
+    final menusState = context.watch<MenusCubit>().state;
 
     useEffect(
       () {
         final storeCubit = context.read<StoreCubit>();
         final storeId = storeCubit.state.store.id;
         if (storeId != null) {
-          context.read<ResourcesCubit>().load(storeId: storeId);
+          context.read<MenusCubit>().load(storeId: storeId);
         }
         return null;
       },
@@ -48,32 +42,26 @@ class _MenusScreenMenusTab extends HookWidget {
           listenWhen: (prev, curr) => prev.store != curr.store,
           listener: (context, state) {
             if (state.store.id != null) {
-              context.read<ResourcesCubit>().load(storeId: state.store.id!);
+              context.read<MenusCubit>().load(storeId: state.store.id!);
             }
           },
         ),
       ],
-      child: menusState is ResourcesLoading
-          ? Column(
-              children: const [
-                LinearProgressIndicator(),
-              ],
-            )
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  if (menusState.resources.isEmpty)
-                    const NoResultsTable(
-                      headline: 'Menus',
-                      title: 'No menus yet',
-                      message: 'Click "New" to create one!',
-                      actions: [NewMenuButton()],
-                    )
-                  else
-                    MenusTable(menus: menus),
-                ],
-              ),
-            ),
+      child: menusState.maybeWhen(
+        loading: (_) => const LoadingTable(),
+        orElse: () {
+          return menusState.menus.isEmpty
+              ? const NoResultsTable(
+                  headline: 'Menus',
+                  title: 'No menus yet',
+                  message: 'Click "New" to create one!',
+                  actions: [NewMenuButton()],
+                )
+              : SingleChildScrollView(
+                  child: MenusTable(menus: menusState.menus),
+                );
+        },
+      ),
     );
   }
 }

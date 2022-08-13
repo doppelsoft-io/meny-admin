@@ -46,7 +46,6 @@ class EditMenuItemScreen extends StatelessWidget {
         BlocProvider<EditMenuItemCubit>(
           create: (context) => EditMenuItemCubit(
             itemId: id,
-            authCubit: context.read<AuthCubit>(),
             storeCubit: context.read<StoreCubit>(),
           ),
         ),
