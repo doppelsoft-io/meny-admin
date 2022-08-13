@@ -21,7 +21,7 @@ class MyStoreDetailsTab extends StatelessWidget {
         listener: (context, state) {
           state.maybeWhen(
             success: (_) {
-              Locator.instance<ToastService>().showOverlay(
+              Locator.instance<ToastService>().showNotification(
                 const Text('Store updated'),
               );
             },

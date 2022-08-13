@@ -195,7 +195,7 @@ class _EditModifierGroupScreen extends HookWidget {
           editModifierGroupState.maybeWhen(
             success: (group) {
               Navigator.pop(context);
-              Locator.instance<ToastService>().showOverlay(
+              Locator.instance<ToastService>().showNotification(
                 Text('Your modifier group ${group.name} has been saved'),
               );
             },
@@ -814,7 +814,7 @@ class _DeleteModifierGroupButton extends StatelessWidget {
           success: () {
             Navigator.of(context).pop();
             if (group.name.isNotEmpty) {
-              Locator.instance<ToastService>().showOverlay(
+              Locator.instance<ToastService>().showNotification(
                 Text('Your modifier group ${group.name} has been deleted'),
                 ToastType.error,
               );

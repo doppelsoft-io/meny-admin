@@ -12,7 +12,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 class AppScreen extends StatelessWidget {
   const AppScreen({Key? key}) : super(key: key);
 
-  static const String routeName = '/app';
+  static const String routeName = '/';
 
   @override
   Widget build(BuildContext context) {

@@ -94,6 +94,10 @@ final router = GoRouter(
       ],
     ),
   ],
+  // redirect: (state) {
+  //   print('state $state');
+  //   return null;
+  // },
   errorBuilder: (context, state) => ErrorScreen(state.error!),
 );
 

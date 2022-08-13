@@ -64,7 +64,7 @@ class _EditMenuScreen extends HookWidget {
               controller.text = menu.name;
             },
             success: (menu) {
-              Locator.instance<ToastService>().showOverlay(
+              Locator.instance<ToastService>().showNotification(
                 Text('Your menu ${menu.name} has been saved'),
               );
               Navigator.pop(context);

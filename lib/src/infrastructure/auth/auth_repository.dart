@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -41,7 +43,9 @@ class AuthRepository {
 
   Future<UserModel> getCurrentUser() async {
     try {
-      final currentUser = _firebaseAuth.currentUser;
+      final completer = Completer<User?>();
+      _firebaseAuth.authStateChanges().listen(completer.complete);
+      final currentUser = await completer.future;
 
       if (currentUser != null) {
         return UserModel.fromFirebaseAuthUser(currentUser);

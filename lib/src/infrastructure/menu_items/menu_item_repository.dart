@@ -86,7 +86,6 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
           .menuItemEntitiesCollection(storeId: storeId)
           .add(resource.toJson());
       final snapshot = await document.get();
-      print('MEE: snapshot ${snapshot.id}');
       return MenuItemModel.fromSnapshot(snapshot);
     } catch (err) {
       _loggerService.log('(create): ${err.toString()}');

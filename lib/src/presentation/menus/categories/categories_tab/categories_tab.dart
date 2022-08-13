@@ -17,7 +17,9 @@ class CategoriesTab extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<CategoriesCubit>(
-          create: (context) => CategoriesCubit(),
+          create: (context) => CategoriesCubit(
+            authCubit: context.read<AuthCubit>(),
+          ),
         ),
       ],
       child: _MenusScreenCategoriesTab(),

@@ -79,6 +79,10 @@ class AuthActions extends HookWidget {
       authenticated: (_) {
         return IconButton(
           onPressed: () {
+            // context.read<MenusCubit>().close();
+            // context.read<CategoriesCubit>().close();
+            // context.read<MenuItemsCubit>().close();
+            // context.read<ModifierGroupsCubit>().close();
             context.read<AuthCubit>().logout();
 
             Locator.instance<ToastService>().showNotification(

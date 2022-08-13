@@ -39,7 +39,7 @@ class _DeleteMenuButton extends StatelessWidget {
         deleteMenuState.maybeWhen(
           success: () {
             Navigator.of(context).pop();
-            Locator.instance<ToastService>().showOverlay(
+            Locator.instance<ToastService>().showNotification(
               const Text('Your menu has been deleted'),
               ToastType.error,
             );

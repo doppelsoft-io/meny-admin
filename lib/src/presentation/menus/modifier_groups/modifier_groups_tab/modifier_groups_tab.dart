@@ -17,7 +17,9 @@ class ModifierGroupsTab extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ModifierGroupsCubit>(
-          create: (context) => ModifierGroupsCubit(),
+          create: (context) => ModifierGroupsCubit(
+            authCubit: context.read<AuthCubit>(),
+          ),
         ),
       ],
       child: BlocListener<StoreCubit, StoreState>(

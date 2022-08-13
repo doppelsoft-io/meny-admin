@@ -22,6 +22,8 @@ class AuthCubit extends Cubit<AuthState> {
     _authSubscription = _firebaseAuth.authStateChanges().listen((user) {
       if (user != null) {
         userChanged(UserModel.fromFirebaseAuthUser(user));
+      } else {
+        emitUnauthenticated();
       }
     });
   }
@@ -38,9 +40,11 @@ class AuthCubit extends Cubit<AuthState> {
     return super.close();
   }
 
-  Future<void> userChanged(UserModel user) async {
-    await Future<void>.delayed(Duration.zero);
+  void emitUnauthenticated() {
+    emit(_Unauthenticated(user: UserModel.empty()));
+  }
 
+  Future<void> userChanged(UserModel user) async {
     if (user.isAnonymous) {
       emit(_Anonymous(user: user));
     } else {

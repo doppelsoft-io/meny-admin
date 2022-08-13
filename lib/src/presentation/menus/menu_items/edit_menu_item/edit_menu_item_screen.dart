@@ -140,7 +140,7 @@ class _EditMenuItemScreen extends HookWidget {
           editMenuItemState.maybeWhen(
             success: (item) {
               Navigator.pop(context);
-              Locator.instance<ToastService>().showOverlay(
+              Locator.instance<ToastService>().showNotification(
                 Text('Your item ${item.name} has been saved'),
               );
             },
@@ -427,7 +427,7 @@ class _DeleteMenuItemButton extends StatelessWidget {
           success: () {
             Navigator.of(context).pop();
             if (item.name.isNotEmpty) {
-              Locator.instance<ToastService>().showOverlay(
+              Locator.instance<ToastService>().showNotification(
                 Text('Your item ${item.name} has been deleted'),
                 ToastType.error,
               );

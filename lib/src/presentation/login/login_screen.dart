@@ -53,6 +53,16 @@ class _LoginScreen extends HookWidget {
       updatePassword,
     ]);
 
+    void submit() {
+      final isValid = loginFormKey.value.currentState!.validate();
+      if (isValid) {
+        context.read<LoginCubit>().loginWithCredentials(
+              email: emailController.text,
+              password: passwordController.text,
+            );
+      }
+    }
+
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         state.maybeWhen(
@@ -176,23 +186,16 @@ class _LoginScreen extends HookWidget {
                           minimumSize:
                               const Size.fromHeight(kMinInteractiveDimension),
                         ),
-                        onPressed: [
-                          emailController.text,
-                          passwordController.text
-                        ].any((value) => value.isEmpty)
-                            ? null
-                            : () {
-                                final isValid =
-                                    loginFormKey.value.currentState!.validate();
-                                if (isValid) {
-                                  context
-                                      .read<LoginCubit>()
-                                      .loginWithCredentials(
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                      );
-                                }
-                              },
+                        onPressed: state.maybeWhen(
+                          loggingIn: () => null,
+                          orElse: () {
+                            if ([emailController.text, passwordController.text]
+                                .any((value) => value.isEmpty)) {
+                              return null;
+                            }
+                            return submit;
+                          },
+                        ),
                         child: state.maybeWhen(
                           loggingIn: () => SizedBox(
                             height: 18,

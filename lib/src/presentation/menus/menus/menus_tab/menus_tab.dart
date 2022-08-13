@@ -12,7 +12,9 @@ class MenusTab extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<MenusCubit>(
-          create: (context) => MenusCubit(),
+          create: (context) => MenusCubit(
+            authCubit: context.read<AuthCubit>(),
+          ),
         ),
       ],
       child: _MenusScreenMenusTab(),

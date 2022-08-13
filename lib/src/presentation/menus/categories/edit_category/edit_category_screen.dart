@@ -58,7 +58,6 @@ class _EditCategoryScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final createCategoryState = context.watch<CreateCategoryCubit>().state;
     final editCategoryState = context.watch<EditCategoryCubit>().state;
     final menuCategoriesState = context.watch<MenuCategoriesCubit>().state;
     final deleteCategoryState = context.watch<DeleteCategoryCubit>().state;
@@ -114,7 +113,7 @@ class _EditCategoryScreen extends HookWidget {
           editCategoryState.maybeWhen(
             success: (category) {
               Navigator.pop(context);
-              Locator.instance<ToastService>().showOverlay(
+              Locator.instance<ToastService>().showNotification(
                 Text('Your category ${category.name} has been saved'),
               );
             },
@@ -311,7 +310,7 @@ class _DeleteCategoryButton extends StatelessWidget {
           success: () {
             Navigator.of(context).pop();
             if (category.name.isNotEmpty) {
-              Locator.instance<ToastService>().showOverlay(
+              Locator.instance<ToastService>().showNotification(
                 Text('Your category ${category.name} has been deleted'),
                 ToastType.error,
               );

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
+import 'dart:developer' as developer;
 
 import 'package:bloc/bloc.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
@@ -47,12 +47,15 @@ class StoreCubit extends Cubit<StoreState> {
   void watchStore(StoreModel store) {
     _storeSubscription?.cancel();
     _storeSubscription =
-        _storeRepository.stream(storeId: store.id!).listen(setStore);
+        _storeRepository.stream(storeId: store.id!).listen(setStore)
+          ..onError((error) {
+            developer.log(error.toString());
+          });
   }
 
   Future<void> setStore(StoreModel store) async {
     assert(store.id != null && store.id!.isNotEmpty, 'store.id is empty');
-    log('MEE: store ${store.id}');
+    developer.log('MEE: store ${store.id}');
     await _storeCacheService.save(store.id!);
     emit(state.copyWith(store: store));
   }
@@ -103,7 +106,7 @@ class StoreCubit extends Cubit<StoreState> {
         );
       }
     } catch (err) {
-      log('err $err');
+      developer.log('err $err');
     }
   }
 
