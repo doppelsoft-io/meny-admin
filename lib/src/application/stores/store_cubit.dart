@@ -94,10 +94,12 @@ class StoreCubit extends Cubit<StoreState> {
 
         emit(
           failureOrStore.fold(
-            (failure) => StoreState.error(
-              store: state.store,
-              exception: failure,
-            ),
+            (failure) {
+              return StoreState.error(
+                store: state.store,
+                exception: failure,
+              );
+            },
             (stores) {
               watchStore(stores.first);
               return StoreState.loaded(store: stores.first);
@@ -106,7 +108,13 @@ class StoreCubit extends Cubit<StoreState> {
         );
       }
     } catch (err) {
-      developer.log('err $err');
+      developer.log('err ${err.runtimeType}');
+      emit(
+        StoreState.error(
+          store: state.store,
+          exception: const CustomException(message: 'Store is null'),
+        ),
+      );
     }
   }
 
