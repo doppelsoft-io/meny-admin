@@ -252,11 +252,7 @@ class _SignupScreen extends HookWidget {
                     DSVerticalSpacing.medium(),
                     TextButton(
                       onPressed: () {
-                        if (GoRouter.of(context).canPop()) {
-                          GoRouter.of(context).pop();
-                        } else {
-                          GoRouter.of(context).pushNamed(LoginScreen.routeName);
-                        }
+                        GoRouter.of(context).goNamed(LoginScreen.routeName);
                       },
                       child: const Text('Already have an account?'),
                     ),

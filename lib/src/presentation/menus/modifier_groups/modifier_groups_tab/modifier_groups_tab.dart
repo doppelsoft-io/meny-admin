@@ -1,3 +1,4 @@
+import 'package:data_table_2/data_table_2.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_core/meny_core.dart';
 
 class ModifierGroupsTab extends StatelessWidget {
   const ModifierGroupsTab({Key? key}) : super(key: key);
@@ -58,6 +60,53 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
     return modifierGroupsState.maybeWhen(
       loading: (_) => const Center(child: CircularProgressIndicator()),
       loaded: (groups) {
+        return ResourceTable<ModifierGroupModel>(
+          header: const PageTitle(title: 'Modifier Groups'),
+          action: const NewModifierGroupButton(),
+          resources: groups,
+          columns: const [
+            DataColumn2(
+              label: Text('Name'),
+              size: ColumnSize.L,
+            ),
+          ],
+          cellsBuilder: (_, group) {
+            return [
+              DataCell(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(group.name),
+                    DSText.caption(
+                      'Last updated: ${group.updatedAt?.formatWith(
+                            'MM/dd/yy @ h:mm a',
+                          ) ?? ''}',
+                    ),
+                  ],
+                ),
+              ),
+            ];
+          },
+          onTapItem: (_, group) {
+            ActionService.run(
+              () {
+                GoRouter.of(context).goNamed(
+                  EditModifierGroupScreen.routeName,
+                  params: {'id': group.id!},
+                );
+              },
+              () => AnalyticsService.track(
+                message: Analytics.modifierGroupsTabModifierGroupSelected,
+                params: {
+                  'groupId': group.id!,
+                  'groupName': group.name,
+                },
+              ),
+            );
+          },
+          emptyMessage: '',
+        );
         return groups.isEmpty
             ? const NoResultsTable(
                 headline: 'Modifier Groups',

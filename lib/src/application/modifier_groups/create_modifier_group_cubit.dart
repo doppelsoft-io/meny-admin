@@ -26,7 +26,10 @@ class CreateModifierGroupCubit extends Cubit<CreateModifierGroupState> {
       final storeId = _storeCubit.state.store.id!;
       final newMenu = await _modifierGroupRepository.create(
         storeId: storeId,
-        resource: state.group.copyWith(createdAt: DateTime.now()),
+        resource: state.group.copyWith(
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
       );
       emit(_Created(group: newMenu));
     } on CreateModifierGroupException catch (err) {

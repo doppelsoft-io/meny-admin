@@ -1,6 +1,7 @@
 export 'app/app_screen.dart';
 export 'core/loading_table.dart';
 export 'core/no_results_table.dart';
+export 'core/resource_table.dart';
 export 'login/login_screen.dart';
 export 'menu_preview/menu_preview_screen.dart';
 export 'menu_preview/widgets/compiled_menu_builder.dart';
@@ -16,7 +17,6 @@ export 'menus/menu_items/edit_menu_item/widgets/menu_item_name_field.dart';
 export 'menus/menu_items/edit_menu_item/widgets/menu_item_price_field.dart';
 export 'menus/menu_items/edit_menu_item/widgets/menu_item_tax_info_field.dart';
 export 'menus/menu_items/menu_items_tab/menu_items_tab.dart';
-export 'menus/menu_items/menu_items_tab/widgets/menu_items_table.dart';
 export 'menus/menu_items/menu_items_tab/widgets/new_menu_item_button.dart';
 export 'menus/menus/create_menu/create_menu_screen.dart';
 export 'menus/menus/edit_menu/edit_menu_screen.dart';

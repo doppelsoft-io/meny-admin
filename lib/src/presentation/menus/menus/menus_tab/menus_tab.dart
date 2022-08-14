@@ -57,18 +57,8 @@ class _MenusScreenMenusTab extends HookWidget {
       ],
       child: menusState.maybeWhen(
         loading: (_) => const Center(child: CircularProgressIndicator()),
-        orElse: () {
-          return menusState.menus.isEmpty
-              ? const NoResultsTable(
-                  headline: 'Menus',
-                  title: 'No menus yet',
-                  message: 'Click "New" to create one!',
-                  actions: [NewMenuButton()],
-                )
-              : SingleChildScrollView(
-                  child: MenusTable(menus: menusState.menus),
-                );
-        },
+        loaded: (menus) => MenusTable(menus: menus),
+        orElse: SizedBox.shrink,
       ),
     );
   }
