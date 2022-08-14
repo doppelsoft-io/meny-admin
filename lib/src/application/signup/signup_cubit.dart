@@ -15,17 +15,14 @@ part 'signup_cubit.freezed.dart';
 class SignupCubit extends Cubit<SignupState> {
   SignupCubit({
     AuthRepository? authRepository,
-    StoreRepository? storeRepository,
     FirebaseFirestore? firebaseFirestore,
     required AuthCubit authCubit,
   })  : _authRepository = authRepository ?? Locator.instance(),
-        _storeRepository = storeRepository ?? Locator.instance(),
         _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
         _authCubit = authCubit,
         super(SignupState.initial(store: StoreModel.empty()));
 
   final AuthRepository _authRepository;
-  final StoreRepository _storeRepository;
   final FirebaseFirestore _firebaseFirestore;
   final AuthCubit _authCubit;
 
