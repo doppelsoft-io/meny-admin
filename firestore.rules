@@ -18,12 +18,20 @@ service cloud.firestore {
       return request.resource.data.name !=null;
     }
     
+    function currentUserSetAsOwner(){
+      return request.resource.data.owner == request.auth.uid;
+    }
+    
+    function currentUserExistsInUsersList(){
+      return request.auth.uid in request.resource.data.users;
+    }
+    
     match /users/{userId} {
 			allow list, read, write, delete: if loggedIn() && request.auth.uid == userId;
     }
     
     match /stores/{storeId} {
-			allow create: if loggedIn() && request.resource.data.owner == request.auth.uid;
+			allow create: if loggedIn() && currentUserSetAsOwner() && currentUserExistsInUsersList() && hasName();
       allow list: if loggedIn();
 			allow read: if loggedIn() && userBelongsToStore(storeId);
       allow write: if loggedIn() && isStoreOwner(storeId);
