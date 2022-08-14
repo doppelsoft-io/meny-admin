@@ -2,6 +2,7 @@
 ///
 import 'package:flutter/services.dart';
 
+// ignore: one_member_abstracts
 abstract class StringValidator {
   bool isValid(String value);
 }

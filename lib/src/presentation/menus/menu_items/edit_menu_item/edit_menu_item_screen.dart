@@ -121,10 +121,7 @@ class _EditMenuItemScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final storeState = context.watch<StoreCubit>().state;
     final editMenuItemState = context.watch<EditMenuItemCubit>().state;
-    final deleteMenuItemState = context.watch<DeleteMenuItemCubit>().state;
-    final imageUploadState = context.watch<ImageUploadCubit>().state;
     final item = editMenuItemState.item;
     final params = EditMenuItemSheetParams(
       nameController: useTextEditingController(),
