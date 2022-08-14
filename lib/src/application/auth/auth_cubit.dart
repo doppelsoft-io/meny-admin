@@ -19,13 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
         _storeCacheService = storeCacheService ?? Locator.instance(),
         super(_Initial(user: UserModel.empty())) {
     _authSubscription?.cancel();
-    _authSubscription = _firebaseAuth.authStateChanges().listen((user) {
-      if (user != null) {
-        userChanged(UserModel.fromFirebaseAuthUser(user));
-      } else {
-        emitUnauthenticated();
-      }
-    });
+    _authSubscription = _firebaseAuth.authStateChanges().listen(userChanged);
   }
 
   final AuthRepository _authRepository;
@@ -44,11 +38,16 @@ class AuthCubit extends Cubit<AuthState> {
     emit(_Unauthenticated(user: UserModel.empty()));
   }
 
-  Future<void> userChanged(UserModel user) async {
-    if (user.isAnonymous) {
-      emit(_Anonymous(user: user));
+  Future<void> userChanged(User? firebaseUser) async {
+    if (firebaseUser != null) {
+      final userModel = UserModel.fromFirebaseAuthUser(firebaseUser);
+      if (firebaseUser.isAnonymous) {
+        emit(_Anonymous(user: userModel));
+      } else {
+        emit(_Authenticated(user: userModel));
+      }
     } else {
-      emit(_Authenticated(user: user));
+      emit(_Unauthenticated(user: UserModel.empty()));
     }
   }
 

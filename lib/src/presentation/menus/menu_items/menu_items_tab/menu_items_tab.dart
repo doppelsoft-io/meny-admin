@@ -50,7 +50,7 @@ class _MenusScreenItemsTab extends HookWidget {
         ),
       ],
       child: menuItemsState.maybeWhen(
-        loading: (_) => const LoadingTable(),
+        loading: (_) => const Center(child: CircularProgressIndicator()),
         orElse: () {
           return menuItemsState.items.isEmpty
               ? const NoResultsTable(

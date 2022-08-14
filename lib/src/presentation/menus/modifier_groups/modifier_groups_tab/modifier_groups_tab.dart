@@ -56,7 +56,7 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
       const [],
     );
     return modifierGroupsState.maybeWhen(
-      loading: (_) => const LoadingTable(),
+      loading: (_) => const Center(child: CircularProgressIndicator()),
       loaded: (groups) {
         return groups.isEmpty
             ? const NoResultsTable(

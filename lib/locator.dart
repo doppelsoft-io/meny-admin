@@ -3,6 +3,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/paths.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -84,6 +85,8 @@ class Locator {
       )
       ..registerSingleton<ModifierGroupItemRepository>(
         ModifierGroupItemRepository(),
-      );
+      )
+      ..registerSingleton<AuthCubit>(AuthCubit())
+      ..registerSingleton<StoreCubit>(StoreCubit(authCubit: instance()));
   }
 }

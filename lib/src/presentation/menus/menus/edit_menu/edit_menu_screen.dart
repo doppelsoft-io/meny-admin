@@ -29,7 +29,8 @@ class EditMenuScreen extends StatelessWidget {
         BlocProvider<EditMenuCubit>(
           create: (context) => EditMenuCubit(
             storeCubit: context.read<StoreCubit>(),
-          )..loadMenu(id: id),
+            menuId: id,
+          ),
         ),
         BlocProvider<DeleteMenuCubit>(
           create: (context) => DeleteMenuCubit(
@@ -47,154 +48,162 @@ class _EditMenuScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final storeState = context.watch<StoreCubit>().state;
     final editMenuState = context.watch<EditMenuCubit>().state;
     final deleteMenuState = context.watch<DeleteMenuCubit>().state;
 
     final controller = useTextEditingController(text: editMenuState.menu.name);
 
-    return WillPopScope(
-      onWillPop: () => _onWillPop(
-        context: context,
-        menu: editMenuState.menu,
-      ),
-      child: BlocConsumer<EditMenuCubit, EditMenuState>(
-        listener: (context, editMenuState) {
-          editMenuState.maybeWhen(
-            loaded: (menu) {
-              controller.text = menu.name;
-            },
-            success: (menu) {
-              Locator.instance<ToastService>().showNotification(
-                Text('Your menu ${menu.name} has been saved'),
+    return storeState.maybeWhen(
+      orElse: DSLoadingIndicator.new,
+      loaded: (store) {
+        return WillPopScope(
+          onWillPop: () => _onWillPop(
+            context: context,
+            menu: editMenuState.menu,
+          ),
+          child: BlocConsumer<EditMenuCubit, EditMenuState>(
+            listener: (context, editMenuState) {
+              editMenuState.maybeWhen(
+                loaded: (menu) {
+                  controller.text = menu.name;
+                },
+                success: (menu) {
+                  Locator.instance<ToastService>().showNotification(
+                    Text('Your menu ${menu.name} has been saved'),
+                  );
+                  Navigator.pop(context);
+                },
+                error: (_, exception) {
+                  DialogService.showErrorDialog(
+                    context: context,
+                    failure: CustomException(message: exception.toString()),
+                  );
+                },
+                orElse: () {},
               );
-              Navigator.pop(context);
             },
-            error: (_, exception) {
-              DialogService.showErrorDialog(
-                context: context,
-                failure: CustomException(message: exception.toString()),
-              );
-            },
-            orElse: () {},
-          );
-        },
-        builder: (context, editMenuState) {
-          return editMenuState.maybeWhen(
-            loading: (_) => ScaffoldBuilder.loading(),
-            orElse: () {
-              return Scaffold(
-                appBar: AppBar(
-                  elevation: 0,
-                  iconTheme: const IconThemeData(color: Colors.black),
-                  backgroundColor: Colors.white,
-                  title: const Text(
-                    'Edit Menu',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                  bottom: PreferredSize(
-                    preferredSize: const Size.fromHeight(8),
-                    child: Visibility(
-                      visible: editMenuState.maybeWhen(
-                            orElse: () => false,
-                            updating: (_) => true,
-                          ) ||
-                          deleteMenuState.maybeWhen(
-                            orElse: () => false,
-                            deleting: () => true,
-                          ),
-                      child: const LinearProgressIndicator(),
-                    ),
-                  ),
-                  actions: [
-                    DeleteMenuButton(
-                      onDelete: (_) async {
-                        final result = await DSConfirmDialog.open<bool>(
-                          context,
-                          args: DSConfirmDialogArgs(
-                            title: 'Delete ${editMenuState.menu.name}?',
-                            content: Text(
-                              'This will delete this menu. No categories or items will be affected.',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                          ),
-                        );
-                        if (result != null && result) {
-                          // ignore: use_build_context_synchronously
-                          await context
-                              .read<DeleteMenuCubit>()
-                              .delete(menu: editMenuState.menu);
-                        }
-                      },
-                    ),
-                    DSHorizontalSpacing.small(),
-                    SaveMenuButton(
-                      onSave: (_) {
-                        final isValid =
-                            EditMenuScreen._formKey.currentState!.validate();
-
-                        if (!isValid) return;
-
-                        context.read<EditMenuCubit>().update(
-                              editMenuState.menu.copyWith(
-                                name: controller.text,
-                                updatedAt: DateTime.now(),
+            builder: (context, editMenuState) {
+              return editMenuState.maybeWhen(
+                loading: (_) => ScaffoldBuilder.loading(),
+                orElse: () {
+                  return Scaffold(
+                    appBar: AppBar(
+                      elevation: 0,
+                      iconTheme: const IconThemeData(color: Colors.black),
+                      backgroundColor: Colors.white,
+                      title: const Text(
+                        'Edit Menu',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      bottom: PreferredSize(
+                        preferredSize: const Size.fromHeight(8),
+                        child: Visibility(
+                          visible: editMenuState.maybeWhen(
+                                orElse: () => false,
+                                updating: (_) => true,
+                              ) ||
+                              deleteMenuState.maybeWhen(
+                                orElse: () => false,
+                                deleting: () => true,
+                              ),
+                          child: const LinearProgressIndicator(),
+                        ),
+                      ),
+                      actions: [
+                        DeleteMenuButton(
+                          onDelete: (_) async {
+                            final result = await DSConfirmDialog.open<bool>(
+                              context,
+                              args: DSConfirmDialogArgs(
+                                title: 'Delete ${editMenuState.menu.name}?',
+                                content: Text(
+                                  'This will delete this menu. No categories or items will be affected.',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
                               ),
                             );
-                      },
-                    ),
-                    DSHorizontalSpacing.medium(),
-                  ],
-                ),
-                body: SingleChildScrollView(
-                  padding: const EdgeInsets.all(DSSpacing.medium),
-                  child: Form(
-                    key: EditMenuScreen._formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PageSection(
-                          title: 'Name',
-                          child: DSTextFormField(
-                            theme: Themes.theme.textFormFieldThemeData,
-                            args: DSTextFormFieldArgs(
-                              controller: controller,
-                              autofocus: true,
-                              decoration: const InputDecoration(
-                                hintText: 'Enter a name',
-                              ),
-                              validator: (value) =>
-                                  FormValidatorHelper.validateExists(
-                                value,
-                                message: 'Please enter a name for your menu',
-                              ),
-                              onFieldSubmitted: (text) {
-                                final isValid = EditMenuScreen
-                                    ._formKey.currentState!
-                                    .validate();
-
-                                if (!isValid) return;
-
-                                context.read<EditMenuCubit>().update(
-                                      editMenuState.menu.copyWith(
-                                        name: controller.text,
-                                        updatedAt: DateTime.now(),
-                                      ),
-                                    );
-                              },
-                            ),
-                          ),
+                            if (result != null && result) {
+                              // ignore: use_build_context_synchronously
+                              await context
+                                  .read<DeleteMenuCubit>()
+                                  .delete(menu: editMenuState.menu);
+                            }
+                          },
                         ),
+                        DSHorizontalSpacing.small(),
+                        SaveMenuButton(
+                          onSave: (_) {
+                            final isValid = EditMenuScreen
+                                ._formKey.currentState!
+                                .validate();
+
+                            if (!isValid) return;
+
+                            context.read<EditMenuCubit>().update(
+                                  editMenuState.menu.copyWith(
+                                    name: controller.text,
+                                    updatedAt: DateTime.now(),
+                                  ),
+                                );
+                          },
+                        ),
+                        DSHorizontalSpacing.medium(),
                       ],
                     ),
-                  ),
-                ),
+                    body: SingleChildScrollView(
+                      padding: const EdgeInsets.all(DSSpacing.medium),
+                      child: Form(
+                        key: EditMenuScreen._formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            PageSection(
+                              title: 'Name',
+                              child: DSTextFormField(
+                                theme: Themes.theme.textFormFieldThemeData,
+                                args: DSTextFormFieldArgs(
+                                  controller: controller,
+                                  autofocus: true,
+                                  decoration: const InputDecoration(
+                                    hintText: 'Enter a name',
+                                  ),
+                                  validator: (value) =>
+                                      FormValidatorHelper.validateExists(
+                                    value,
+                                    message:
+                                        'Please enter a name for your menu',
+                                  ),
+                                  onFieldSubmitted: (text) {
+                                    final isValid = EditMenuScreen
+                                        ._formKey.currentState!
+                                        .validate();
+
+                                    if (!isValid) return;
+
+                                    context.read<EditMenuCubit>().update(
+                                          editMenuState.menu.copyWith(
+                                            name: controller.text,
+                                            updatedAt: DateTime.now(),
+                                          ),
+                                        );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
               );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

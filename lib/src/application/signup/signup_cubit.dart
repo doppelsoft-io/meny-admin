@@ -15,14 +15,17 @@ part 'signup_cubit.freezed.dart';
 class SignupCubit extends Cubit<SignupState> {
   SignupCubit({
     AuthRepository? authRepository,
+    StoreRepository? storeRepository,
     FirebaseFirestore? firebaseFirestore,
     required AuthCubit authCubit,
   })  : _authRepository = authRepository ?? Locator.instance(),
+        _storeRepository = storeRepository ?? Locator.instance(),
         _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
         _authCubit = authCubit,
         super(SignupState.initial(store: StoreModel.empty()));
 
   final AuthRepository _authRepository;
+  final StoreRepository _storeRepository;
   final FirebaseFirestore _firebaseFirestore;
   final AuthCubit _authCubit;
 
@@ -42,23 +45,25 @@ class SignupCubit extends Cubit<SignupState> {
 
       final storeRef = _firebaseFirestore.storesDocument(storeId: store.id!);
 
-      final createdUser = await _authRepository.signUpAndLinkAnonymousUser(
+      final createdFirebaseUser =
+          await _authRepository.signUpAndLinkAnonymousUser(
         email: email,
         password: password,
       );
 
+      final user = UserModel.fromFirebaseAuthUser(createdFirebaseUser!);
+
       final batch = _firebaseFirestore.batch();
 
-      final usersRef =
-          _firebaseFirestore.usersDocument(userId: createdUser.id!);
+      final usersRef = _firebaseFirestore.usersDocument(userId: user.id ?? '');
 
       batch
-        ..set(usersRef, createdUser.toJson())
+        ..set(usersRef, user.toJson())
         ..set(storeRef, store.toJson(), SetOptions(merge: true));
 
       await batch.commit();
 
-      await _authCubit.userChanged(createdUser);
+      await _authCubit.userChanged(createdFirebaseUser);
 
       emit(
         SignupState.done(
@@ -66,6 +71,15 @@ class SignupCubit extends Cubit<SignupState> {
           email: state.email,
           password: state.password,
           result: right(true),
+        ),
+      );
+    } on SignUpAndLinkException catch (err) {
+      emit(
+        SignupState.done(
+          store: state.store,
+          email: state.email,
+          password: state.password,
+          result: left(err),
         ),
       );
     } on CustomException catch (err) {
@@ -88,7 +102,11 @@ class SignupCubit extends Cubit<SignupState> {
       );
     } finally {
       emit(
-        SignupState.initial(store: state.store),
+        SignupState.initial(
+          store: state.store,
+          email: state.email,
+          password: state.password,
+        ),
       );
     }
   }

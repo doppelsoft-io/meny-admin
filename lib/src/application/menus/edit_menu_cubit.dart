@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
@@ -11,13 +13,44 @@ part 'edit_menu_state.dart';
 class EditMenuCubit extends Cubit<EditMenuState> {
   EditMenuCubit({
     required StoreCubit storeCubit,
+    required String menuId,
     MenuRepository? menuRepository,
   })  : _storeCubit = storeCubit,
+        _menuId = menuId,
         _menuRepository = menuRepository ?? Locator.instance(),
-        super(_Initial(menu: MenuModel.empty()));
+        super(_Initial(menu: MenuModel.empty())) {
+    _subscription?.cancel();
 
-  final MenuRepository _menuRepository;
+    /// If store already loaded (when already in app)
+    _storeCubit.state.maybeWhen(
+      loaded: (store) {
+        loadMenu(id: _menuId);
+      },
+      orElse: () {
+        /// Otherwise, listen to store stream (reloads page)
+        _subscription = _storeCubit.stream.listen((state) {
+          state.maybeWhen(
+            loaded: (store) {
+              loadMenu(id: _menuId);
+            },
+            orElse: () {},
+          );
+        });
+      },
+    );
+  }
+
   final StoreCubit _storeCubit;
+  final String _menuId;
+  final MenuRepository _menuRepository;
+
+  StreamSubscription<StoreState>? _subscription;
+
+  @override
+  Future<void> close() async {
+    await _subscription?.cancel();
+    await super.close();
+  }
 
   Future<void> loadMenu({required String id}) async {
     emit(_Loading(menu: state.menu));

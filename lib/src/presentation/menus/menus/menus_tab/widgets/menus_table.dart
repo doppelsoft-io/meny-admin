@@ -24,8 +24,8 @@ class MenusTable extends StatelessWidget {
         ],
         columns: [
           const DSTableHeader(name: 'Name'),
-          const DSTableHeader(name: 'Last Updated'),
-          const DSTableHeader(name: 'Actions'),
+          // const DSTableHeader(name: 'Last Updated'),
+          const DSTableHeader(name: ''),
         ],
         source: DSTableDataSource(
           emptyBuilder: (context) {
@@ -60,50 +60,100 @@ class MenusTable extends StatelessWidget {
                   },
                   cells: [
                     DSTableCell(
-                      builder: () => DSText.bodyText1(e.name),
+                      builder: () => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          DSText.bodyText2(
+                            e.name,
+                            styleOverrides: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          DSText.caption(
+                            'Last updated: ${e.updatedAt?.formatWith(
+                                  'MM/dd/yy @ h:mm a',
+                                ) ?? ''}',
+                          ),
+                        ],
+                      ),
                     ),
                     DSTableCell(
                       builder: () {
-                        return DSText.bodyText1(
-                          e.updatedAt?.formatWith(
-                                'MM/dd/yy @ h:mm a',
-                              ) ??
-                              '',
-                        );
-                      },
-                    ),
-                    DSTableCell(
-                      builder: () {
-                        return Row(
-                          children: [
-                            TextButton(
-                              style: ButtonStyle(
-                                alignment: Alignment.center,
-                                padding: MaterialStateProperty.all(
-                                  EdgeInsets.zero,
-                                ),
-                              ),
-                              child: const Text('Preview'),
-                              onPressed: () => ActionService.run(
-                                () => GoRouter.of(context).goNamed(
-                                  MenuPreviewScreen.routeName,
-                                  params: {
-                                    'id': e.id!,
-                                  },
-                                ),
-                                () => AnalyticsService.track(
-                                  message: Analytics.menusTabPreviewTapped,
-                                  params: {
-                                    'menuId': e.id!,
-                                    'menuName': e.name,
-                                  },
-                                ),
+                        return Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            style: ButtonStyle(
+                              alignment: Alignment.center,
+                              padding: MaterialStateProperty.all(
+                                EdgeInsets.zero,
                               ),
                             ),
-                          ],
+                            child: const Text('Preview'),
+                            onPressed: () => ActionService.run(
+                              () => GoRouter.of(context).goNamed(
+                                MenuPreviewScreen.routeName,
+                                params: {
+                                  'id': e.id!,
+                                },
+                              ),
+                              () => AnalyticsService.track(
+                                message: Analytics.menusTabPreviewTapped,
+                                params: {
+                                  'menuId': e.id!,
+                                  'menuName': e.name,
+                                },
+                              ),
+                            ),
+                          ),
                         );
                       },
                     ),
+                    // DSTableCell(
+                    //   builder: () {
+                    //     return SizedBox(
+                    //       width: 200,
+                    //       child: DSText.bodyText1(
+                    //         e.updatedAt?.formatWith(
+                    //               'MM/dd/yy @ h:mm a',
+                    //             ) ??
+                    //             '',
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+                    // DSTableCell(
+                    //   builder: () {
+                    //     return Row(
+                    //       children: [
+                    //         TextButton(
+                    //           style: ButtonStyle(
+                    //             alignment: Alignment.center,
+                    //             padding: MaterialStateProperty.all(
+                    //               EdgeInsets.zero,
+                    //             ),
+                    //           ),
+                    //           child: const Text('Preview'),
+                    //           onPressed: () => ActionService.run(
+                    //             () => GoRouter.of(context).goNamed(
+                    //               MenuPreviewScreen.routeName,
+                    //               params: {
+                    //                 'id': e.id!,
+                    //               },
+                    //             ),
+                    //             () => AnalyticsService.track(
+                    //               message: Analytics.menusTabPreviewTapped,
+                    //               params: {
+                    //                 'menuId': e.id!,
+                    //                 'menuName': e.name,
+                    //               },
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     );
+                    //   },
+                    // ),
                   ],
                 ),
               )

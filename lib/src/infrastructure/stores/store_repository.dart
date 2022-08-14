@@ -62,8 +62,15 @@ class StoreRepository {
   Future<Either<CustomException, StoreModel>> createEmptyStoreForUser({
     required String userId,
   }) async {
+    return _createEmptyStoreForUser(userId: userId);
+  }
+
+  Future<Either<CustomException, StoreModel>> _createEmptyStoreForUser({
+    required String userId,
+  }) async {
     try {
       final store = StoreModel.empty().copyWith(
+        name: 'My Example Store',
         owner: userId,
         users: [userId],
         roles: {

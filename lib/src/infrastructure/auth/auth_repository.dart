@@ -42,17 +42,21 @@ class AuthRepository {
   final LoggerService _loggerService;
 
   Future<UserModel> getCurrentUser() async {
+    StreamSubscription<User?>? subscription;
     try {
       final completer = Completer<User?>();
-      _firebaseAuth.authStateChanges().listen(completer.complete);
+      subscription =
+          _firebaseAuth.authStateChanges().listen(completer.complete);
       final currentUser = await completer.future;
 
+      await subscription.cancel();
       if (currentUser != null) {
         return UserModel.fromFirebaseAuthUser(currentUser);
       } else {
         return UserModel.empty();
       }
     } catch (err) {
+      await subscription?.cancel();
       _loggerService.log('(getCurrentUser): ${err.toString()}');
       throw const GetCurrentUserException(
         message: 'Failed to fetch current user',
@@ -105,7 +109,7 @@ class AuthRepository {
     }
   }
 
-  Future<UserModel> signUpAndLinkAnonymousUser({
+  Future<User?> signUpAndLinkAnonymousUser({
     required String email,
     required String password,
   }) async {
@@ -118,10 +122,10 @@ class AuthRepository {
         );
         final userCredential = await currentUser.linkWithCredential(credential);
         if (userCredential.user != null) {
-          return UserModel.fromFirebaseAuthUser(userCredential.user!);
+          return userCredential.user!;
         }
       }
-      return UserModel.empty();
+      return null;
     } on FirebaseAuthException catch (err) {
       _loggerService.log('(signUpAndLinkAnonymousUser): ${err.message}');
       throw SignUpAndLinkException(message: err.message ?? 'Sign up failed');

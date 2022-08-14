@@ -3,9 +3,9 @@ import 'dart:developer' as developer;
 
 import 'package:bloc/bloc.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -14,25 +14,34 @@ part 'store_state.dart';
 
 class StoreCubit extends Cubit<StoreState> {
   StoreCubit({
+    required AuthCubit authCubit,
     StoreRepository? storeRepository,
     StoreCacheService? storeCacheService,
-    FirebaseAuth? firebaseAuth,
-  })  : _storeRepository = storeRepository ?? Locator.instance(),
+  })  : _authCubit = authCubit,
+        _storeRepository = storeRepository ?? Locator.instance(),
         _storeCacheService = storeCacheService ?? Locator.instance(),
-        _firebaseAuth = firebaseAuth ?? Locator.instance(),
-        super(StoreState.loading(store: StoreModel.empty())) {
+        super(_Loading(store: StoreModel.empty())) {
     _authSubscription?.cancel();
 
-    _authSubscription = _firebaseAuth.authStateChanges().listen((user) {
-      if (user != null) {
-        loadStoreForUser(user: UserModel.fromFirebaseAuthUser(user));
-      }
+    _authSubscription = _authCubit.stream.listen((state) {
+      state.maybeWhen(
+        authenticated: (user) {
+          loadStoreForUser(user: user);
+        },
+        anonymous: (user) {
+          loadStoreForUser(user: user);
+        },
+        unauthenticated: (user) {
+          emit(_Loading(store: StoreModel.empty()));
+        },
+        orElse: () {},
+      );
     });
   }
 
+  final AuthCubit _authCubit;
   final StoreRepository _storeRepository;
   final StoreCacheService _storeCacheService;
-  final FirebaseAuth _firebaseAuth;
 
   StreamSubscription? _authSubscription;
   StreamSubscription? _storeSubscription;

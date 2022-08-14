@@ -25,32 +25,38 @@ class MenusTab extends StatelessWidget {
 class _MenusScreenMenusTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final storeState = context.watch<StoreCubit>().state;
     final menusState = context.watch<MenusCubit>().state;
 
     useEffect(
       () {
-        final storeCubit = context.read<StoreCubit>();
-        final storeId = storeCubit.state.store.id;
-        if (storeId != null) {
-          context.read<MenusCubit>().load(storeId: storeId);
-        }
+        storeState.maybeWhen(
+          loaded: (store) {
+            context.read<MenusCubit>().load(storeId: store.id!);
+          },
+          orElse: () {},
+        );
         return null;
       },
       const [],
     );
+
     return MultiBlocListener(
       listeners: [
         BlocListener<StoreCubit, StoreState>(
           listenWhen: (prev, curr) => prev.store != curr.store,
           listener: (context, state) {
-            if (state.store.id != null) {
-              context.read<MenusCubit>().load(storeId: state.store.id!);
-            }
+            state.maybeWhen(
+              loaded: (store) {
+                context.read<MenusCubit>().load(storeId: state.store.id!);
+              },
+              orElse: () {},
+            );
           },
         ),
       ],
       child: menusState.maybeWhen(
-        loading: (_) => const LoadingTable(),
+        loading: (_) => const Center(child: CircularProgressIndicator()),
         orElse: () {
           return menusState.menus.isEmpty
               ? const NoResultsTable(

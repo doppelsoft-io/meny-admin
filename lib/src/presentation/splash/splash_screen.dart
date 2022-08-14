@@ -8,7 +8,7 @@ import 'package:shimmer/shimmer.dart';
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
-  static const String routeName = '/splash';
+  static const String routeName = 'splash';
 
   static Route route() {
     return MaterialPageRoute<Widget>(
@@ -20,19 +20,16 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, authState) {
-        authState.maybeWhen(
-          authenticated: (_) {
-            // Timer(const Duration(seconds: 1), () {
-            //   Navigator.of(context).pushReplacementNamed(AppScreen.routeName);
-            // });
-          },
-          anonymous: (_) {
-            // Timer(const Duration(seconds: 1), () {
-            //   Navigator.of(context).pushReplacementNamed(AppScreen.routeName);
-            // });
-          },
-          orElse: () {},
-        );
+        // authState.maybeWhen(
+        //   authenticated: (_) {
+        //     GoRouter.of(context).go(AppScreen.routeName);
+        //   },
+        //   anonymous: (_) {
+        //     print('HERE');
+        //     GoRouter.of(context).go(AppScreen.routeName);
+        //   },
+        //   orElse: () {},
+        // );
       },
       child: Scaffold(
         body: Container(

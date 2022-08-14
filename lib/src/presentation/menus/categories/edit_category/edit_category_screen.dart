@@ -34,8 +34,9 @@ class EditCategoryScreen extends StatelessWidget {
         ),
         BlocProvider<EditCategoryCubit>(
           create: (context) => EditCategoryCubit(
+            categoryId: id,
             storeCubit: context.read<StoreCubit>(),
-          )..loadCategory(id: id),
+          ),
         ),
         BlocProvider<DeleteCategoryCubit>(
           create: (context) => DeleteCategoryCubit(

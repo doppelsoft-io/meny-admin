@@ -17,9 +17,17 @@ class AppHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final storeState = context.watch<StoreCubit>().state;
+    final route = GoRouter.of(context).location;
+    final onAuthScreens = route.contains(LoginScreen.routeName) ||
+        route.contains(SignupScreen.routeName);
     const defaultTitle = 'meny';
+
     final title = storeState.maybeWhen(
-      loaded: (store) => store.name.isEmpty ? defaultTitle : store.name,
+      loaded: (store) => onAuthScreens
+          ? defaultTitle
+          : store.name.isEmpty
+              ? defaultTitle
+              : store.name,
       orElse: () => defaultTitle,
     );
 
@@ -74,15 +82,14 @@ class AuthActions extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final authState = context.watch<AuthCubit>().state;
+    final route = GoRouter.of(context).location;
+    final onAuthScreens = route.contains(LoginScreen.routeName) ||
+        route.contains(SignupScreen.routeName);
 
     return authState.maybeWhen(
       authenticated: (_) {
         return IconButton(
           onPressed: () {
-            // context.read<MenusCubit>().close();
-            // context.read<CategoriesCubit>().close();
-            // context.read<MenuItemsCubit>().close();
-            // context.read<ModifierGroupsCubit>().close();
             context.read<AuthCubit>().logout();
 
             Locator.instance<ToastService>().showNotification(
@@ -94,15 +101,13 @@ class AuthActions extends HookWidget {
       },
       orElse: () {
         return Visibility(
-          visible:
-              GoRouter.of(context).location != '/${LoginScreen.routeName}' &&
-                  GoRouter.of(context).location != '/${SignupScreen.routeName}',
+          visible: !onAuthScreens,
           child: TextButton(
             onPressed: () {
-              GoRouter.of(context).pushNamed(LoginScreen.routeName);
+              GoRouter.of(context).pushNamed(SignupScreen.routeName);
             },
             child: DSText.subtitle1(
-              'Log in',
+              'Create an account',
               styleOverrides: TextStyle(
                 color: Themes.colorScheme.primary,
               ),

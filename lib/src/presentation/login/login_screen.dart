@@ -126,7 +126,7 @@ class _LoginScreen extends HookWidget {
                         controller: emailController,
                         decoration: const InputDecoration(
                           label: Text('Email'),
-                          hintText: 'Enter your email address',
+                          hintText: 'Email',
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                         ),
                         keyboardType: TextInputType.emailAddress,
@@ -160,7 +160,7 @@ class _LoginScreen extends HookWidget {
                         obscureText: true,
                         decoration: const InputDecoration(
                           label: Text('Password'),
-                          hintText: 'Enter your password',
+                          hintText: 'Password',
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                         ),
                         onFieldSubmitted: (value) {
