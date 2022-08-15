@@ -13,6 +13,7 @@ part 'compiled_menu_cubit.freezed.dart';
 class CompiledMenuCubit extends Cubit<CompiledMenuState> {
   CompiledMenuCubit({
     required StoreCubit storeCubit,
+    required String menuId,
     MenuRepository? menuRepository,
     CategoryRepository? categoryRepository,
     MenuItemRepository? menuItemRepository,
@@ -20,6 +21,7 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
     CategoryMenuItemsRepository? categoryMenuItemsRepository,
     CompiledMenuRepository? compiledMenuRepository,
   })  : _storeCubit = storeCubit,
+        _menuId = menuId,
         _menuRepository = menuRepository ?? Locator.instance(),
         _categoryRepository = categoryRepository ?? Locator.instance(),
         _menuItemRepository = menuItemRepository ?? Locator.instance(),
@@ -27,9 +29,22 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
         _categoryMenuItemsRepository =
             categoryMenuItemsRepository ?? Locator.instance(),
         _compiledMenuRepository = compiledMenuRepository ?? Locator.instance(),
-        super(_Loading(response: CompiledMenuModel.empty()));
+        super(_Loading(response: CompiledMenuModel.empty())) {
+    _storeCubit.state.maybeWhen(
+      loaded: (_) => load(id: _menuId),
+      orElse: () {
+        _storeCubit.stream.listen((state) {
+          state.maybeWhen(
+            loaded: (_) => load(id: _menuId),
+            orElse: () {},
+          );
+        });
+      },
+    );
+  }
 
   final StoreCubit _storeCubit;
+  final String _menuId;
   final MenuRepository _menuRepository;
   final CategoryRepository _categoryRepository;
   final MenuItemRepository _menuItemRepository;
@@ -49,7 +64,7 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
       final menuCategories = await _menuCategoryRepository.getForMenu(
         storeId: storeId,
         menuId: menu.id!,
-        orderBy: const OrderBy('position'),
+        orderBy: const OrderBy('position', descending: false),
       );
       final categoryFutures = List.generate(
         menuCategories.length,
@@ -64,10 +79,8 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
               await _categoryMenuItemsRepository.getForCategory(
             storeId: storeId,
             categoryId: categoryId,
-          )
-                ..sort((a, b) {
-                  return (a.position ?? 1000).compareTo(b.position ?? 999);
-                });
+            orderBy: const OrderBy('position', descending: false),
+          );
 
           final categoryMenuItemFutures = List.generate(
             categoryMenuItems.length,

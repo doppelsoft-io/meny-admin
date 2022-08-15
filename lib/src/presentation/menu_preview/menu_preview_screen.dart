@@ -121,7 +121,8 @@ class MenuPreviewScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => CompiledMenuCubit(
         storeCubit: context.read<StoreCubit>(),
-      )..load(id: id),
+        menuId: id,
+      ),
       child: _MenuPreviewScreen(id: id),
     );
   }
