@@ -82,7 +82,7 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
                 SizedBox(
                   width: 100,
                   child: ElevatedButton(
-                    onPressed: onPublish,
+                    onPressed: publishing ? null : onPublish,
                     child: publishing
                         ? SizedBox(
                             height: 15,

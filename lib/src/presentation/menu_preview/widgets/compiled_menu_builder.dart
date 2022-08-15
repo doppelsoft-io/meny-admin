@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
-import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -46,13 +45,23 @@ class _CompiledMenuBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CompiledMenuCubit, CompiledMenuState>(
+    return BlocConsumer<CompiledMenuCubit, CompiledMenuState>(
+      listener: (context, state) {
+        state.maybeWhen(
+          error: (_, exception) {
+            DialogService.showErrorDialog(
+              context: context,
+              failure: CustomException(
+                message: exception.toString(),
+              ),
+            );
+          },
+          orElse: () {},
+        );
+      },
       builder: (context, state) {
         return state.maybeWhen(
           loading: (_) => const LinearProgressIndicator(),
-          error: (_, exception) => ErrorDisplay(
-            exception: CustomException(message: exception.toString()),
-          ),
           orElse: () {
             final categories =
                 List<CompiledCategoryModel>.from(state.response.categories);
@@ -87,6 +96,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                 ),
               ],
               child: ReorderableListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(DSSpacing.medium),
                 shrinkWrap: true,
                 onReorder: (oldIndex, newIndex) {
@@ -133,6 +143,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                           ],
                         ),
                         ReorderableListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           buildDefaultDragHandles: false,
                           itemCount: items.length,

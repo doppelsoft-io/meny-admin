@@ -165,6 +165,12 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
           exception: err,
         ),
       );
+    } finally {
+      emit(
+        _Loaded(
+          response: state.response,
+        ),
+      );
     }
   }
 }
