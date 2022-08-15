@@ -179,7 +179,18 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                  )
+                                  ),
+                                  if (item.imageUrl != null &&
+                                      item.imageUrl!.isNotEmpty)
+                                    DSImageUploadCard(
+                                      url: item.imageUrl ?? '',
+                                      theme:
+                                          DSImageUploadCardThemeData.fallback()
+                                              .copyWith(
+                                        width: 91,
+                                        height: 73,
+                                      ),
+                                    ),
                                 ],
                               ),
                             );
