@@ -107,17 +107,17 @@ class _MenusScreenItemsTab extends HookWidget {
                       fixedWidth: 75,
                     ),
                     DataColumn2(
+                      label: const Text('Name'),
+                      size: ColumnSize.L,
+                      onSort: (columnIndex, descending) =>
+                          _sort(columnIndex, descending, 'name'),
+                    ),
+                    DataColumn2(
                       label: const Text('Price'),
                       fixedWidth: 125,
                       onSort: (columnIndex, descending) =>
                           _sort(columnIndex, descending, 'priceInfo.price'),
                       numeric: true,
-                    ),
-                    DataColumn2(
-                      label: const Text('Name'),
-                      size: ColumnSize.L,
-                      onSort: (columnIndex, descending) =>
-                          _sort(columnIndex, descending, 'name'),
                     ),
                     DataColumn2(
                       label: const Text('Created'),
@@ -136,9 +136,6 @@ class _MenusScreenItemsTab extends HookWidget {
                         ),
                       ),
                       DataCell(
-                        Text((item.priceInfo.price / 100).toCurrency()),
-                      ),
-                      DataCell(
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -151,6 +148,9 @@ class _MenusScreenItemsTab extends HookWidget {
                             ),
                           ],
                         ),
+                      ),
+                      DataCell(
+                        Text((item.priceInfo.price / 100).toCurrency()),
                       ),
                       DataCell(
                         Text(
