@@ -72,5 +72,9 @@ service cloud.firestore {
     match /stores/{storeId}/modifier_group_items/{itemId} {
   		allow list, read, write, delete: if loggedIn() && userBelongsToStore(storeId);
   	}
+    
+    match /stores/{storeId}/compiled_menus/{itemId} {
+  		allow list, read, write, delete: if loggedIn() && userBelongsToStore(storeId);
+  	}
   }
 }
