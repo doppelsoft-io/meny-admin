@@ -159,7 +159,8 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                     ),
                   );
                 },
-                emptyMessage: '',
+                emptyMessage:
+                    'No modifier groups yet. Click "New" above to get started!',
               ),
             ),
           ],
