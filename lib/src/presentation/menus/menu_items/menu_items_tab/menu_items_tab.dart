@@ -80,93 +80,112 @@ class _MenusScreenItemsTab extends HookWidget {
           final items = menuItemsState.items;
           final orderBy = menuItemsState.orderBy;
 
-          return ResourceTable<MenuItemModel>(
-            header: const PageTitle(title: 'Items'),
-            action: const NewMenuItemButton(),
-            resources: items,
-            sortColumnIndex: orderBy.sortColumnIndex,
-            sortAscending: !orderBy.descending,
-            columns: [
-              const DataColumn2(
-                label: Text('Photo'),
-                fixedWidth: 75,
+          return Column(
+            children: [
+              Visibility(
+                maintainAnimation: true,
+                maintainInteractivity: true,
+                maintainSemantics: true,
+                maintainSize: true,
+                maintainState: true,
+                visible: menuItemsState.maybeWhen(
+                  loading: (_, __) => true,
+                  orElse: () => false,
+                ),
+                child: const LinearProgressIndicator(),
               ),
-              DataColumn2(
-                label: const Text('Price'),
-                fixedWidth: 125,
-                onSort: (columnIndex, descending) =>
-                    _sort(columnIndex, descending, 'priceInfo.price'),
-                numeric: true,
-              ),
-              DataColumn2(
-                label: const Text('Name'),
-                size: ColumnSize.L,
-                onSort: (columnIndex, descending) =>
-                    _sort(columnIndex, descending, 'name'),
-              ),
-              DataColumn2(
-                label: const Text('Created'),
-                fixedWidth: 200,
-                size: ColumnSize.S,
-                onSort: (columnIndex, descending) =>
-                    _sort(columnIndex, descending, 'createdAt'),
+              Expanded(
+                child: ResourceTable<MenuItemModel>(
+                  header: const PageTitle(title: 'Items'),
+                  action: const NewMenuItemButton(),
+                  resources: items,
+                  sortColumnIndex: orderBy.sortColumnIndex,
+                  sortAscending: !orderBy.descending,
+                  columns: [
+                    const DataColumn2(
+                      label: Text('Photo'),
+                      fixedWidth: 75,
+                    ),
+                    DataColumn2(
+                      label: const Text('Price'),
+                      fixedWidth: 125,
+                      onSort: (columnIndex, descending) =>
+                          _sort(columnIndex, descending, 'priceInfo.price'),
+                      numeric: true,
+                    ),
+                    DataColumn2(
+                      label: const Text('Name'),
+                      size: ColumnSize.L,
+                      onSort: (columnIndex, descending) =>
+                          _sort(columnIndex, descending, 'name'),
+                    ),
+                    DataColumn2(
+                      label: const Text('Created'),
+                      fixedWidth: 200,
+                      size: ColumnSize.S,
+                      onSort: (columnIndex, descending) =>
+                          _sort(columnIndex, descending, 'createdAt'),
+                    ),
+                  ],
+                  cellsBuilder: (_, item) {
+                    return [
+                      DataCell(
+                        DSImageUploadCard(
+                          theme: DSImageUploadCardThemeData.thumbnail(),
+                          url: item.imageUrl ?? '',
+                        ),
+                      ),
+                      DataCell(
+                        Text((item.priceInfo.price / 100).toCurrency()),
+                      ),
+                      DataCell(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            DSText.bodyText1(item.name),
+                            DSText.caption(
+                              'Updated: ${item.updatedAt?.formatWith(
+                                    'MM/dd/yy @ h:mm a',
+                                  ) ?? ''}',
+                            ),
+                          ],
+                        ),
+                      ),
+                      DataCell(
+                        Text(
+                          item.createdAt?.formatWith(
+                                'MM/dd/yy @ h:mm a',
+                              ) ??
+                              '',
+                        ),
+                      ),
+                    ];
+                  },
+                  onTapItem: (_, item) {
+                    ActionService.run(
+                      () {
+                        GoRouter.of(context).pushNamed(
+                          EditMenuItemScreen.routeName,
+                          params: {
+                            'id': item.id!,
+                          },
+                        );
+                      },
+                      () => AnalyticsService.track(
+                        message: Analytics.ingredientsTabIngredientSelected,
+                        params: {
+                          'itemId': item.id!,
+                          'itemName': item.name,
+                        },
+                      ),
+                    );
+                  },
+                  emptyMessage:
+                      'No items yet. Click "New" above to get started!',
+                ),
               ),
             ],
-            cellsBuilder: (_, item) {
-              return [
-                DataCell(
-                  DSImageUploadCard(
-                    theme: DSImageUploadCardThemeData.thumbnail(),
-                    url: item.imageUrl ?? '',
-                  ),
-                ),
-                DataCell(
-                  Text((item.priceInfo.price / 100).toCurrency()),
-                ),
-                DataCell(
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DSText.bodyText1(item.name),
-                      DSText.caption(
-                        'Updated: ${item.updatedAt?.formatWith(
-                              'MM/dd/yy @ h:mm a',
-                            ) ?? ''}',
-                      ),
-                    ],
-                  ),
-                ),
-                DataCell(
-                  Text(
-                    item.createdAt?.formatWith(
-                          'MM/dd/yy @ h:mm a',
-                        ) ??
-                        '',
-                  ),
-                ),
-              ];
-            },
-            onTapItem: (_, item) {
-              ActionService.run(
-                () {
-                  GoRouter.of(context).pushNamed(
-                    EditMenuItemScreen.routeName,
-                    params: {
-                      'id': item.id!,
-                    },
-                  );
-                },
-                () => AnalyticsService.track(
-                  message: Analytics.ingredientsTabIngredientSelected,
-                  params: {
-                    'itemId': item.id!,
-                    'itemName': item.name,
-                  },
-                ),
-              );
-            },
-            emptyMessage: 'No items yet. Click "New" above to get started!',
           );
         },
       ),

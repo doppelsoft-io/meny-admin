@@ -77,75 +77,92 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
     }
 
     return modifierGroupsState.maybeWhen(
-      loading: (_, __) => const Center(child: CircularProgressIndicator()),
       orElse: () {
         final groups = modifierGroupsState.groups;
         final orderBy = modifierGroupsState.orderBy;
-        return ResourceTable<ModifierGroupModel>(
-          sortAscending: !orderBy.descending,
-          sortColumnIndex: orderBy.sortColumnIndex,
-          header: const PageTitle(title: 'Modifier Groups'),
-          action: const NewModifierGroupButton(),
-          resources: groups,
-          columns: [
-            DataColumn2(
-              label: const Text('Name'),
-              size: ColumnSize.L,
-              onSort: (columnIndex, descending) =>
-                  _sort(columnIndex, descending, 'name'),
+        return Column(
+          children: [
+            Visibility(
+              maintainAnimation: true,
+              maintainInteractivity: true,
+              maintainSemantics: true,
+              maintainSize: true,
+              maintainState: true,
+              visible: modifierGroupsState.maybeWhen(
+                loading: (_, __) => true,
+                orElse: () => false,
+              ),
+              child: const LinearProgressIndicator(),
             ),
-            DataColumn2(
-              label: const Text('Created'),
-              fixedWidth: 200,
-              size: ColumnSize.S,
-              onSort: (columnIndex, descending) =>
-                  _sort(columnIndex, descending, 'createdAt'),
+            Expanded(
+              child: ResourceTable<ModifierGroupModel>(
+                sortAscending: !orderBy.descending,
+                sortColumnIndex: orderBy.sortColumnIndex,
+                header: const PageTitle(title: 'Modifier Groups'),
+                action: const NewModifierGroupButton(),
+                resources: groups,
+                columns: [
+                  DataColumn2(
+                    label: const Text('Name'),
+                    size: ColumnSize.L,
+                    onSort: (columnIndex, descending) =>
+                        _sort(columnIndex, descending, 'name'),
+                  ),
+                  DataColumn2(
+                    label: const Text('Created'),
+                    fixedWidth: 200,
+                    size: ColumnSize.S,
+                    onSort: (columnIndex, descending) =>
+                        _sort(columnIndex, descending, 'createdAt'),
+                  ),
+                ],
+                cellsBuilder: (_, group) {
+                  return [
+                    DataCell(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(group.name),
+                          DSText.caption(
+                            'Last updated: ${group.updatedAt?.formatWith(
+                                  'MM/dd/yy @ h:mm a',
+                                ) ?? ''}',
+                          ),
+                        ],
+                      ),
+                    ),
+                    DataCell(
+                      Text(
+                        group.createdAt?.formatWith(
+                              'MM/dd/yy @ h:mm a',
+                            ) ??
+                            '',
+                      ),
+                    ),
+                  ];
+                },
+                onTapItem: (_, group) {
+                  ActionService.run(
+                    () {
+                      GoRouter.of(context).goNamed(
+                        EditModifierGroupScreen.routeName,
+                        params: {'id': group.id!},
+                      );
+                    },
+                    () => AnalyticsService.track(
+                      message: Analytics.modifierGroupsTabModifierGroupSelected,
+                      params: {
+                        'groupId': group.id!,
+                        'groupName': group.name,
+                      },
+                    ),
+                  );
+                },
+                emptyMessage: '',
+              ),
             ),
           ],
-          cellsBuilder: (_, group) {
-            return [
-              DataCell(
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(group.name),
-                    DSText.caption(
-                      'Last updated: ${group.updatedAt?.formatWith(
-                            'MM/dd/yy @ h:mm a',
-                          ) ?? ''}',
-                    ),
-                  ],
-                ),
-              ),
-              DataCell(
-                Text(
-                  group.createdAt?.formatWith(
-                        'MM/dd/yy @ h:mm a',
-                      ) ??
-                      '',
-                ),
-              ),
-            ];
-          },
-          onTapItem: (_, group) {
-            ActionService.run(
-              () {
-                GoRouter.of(context).goNamed(
-                  EditModifierGroupScreen.routeName,
-                  params: {'id': group.id!},
-                );
-              },
-              () => AnalyticsService.track(
-                message: Analytics.modifierGroupsTabModifierGroupSelected,
-                params: {
-                  'groupId': group.id!,
-                  'groupName': group.name,
-                },
-              ),
-            );
-          },
-          emptyMessage: '',
         );
       },
     );

@@ -76,78 +76,94 @@ class _MenusScreenCategoriesTab extends HookWidget {
         ),
       ],
       child: categoriesState.maybeWhen(
-        loading: (_, orderBy) =>
-            const Center(child: CircularProgressIndicator()),
         orElse: () {
           final categories = categoriesState.categories;
           final orderBy = categoriesState.orderBy;
 
-          return ResourceTable<CategoryModel>(
-            sortAscending: !orderBy.descending,
-            sortColumnIndex: orderBy.sortColumnIndex,
-            header: const PageTitle(
-              title: 'Categories',
-            ),
-            action: const NewCategoryButton(),
-            columns: [
-              DataColumn2(
-                label: const Text('Name'),
-                size: ColumnSize.L,
-                onSort: (columnIndex, descending) =>
-                    _sort(columnIndex, descending, 'name'),
+          return Column(
+            children: [
+              Visibility(
+                maintainAnimation: true,
+                maintainInteractivity: true,
+                maintainSemantics: true,
+                maintainSize: true,
+                maintainState: true,
+                visible: categoriesState.maybeWhen(
+                  loading: (_, __) => true,
+                  orElse: () => false,
+                ),
+                child: const LinearProgressIndicator(),
               ),
-              DataColumn2(
-                label: const Text('Created'),
-                fixedWidth: 200,
-                size: ColumnSize.S,
-                onSort: (columnIndex, descending) =>
-                    _sort(columnIndex, descending, 'createdAt'),
+              Expanded(
+                child: ResourceTable<CategoryModel>(
+                  sortAscending: !orderBy.descending,
+                  sortColumnIndex: orderBy.sortColumnIndex,
+                  header: const PageTitle(
+                    title: 'Categories',
+                  ),
+                  action: const NewCategoryButton(),
+                  columns: [
+                    DataColumn2(
+                      label: const Text('Name'),
+                      size: ColumnSize.L,
+                      onSort: (columnIndex, descending) =>
+                          _sort(columnIndex, descending, 'name'),
+                    ),
+                    DataColumn2(
+                      label: const Text('Created'),
+                      fixedWidth: 200,
+                      size: ColumnSize.S,
+                      onSort: (columnIndex, descending) =>
+                          _sort(columnIndex, descending, 'createdAt'),
+                    ),
+                  ],
+                  resources: categories,
+                  emptyMessage:
+                      'No categories yet. Click "New" above to get started!',
+                  onTapItem: (context, category) {
+                    ActionService.run(
+                      () {
+                        GoRouter.of(context).goNamed(
+                          EditCategoryScreen.routeName,
+                          params: {
+                            'id': category.id!,
+                          },
+                        );
+                      },
+                      () => AnalyticsService.track(
+                        message: Analytics.categoriesTabItemSelected,
+                      ),
+                    );
+                  },
+                  cellsBuilder: (context, category) {
+                    return <DataCell>[
+                      DataCell(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(category.name),
+                            DSText.caption(
+                              'Last updated: ${category.updatedAt?.formatWith(
+                                    'MM/dd/yy @ h:mm a',
+                                  ) ?? ''}',
+                            ),
+                          ],
+                        ),
+                      ),
+                      DataCell(
+                        Text(
+                          category.createdAt?.formatWith(
+                                'MM/dd/yy @ h:mm a',
+                              ) ??
+                              '',
+                        ),
+                      ),
+                    ];
+                  },
+                ),
               ),
             ],
-            resources: categories,
-            emptyMessage:
-                'No categories yet. Click "New" above to get started!',
-            onTapItem: (context, category) {
-              ActionService.run(
-                () {
-                  GoRouter.of(context).goNamed(
-                    EditCategoryScreen.routeName,
-                    params: {
-                      'id': category.id!,
-                    },
-                  );
-                },
-                () => AnalyticsService.track(
-                  message: Analytics.categoriesTabItemSelected,
-                ),
-              );
-            },
-            cellsBuilder: (context, category) {
-              return <DataCell>[
-                DataCell(
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(category.name),
-                      DSText.caption(
-                        'Last updated: ${category.updatedAt?.formatWith(
-                              'MM/dd/yy @ h:mm a',
-                            ) ?? ''}',
-                      ),
-                    ],
-                  ),
-                ),
-                DataCell(
-                  Text(
-                    category.createdAt?.formatWith(
-                          'MM/dd/yy @ h:mm a',
-                        ) ??
-                        '',
-                  ),
-                ),
-              ];
-            },
           );
         },
       ),

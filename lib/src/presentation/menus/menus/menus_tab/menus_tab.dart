@@ -81,104 +81,124 @@ class _MenusScreenMenusTab extends HookWidget {
         ),
       ],
       child: menusState.maybeWhen(
-        loaded: (menus, orderBy) {
-          return ResourceTable<MenuModel>(
-            sortColumnIndex: orderBy.sortColumnIndex,
-            sortAscending: !orderBy.descending,
-            header: const PageTitle(title: 'Menus'),
-            action: const NewMenuButton(),
-            resources: menus,
-            columns: [
-              DataColumn2(
-                label: const Text('Name'),
-                size: ColumnSize.L,
-                onSort: (columnIndex, descending) =>
-                    _sort(columnIndex, descending, 'name'),
+        orElse: () {
+          final menus = menusState.menus;
+          final orderBy = menusState.orderBy;
+          return Column(
+            children: [
+              Visibility(
+                maintainAnimation: true,
+                maintainInteractivity: true,
+                maintainSemantics: true,
+                maintainSize: true,
+                maintainState: true,
+                visible: menusState.maybeWhen(
+                  loading: (_, __) => true,
+                  orElse: () => false,
+                ),
+                child: const LinearProgressIndicator(),
               ),
-              DataColumn2(
-                label: const Text('Created'),
-                fixedWidth: 200,
-                size: ColumnSize.S,
-                onSort: (columnIndex, descending) =>
-                    _sort(columnIndex, descending, 'createdAt'),
-              ),
-              const DataColumn2(
-                label: Text(''),
-                fixedWidth: 100,
-                size: ColumnSize.S,
+              Expanded(
+                child: ResourceTable<MenuModel>(
+                  sortColumnIndex: orderBy.sortColumnIndex,
+                  sortAscending: !orderBy.descending,
+                  header: const PageTitle(title: 'Menus'),
+                  action: const NewMenuButton(),
+                  resources: menus,
+                  columns: [
+                    DataColumn2(
+                      label: const Text('Name'),
+                      size: ColumnSize.L,
+                      onSort: (columnIndex, descending) =>
+                          _sort(columnIndex, descending, 'name'),
+                    ),
+                    DataColumn2(
+                      label: const Text('Created'),
+                      fixedWidth: 200,
+                      size: ColumnSize.S,
+                      onSort: (columnIndex, descending) =>
+                          _sort(columnIndex, descending, 'createdAt'),
+                    ),
+                    const DataColumn2(
+                      label: Text(''),
+                      fixedWidth: 100,
+                      size: ColumnSize.S,
+                    ),
+                  ],
+                  cellsBuilder: (_, menu) {
+                    return <DataCell>[
+                      DataCell(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(menu.name),
+                            DSText.caption(
+                              'Last updated: ${menu.updatedAt?.formatWith(
+                                    'MM/dd/yy @ h:mm a',
+                                  ) ?? ''}',
+                            ),
+                          ],
+                        ),
+                      ),
+                      DataCell(
+                        Text(
+                          menu.createdAt?.formatWith(
+                                'MM/dd/yy @ h:mm a',
+                              ) ??
+                              '',
+                        ),
+                      ),
+                      DataCell(
+                        TextButton(
+                          style: ButtonStyle(
+                            alignment: Alignment.center,
+                            padding: MaterialStateProperty.all(
+                              EdgeInsets.zero,
+                            ),
+                          ),
+                          child: const Text('Preview'),
+                          onPressed: () => ActionService.run(
+                            () => GoRouter.of(context).goNamed(
+                              MenuPreviewScreen.routeName,
+                              params: {
+                                'id': menu.id!,
+                              },
+                            ),
+                            () => AnalyticsService.track(
+                              message: Analytics.menusTabPreviewTapped,
+                              params: {
+                                'menuId': menu.id!,
+                                'menuName': menu.name,
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ];
+                  },
+                  emptyMessage:
+                      'No menus yet. Click "New" above to get started!',
+                  onTapItem: (_, menu) {
+                    ActionService.run(
+                      () {
+                        GoRouter.of(context).goNamed(
+                          EditMenuScreen.routeName,
+                          params: {
+                            'id': menu.id!,
+                          },
+                        );
+                      },
+                      () => AnalyticsService.track(
+                        message: Analytics.menusTabItemSelected,
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
-            cellsBuilder: (_, menu) {
-              return <DataCell>[
-                DataCell(
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(menu.name),
-                      DSText.caption(
-                        'Last updated: ${menu.updatedAt?.formatWith(
-                              'MM/dd/yy @ h:mm a',
-                            ) ?? ''}',
-                      ),
-                    ],
-                  ),
-                ),
-                DataCell(
-                  Text(
-                    menu.createdAt?.formatWith(
-                          'MM/dd/yy @ h:mm a',
-                        ) ??
-                        '',
-                  ),
-                ),
-                DataCell(
-                  TextButton(
-                    style: ButtonStyle(
-                      alignment: Alignment.center,
-                      padding: MaterialStateProperty.all(
-                        EdgeInsets.zero,
-                      ),
-                    ),
-                    child: const Text('Preview'),
-                    onPressed: () => ActionService.run(
-                      () => GoRouter.of(context).goNamed(
-                        MenuPreviewScreen.routeName,
-                        params: {
-                          'id': menu.id!,
-                        },
-                      ),
-                      () => AnalyticsService.track(
-                        message: Analytics.menusTabPreviewTapped,
-                        params: {
-                          'menuId': menu.id!,
-                          'menuName': menu.name,
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ];
-            },
-            emptyMessage: 'No menus yet. Click "New" above to get started!',
-            onTapItem: (_, menu) {
-              ActionService.run(
-                () {
-                  GoRouter.of(context).goNamed(
-                    EditMenuScreen.routeName,
-                    params: {
-                      'id': menu.id!,
-                    },
-                  );
-                },
-                () => AnalyticsService.track(
-                  message: Analytics.menusTabItemSelected,
-                ),
-              );
-            },
           );
         },
-        orElse: SizedBox.shrink,
       ),
     );
   }
