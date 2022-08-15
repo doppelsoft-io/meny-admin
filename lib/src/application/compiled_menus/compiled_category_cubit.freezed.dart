@@ -260,7 +260,7 @@ abstract class _Initial implements CompiledCategoryState {
   factory _Initial({final List<CategoryModel> categories}) = _$_Initial;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -420,7 +420,7 @@ abstract class _Loading implements CompiledCategoryState {
       _$_Loading;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -580,7 +580,7 @@ abstract class _Success implements CompiledCategoryState {
       _$_Success;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
   @override
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
@@ -752,8 +752,8 @@ abstract class _Error implements CompiledCategoryState {
       required final Exception exception}) = _$_Error;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

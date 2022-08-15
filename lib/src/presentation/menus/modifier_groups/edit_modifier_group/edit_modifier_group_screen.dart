@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -320,7 +321,10 @@ class _EditModifierGroupScreen extends HookWidget {
                             final storeId =
                                 context.read<StoreCubit>().state.store.id!;
                             return Locator.instance<MenuItemRepository>()
-                                .getAll(storeId: storeId)
+                                .getAll(
+                                  storeId: storeId,
+                                  orderBy: OrderBy.fallback(),
+                                )
                                 .first;
                           },
                           suggestionConfigurationBuilder: (_, item) =>

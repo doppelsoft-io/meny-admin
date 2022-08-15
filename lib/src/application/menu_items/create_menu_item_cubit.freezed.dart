@@ -257,7 +257,7 @@ abstract class _Initial implements CreateMenuItemState {
   const factory _Initial({required final MenuItemModel item}) = _$_Initial;
 
   @override
-  MenuItemModel get item => throw _privateConstructorUsedError;
+  MenuItemModel get item;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -410,7 +410,7 @@ abstract class _Creating implements CreateMenuItemState {
   const factory _Creating({required final MenuItemModel item}) = _$_Creating;
 
   @override
-  MenuItemModel get item => throw _privateConstructorUsedError;
+  MenuItemModel get item;
   @override
   @JsonKey(ignore: true)
   _$$_CreatingCopyWith<_$_Creating> get copyWith =>
@@ -562,7 +562,7 @@ abstract class _Created implements CreateMenuItemState {
   const factory _Created({required final MenuItemModel item}) = _$_Created;
 
   @override
-  MenuItemModel get item => throw _privateConstructorUsedError;
+  MenuItemModel get item;
   @override
   @JsonKey(ignore: true)
   _$$_CreatedCopyWith<_$_Created> get copyWith =>
@@ -725,8 +725,8 @@ abstract class _Error implements CreateMenuItemState {
       required final Exception exception}) = _$_Error;
 
   @override
-  MenuItemModel get item => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  MenuItemModel get item;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

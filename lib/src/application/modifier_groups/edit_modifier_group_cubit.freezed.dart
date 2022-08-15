@@ -272,7 +272,7 @@ abstract class _Loading implements EditModifierGroupState {
       _$_Loading;
 
   @override
-  ModifierGroupModel get group => throw _privateConstructorUsedError;
+  ModifierGroupModel get group;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -430,7 +430,7 @@ abstract class _Loaded implements EditModifierGroupState {
   const factory _Loaded({required final ModifierGroupModel group}) = _$_Loaded;
 
   @override
-  ModifierGroupModel get group => throw _privateConstructorUsedError;
+  ModifierGroupModel get group;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
@@ -591,7 +591,7 @@ abstract class _Updating implements EditModifierGroupState {
       _$_Updating;
 
   @override
-  ModifierGroupModel get group => throw _privateConstructorUsedError;
+  ModifierGroupModel get group;
   @override
   @JsonKey(ignore: true)
   _$$_UpdatingCopyWith<_$_Updating> get copyWith =>
@@ -751,7 +751,7 @@ abstract class _Success implements EditModifierGroupState {
       _$_Success;
 
   @override
-  ModifierGroupModel get group => throw _privateConstructorUsedError;
+  ModifierGroupModel get group;
   @override
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
@@ -921,8 +921,8 @@ abstract class _Error implements EditModifierGroupState {
       required final Exception exception}) = _$_Error;
 
   @override
-  ModifierGroupModel get group => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  ModifierGroupModel get group;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

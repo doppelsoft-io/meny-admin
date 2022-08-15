@@ -256,7 +256,7 @@ abstract class _Initial implements EditStoreState {
   const factory _Initial({required final StoreModel store}) = _$_Initial;
 
   @override
-  StoreModel get store => throw _privateConstructorUsedError;
+  StoreModel get store;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -406,7 +406,7 @@ abstract class _Saving implements EditStoreState {
   const factory _Saving({required final StoreModel store}) = _$_Saving;
 
   @override
-  StoreModel get store => throw _privateConstructorUsedError;
+  StoreModel get store;
   @override
   @JsonKey(ignore: true)
   _$$_SavingCopyWith<_$_Saving> get copyWith =>
@@ -557,7 +557,7 @@ abstract class _Success implements EditStoreState {
   const factory _Success({required final StoreModel store}) = _$_Success;
 
   @override
-  StoreModel get store => throw _privateConstructorUsedError;
+  StoreModel get store;
   @override
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
@@ -719,8 +719,8 @@ abstract class _Error implements EditStoreState {
       required final Exception exception}) = _$_Error;
 
   @override
-  StoreModel get store => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  StoreModel get store;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

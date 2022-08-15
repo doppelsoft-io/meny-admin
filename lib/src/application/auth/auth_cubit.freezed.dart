@@ -253,7 +253,7 @@ abstract class _Initial implements AuthState {
   factory _Initial({required final UserModel user}) = _$_Initial;
 
   @override
-  UserModel get user => throw _privateConstructorUsedError;
+  UserModel get user;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -407,7 +407,7 @@ abstract class _Unauthenticated implements AuthState {
       _$_Unauthenticated;
 
   @override
-  UserModel get user => throw _privateConstructorUsedError;
+  UserModel get user;
   @override
   @JsonKey(ignore: true)
   _$$_UnauthenticatedCopyWith<_$_Unauthenticated> get copyWith =>
@@ -559,7 +559,7 @@ abstract class _Authenticated implements AuthState {
   factory _Authenticated({required final UserModel user}) = _$_Authenticated;
 
   @override
-  UserModel get user => throw _privateConstructorUsedError;
+  UserModel get user;
   @override
   @JsonKey(ignore: true)
   _$$_AuthenticatedCopyWith<_$_Authenticated> get copyWith =>
@@ -710,7 +710,7 @@ abstract class _Anonymous implements AuthState {
   factory _Anonymous({required final UserModel user}) = _$_Anonymous;
 
   @override
-  UserModel get user => throw _privateConstructorUsedError;
+  UserModel get user;
   @override
   @JsonKey(ignore: true)
   _$$_AnonymousCopyWith<_$_Anonymous> get copyWith =>

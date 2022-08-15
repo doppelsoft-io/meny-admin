@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/constants/paths.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_admin/src/infrastructure/i_resources_repository.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -54,10 +55,13 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
   }
 
   @override
-  Stream<List<CategoryModel>> getAll({required String storeId}) {
+  Stream<List<CategoryModel>> getAll({
+    required String storeId,
+    required OrderBy orderBy,
+  }) {
     return firebaseFirestore
         .categoryEntitiesCollection(storeId: storeId)
-        .orderBy('createdAt', descending: false)
+        .orderBy(orderBy.field, descending: orderBy.descending)
         .snapshots()
         .map(
           (doc) => doc.docs.map(CategoryModel.fromSnapshot).toList(),

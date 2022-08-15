@@ -298,11 +298,11 @@ abstract class _Initial implements SignupState {
       final String password}) = _$_Initial;
 
   @override
-  StoreModel get store => throw _privateConstructorUsedError;
+  StoreModel get store;
   @override
-  String get email => throw _privateConstructorUsedError;
+  String get email;
   @override
-  String get password => throw _privateConstructorUsedError;
+  String get password;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -481,11 +481,11 @@ abstract class _SigningIn implements SignupState {
       required final String password}) = _$_SigningIn;
 
   @override
-  StoreModel get store => throw _privateConstructorUsedError;
+  StoreModel get store;
   @override
-  String get email => throw _privateConstructorUsedError;
+  String get email;
   @override
-  String get password => throw _privateConstructorUsedError;
+  String get password;
   @override
   @JsonKey(ignore: true)
   _$$_SigningInCopyWith<_$_SigningIn> get copyWith =>
@@ -678,13 +678,12 @@ abstract class _Done implements SignupState {
       required final Either<CustomException, bool> result}) = _$_Done;
 
   @override
-  StoreModel get store => throw _privateConstructorUsedError;
+  StoreModel get store;
   @override
-  String get email => throw _privateConstructorUsedError;
+  String get email;
   @override
-  String get password => throw _privateConstructorUsedError;
-  Either<CustomException, bool> get result =>
-      throw _privateConstructorUsedError;
+  String get password;
+  Either<CustomException, bool> get result;
   @override
   @JsonKey(ignore: true)
   _$$_DoneCopyWith<_$_Done> get copyWith => throw _privateConstructorUsedError;

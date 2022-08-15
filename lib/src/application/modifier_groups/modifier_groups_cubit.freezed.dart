@@ -17,28 +17,33 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ModifierGroupsState {
   List<ModifierGroupModel> get groups => throw _privateConstructorUsedError;
+  OrderBy get orderBy => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ModifierGroupModel> groups) loading,
-    required TResult Function(List<ModifierGroupModel> groups) loaded,
-    required TResult Function(
-            List<ModifierGroupModel> groups, Exception exception)
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)
+        loading,
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)
+        loaded,
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ModifierGroupModel> groups)? loading,
-    TResult Function(List<ModifierGroupModel> groups)? loaded,
-    TResult Function(List<ModifierGroupModel> groups, Exception exception)?
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loading,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loaded,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)?
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ModifierGroupModel> groups)? loading,
-    TResult Function(List<ModifierGroupModel> groups)? loaded,
-    TResult Function(List<ModifierGroupModel> groups, Exception exception)?
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loading,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loaded,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)?
         error,
     required TResult orElse(),
   }) =>
@@ -76,7 +81,7 @@ abstract class $ModifierGroupsStateCopyWith<$Res> {
   factory $ModifierGroupsStateCopyWith(
           ModifierGroupsState value, $Res Function(ModifierGroupsState) then) =
       _$ModifierGroupsStateCopyWithImpl<$Res>;
-  $Res call({List<ModifierGroupModel> groups});
+  $Res call({List<ModifierGroupModel> groups, OrderBy orderBy});
 }
 
 /// @nodoc
@@ -91,12 +96,17 @@ class _$ModifierGroupsStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? groups = freezed,
+    Object? orderBy = freezed,
   }) {
     return _then(_value.copyWith(
       groups: groups == freezed
           ? _value.groups
           : groups // ignore: cast_nullable_to_non_nullable
               as List<ModifierGroupModel>,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
     ));
   }
 }
@@ -108,7 +118,7 @@ abstract class _$$_LoadingCopyWith<$Res>
           _$_Loading value, $Res Function(_$_Loading) then) =
       __$$_LoadingCopyWithImpl<$Res>;
   @override
-  $Res call({List<ModifierGroupModel> groups});
+  $Res call({List<ModifierGroupModel> groups, OrderBy orderBy});
 }
 
 /// @nodoc
@@ -124,12 +134,17 @@ class __$$_LoadingCopyWithImpl<$Res>
   @override
   $Res call({
     Object? groups = freezed,
+    Object? orderBy = freezed,
   }) {
     return _then(_$_Loading(
       groups: groups == freezed
           ? _value._groups
           : groups // ignore: cast_nullable_to_non_nullable
               as List<ModifierGroupModel>,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
     ));
   }
 }
@@ -138,7 +153,8 @@ class __$$_LoadingCopyWithImpl<$Res>
 
 class _$_Loading implements _Loading {
   const _$_Loading(
-      {final List<ModifierGroupModel> groups = const <ModifierGroupModel>[]})
+      {final List<ModifierGroupModel> groups = const <ModifierGroupModel>[],
+      this.orderBy = const OrderBy('createdAt')})
       : _groups = groups;
 
   final List<ModifierGroupModel> _groups;
@@ -150,8 +166,12 @@ class _$_Loading implements _Loading {
   }
 
   @override
+  @JsonKey()
+  final OrderBy orderBy;
+
+  @override
   String toString() {
-    return 'ModifierGroupsState.loading(groups: $groups)';
+    return 'ModifierGroupsState.loading(groups: $groups, orderBy: $orderBy)';
   }
 
   @override
@@ -159,12 +179,15 @@ class _$_Loading implements _Loading {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loading &&
-            const DeepCollectionEquality().equals(other._groups, _groups));
+            const DeepCollectionEquality().equals(other._groups, _groups) &&
+            const DeepCollectionEquality().equals(other.orderBy, orderBy));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_groups));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_groups),
+      const DeepCollectionEquality().hash(orderBy));
 
   @JsonKey(ignore: true)
   @override
@@ -174,37 +197,41 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ModifierGroupModel> groups) loading,
-    required TResult Function(List<ModifierGroupModel> groups) loaded,
-    required TResult Function(
-            List<ModifierGroupModel> groups, Exception exception)
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)
+        loading,
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)
+        loaded,
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)
         error,
   }) {
-    return loading(groups);
+    return loading(groups, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ModifierGroupModel> groups)? loading,
-    TResult Function(List<ModifierGroupModel> groups)? loaded,
-    TResult Function(List<ModifierGroupModel> groups, Exception exception)?
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loading,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loaded,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)?
         error,
   }) {
-    return loading?.call(groups);
+    return loading?.call(groups, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ModifierGroupModel> groups)? loading,
-    TResult Function(List<ModifierGroupModel> groups)? loaded,
-    TResult Function(List<ModifierGroupModel> groups, Exception exception)?
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loading,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loaded,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)?
         error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(groups);
+      return loading(groups, orderBy);
     }
     return orElse();
   }
@@ -245,10 +272,14 @@ class _$_Loading implements _Loading {
 }
 
 abstract class _Loading implements ModifierGroupsState {
-  const factory _Loading({final List<ModifierGroupModel> groups}) = _$_Loading;
+  const factory _Loading(
+      {final List<ModifierGroupModel> groups,
+      final OrderBy orderBy}) = _$_Loading;
 
   @override
-  List<ModifierGroupModel> get groups => throw _privateConstructorUsedError;
+  List<ModifierGroupModel> get groups;
+  @override
+  OrderBy get orderBy;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -261,7 +292,7 @@ abstract class _$$_LoadedCopyWith<$Res>
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
   @override
-  $Res call({List<ModifierGroupModel> groups});
+  $Res call({List<ModifierGroupModel> groups, OrderBy orderBy});
 }
 
 /// @nodoc
@@ -277,12 +308,17 @@ class __$$_LoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? groups = freezed,
+    Object? orderBy = freezed,
   }) {
     return _then(_$_Loaded(
       groups: groups == freezed
           ? _value._groups
           : groups // ignore: cast_nullable_to_non_nullable
               as List<ModifierGroupModel>,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
     ));
   }
 }
@@ -290,7 +326,8 @@ class __$$_LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded({required final List<ModifierGroupModel> groups})
+  const _$_Loaded(
+      {required final List<ModifierGroupModel> groups, required this.orderBy})
       : _groups = groups;
 
   final List<ModifierGroupModel> _groups;
@@ -301,8 +338,11 @@ class _$_Loaded implements _Loaded {
   }
 
   @override
+  final OrderBy orderBy;
+
+  @override
   String toString() {
-    return 'ModifierGroupsState.loaded(groups: $groups)';
+    return 'ModifierGroupsState.loaded(groups: $groups, orderBy: $orderBy)';
   }
 
   @override
@@ -310,12 +350,15 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
-            const DeepCollectionEquality().equals(other._groups, _groups));
+            const DeepCollectionEquality().equals(other._groups, _groups) &&
+            const DeepCollectionEquality().equals(other.orderBy, orderBy));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_groups));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_groups),
+      const DeepCollectionEquality().hash(orderBy));
 
   @JsonKey(ignore: true)
   @override
@@ -325,37 +368,41 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ModifierGroupModel> groups) loading,
-    required TResult Function(List<ModifierGroupModel> groups) loaded,
-    required TResult Function(
-            List<ModifierGroupModel> groups, Exception exception)
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)
+        loading,
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)
+        loaded,
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)
         error,
   }) {
-    return loaded(groups);
+    return loaded(groups, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ModifierGroupModel> groups)? loading,
-    TResult Function(List<ModifierGroupModel> groups)? loaded,
-    TResult Function(List<ModifierGroupModel> groups, Exception exception)?
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loading,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loaded,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)?
         error,
   }) {
-    return loaded?.call(groups);
+    return loaded?.call(groups, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ModifierGroupModel> groups)? loading,
-    TResult Function(List<ModifierGroupModel> groups)? loaded,
-    TResult Function(List<ModifierGroupModel> groups, Exception exception)?
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loading,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loaded,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)?
         error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(groups);
+      return loaded(groups, orderBy);
     }
     return orElse();
   }
@@ -396,11 +443,14 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements ModifierGroupsState {
-  const factory _Loaded({required final List<ModifierGroupModel> groups}) =
-      _$_Loaded;
+  const factory _Loaded(
+      {required final List<ModifierGroupModel> groups,
+      required final OrderBy orderBy}) = _$_Loaded;
 
   @override
-  List<ModifierGroupModel> get groups => throw _privateConstructorUsedError;
+  List<ModifierGroupModel> get groups;
+  @override
+  OrderBy get orderBy;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
@@ -413,7 +463,8 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
-  $Res call({List<ModifierGroupModel> groups, Exception exception});
+  $Res call(
+      {List<ModifierGroupModel> groups, OrderBy orderBy, Exception exception});
 }
 
 /// @nodoc
@@ -429,6 +480,7 @@ class __$$_ErrorCopyWithImpl<$Res>
   @override
   $Res call({
     Object? groups = freezed,
+    Object? orderBy = freezed,
     Object? exception = freezed,
   }) {
     return _then(_$_Error(
@@ -436,6 +488,10 @@ class __$$_ErrorCopyWithImpl<$Res>
           ? _value._groups
           : groups // ignore: cast_nullable_to_non_nullable
               as List<ModifierGroupModel>,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
       exception: exception == freezed
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
@@ -448,7 +504,9 @@ class __$$_ErrorCopyWithImpl<$Res>
 
 class _$_Error implements _Error {
   const _$_Error(
-      {required final List<ModifierGroupModel> groups, required this.exception})
+      {required final List<ModifierGroupModel> groups,
+      required this.orderBy,
+      required this.exception})
       : _groups = groups;
 
   final List<ModifierGroupModel> _groups;
@@ -459,11 +517,13 @@ class _$_Error implements _Error {
   }
 
   @override
+  final OrderBy orderBy;
+  @override
   final Exception exception;
 
   @override
   String toString() {
-    return 'ModifierGroupsState.error(groups: $groups, exception: $exception)';
+    return 'ModifierGroupsState.error(groups: $groups, orderBy: $orderBy, exception: $exception)';
   }
 
   @override
@@ -472,6 +532,7 @@ class _$_Error implements _Error {
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
             const DeepCollectionEquality().equals(other._groups, _groups) &&
+            const DeepCollectionEquality().equals(other.orderBy, orderBy) &&
             const DeepCollectionEquality().equals(other.exception, exception));
   }
 
@@ -479,6 +540,7 @@ class _$_Error implements _Error {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_groups),
+      const DeepCollectionEquality().hash(orderBy),
       const DeepCollectionEquality().hash(exception));
 
   @JsonKey(ignore: true)
@@ -489,37 +551,41 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ModifierGroupModel> groups) loading,
-    required TResult Function(List<ModifierGroupModel> groups) loaded,
-    required TResult Function(
-            List<ModifierGroupModel> groups, Exception exception)
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)
+        loading,
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)
+        loaded,
+    required TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)
         error,
   }) {
-    return error(groups, exception);
+    return error(groups, orderBy, exception);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<ModifierGroupModel> groups)? loading,
-    TResult Function(List<ModifierGroupModel> groups)? loaded,
-    TResult Function(List<ModifierGroupModel> groups, Exception exception)?
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loading,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loaded,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)?
         error,
   }) {
-    return error?.call(groups, exception);
+    return error?.call(groups, orderBy, exception);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ModifierGroupModel> groups)? loading,
-    TResult Function(List<ModifierGroupModel> groups)? loaded,
-    TResult Function(List<ModifierGroupModel> groups, Exception exception)?
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loading,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy)? loaded,
+    TResult Function(List<ModifierGroupModel> groups, OrderBy orderBy,
+            Exception exception)?
         error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(groups, exception);
+      return error(groups, orderBy, exception);
     }
     return orElse();
   }
@@ -562,11 +628,14 @@ class _$_Error implements _Error {
 abstract class _Error implements ModifierGroupsState {
   const factory _Error(
       {required final List<ModifierGroupModel> groups,
+      required final OrderBy orderBy,
       required final Exception exception}) = _$_Error;
 
   @override
-  List<ModifierGroupModel> get groups => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  List<ModifierGroupModel> get groups;
+  @override
+  OrderBy get orderBy;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

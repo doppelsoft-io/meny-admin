@@ -17,28 +17,33 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CategoriesState {
   List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  OrderBy get orderBy => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryModel> categories) loading,
-    required TResult Function(List<CategoryModel> categories) loaded,
-    required TResult Function(
-            List<CategoryModel> categories, Exception exception)
+    required TResult Function(List<CategoryModel> categories, OrderBy orderBy)
+        loading,
+    required TResult Function(List<CategoryModel> categories, OrderBy orderBy)
+        loaded,
+    required TResult Function(List<CategoryModel> categories,
+            Exception exception, OrderBy orderBy)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<CategoryModel> categories)? loading,
-    TResult Function(List<CategoryModel> categories)? loaded,
-    TResult Function(List<CategoryModel> categories, Exception exception)?
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loading,
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loaded,
+    TResult Function(List<CategoryModel> categories, Exception exception,
+            OrderBy orderBy)?
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CategoryModel> categories)? loading,
-    TResult Function(List<CategoryModel> categories)? loaded,
-    TResult Function(List<CategoryModel> categories, Exception exception)?
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loading,
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loaded,
+    TResult Function(List<CategoryModel> categories, Exception exception,
+            OrderBy orderBy)?
         error,
     required TResult orElse(),
   }) =>
@@ -76,7 +81,7 @@ abstract class $CategoriesStateCopyWith<$Res> {
   factory $CategoriesStateCopyWith(
           CategoriesState value, $Res Function(CategoriesState) then) =
       _$CategoriesStateCopyWithImpl<$Res>;
-  $Res call({List<CategoryModel> categories});
+  $Res call({List<CategoryModel> categories, OrderBy orderBy});
 }
 
 /// @nodoc
@@ -91,12 +96,17 @@ class _$CategoriesStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? categories = freezed,
+    Object? orderBy = freezed,
   }) {
     return _then(_value.copyWith(
       categories: categories == freezed
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
     ));
   }
 }
@@ -108,7 +118,7 @@ abstract class _$$_LoadingCopyWith<$Res>
           _$_Loading value, $Res Function(_$_Loading) then) =
       __$$_LoadingCopyWithImpl<$Res>;
   @override
-  $Res call({List<CategoryModel> categories});
+  $Res call({List<CategoryModel> categories, OrderBy orderBy});
 }
 
 /// @nodoc
@@ -123,12 +133,17 @@ class __$$_LoadingCopyWithImpl<$Res> extends _$CategoriesStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? categories = freezed,
+    Object? orderBy = freezed,
   }) {
     return _then(_$_Loading(
       categories: categories == freezed
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
     ));
   }
 }
@@ -137,7 +152,8 @@ class __$$_LoadingCopyWithImpl<$Res> extends _$CategoriesStateCopyWithImpl<$Res>
 
 class _$_Loading implements _Loading {
   const _$_Loading(
-      {final List<CategoryModel> categories = const <CategoryModel>[]})
+      {final List<CategoryModel> categories = const <CategoryModel>[],
+      this.orderBy = const OrderBy('createdAt')})
       : _categories = categories;
 
   final List<CategoryModel> _categories;
@@ -149,8 +165,12 @@ class _$_Loading implements _Loading {
   }
 
   @override
+  @JsonKey()
+  final OrderBy orderBy;
+
+  @override
   String toString() {
-    return 'CategoriesState.loading(categories: $categories)';
+    return 'CategoriesState.loading(categories: $categories, orderBy: $orderBy)';
   }
 
   @override
@@ -159,12 +179,15 @@ class _$_Loading implements _Loading {
         (other.runtimeType == runtimeType &&
             other is _$_Loading &&
             const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+                .equals(other._categories, _categories) &&
+            const DeepCollectionEquality().equals(other.orderBy, orderBy));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_categories));
+      runtimeType,
+      const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(orderBy));
 
   @JsonKey(ignore: true)
   @override
@@ -174,37 +197,41 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryModel> categories) loading,
-    required TResult Function(List<CategoryModel> categories) loaded,
-    required TResult Function(
-            List<CategoryModel> categories, Exception exception)
+    required TResult Function(List<CategoryModel> categories, OrderBy orderBy)
+        loading,
+    required TResult Function(List<CategoryModel> categories, OrderBy orderBy)
+        loaded,
+    required TResult Function(List<CategoryModel> categories,
+            Exception exception, OrderBy orderBy)
         error,
   }) {
-    return loading(categories);
+    return loading(categories, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<CategoryModel> categories)? loading,
-    TResult Function(List<CategoryModel> categories)? loaded,
-    TResult Function(List<CategoryModel> categories, Exception exception)?
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loading,
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loaded,
+    TResult Function(List<CategoryModel> categories, Exception exception,
+            OrderBy orderBy)?
         error,
   }) {
-    return loading?.call(categories);
+    return loading?.call(categories, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CategoryModel> categories)? loading,
-    TResult Function(List<CategoryModel> categories)? loaded,
-    TResult Function(List<CategoryModel> categories, Exception exception)?
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loading,
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loaded,
+    TResult Function(List<CategoryModel> categories, Exception exception,
+            OrderBy orderBy)?
         error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(categories);
+      return loading(categories, orderBy);
     }
     return orElse();
   }
@@ -245,10 +272,14 @@ class _$_Loading implements _Loading {
 }
 
 abstract class _Loading implements CategoriesState {
-  const factory _Loading({final List<CategoryModel> categories}) = _$_Loading;
+  const factory _Loading(
+      {final List<CategoryModel> categories,
+      final OrderBy orderBy}) = _$_Loading;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
+  @override
+  OrderBy get orderBy;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -261,7 +292,7 @@ abstract class _$$_LoadedCopyWith<$Res>
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
   @override
-  $Res call({List<CategoryModel> categories});
+  $Res call({List<CategoryModel> categories, OrderBy orderBy});
 }
 
 /// @nodoc
@@ -276,12 +307,17 @@ class __$$_LoadedCopyWithImpl<$Res> extends _$CategoriesStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? categories = freezed,
+    Object? orderBy = freezed,
   }) {
     return _then(_$_Loaded(
       categories: categories == freezed
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
     ));
   }
 }
@@ -289,7 +325,8 @@ class __$$_LoadedCopyWithImpl<$Res> extends _$CategoriesStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded({required final List<CategoryModel> categories})
+  const _$_Loaded(
+      {required final List<CategoryModel> categories, required this.orderBy})
       : _categories = categories;
 
   final List<CategoryModel> _categories;
@@ -300,8 +337,11 @@ class _$_Loaded implements _Loaded {
   }
 
   @override
+  final OrderBy orderBy;
+
+  @override
   String toString() {
-    return 'CategoriesState.loaded(categories: $categories)';
+    return 'CategoriesState.loaded(categories: $categories, orderBy: $orderBy)';
   }
 
   @override
@@ -310,12 +350,15 @@ class _$_Loaded implements _Loaded {
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
             const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+                .equals(other._categories, _categories) &&
+            const DeepCollectionEquality().equals(other.orderBy, orderBy));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_categories));
+      runtimeType,
+      const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(orderBy));
 
   @JsonKey(ignore: true)
   @override
@@ -325,37 +368,41 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryModel> categories) loading,
-    required TResult Function(List<CategoryModel> categories) loaded,
-    required TResult Function(
-            List<CategoryModel> categories, Exception exception)
+    required TResult Function(List<CategoryModel> categories, OrderBy orderBy)
+        loading,
+    required TResult Function(List<CategoryModel> categories, OrderBy orderBy)
+        loaded,
+    required TResult Function(List<CategoryModel> categories,
+            Exception exception, OrderBy orderBy)
         error,
   }) {
-    return loaded(categories);
+    return loaded(categories, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<CategoryModel> categories)? loading,
-    TResult Function(List<CategoryModel> categories)? loaded,
-    TResult Function(List<CategoryModel> categories, Exception exception)?
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loading,
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loaded,
+    TResult Function(List<CategoryModel> categories, Exception exception,
+            OrderBy orderBy)?
         error,
   }) {
-    return loaded?.call(categories);
+    return loaded?.call(categories, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CategoryModel> categories)? loading,
-    TResult Function(List<CategoryModel> categories)? loaded,
-    TResult Function(List<CategoryModel> categories, Exception exception)?
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loading,
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loaded,
+    TResult Function(List<CategoryModel> categories, Exception exception,
+            OrderBy orderBy)?
         error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(categories);
+      return loaded(categories, orderBy);
     }
     return orElse();
   }
@@ -396,11 +443,14 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements CategoriesState {
-  const factory _Loaded({required final List<CategoryModel> categories}) =
-      _$_Loaded;
+  const factory _Loaded(
+      {required final List<CategoryModel> categories,
+      required final OrderBy orderBy}) = _$_Loaded;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
+  @override
+  OrderBy get orderBy;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
@@ -413,7 +463,8 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
-  $Res call({List<CategoryModel> categories, Exception exception});
+  $Res call(
+      {List<CategoryModel> categories, Exception exception, OrderBy orderBy});
 }
 
 /// @nodoc
@@ -429,6 +480,7 @@ class __$$_ErrorCopyWithImpl<$Res> extends _$CategoriesStateCopyWithImpl<$Res>
   $Res call({
     Object? categories = freezed,
     Object? exception = freezed,
+    Object? orderBy = freezed,
   }) {
     return _then(_$_Error(
       categories: categories == freezed
@@ -439,6 +491,10 @@ class __$$_ErrorCopyWithImpl<$Res> extends _$CategoriesStateCopyWithImpl<$Res>
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
     ));
   }
 }
@@ -447,7 +503,9 @@ class __$$_ErrorCopyWithImpl<$Res> extends _$CategoriesStateCopyWithImpl<$Res>
 
 class _$_Error implements _Error {
   const _$_Error(
-      {required final List<CategoryModel> categories, required this.exception})
+      {required final List<CategoryModel> categories,
+      required this.exception,
+      required this.orderBy})
       : _categories = categories;
 
   final List<CategoryModel> _categories;
@@ -459,10 +517,12 @@ class _$_Error implements _Error {
 
   @override
   final Exception exception;
+  @override
+  final OrderBy orderBy;
 
   @override
   String toString() {
-    return 'CategoriesState.error(categories: $categories, exception: $exception)';
+    return 'CategoriesState.error(categories: $categories, exception: $exception, orderBy: $orderBy)';
   }
 
   @override
@@ -472,14 +532,16 @@ class _$_Error implements _Error {
             other is _$_Error &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            const DeepCollectionEquality().equals(other.exception, exception) &&
+            const DeepCollectionEquality().equals(other.orderBy, orderBy));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_categories),
-      const DeepCollectionEquality().hash(exception));
+      const DeepCollectionEquality().hash(exception),
+      const DeepCollectionEquality().hash(orderBy));
 
   @JsonKey(ignore: true)
   @override
@@ -489,37 +551,41 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<CategoryModel> categories) loading,
-    required TResult Function(List<CategoryModel> categories) loaded,
-    required TResult Function(
-            List<CategoryModel> categories, Exception exception)
+    required TResult Function(List<CategoryModel> categories, OrderBy orderBy)
+        loading,
+    required TResult Function(List<CategoryModel> categories, OrderBy orderBy)
+        loaded,
+    required TResult Function(List<CategoryModel> categories,
+            Exception exception, OrderBy orderBy)
         error,
   }) {
-    return error(categories, exception);
+    return error(categories, exception, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<CategoryModel> categories)? loading,
-    TResult Function(List<CategoryModel> categories)? loaded,
-    TResult Function(List<CategoryModel> categories, Exception exception)?
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loading,
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loaded,
+    TResult Function(List<CategoryModel> categories, Exception exception,
+            OrderBy orderBy)?
         error,
   }) {
-    return error?.call(categories, exception);
+    return error?.call(categories, exception, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CategoryModel> categories)? loading,
-    TResult Function(List<CategoryModel> categories)? loaded,
-    TResult Function(List<CategoryModel> categories, Exception exception)?
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loading,
+    TResult Function(List<CategoryModel> categories, OrderBy orderBy)? loaded,
+    TResult Function(List<CategoryModel> categories, Exception exception,
+            OrderBy orderBy)?
         error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(categories, exception);
+      return error(categories, exception, orderBy);
     }
     return orElse();
   }
@@ -562,11 +628,14 @@ class _$_Error implements _Error {
 abstract class _Error implements CategoriesState {
   const factory _Error(
       {required final List<CategoryModel> categories,
-      required final Exception exception}) = _$_Error;
+      required final Exception exception,
+      required final OrderBy orderBy}) = _$_Error;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
+  Exception get exception;
+  @override
+  OrderBy get orderBy;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

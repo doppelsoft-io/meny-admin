@@ -275,8 +275,7 @@ abstract class _Initial implements EditModifierGroupItemState {
       {required final ModifierGroupItemModel modifierGroupItem}) = _$_Initial;
 
   @override
-  ModifierGroupItemModel get modifierGroupItem =>
-      throw _privateConstructorUsedError;
+  ModifierGroupItemModel get modifierGroupItem;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -438,8 +437,7 @@ abstract class _Updating implements EditModifierGroupItemState {
       {required final ModifierGroupItemModel modifierGroupItem}) = _$_Updating;
 
   @override
-  ModifierGroupItemModel get modifierGroupItem =>
-      throw _privateConstructorUsedError;
+  ModifierGroupItemModel get modifierGroupItem;
   @override
   @JsonKey(ignore: true)
   _$$_UpdatingCopyWith<_$_Updating> get copyWith =>
@@ -600,8 +598,7 @@ abstract class _Success implements EditModifierGroupItemState {
       {required final ModifierGroupItemModel modifierGroupItem}) = _$_Success;
 
   @override
-  ModifierGroupItemModel get modifierGroupItem =>
-      throw _privateConstructorUsedError;
+  ModifierGroupItemModel get modifierGroupItem;
   @override
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
@@ -772,9 +769,8 @@ abstract class _Error implements EditModifierGroupItemState {
       required final Exception exception}) = _$_Error;
 
   @override
-  ModifierGroupItemModel get modifierGroupItem =>
-      throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  ModifierGroupItemModel get modifierGroupItem;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

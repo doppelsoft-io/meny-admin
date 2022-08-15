@@ -7,6 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
@@ -46,6 +47,23 @@ class _MenusScreenCategoriesTab extends HookWidget {
       const [],
     );
 
+    void _sort(
+      int columnIndex,
+      bool descending,
+      String name,
+    ) {
+      final storeCubit = context.read<StoreCubit>();
+      final storeId = storeCubit.state.store.id;
+      context.read<CategoriesCubit>().load(
+            storeId: storeId!,
+            orderBy: OrderBy(
+              name,
+              descending: !descending,
+              sortColumnIndex: columnIndex,
+            ),
+          );
+    }
+
     return MultiBlocListener(
       listeners: [
         BlocListener<StoreCubit, StoreState>(
@@ -58,17 +76,32 @@ class _MenusScreenCategoriesTab extends HookWidget {
         ),
       ],
       child: categoriesState.maybeWhen(
-        loading: (_) => const Center(child: CircularProgressIndicator()),
-        loaded: (categories) {
+        loading: (_, orderBy) =>
+            const Center(child: CircularProgressIndicator()),
+        orElse: () {
+          final categories = categoriesState.categories;
+          final orderBy = categoriesState.orderBy;
+
           return ResourceTable<CategoryModel>(
+            sortAscending: !orderBy.descending,
+            sortColumnIndex: orderBy.sortColumnIndex,
             header: const PageTitle(
               title: 'Categories',
             ),
             action: const NewCategoryButton(),
-            columns: const [
+            columns: [
               DataColumn2(
-                label: Text('Name'),
+                label: const Text('Name'),
                 size: ColumnSize.L,
+                onSort: (columnIndex, descending) =>
+                    _sort(columnIndex, descending, 'name'),
+              ),
+              DataColumn2(
+                label: const Text('Created'),
+                fixedWidth: 200,
+                size: ColumnSize.S,
+                onSort: (columnIndex, descending) =>
+                    _sort(columnIndex, descending, 'createdAt'),
               ),
             ],
             resources: categories,
@@ -105,11 +138,18 @@ class _MenusScreenCategoriesTab extends HookWidget {
                     ],
                   ),
                 ),
+                DataCell(
+                  Text(
+                    category.createdAt?.formatWith(
+                          'MM/dd/yy @ h:mm a',
+                        ) ??
+                        '',
+                  ),
+                ),
               ];
             },
           );
         },
-        orElse: SizedBox.shrink,
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/constants/paths.dart';
-import 'package:meny_admin/src/typedefs/typedefs.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_core/meny_core.dart';
 
 class MenuCategoryException implements Exception {
@@ -88,14 +88,14 @@ class MenuCategoryRepository {
     OrderBy? orderBy,
   }) {
     try {
-      final _orderBy = orderBy ??= const OrderBy('createdAt', true);
+      final _orderBy = orderBy ??= OrderBy.fallback();
 
       return _firebaseFirestore
           .collection(Paths.stores)
           .doc(storeId)
           .collection(Paths.menuCategories)
           .where('menuId', isEqualTo: menuId)
-          .orderBy(_orderBy.value1, descending: _orderBy.value2)
+          .orderBy(_orderBy.field, descending: _orderBy.descending)
           .snapshots()
           .map(
             (doc) => doc.docs.map(MenuCategoryModel.fromSnapshot).toList(),
@@ -108,7 +108,7 @@ class MenuCategoryRepository {
   Future<List<MenuCategoryModel>> getForCategory({
     required String storeId,
     required String categoryId,
-    OrderBy? orderBy,
+    OrderBy orderBy = const OrderBy('createdAt'),
   }) {
     try {
       return streamForCategory(
@@ -124,17 +124,15 @@ class MenuCategoryRepository {
   Stream<List<MenuCategoryModel>> streamForCategory({
     required String storeId,
     required String categoryId,
-    OrderBy? orderBy,
+    OrderBy orderBy = const OrderBy('createdAt'),
   }) {
     try {
-      final _orderBy = orderBy ??= const OrderBy('createdAt', true);
-
       return _firebaseFirestore
           .collection(Paths.stores)
           .doc(storeId)
           .collection(Paths.menuCategories)
           .where('categoryId', isEqualTo: categoryId)
-          .orderBy(_orderBy.value1, descending: _orderBy.value2)
+          .orderBy(orderBy.field, descending: orderBy.descending)
           .snapshots()
           .map(
             (doc) => doc.docs.map(MenuCategoryModel.fromSnapshot).toList(),

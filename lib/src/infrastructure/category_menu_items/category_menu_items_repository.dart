@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/constants/paths.dart';
-import 'package:meny_admin/src/typedefs/typedefs.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_core/meny_core.dart';
 
 class CategoryMenuItemException implements Exception {
@@ -70,7 +70,7 @@ class CategoryMenuItemsRepository {
   Future<List<CategoryMenuItemModel>> getForCategory({
     required String storeId,
     required String categoryId,
-    OrderBy? orderBy,
+    OrderBy orderBy = const OrderBy('createdAt'),
   }) async {
     return streamForCategory(
       storeId: storeId,
@@ -82,7 +82,7 @@ class CategoryMenuItemsRepository {
   Future<List<CategoryMenuItemModel>> getForMenuItem({
     required String storeId,
     required String menuItemId,
-    OrderBy? orderBy,
+    OrderBy orderBy = const OrderBy('createdAt'),
   }) async {
     return streamForMenuItem(
       storeId: storeId,
@@ -94,16 +94,15 @@ class CategoryMenuItemsRepository {
   Stream<List<CategoryMenuItemModel>> streamForCategory({
     required String storeId,
     required String categoryId,
-    OrderBy? orderBy,
+    OrderBy orderBy = const OrderBy('createdAt'),
   }) {
     try {
-      final _orderBy = orderBy ??= const OrderBy('createdAt', true);
       return _firebaseFirestore
           .collection(Paths.stores)
           .doc(storeId)
           .collection(Paths.categoryMenuItems)
           .where('categoryId', isEqualTo: categoryId)
-          .orderBy(_orderBy.value1, descending: _orderBy.value2)
+          .orderBy(orderBy.field, descending: orderBy.descending)
           .snapshots()
           .map(
             (doc) => doc.docs.map(CategoryMenuItemModel.fromSnapshot).toList(),
@@ -116,16 +115,15 @@ class CategoryMenuItemsRepository {
   Stream<List<CategoryMenuItemModel>> streamForMenuItem({
     required String storeId,
     required String menuItemId,
-    OrderBy? orderBy,
+    OrderBy orderBy = const OrderBy('createdAt'),
   }) {
     try {
-      final _orderBy = orderBy ??= const OrderBy('createdAt', true);
       return _firebaseFirestore
           .collection(Paths.stores)
           .doc(storeId)
           .collection(Paths.categoryMenuItems)
           .where('menuItemId', isEqualTo: menuItemId)
-          .orderBy(_orderBy.value1, descending: _orderBy.value2)
+          .orderBy(orderBy.field, descending: orderBy.descending)
           .snapshots()
           .map(
             (doc) => doc.docs.map(CategoryMenuItemModel.fromSnapshot).toList(),

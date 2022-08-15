@@ -358,10 +358,9 @@ abstract class _Initial implements CategoryMenuItemsState {
       final List<CategoryMenuItemModel> categoryMenuItems}) = _$_Initial;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
   @override
-  List<CategoryMenuItemModel> get categoryMenuItems =>
-      throw _privateConstructorUsedError;
+  List<CategoryMenuItemModel> get categoryMenuItems;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -575,10 +574,9 @@ abstract class _Adding implements CategoryMenuItemsState {
       _$_Adding;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
   @override
-  List<CategoryMenuItemModel> get categoryMenuItems =>
-      throw _privateConstructorUsedError;
+  List<CategoryMenuItemModel> get categoryMenuItems;
   @override
   @JsonKey(ignore: true)
   _$$_AddingCopyWith<_$_Adding> get copyWith =>
@@ -794,10 +792,9 @@ abstract class _Removing implements CategoryMenuItemsState {
       _$_Removing;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
   @override
-  List<CategoryMenuItemModel> get categoryMenuItems =>
-      throw _privateConstructorUsedError;
+  List<CategoryMenuItemModel> get categoryMenuItems;
   @override
   @JsonKey(ignore: true)
   _$$_RemovingCopyWith<_$_Removing> get copyWith =>
@@ -1012,10 +1009,9 @@ abstract class _Success implements CategoryMenuItemsState {
       _$_Success;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
   @override
-  List<CategoryMenuItemModel> get categoryMenuItems =>
-      throw _privateConstructorUsedError;
+  List<CategoryMenuItemModel> get categoryMenuItems;
   @override
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
@@ -1241,11 +1237,10 @@ abstract class _Error implements CategoryMenuItemsState {
       required final Exception exception}) = _$_Error;
 
   @override
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories;
   @override
-  List<CategoryMenuItemModel> get categoryMenuItems =>
-      throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  List<CategoryMenuItemModel> get categoryMenuItems;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

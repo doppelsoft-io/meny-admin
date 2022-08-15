@@ -573,7 +573,7 @@ class _$_Error implements _Error {
 abstract class _Error implements ReorderCompiledCategoryState {
   const factory _Error({required final Exception exception}) = _$_Error;
 
-  Exception get exception => throw _privateConstructorUsedError;
+  Exception get exception;
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       throw _privateConstructorUsedError;

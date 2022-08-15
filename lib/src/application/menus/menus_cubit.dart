@@ -6,6 +6,7 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -30,14 +31,28 @@ class MenusCubit extends Cubit<MenusState> {
     await super.close();
   }
 
-  Future<void> _load({required String storeId}) async {
-    _subscription = _menuRepository.getAll(storeId: storeId).listen(
-          (menus) => emit(_Loaded(menus: menus)),
+  Future<void> _load({
+    required String storeId,
+    required OrderBy orderBy,
+  }) async {
+    _subscription = _menuRepository
+        .getAll(
+          storeId: storeId,
+          orderBy: orderBy,
+        )
+        .listen(
+          (menus) => emit(
+            _Loaded(
+              menus: menus,
+              orderBy: state.orderBy,
+            ),
+          ),
         )..onError((error) {
         log(error.toString());
         emit(
           _Error(
             menus: state.menus,
+            orderBy: state.orderBy,
             exception: const CustomException(
               message: 'Failed to load menus',
             ),
@@ -46,16 +61,26 @@ class MenusCubit extends Cubit<MenusState> {
       });
   }
 
-  Future<void> load({required String storeId}) async {
+  Future<void> load({
+    required String storeId,
+    OrderBy orderBy = const OrderBy('createdAt', sortColumnIndex: 1),
+  }) async {
     await _subscription?.cancel();
+    emit(
+      _Loading(
+        menus: state.menus,
+        orderBy: orderBy,
+      ),
+    );
     _authCubit.state.maybeWhen(
-      authenticated: (user) {
-        _load(storeId: storeId);
+      initial: (_) {},
+      unauthenticated: (_) {},
+      orElse: () {
+        _load(
+          storeId: storeId,
+          orderBy: orderBy,
+        );
       },
-      anonymous: (user) {
-        _load(storeId: storeId);
-      },
-      orElse: () {},
     );
   }
 }

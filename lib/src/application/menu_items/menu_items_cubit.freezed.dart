@@ -17,26 +17,34 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MenuItemsState {
   List<MenuItemModel> get items => throw _privateConstructorUsedError;
+  OrderBy get orderBy => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<MenuItemModel> items) loading,
-    required TResult Function(List<MenuItemModel> items) loaded,
-    required TResult Function(List<MenuItemModel> items, Exception exception)
+    required TResult Function(List<MenuItemModel> items, OrderBy orderBy)
+        loading,
+    required TResult Function(List<MenuItemModel> items, OrderBy orderBy)
+        loaded,
+    required TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items)? loading,
-    TResult Function(List<MenuItemModel> items)? loaded,
-    TResult Function(List<MenuItemModel> items, Exception exception)? error,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items)? loading,
-    TResult Function(List<MenuItemModel> items)? loaded,
-    TResult Function(List<MenuItemModel> items, Exception exception)? error,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
+        error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -73,7 +81,7 @@ abstract class $MenuItemsStateCopyWith<$Res> {
   factory $MenuItemsStateCopyWith(
           MenuItemsState value, $Res Function(MenuItemsState) then) =
       _$MenuItemsStateCopyWithImpl<$Res>;
-  $Res call({List<MenuItemModel> items});
+  $Res call({List<MenuItemModel> items, OrderBy orderBy});
 }
 
 /// @nodoc
@@ -88,12 +96,17 @@ class _$MenuItemsStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? items = freezed,
+    Object? orderBy = freezed,
   }) {
     return _then(_value.copyWith(
       items: items == freezed
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
     ));
   }
 }
@@ -105,7 +118,7 @@ abstract class _$$_LoadingCopyWith<$Res>
           _$_Loading value, $Res Function(_$_Loading) then) =
       __$$_LoadingCopyWithImpl<$Res>;
   @override
-  $Res call({List<MenuItemModel> items});
+  $Res call({List<MenuItemModel> items, OrderBy orderBy});
 }
 
 /// @nodoc
@@ -120,12 +133,17 @@ class __$$_LoadingCopyWithImpl<$Res> extends _$MenuItemsStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? items = freezed,
+    Object? orderBy = freezed,
   }) {
     return _then(_$_Loading(
       items: items == freezed
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
     ));
   }
 }
@@ -133,7 +151,9 @@ class __$$_LoadingCopyWithImpl<$Res> extends _$MenuItemsStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loading implements _Loading {
-  const _$_Loading({final List<MenuItemModel> items = const <MenuItemModel>[]})
+  const _$_Loading(
+      {final List<MenuItemModel> items = const <MenuItemModel>[],
+      this.orderBy = const OrderBy('createdAt')})
       : _items = items;
 
   final List<MenuItemModel> _items;
@@ -145,8 +165,12 @@ class _$_Loading implements _Loading {
   }
 
   @override
+  @JsonKey()
+  final OrderBy orderBy;
+
+  @override
   String toString() {
-    return 'MenuItemsState.loading(items: $items)';
+    return 'MenuItemsState.loading(items: $items, orderBy: $orderBy)';
   }
 
   @override
@@ -154,12 +178,15 @@ class _$_Loading implements _Loading {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loading &&
-            const DeepCollectionEquality().equals(other._items, _items));
+            const DeepCollectionEquality().equals(other._items, _items) &&
+            const DeepCollectionEquality().equals(other.orderBy, orderBy));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_items),
+      const DeepCollectionEquality().hash(orderBy));
 
   @JsonKey(ignore: true)
   @override
@@ -169,34 +196,41 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<MenuItemModel> items) loading,
-    required TResult Function(List<MenuItemModel> items) loaded,
-    required TResult Function(List<MenuItemModel> items, Exception exception)
+    required TResult Function(List<MenuItemModel> items, OrderBy orderBy)
+        loading,
+    required TResult Function(List<MenuItemModel> items, OrderBy orderBy)
+        loaded,
+    required TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)
         error,
   }) {
-    return loading(items);
+    return loading(items, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items)? loading,
-    TResult Function(List<MenuItemModel> items)? loaded,
-    TResult Function(List<MenuItemModel> items, Exception exception)? error,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
+        error,
   }) {
-    return loading?.call(items);
+    return loading?.call(items, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items)? loading,
-    TResult Function(List<MenuItemModel> items)? loaded,
-    TResult Function(List<MenuItemModel> items, Exception exception)? error,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
+        error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(items);
+      return loading(items, orderBy);
     }
     return orElse();
   }
@@ -237,10 +271,13 @@ class _$_Loading implements _Loading {
 }
 
 abstract class _Loading implements MenuItemsState {
-  const factory _Loading({final List<MenuItemModel> items}) = _$_Loading;
+  const factory _Loading(
+      {final List<MenuItemModel> items, final OrderBy orderBy}) = _$_Loading;
 
   @override
-  List<MenuItemModel> get items => throw _privateConstructorUsedError;
+  List<MenuItemModel> get items;
+  @override
+  OrderBy get orderBy;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -253,7 +290,7 @@ abstract class _$$_LoadedCopyWith<$Res>
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
   @override
-  $Res call({List<MenuItemModel> items});
+  $Res call({List<MenuItemModel> items, OrderBy orderBy});
 }
 
 /// @nodoc
@@ -268,12 +305,17 @@ class __$$_LoadedCopyWithImpl<$Res> extends _$MenuItemsStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? items = freezed,
+    Object? orderBy = freezed,
   }) {
     return _then(_$_Loaded(
       items: items == freezed
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
     ));
   }
 }
@@ -281,7 +323,9 @@ class __$$_LoadedCopyWithImpl<$Res> extends _$MenuItemsStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded({required final List<MenuItemModel> items}) : _items = items;
+  const _$_Loaded(
+      {required final List<MenuItemModel> items, required this.orderBy})
+      : _items = items;
 
   final List<MenuItemModel> _items;
   @override
@@ -291,8 +335,11 @@ class _$_Loaded implements _Loaded {
   }
 
   @override
+  final OrderBy orderBy;
+
+  @override
   String toString() {
-    return 'MenuItemsState.loaded(items: $items)';
+    return 'MenuItemsState.loaded(items: $items, orderBy: $orderBy)';
   }
 
   @override
@@ -300,12 +347,15 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
-            const DeepCollectionEquality().equals(other._items, _items));
+            const DeepCollectionEquality().equals(other._items, _items) &&
+            const DeepCollectionEquality().equals(other.orderBy, orderBy));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_items),
+      const DeepCollectionEquality().hash(orderBy));
 
   @JsonKey(ignore: true)
   @override
@@ -315,34 +365,41 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<MenuItemModel> items) loading,
-    required TResult Function(List<MenuItemModel> items) loaded,
-    required TResult Function(List<MenuItemModel> items, Exception exception)
+    required TResult Function(List<MenuItemModel> items, OrderBy orderBy)
+        loading,
+    required TResult Function(List<MenuItemModel> items, OrderBy orderBy)
+        loaded,
+    required TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)
         error,
   }) {
-    return loaded(items);
+    return loaded(items, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items)? loading,
-    TResult Function(List<MenuItemModel> items)? loaded,
-    TResult Function(List<MenuItemModel> items, Exception exception)? error,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
+        error,
   }) {
-    return loaded?.call(items);
+    return loaded?.call(items, orderBy);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items)? loading,
-    TResult Function(List<MenuItemModel> items)? loaded,
-    TResult Function(List<MenuItemModel> items, Exception exception)? error,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
+        error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(items);
+      return loaded(items, orderBy);
     }
     return orElse();
   }
@@ -383,10 +440,14 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements MenuItemsState {
-  const factory _Loaded({required final List<MenuItemModel> items}) = _$_Loaded;
+  const factory _Loaded(
+      {required final List<MenuItemModel> items,
+      required final OrderBy orderBy}) = _$_Loaded;
 
   @override
-  List<MenuItemModel> get items => throw _privateConstructorUsedError;
+  List<MenuItemModel> get items;
+  @override
+  OrderBy get orderBy;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
@@ -399,7 +460,7 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
-  $Res call({List<MenuItemModel> items, Exception exception});
+  $Res call({List<MenuItemModel> items, OrderBy orderBy, Exception exception});
 }
 
 /// @nodoc
@@ -414,6 +475,7 @@ class __$$_ErrorCopyWithImpl<$Res> extends _$MenuItemsStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? items = freezed,
+    Object? orderBy = freezed,
     Object? exception = freezed,
   }) {
     return _then(_$_Error(
@@ -421,6 +483,10 @@ class __$$_ErrorCopyWithImpl<$Res> extends _$MenuItemsStateCopyWithImpl<$Res>
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
+      orderBy: orderBy == freezed
+          ? _value.orderBy
+          : orderBy // ignore: cast_nullable_to_non_nullable
+              as OrderBy,
       exception: exception == freezed
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
@@ -433,7 +499,9 @@ class __$$_ErrorCopyWithImpl<$Res> extends _$MenuItemsStateCopyWithImpl<$Res>
 
 class _$_Error implements _Error {
   const _$_Error(
-      {required final List<MenuItemModel> items, required this.exception})
+      {required final List<MenuItemModel> items,
+      required this.orderBy,
+      required this.exception})
       : _items = items;
 
   final List<MenuItemModel> _items;
@@ -444,11 +512,13 @@ class _$_Error implements _Error {
   }
 
   @override
+  final OrderBy orderBy;
+  @override
   final Exception exception;
 
   @override
   String toString() {
-    return 'MenuItemsState.error(items: $items, exception: $exception)';
+    return 'MenuItemsState.error(items: $items, orderBy: $orderBy, exception: $exception)';
   }
 
   @override
@@ -457,6 +527,7 @@ class _$_Error implements _Error {
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
             const DeepCollectionEquality().equals(other._items, _items) &&
+            const DeepCollectionEquality().equals(other.orderBy, orderBy) &&
             const DeepCollectionEquality().equals(other.exception, exception));
   }
 
@@ -464,6 +535,7 @@ class _$_Error implements _Error {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_items),
+      const DeepCollectionEquality().hash(orderBy),
       const DeepCollectionEquality().hash(exception));
 
   @JsonKey(ignore: true)
@@ -474,34 +546,41 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<MenuItemModel> items) loading,
-    required TResult Function(List<MenuItemModel> items) loaded,
-    required TResult Function(List<MenuItemModel> items, Exception exception)
+    required TResult Function(List<MenuItemModel> items, OrderBy orderBy)
+        loading,
+    required TResult Function(List<MenuItemModel> items, OrderBy orderBy)
+        loaded,
+    required TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)
         error,
   }) {
-    return error(items, exception);
+    return error(items, orderBy, exception);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items)? loading,
-    TResult Function(List<MenuItemModel> items)? loaded,
-    TResult Function(List<MenuItemModel> items, Exception exception)? error,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
+        error,
   }) {
-    return error?.call(items, exception);
+    return error?.call(items, orderBy, exception);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items)? loading,
-    TResult Function(List<MenuItemModel> items)? loaded,
-    TResult Function(List<MenuItemModel> items, Exception exception)? error,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult Function(
+            List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
+        error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(items, exception);
+      return error(items, orderBy, exception);
     }
     return orElse();
   }
@@ -544,11 +623,14 @@ class _$_Error implements _Error {
 abstract class _Error implements MenuItemsState {
   const factory _Error(
       {required final List<MenuItemModel> items,
+      required final OrderBy orderBy,
       required final Exception exception}) = _$_Error;
 
   @override
-  List<MenuItemModel> get items => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  List<MenuItemModel> get items;
+  @override
+  OrderBy get orderBy;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

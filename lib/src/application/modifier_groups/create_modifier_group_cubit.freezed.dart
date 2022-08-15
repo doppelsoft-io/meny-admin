@@ -260,7 +260,7 @@ abstract class _Initial implements CreateModifierGroupState {
       _$_Initial;
 
   @override
-  ModifierGroupModel get group => throw _privateConstructorUsedError;
+  ModifierGroupModel get group;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -415,7 +415,7 @@ abstract class _Creating implements CreateModifierGroupState {
       _$_Creating;
 
   @override
-  ModifierGroupModel get group => throw _privateConstructorUsedError;
+  ModifierGroupModel get group;
   @override
   @JsonKey(ignore: true)
   _$$_CreatingCopyWith<_$_Creating> get copyWith =>
@@ -569,7 +569,7 @@ abstract class _Created implements CreateModifierGroupState {
       _$_Created;
 
   @override
-  ModifierGroupModel get group => throw _privateConstructorUsedError;
+  ModifierGroupModel get group;
   @override
   @JsonKey(ignore: true)
   _$$_CreatedCopyWith<_$_Created> get copyWith =>
@@ -733,8 +733,8 @@ abstract class _Error implements CreateModifierGroupState {
       required final Exception exception}) = _$_Error;
 
   @override
-  ModifierGroupModel get group => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  ModifierGroupModel get group;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

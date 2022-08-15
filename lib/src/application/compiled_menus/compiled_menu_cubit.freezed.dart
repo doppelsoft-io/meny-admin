@@ -272,7 +272,7 @@ abstract class _Loading implements CompiledMenuState {
       _$_Loading;
 
   @override
-  CompiledMenuModel get response => throw _privateConstructorUsedError;
+  CompiledMenuModel get response;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -431,7 +431,7 @@ abstract class _Loaded implements CompiledMenuState {
       _$_Loaded;
 
   @override
-  CompiledMenuModel get response => throw _privateConstructorUsedError;
+  CompiledMenuModel get response;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
@@ -592,7 +592,7 @@ abstract class _Publishing implements CompiledMenuState {
       _$_Publishing;
 
   @override
-  CompiledMenuModel get response => throw _privateConstructorUsedError;
+  CompiledMenuModel get response;
   @override
   @JsonKey(ignore: true)
   _$$_PublishingCopyWith<_$_Publishing> get copyWith =>
@@ -753,7 +753,7 @@ abstract class _Published implements CompiledMenuState {
       _$_Published;
 
   @override
-  CompiledMenuModel get response => throw _privateConstructorUsedError;
+  CompiledMenuModel get response;
   @override
   @JsonKey(ignore: true)
   _$$_PublishedCopyWith<_$_Published> get copyWith =>
@@ -922,8 +922,8 @@ abstract class _Error implements CompiledMenuState {
       required final Exception exception}) = _$_Error;
 
   @override
-  CompiledMenuModel get response => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  CompiledMenuModel get response;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

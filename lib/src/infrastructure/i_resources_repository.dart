@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 
 abstract class IResourcesRepository<T> {
   IResourcesRepository({
@@ -9,7 +10,10 @@ abstract class IResourcesRepository<T> {
   String path;
   FirebaseFirestore firebaseFirestore;
 
-  Stream<List<T>> getAll({required String storeId});
+  Stream<List<T>> getAll({
+    required String storeId,
+    required OrderBy orderBy,
+  });
   Future<T> create({
     required String storeId,
     required T resource,

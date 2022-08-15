@@ -371,10 +371,9 @@ abstract class _Initial implements MenuItemModifierGroupsState {
       _$_Initial;
 
   @override
-  List<ModifierGroupModel> get groups => throw _privateConstructorUsedError;
+  List<ModifierGroupModel> get groups;
   @override
-  List<MenuItemModifierGroupModel> get menuItemModifierGroups =>
-      throw _privateConstructorUsedError;
+  List<MenuItemModifierGroupModel> get menuItemModifierGroups;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -593,10 +592,9 @@ abstract class _Adding implements MenuItemModifierGroupsState {
           menuItemModifierGroups}) = _$_Adding;
 
   @override
-  List<ModifierGroupModel> get groups => throw _privateConstructorUsedError;
+  List<ModifierGroupModel> get groups;
   @override
-  List<MenuItemModifierGroupModel> get menuItemModifierGroups =>
-      throw _privateConstructorUsedError;
+  List<MenuItemModifierGroupModel> get menuItemModifierGroups;
   @override
   @JsonKey(ignore: true)
   _$$_AddingCopyWith<_$_Adding> get copyWith =>
@@ -817,10 +815,9 @@ abstract class _Removing implements MenuItemModifierGroupsState {
           menuItemModifierGroups}) = _$_Removing;
 
   @override
-  List<ModifierGroupModel> get groups => throw _privateConstructorUsedError;
+  List<ModifierGroupModel> get groups;
   @override
-  List<MenuItemModifierGroupModel> get menuItemModifierGroups =>
-      throw _privateConstructorUsedError;
+  List<MenuItemModifierGroupModel> get menuItemModifierGroups;
   @override
   @JsonKey(ignore: true)
   _$$_RemovingCopyWith<_$_Removing> get copyWith =>
@@ -1040,10 +1037,9 @@ abstract class _Success implements MenuItemModifierGroupsState {
           menuItemModifierGroups}) = _$_Success;
 
   @override
-  List<ModifierGroupModel> get groups => throw _privateConstructorUsedError;
+  List<ModifierGroupModel> get groups;
   @override
-  List<MenuItemModifierGroupModel> get menuItemModifierGroups =>
-      throw _privateConstructorUsedError;
+  List<MenuItemModifierGroupModel> get menuItemModifierGroups;
   @override
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
@@ -1274,11 +1270,10 @@ abstract class _Error implements MenuItemModifierGroupsState {
       required final Exception exception}) = _$_Error;
 
   @override
-  List<ModifierGroupModel> get groups => throw _privateConstructorUsedError;
+  List<ModifierGroupModel> get groups;
   @override
-  List<MenuItemModifierGroupModel> get menuItemModifierGroups =>
-      throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  List<MenuItemModifierGroupModel> get menuItemModifierGroups;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

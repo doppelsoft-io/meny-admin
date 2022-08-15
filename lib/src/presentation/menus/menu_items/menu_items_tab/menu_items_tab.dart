@@ -7,6 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
@@ -45,6 +46,24 @@ class _MenusScreenItemsTab extends HookWidget {
       },
       const [],
     );
+
+    void _sort(
+      int columnIndex,
+      bool descending,
+      String name,
+    ) {
+      final storeCubit = context.read<StoreCubit>();
+      final storeId = storeCubit.state.store.id;
+      context.read<MenuItemsCubit>().load(
+            storeId: storeId!,
+            orderBy: OrderBy(
+              name,
+              descending: !descending,
+              sortColumnIndex: columnIndex,
+            ),
+          );
+    }
+
     return MultiBlocListener(
       listeners: [
         BlocListener<StoreCubit, StoreState>(
@@ -57,25 +76,40 @@ class _MenusScreenItemsTab extends HookWidget {
         ),
       ],
       child: menuItemsState.maybeWhen(
-        loading: (_) => const Center(child: CircularProgressIndicator()),
-        loaded: (items) {
+        orElse: () {
+          final items = menuItemsState.items;
+          final orderBy = menuItemsState.orderBy;
+
           return ResourceTable<MenuItemModel>(
             header: const PageTitle(title: 'Items'),
             action: const NewMenuItemButton(),
             resources: items,
-            columns: const [
-              DataColumn2(
+            sortColumnIndex: orderBy.sortColumnIndex,
+            sortAscending: !orderBy.descending,
+            columns: [
+              const DataColumn2(
                 label: Text('Photo'),
                 fixedWidth: 75,
               ),
               DataColumn2(
-                label: Text('Name'),
-                size: ColumnSize.L,
+                label: const Text('Price'),
+                fixedWidth: 125,
+                onSort: (columnIndex, descending) =>
+                    _sort(columnIndex, descending, 'priceInfo.price'),
+                numeric: true,
               ),
               DataColumn2(
-                label: Text('Price'),
-                fixedWidth: 100,
+                label: const Text('Name'),
+                size: ColumnSize.L,
+                onSort: (columnIndex, descending) =>
+                    _sort(columnIndex, descending, 'name'),
+              ),
+              DataColumn2(
+                label: const Text('Created'),
+                fixedWidth: 200,
                 size: ColumnSize.S,
+                onSort: (columnIndex, descending) =>
+                    _sort(columnIndex, descending, 'createdAt'),
               ),
             ],
             cellsBuilder: (_, item) {
@@ -87,13 +121,16 @@ class _MenusScreenItemsTab extends HookWidget {
                   ),
                 ),
                 DataCell(
+                  Text((item.priceInfo.price / 100).toCurrency()),
+                ),
+                DataCell(
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(item.name),
+                      DSText.bodyText1(item.name),
                       DSText.caption(
-                        'Last updated: ${item.updatedAt?.formatWith(
+                        'Updated: ${item.updatedAt?.formatWith(
                               'MM/dd/yy @ h:mm a',
                             ) ?? ''}',
                       ),
@@ -101,7 +138,12 @@ class _MenusScreenItemsTab extends HookWidget {
                   ),
                 ),
                 DataCell(
-                  Text((item.priceInfo.price / 100).toCurrency()),
+                  Text(
+                    item.createdAt?.formatWith(
+                          'MM/dd/yy @ h:mm a',
+                        ) ??
+                        '',
+                  ),
                 ),
               ];
             },
@@ -127,7 +169,6 @@ class _MenusScreenItemsTab extends HookWidget {
             emptyMessage: 'No items yet. Click "New" above to get started!',
           );
         },
-        orElse: SizedBox.shrink,
       ),
     );
   }

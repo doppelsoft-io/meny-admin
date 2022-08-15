@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
+import 'package:meny_admin/src/domain/core/order_by.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -34,7 +35,12 @@ class ModifierGroupItemsCubit extends Cubit<ModifierGroupItemsState> {
 
   Future<void> load({required String modifierGroupId}) async {
     final storeId = _storeCubit.state.store.id!;
-    final menuItems = await _menuItemRepository.getAll(storeId: storeId).first;
+    final menuItems = await _menuItemRepository
+        .getAll(
+          storeId: storeId,
+          orderBy: OrderBy.fallback(),
+        )
+        .first;
 
     _subscription = _modifierGroupItemRepository
         .streamForModifierGroup(

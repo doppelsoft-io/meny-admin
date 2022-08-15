@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -642,7 +643,10 @@ class _CategorySelector extends StatelessWidget {
         final storeId = context.read<StoreCubit>().state.store.id!;
 
         return Locator.instance<CategoryRepository>()
-            .getAll(storeId: storeId)
+            .getAll(
+              storeId: storeId,
+              orderBy: const OrderBy('createdAt'),
+            )
             .first;
       },
       suggestionConfigurationBuilder: (_, category) => SuggestionConfiguration(
@@ -699,7 +703,9 @@ class _ModifierGroupSelector extends StatelessWidget {
         final storeId = context.read<StoreCubit>().state.store.id!;
 
         return Locator.instance<ModifierGroupRepository>()
-            .getAll(storeId: storeId)
+            .getAll(
+              storeId: storeId,
+            )
             .first;
       },
       suggestionConfigurationBuilder: (context, modifierGroup) {

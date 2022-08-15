@@ -3,8 +3,8 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
-import 'package:meny_admin/src/typedefs/typedefs.dart';
 import 'package:meny_core/meny_core.dart';
 
 part 'compiled_menu_state.dart';
@@ -49,7 +49,7 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
       final menuCategories = await _menuCategoryRepository.getForMenu(
         storeId: storeId,
         menuId: menu.id!,
-        orderBy: const OrderBy('position', false),
+        orderBy: const OrderBy('position'),
       );
       final categoryFutures = List.generate(
         menuCategories.length,

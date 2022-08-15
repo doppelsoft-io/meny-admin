@@ -35,8 +35,11 @@ class MenuItemModifierGroupsCubit extends Cubit<MenuItemModifierGroupsState> {
 
   Future<void> load({required String menuItemId}) async {
     final storeId = _storeCubit.state.store.id!;
-    final modifierGroups =
-        await _modifierGroupRepository.getAll(storeId: storeId).first;
+    final modifierGroups = await _modifierGroupRepository
+        .getAll(
+          storeId: storeId,
+        )
+        .first;
 
     _subscription = _menuItemModifierGroupRepository
         .streamForMenuItem(

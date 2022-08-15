@@ -6,6 +6,7 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -31,27 +32,49 @@ class MenuItemsCubit extends Cubit<MenuItemsState> {
     await super.close();
   }
 
-  Future<void> load({required String storeId}) async {
+  Future<void> load({
+    required String storeId,
+    OrderBy orderBy = const OrderBy(
+      'createdAt',
+      sortColumnIndex: 3,
+    ),
+  }) async {
+    emit(
+      _Loading(
+        items: state.items,
+        orderBy: orderBy,
+      ),
+    );
     _authCubit.state.maybeWhen(
-      authenticated: (_) {
-        _load(storeId: storeId);
+      initial: (_) {},
+      unauthenticated: (_) {},
+      orElse: () {
+        _load(
+          storeId: storeId,
+          orderBy: orderBy,
+        );
       },
-      anonymous: (_) {
-        _load(storeId: storeId);
-      },
-      orElse: () {},
     );
   }
 
-  Future<void> _load({required String storeId}) async {
+  Future<void> _load({
+    required String storeId,
+    required OrderBy orderBy,
+  }) async {
     await _subscription?.cancel();
     _subscription = _menuItemRepository
         .getAll(
       storeId: storeId,
+      orderBy: orderBy,
     )
         .listen(
       (items) {
-        emit(_Loaded(items: items));
+        emit(
+          _Loaded(
+            items: items,
+            orderBy: state.orderBy,
+          ),
+        );
       },
     )..onError(
         (error) {
@@ -59,6 +82,7 @@ class MenuItemsCubit extends Cubit<MenuItemsState> {
           emit(
             _Error(
               items: state.items,
+              orderBy: state.orderBy,
               exception: const CustomException(
                 message: 'Failed to load items',
               ),
@@ -67,4 +91,8 @@ class MenuItemsCubit extends Cubit<MenuItemsState> {
         },
       );
   }
+
+  // void sort([int Function(MenuItemModel, MenuItemModel)? compare]) {
+  //   emit(_Loaded(items: List<MenuItemModel>.from(state.items)..sort(compare)));
+  // }
 }

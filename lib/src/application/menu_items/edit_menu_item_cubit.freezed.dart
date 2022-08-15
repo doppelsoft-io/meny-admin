@@ -269,7 +269,7 @@ abstract class _Loading implements EditMenuItemState {
   const factory _Loading({required final MenuItemModel item}) = _$_Loading;
 
   @override
-  MenuItemModel get item => throw _privateConstructorUsedError;
+  MenuItemModel get item;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -426,7 +426,7 @@ abstract class _Loaded implements EditMenuItemState {
   const factory _Loaded({required final MenuItemModel item}) = _$_Loaded;
 
   @override
-  MenuItemModel get item => throw _privateConstructorUsedError;
+  MenuItemModel get item;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
@@ -585,7 +585,7 @@ abstract class _Updating implements EditMenuItemState {
   const factory _Updating({required final MenuItemModel item}) = _$_Updating;
 
   @override
-  MenuItemModel get item => throw _privateConstructorUsedError;
+  MenuItemModel get item;
   @override
   @JsonKey(ignore: true)
   _$$_UpdatingCopyWith<_$_Updating> get copyWith =>
@@ -743,7 +743,7 @@ abstract class _Success implements EditMenuItemState {
   const factory _Success({required final MenuItemModel item}) = _$_Success;
 
   @override
-  MenuItemModel get item => throw _privateConstructorUsedError;
+  MenuItemModel get item;
   @override
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
@@ -911,8 +911,8 @@ abstract class _Error implements EditMenuItemState {
       required final Exception exception}) = _$_Error;
 
   @override
-  MenuItemModel get item => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  MenuItemModel get item;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

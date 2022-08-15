@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -34,7 +35,12 @@ class CategoryMenuItemsCubit extends Cubit<CategoryMenuItemsState> {
 
   Future<void> load({required String menuItemId}) async {
     final storeId = _storeCubit.state.store.id!;
-    final categories = await _categoryRepository.getAll(storeId: storeId).first;
+    final categories = await _categoryRepository
+        .getAll(
+          storeId: storeId,
+          orderBy: const OrderBy('createdAt'),
+        )
+        .first;
 
     _subscription = _categoryMenuItemsRepository
         .streamForMenuItem(

@@ -12,6 +12,8 @@ class ResourceTable<T> extends StatelessWidget {
     required this.cellsBuilder,
     required this.onTapItem,
     required this.emptyMessage,
+    this.sortColumnIndex,
+    this.sortAscending = true,
   }) : super(key: key);
 
   final Widget header;
@@ -21,6 +23,8 @@ class ResourceTable<T> extends StatelessWidget {
   final List<DataCell> Function(BuildContext, T) cellsBuilder;
   final Function(BuildContext, T) onTapItem;
   final String emptyMessage;
+  final int? sortColumnIndex;
+  final bool sortAscending;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,8 @@ class ResourceTable<T> extends StatelessWidget {
         ),
         Expanded(
           child: DataTable2(
+            sortColumnIndex: sortColumnIndex,
+            sortAscending: sortAscending,
             empty: Container(
               alignment: Alignment.topLeft,
               child: Padding(

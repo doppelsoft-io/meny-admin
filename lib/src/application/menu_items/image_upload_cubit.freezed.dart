@@ -277,9 +277,9 @@ abstract class _Initial implements ImageUploadState {
       _$_Initial;
 
   @override
-  XFile get file => throw _privateConstructorUsedError;
+  XFile get file;
   @override
-  String get url => throw _privateConstructorUsedError;
+  String get url;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -444,9 +444,9 @@ abstract class _Picked implements ImageUploadState {
       {required final XFile file, required final String url}) = _$_Picked;
 
   @override
-  XFile get file => throw _privateConstructorUsedError;
+  XFile get file;
   @override
-  String get url => throw _privateConstructorUsedError;
+  String get url;
   @override
   @JsonKey(ignore: true)
   _$$_PickedCopyWith<_$_Picked> get copyWith =>
@@ -614,9 +614,9 @@ abstract class _Uploading implements ImageUploadState {
       {required final XFile file, required final String url}) = _$_Uploading;
 
   @override
-  XFile get file => throw _privateConstructorUsedError;
+  XFile get file;
   @override
-  String get url => throw _privateConstructorUsedError;
+  String get url;
   @override
   @JsonKey(ignore: true)
   _$$_UploadingCopyWith<_$_Uploading> get copyWith =>
@@ -784,9 +784,9 @@ abstract class _Uploaded implements ImageUploadState {
       {required final XFile file, required final String url}) = _$_Uploaded;
 
   @override
-  XFile get file => throw _privateConstructorUsedError;
+  XFile get file;
   @override
-  String get url => throw _privateConstructorUsedError;
+  String get url;
   @override
   @JsonKey(ignore: true)
   _$$_UploadedCopyWith<_$_Uploaded> get copyWith =>
@@ -963,10 +963,10 @@ abstract class _Error implements ImageUploadState {
       required final Exception exception}) = _$_Error;
 
   @override
-  XFile get file => throw _privateConstructorUsedError;
+  XFile get file;
   @override
-  String get url => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  String get url;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

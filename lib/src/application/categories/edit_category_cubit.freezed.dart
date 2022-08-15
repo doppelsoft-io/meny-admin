@@ -271,7 +271,7 @@ abstract class _Loading implements EditCategoryState {
   const factory _Loading({required final CategoryModel category}) = _$_Loading;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  CategoryModel get category;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -429,7 +429,7 @@ abstract class _Loaded implements EditCategoryState {
   const factory _Loaded({required final CategoryModel category}) = _$_Loaded;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  CategoryModel get category;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
@@ -590,7 +590,7 @@ abstract class _Updating implements EditCategoryState {
       _$_Updating;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  CategoryModel get category;
   @override
   @JsonKey(ignore: true)
   _$$_UpdatingCopyWith<_$_Updating> get copyWith =>
@@ -749,7 +749,7 @@ abstract class _Success implements EditCategoryState {
   const factory _Success({required final CategoryModel category}) = _$_Success;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  CategoryModel get category;
   @override
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
@@ -918,8 +918,8 @@ abstract class _Error implements EditCategoryState {
       required final Exception exception}) = _$_Error;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  CategoryModel get category;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

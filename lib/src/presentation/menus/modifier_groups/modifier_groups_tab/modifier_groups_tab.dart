@@ -7,6 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
@@ -57,17 +58,48 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
       },
       const [],
     );
+
+    void _sort(
+      int columnIndex,
+      bool descending,
+      String name,
+    ) {
+      final storeCubit = context.read<StoreCubit>();
+      final storeId = storeCubit.state.store.id;
+      context.read<ModifierGroupsCubit>().load(
+            storeId: storeId!,
+            orderBy: OrderBy(
+              name,
+              descending: !descending,
+              sortColumnIndex: columnIndex,
+            ),
+          );
+    }
+
     return modifierGroupsState.maybeWhen(
-      loading: (_) => const Center(child: CircularProgressIndicator()),
-      loaded: (groups) {
+      loading: (_, __) => const Center(child: CircularProgressIndicator()),
+      orElse: () {
+        final groups = modifierGroupsState.groups;
+        final orderBy = modifierGroupsState.orderBy;
         return ResourceTable<ModifierGroupModel>(
+          sortAscending: !orderBy.descending,
+          sortColumnIndex: orderBy.sortColumnIndex,
           header: const PageTitle(title: 'Modifier Groups'),
           action: const NewModifierGroupButton(),
           resources: groups,
-          columns: const [
+          columns: [
             DataColumn2(
-              label: Text('Name'),
+              label: const Text('Name'),
               size: ColumnSize.L,
+              onSort: (columnIndex, descending) =>
+                  _sort(columnIndex, descending, 'name'),
+            ),
+            DataColumn2(
+              label: const Text('Created'),
+              fixedWidth: 200,
+              size: ColumnSize.S,
+              onSort: (columnIndex, descending) =>
+                  _sort(columnIndex, descending, 'createdAt'),
             ),
           ],
           cellsBuilder: (_, group) {
@@ -84,6 +116,14 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                           ) ?? ''}',
                     ),
                   ],
+                ),
+              ),
+              DataCell(
+                Text(
+                  group.createdAt?.formatWith(
+                        'MM/dd/yy @ h:mm a',
+                      ) ??
+                      '',
                 ),
               ),
             ];
@@ -108,7 +148,6 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
           emptyMessage: '',
         );
       },
-      orElse: SizedBox.shrink,
     );
   }
 }

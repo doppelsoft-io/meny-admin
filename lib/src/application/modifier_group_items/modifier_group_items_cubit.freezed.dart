@@ -393,10 +393,9 @@ abstract class _Initial implements ModifierGroupItemsState {
       final List<ModifierGroupItemModel> modifierGroupItems}) = _$_Initial;
 
   @override
-  List<MenuItemModel> get items => throw _privateConstructorUsedError;
+  List<MenuItemModel> get items;
   @override
-  List<ModifierGroupItemModel> get modifierGroupItems =>
-      throw _privateConstructorUsedError;
+  List<ModifierGroupItemModel> get modifierGroupItems;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -627,10 +626,9 @@ abstract class _Adding implements ModifierGroupItemsState {
       _$_Adding;
 
   @override
-  List<MenuItemModel> get items => throw _privateConstructorUsedError;
+  List<MenuItemModel> get items;
   @override
-  List<ModifierGroupItemModel> get modifierGroupItems =>
-      throw _privateConstructorUsedError;
+  List<ModifierGroupItemModel> get modifierGroupItems;
   @override
   @JsonKey(ignore: true)
   _$$_AddingCopyWith<_$_Adding> get copyWith =>
@@ -863,10 +861,9 @@ abstract class _Removing implements ModifierGroupItemsState {
       _$_Removing;
 
   @override
-  List<MenuItemModel> get items => throw _privateConstructorUsedError;
+  List<MenuItemModel> get items;
   @override
-  List<ModifierGroupItemModel> get modifierGroupItems =>
-      throw _privateConstructorUsedError;
+  List<ModifierGroupItemModel> get modifierGroupItems;
   @override
   @JsonKey(ignore: true)
   _$$_RemovingCopyWith<_$_Removing> get copyWith =>
@@ -1099,10 +1096,9 @@ abstract class _Updating implements ModifierGroupItemsState {
       _$_Updating;
 
   @override
-  List<MenuItemModel> get items => throw _privateConstructorUsedError;
+  List<MenuItemModel> get items;
   @override
-  List<ModifierGroupItemModel> get modifierGroupItems =>
-      throw _privateConstructorUsedError;
+  List<ModifierGroupItemModel> get modifierGroupItems;
   @override
   @JsonKey(ignore: true)
   _$$_UpdatingCopyWith<_$_Updating> get copyWith =>
@@ -1334,10 +1330,9 @@ abstract class _Success implements ModifierGroupItemsState {
       _$_Success;
 
   @override
-  List<MenuItemModel> get items => throw _privateConstructorUsedError;
+  List<MenuItemModel> get items;
   @override
-  List<ModifierGroupItemModel> get modifierGroupItems =>
-      throw _privateConstructorUsedError;
+  List<ModifierGroupItemModel> get modifierGroupItems;
   @override
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
@@ -1580,11 +1575,10 @@ abstract class _Error implements ModifierGroupItemsState {
       required final Exception exception}) = _$_Error;
 
   @override
-  List<MenuItemModel> get items => throw _privateConstructorUsedError;
+  List<MenuItemModel> get items;
   @override
-  List<ModifierGroupItemModel> get modifierGroupItems =>
-      throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  List<ModifierGroupItemModel> get modifierGroupItems;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

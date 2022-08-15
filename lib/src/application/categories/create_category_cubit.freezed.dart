@@ -259,7 +259,7 @@ abstract class _Initial implements CreateCategoryState {
   const factory _Initial({required final CategoryModel category}) = _$_Initial;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  CategoryModel get category;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -414,7 +414,7 @@ abstract class _Creating implements CreateCategoryState {
       _$_Creating;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  CategoryModel get category;
   @override
   @JsonKey(ignore: true)
   _$$_CreatingCopyWith<_$_Creating> get copyWith =>
@@ -567,7 +567,7 @@ abstract class _Created implements CreateCategoryState {
   const factory _Created({required final CategoryModel category}) = _$_Created;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
+  CategoryModel get category;
   @override
   @JsonKey(ignore: true)
   _$$_CreatedCopyWith<_$_Created> get copyWith =>
@@ -731,8 +731,8 @@ abstract class _Error implements CreateCategoryState {
       required final Exception exception}) = _$_Error;
 
   @override
-  CategoryModel get category => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  CategoryModel get category;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

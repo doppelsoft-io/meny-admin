@@ -280,7 +280,7 @@ abstract class _Initial implements EditMenuState {
   const factory _Initial({required final MenuModel menu}) = _$_Initial;
 
   @override
-  MenuModel get menu => throw _privateConstructorUsedError;
+  MenuModel get menu;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -443,7 +443,7 @@ abstract class _Loading implements EditMenuState {
   const factory _Loading({required final MenuModel menu}) = _$_Loading;
 
   @override
-  MenuModel get menu => throw _privateConstructorUsedError;
+  MenuModel get menu;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -605,7 +605,7 @@ abstract class _Loaded implements EditMenuState {
   const factory _Loaded({required final MenuModel menu}) = _$_Loaded;
 
   @override
-  MenuModel get menu => throw _privateConstructorUsedError;
+  MenuModel get menu;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
@@ -769,7 +769,7 @@ abstract class _Updating implements EditMenuState {
   const factory _Updating({required final MenuModel menu}) = _$_Updating;
 
   @override
-  MenuModel get menu => throw _privateConstructorUsedError;
+  MenuModel get menu;
   @override
   @JsonKey(ignore: true)
   _$$_UpdatingCopyWith<_$_Updating> get copyWith =>
@@ -932,7 +932,7 @@ abstract class _Success implements EditMenuState {
   const factory _Success({required final MenuModel menu}) = _$_Success;
 
   @override
-  MenuModel get menu => throw _privateConstructorUsedError;
+  MenuModel get menu;
   @override
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
@@ -1105,8 +1105,8 @@ abstract class _Error implements EditMenuState {
       required final Exception exception}) = _$_Error;
 
   @override
-  MenuModel get menu => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  MenuModel get menu;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

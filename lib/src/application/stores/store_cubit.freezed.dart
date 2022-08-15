@@ -242,7 +242,7 @@ abstract class _Loading implements StoreState {
   const factory _Loading({required final StoreModel store}) = _$_Loading;
 
   @override
-  StoreModel get store => throw _privateConstructorUsedError;
+  StoreModel get store;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -385,7 +385,7 @@ abstract class _Loaded implements StoreState {
   const factory _Loaded({required final StoreModel store}) = _$_Loaded;
 
   @override
-  StoreModel get store => throw _privateConstructorUsedError;
+  StoreModel get store;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
@@ -540,8 +540,8 @@ abstract class _Error implements StoreState {
       required final Exception exception}) = _$_Error;
 
   @override
-  StoreModel get store => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  StoreModel get store;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

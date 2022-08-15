@@ -14,11 +14,11 @@ class PageTitle extends StatelessWidget {
     return ScreenTypeLayout(
       mobile: Text(
         title,
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headlineSmall,
       ),
       desktop: Text(
         title,
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.titleLarge,
       ),
     );
   }

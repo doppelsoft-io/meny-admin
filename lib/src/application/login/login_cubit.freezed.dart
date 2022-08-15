@@ -429,8 +429,7 @@ abstract class _Done implements LoginState {
   const factory _Done(
       {required final Either<CustomException, UserModel> result}) = _$_Done;
 
-  Either<CustomException, UserModel> get result =>
-      throw _privateConstructorUsedError;
+  Either<CustomException, UserModel> get result;
   @JsonKey(ignore: true)
   _$$_DoneCopyWith<_$_Done> get copyWith => throw _privateConstructorUsedError;
 }

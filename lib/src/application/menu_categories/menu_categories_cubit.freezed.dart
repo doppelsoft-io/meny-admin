@@ -353,10 +353,9 @@ abstract class _Initial implements MenuCategoriesState {
       final List<MenuModel> menus}) = _$_Initial;
 
   @override
-  List<MenuCategoryModel> get menuCategories =>
-      throw _privateConstructorUsedError;
+  List<MenuCategoryModel> get menuCategories;
   @override
-  List<MenuModel> get menus => throw _privateConstructorUsedError;
+  List<MenuModel> get menus;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
@@ -566,10 +565,9 @@ abstract class _Adding implements MenuCategoriesState {
       required final List<MenuModel> menus}) = _$_Adding;
 
   @override
-  List<MenuCategoryModel> get menuCategories =>
-      throw _privateConstructorUsedError;
+  List<MenuCategoryModel> get menuCategories;
   @override
-  List<MenuModel> get menus => throw _privateConstructorUsedError;
+  List<MenuModel> get menus;
   @override
   @JsonKey(ignore: true)
   _$$_AddingCopyWith<_$_Adding> get copyWith =>
@@ -781,10 +779,9 @@ abstract class _Removing implements MenuCategoriesState {
       required final List<MenuModel> menus}) = _$_Removing;
 
   @override
-  List<MenuCategoryModel> get menuCategories =>
-      throw _privateConstructorUsedError;
+  List<MenuCategoryModel> get menuCategories;
   @override
-  List<MenuModel> get menus => throw _privateConstructorUsedError;
+  List<MenuModel> get menus;
   @override
   @JsonKey(ignore: true)
   _$$_RemovingCopyWith<_$_Removing> get copyWith =>
@@ -995,10 +992,9 @@ abstract class _Success implements MenuCategoriesState {
       required final List<MenuModel> menus}) = _$_Success;
 
   @override
-  List<MenuCategoryModel> get menuCategories =>
-      throw _privateConstructorUsedError;
+  List<MenuCategoryModel> get menuCategories;
   @override
-  List<MenuModel> get menus => throw _privateConstructorUsedError;
+  List<MenuModel> get menus;
   @override
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
@@ -1223,11 +1219,10 @@ abstract class _Error implements MenuCategoriesState {
       required final Exception exception}) = _$_Error;
 
   @override
-  List<MenuCategoryModel> get menuCategories =>
-      throw _privateConstructorUsedError;
+  List<MenuCategoryModel> get menuCategories;
   @override
-  List<MenuModel> get menus => throw _privateConstructorUsedError;
-  Exception get exception => throw _privateConstructorUsedError;
+  List<MenuModel> get menus;
+  Exception get exception;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
