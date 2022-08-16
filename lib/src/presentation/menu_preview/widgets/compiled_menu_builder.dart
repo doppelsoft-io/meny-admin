@@ -97,7 +97,10 @@ class _CompiledMenuBuilder extends StatelessWidget {
               ],
               child: ReorderableListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(DSSpacing.medium),
+                padding: const EdgeInsets.symmetric(
+                  vertical: DSSpacing.medium,
+                  horizontal: DSSpacing.medium,
+                ),
                 shrinkWrap: true,
                 onReorder: (oldIndex, newIndex) {
                   if (oldIndex < newIndex) {
@@ -128,14 +131,9 @@ class _CompiledMenuBuilder extends StatelessWidget {
                           children: <Widget>[
                             MouseRegion(
                               cursor: SystemMouseCursors.click,
-                              child: Container(
-                                width: kMinInteractiveDimension,
-                                height: kMinInteractiveDimension,
-                                padding: const EdgeInsets.all(8),
-                                child: ReorderableDragStartListener(
-                                  index: categoryIndex,
-                                  child: const Icon(Icons.menu),
-                                ),
+                              child: ReorderableDragStartListener(
+                                index: categoryIndex,
+                                child: const Icon(Icons.menu, size: 28),
                               ),
                             ),
                             const SizedBox(width: DSSpacing.medium),
@@ -146,26 +144,28 @@ class _CompiledMenuBuilder extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           buildDefaultDragHandles: false,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: DSSpacing.large,
+                          ),
                           itemCount: items.length,
                           itemBuilder: (context, itemIndex) {
                             final item = items[itemIndex];
                             return Container(
                               key: Key(item.id),
                               padding: const EdgeInsets.symmetric(
-                                horizontal: kMinInteractiveDimension,
                                 vertical: DSSpacing.medium,
+                                horizontal: DSSpacing.small,
                               ),
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   MouseRegion(
                                     cursor: SystemMouseCursors.click,
-                                    child: Container(
-                                      width: kMinInteractiveDimension,
-                                      height: kMinInteractiveDimension,
-                                      padding: const EdgeInsets.all(8),
-                                      child: ReorderableDragStartListener(
-                                        index: itemIndex,
-                                        child: const Icon(Icons.menu),
+                                    child: ReorderableDragStartListener(
+                                      index: itemIndex,
+                                      child: const Icon(
+                                        Icons.menu,
+                                        size: 28,
                                       ),
                                     ),
                                   ),
@@ -191,6 +191,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                       ],
                                     ),
                                   ),
+                                  const SizedBox(width: DSSpacing.medium),
                                   if (item.imageUrl != null &&
                                       item.imageUrl!.isNotEmpty)
                                     DSImageUploadCard(
