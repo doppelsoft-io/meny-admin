@@ -375,12 +375,12 @@ class _ItemForm extends HookWidget {
                       controller: params.priceController,
                     ),
                   ),
-                  PageSection(
-                    title: 'Tax Rate',
-                    child: MenuItemTaxInfoField(
-                      controller: params.taxRateController,
-                    ),
-                  ),
+                  // PageSection(
+                  //   title: 'Tax Rate',
+                  //   child: MenuItemTaxInfoField(
+                  //     controller: params.taxRateController,
+                  //   ),
+                  // ),
                   const _SuspensionRules(),
                   PageSection(
                     title: 'Categories',
