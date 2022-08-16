@@ -11,6 +11,7 @@ import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 
 class MenuItemsTab extends StatelessWidget {
   const MenuItemsTab({Key? key}) : super(key: key);
@@ -64,6 +65,26 @@ class _MenusScreenItemsTab extends HookWidget {
           );
     }
 
+    void _onTapItem(BuildContext context, MenuItemModel item) {
+      ActionService.run(
+        () {
+          GoRouter.of(context).pushNamed(
+            EditMenuItemScreen.routeName,
+            params: {
+              'id': item.id!,
+            },
+          );
+        },
+        () => AnalyticsService.track(
+          message: Analytics.itemsTabItemSelected,
+          params: {
+            'itemId': item.id!,
+            'itemName': item.name,
+          },
+        ),
+      );
+    }
+
     return MultiBlocListener(
       listeners: [
         BlocListener<StoreCubit, StoreState>(
@@ -77,30 +98,52 @@ class _MenusScreenItemsTab extends HookWidget {
       ],
       child: menuItemsState.maybeWhen(
         orElse: () {
+          final isMobile = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
           final items = menuItemsState.items;
           final orderBy = menuItemsState.orderBy;
+          const action = NewMenuItemButton();
+          const header = PageTitle(title: 'Items');
+          const emptyMessage =
+              'No items yet. Click "New" above to get started!';
 
-          return Column(
+          return Stack(
             children: [
-              Visibility(
-                maintainAnimation: true,
-                maintainInteractivity: true,
-                maintainSemantics: true,
-                maintainSize: true,
-                maintainState: true,
-                visible: menuItemsState.maybeWhen(
-                  loading: (_, __) => true,
-                  orElse: () => false,
+              if (isMobile) ...[
+                ResourceList<MenuItemModel>(
+                  header: header,
+                  action: action,
+                  resources: items,
+                  emptyMessage: emptyMessage,
+                  onTapItem: _onTapItem,
+                  itemBuilder: (_, item) {
+                    return ListTile(
+                      onTap: () {
+                        _onTapItem(context, item);
+                      },
+                      leading: DSImageUploadCard(
+                        theme: DSImageUploadCardThemeData.thumbnail(),
+                        url: item.imageUrl ?? '',
+                      ),
+                      title: Text(item.name),
+                      trailing: Text((item.priceInfo.price / 100).toCurrency()),
+                      subtitle: Text(
+                        'Updated: ${item.updatedAt?.formatWith(
+                              'MM/dd/yy @ h:mm a',
+                            ) ?? ''}',
+                      ),
+                      isThreeLine: true,
+                    );
+                  },
                 ),
-                child: const LinearProgressIndicator(),
-              ),
-              Expanded(
-                child: ResourceTable<MenuItemModel>(
-                  header: const PageTitle(title: 'Items'),
-                  action: const NewMenuItemButton(),
+              ] else ...[
+                ResourceTable<MenuItemModel>(
+                  header: header,
+                  action: action,
                   resources: items,
                   sortColumnIndex: orderBy.sortColumnIndex,
                   sortAscending: !orderBy.descending,
+                  onTapItem: _onTapItem,
+                  emptyMessage: emptyMessage,
                   columns: [
                     const DataColumn2(
                       label: Text('Photo'),
@@ -115,8 +158,11 @@ class _MenusScreenItemsTab extends HookWidget {
                     DataColumn2(
                       label: const Text('Price'),
                       fixedWidth: 125,
-                      onSort: (columnIndex, descending) =>
-                          _sort(columnIndex, descending, 'priceInfo.price'),
+                      onSort: (columnIndex, descending) => _sort(
+                        columnIndex,
+                        descending,
+                        'priceInfo.price',
+                      ),
                       numeric: true,
                     ),
                     DataColumn2(
@@ -162,29 +208,20 @@ class _MenusScreenItemsTab extends HookWidget {
                       ),
                     ];
                   },
-                  onTapItem: (_, item) {
-                    ActionService.run(
-                      () {
-                        GoRouter.of(context).pushNamed(
-                          EditMenuItemScreen.routeName,
-                          params: {
-                            'id': item.id!,
-                          },
-                        );
-                      },
-                      () => AnalyticsService.track(
-                        message: Analytics.ingredientsTabIngredientSelected,
-                        params: {
-                          'itemId': item.id!,
-                          'itemName': item.name,
-                        },
-                      ),
-                    );
-                  },
-                  emptyMessage:
-                      'No items yet. Click "New" above to get started!',
                 ),
-              ),
+              ],
+              Visibility(
+                maintainAnimation: true,
+                maintainInteractivity: true,
+                maintainSemantics: true,
+                maintainSize: true,
+                maintainState: true,
+                visible: menuItemsState.maybeWhen(
+                  loading: (_, __) => true,
+                  orElse: () => false,
+                ),
+                child: const LinearProgressIndicator(),
+              )
             ],
           );
         },

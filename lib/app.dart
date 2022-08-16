@@ -30,33 +30,21 @@ class App extends StatelessWidget {
       GoRoute(
         name: SplashScreen.routeName,
         path: '/${SplashScreen.routeName}',
-        builder: (context, state) {
-          return const SplashScreen();
-        },
+        builder: (_, state) => const SplashScreen(),
       ),
       GoRoute(
         name: LoginScreen.routeName,
         path: '/${LoginScreen.routeName}',
-        builder: (context, state) {
-          return const LoginScreen();
-        },
-        // redirect: (state) {
-        //   //
-        //   return (authCubit.state.user.id ?? '').isNotEmpty ? '/' : null;
-        // },
+        builder: (_, state) => const LoginScreen(),
       ),
       GoRoute(
         name: SignupScreen.routeName,
         path: '/${SignupScreen.routeName}',
-        builder: (context, state) {
-          return const SignupScreen();
-        },
+        builder: (_, state) => const SignupScreen(),
       ),
       GoRoute(
         path: '/',
-        builder: (context, state) {
-          return const AppScreen();
-        },
+        builder: (_, state) => const AppScreen(),
         routes: [
           GoRoute(
             name: CreateMenuScreen.routeName,
@@ -153,7 +141,7 @@ class App extends StatelessWidget {
     refreshListenable: GoRouterRefreshStream(
       authCubit.stream,
     ),
-    errorBuilder: (context, state) => ErrorScreen(state.error!),
+    errorBuilder: (_, state) => ErrorScreen(state.error!),
   );
 
   @override

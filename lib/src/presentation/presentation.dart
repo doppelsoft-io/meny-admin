@@ -1,6 +1,7 @@
 export 'app/app_screen.dart';
 export 'core/loading_table.dart';
 export 'core/no_results_table.dart';
+export 'core/resource_list.dart';
 export 'core/resource_table.dart';
 export 'login/login_screen.dart';
 export 'menu_preview/menu_preview_screen.dart';

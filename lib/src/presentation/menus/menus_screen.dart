@@ -25,6 +25,7 @@ class MenusScreen extends StatelessWidget {
           centerTitle: false,
           automaticallyImplyLeading: false,
           flexibleSpace: TabBar(
+            enableFeedback: true,
             onTap: (index) => ActionService.run(
               () => null,
               () => AnalyticsService.track(
