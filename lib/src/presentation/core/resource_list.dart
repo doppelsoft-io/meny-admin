@@ -83,16 +83,13 @@ class ResourceList<T> extends StatelessWidget {
       },
       body: ListView.separated(
         shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(
-          vertical: DSSpacing.small,
-          horizontal: DSSpacing.medium,
-        ),
+        padding: EdgeInsets.zero,
         itemBuilder: (_, i) {
           final resource = resources[i];
           return itemBuilder(_, resource);
         },
         separatorBuilder: (_, i) {
-          return const Divider();
+          return const Divider(height: 0);
         },
         itemCount: resources.length,
       ),

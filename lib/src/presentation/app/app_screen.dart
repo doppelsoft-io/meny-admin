@@ -1,4 +1,5 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -83,9 +84,15 @@ class _ScreenContent extends StatelessWidget {
             final pages = tabs.map((e) => e.value4).toList();
             return ScreenTypeLayout(
               mobile: Scaffold(
-                appBar: const PreferredSize(
-                  preferredSize: Size.fromHeight(kToolbarHeight),
-                  child: AppHeader(),
+                appBar: PreferredSize(
+                  preferredSize: Size.fromHeight(
+                    getValueForScreenType<double>(
+                      context: context,
+                      mobile: kToolbarHeight,
+                      desktop: 76,
+                    ),
+                  ),
+                  child: const AppHeader(),
                 ),
                 body: pages[selectedIndex.value],
                 bottomNavigationBar: BottomNavigationBar(
@@ -159,9 +166,15 @@ class _DesktopLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(76),
-        child: AppHeader(),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(
+          getValueForScreenType<double>(
+            context: context,
+            mobile: kToolbarHeight,
+            desktop: 76,
+          ),
+        ),
+        child: const AppHeader(),
       ),
       body: Row(
         children: [
@@ -179,7 +192,10 @@ class _DesktopLayout extends StatelessWidget {
                   (tuple) => NavigationRailDestination(
                     icon: Icon(tuple.value1),
                     selectedIcon: Icon(tuple.value2),
-                    label: Text(tuple.value3),
+                    label: DSText(
+                      tuple.value3,
+                      theme: DSTextThemeData.titleMedium(),
+                    ),
                   ),
                 )
                 .toList(),

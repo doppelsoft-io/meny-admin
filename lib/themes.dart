@@ -7,13 +7,15 @@ class Themes {
 
   static Color primaryColor = Colors.green.shade400;
 
-  static TextTheme defaultTextTheme = _light.textTheme;
-  static TextTheme textTheme = GoogleFonts.balooTextTheme().copyWith(
-    bodyText1: GoogleFonts.hind(textStyle: defaultTextTheme.bodyText1),
-    bodyText2: GoogleFonts.hind(textStyle: defaultTextTheme.bodyText2),
-    caption: GoogleFonts.hind(textStyle: defaultTextTheme.caption),
-    overline: GoogleFonts.hind(textStyle: defaultTextTheme.overline),
-  );
+  // static TextTheme defaultTextTheme = _light.textTheme;
+  static TextTheme defaultTextTheme = GoogleFonts.baloo2TextTheme();
+  // static TextTheme defaultTextTheme = GoogleFonts.oxygenTextTheme();
+  // static TextTheme textTheme = GoogleFonts.balooTextTheme().copyWith(
+  //   bodyText1: GoogleFonts.hind(textStyle: defaultTextTheme.bodyText1),
+  //   bodyText2: GoogleFonts.hind(textStyle: defaultTextTheme.bodyText2),
+  //   caption: GoogleFonts.hind(textStyle: defaultTextTheme.caption),
+  //   overline: GoogleFonts.hind(textStyle: defaultTextTheme.overline),
+  // );
 
   static ColorScheme colorScheme = ColorScheme(
     primary: primaryColor,
@@ -32,7 +34,7 @@ class Themes {
   static final textFormFieldThemeData = DSTextFormFieldThemeData.fallback();
 
   static final DSTheme theme = DSTheme(
-    textTheme: textTheme,
+    textTheme: defaultTextTheme,
     colorScheme: colorScheme,
     checkboxThemeData: DSCheckboxThemeData.fallback().copyWith(
       contentPadding: EdgeInsets.zero,
@@ -42,7 +44,7 @@ class Themes {
       iconColor: Colors.black,
       cursorColor: colorScheme.primary,
       errorColor: colorScheme.error,
-      labelStyle: textTheme.bodyText1,
+      labelStyle: defaultTextTheme.bodyText1,
       border: textFormFieldThemeData.border!.copyWith(
         borderSide: BorderSide(
           color: primaryColor,
@@ -83,6 +85,11 @@ class Themes {
     indicatorColor: primaryColor,
     appBarTheme: _light.appBarTheme.copyWith(
       elevation: 1,
+      titleTextStyle: DSTextThemeData.headlineMedium().style.copyWith(
+            fontFamily: defaultTextTheme.bodyMedium!.fontFamily,
+          ),
+      // color: Colors.black,
+      iconTheme: const IconThemeData(color: Colors.black),
     ),
     listTileTheme: const ListTileThemeData(
       enableFeedback: true,
@@ -98,6 +105,9 @@ class Themes {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(2),
         ),
+        textStyle: defaultTextTheme.titleMedium!.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -107,6 +117,9 @@ class Themes {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(2),
         ),
+        textStyle: defaultTextTheme.titleMedium!.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
@@ -115,6 +128,11 @@ class Themes {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(2),
         ),
+        textStyle: defaultTextTheme.titleMedium!.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+        // DSTextThemeData.labelSmall().style.copyWith(
+        // ),
       ),
     ),
     cardTheme: const CardTheme(
@@ -131,7 +149,7 @@ class Themes {
         size: 16,
         color: primaryColor,
       ),
-      selectedLabelTextStyle: textTheme.headline5!.copyWith(
+      selectedLabelTextStyle: defaultTextTheme.headline5!.copyWith(
         color: primaryColor,
         fontSize: 16,
       ),
@@ -139,7 +157,7 @@ class Themes {
         size: 16,
         color: Colors.grey[700],
       ),
-      unselectedLabelTextStyle: textTheme.headline5!.copyWith(
+      unselectedLabelTextStyle: defaultTextTheme.headline5!.copyWith(
         color: Colors.grey[700],
         fontSize: 16,
       ),
@@ -153,7 +171,7 @@ class Themes {
         color: primaryColor,
       ),
       selectedItemColor: primaryColor,
-      selectedLabelStyle: textTheme.headline5!.copyWith(
+      selectedLabelStyle: defaultTextTheme.headline5!.copyWith(
         color: primaryColor,
         fontSize: 16,
       ),
@@ -161,7 +179,7 @@ class Themes {
         size: 16,
         color: Colors.grey[700],
       ),
-      unselectedLabelStyle: textTheme.headline5!.copyWith(
+      unselectedLabelStyle: defaultTextTheme.headline5!.copyWith(
         color: Colors.grey[700],
         fontSize: 16,
       ),
@@ -176,7 +194,7 @@ class Themes {
       thumbColor: MaterialStateProperty.all(primaryColor),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     ),
-    textTheme: textTheme,
+    textTheme: defaultTextTheme,
     tabBarTheme: TabBarTheme(
       labelColor: Colors.black,
       labelStyle: secondaryTextStyle.copyWith(fontWeight: FontWeight.w700),

@@ -18,7 +18,7 @@ class NoResultsTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return DSTable(
       args: DSTableArgs(
-        header: DSText.headline5(headline),
+        header: DSText(headline),
         actions: actions,
         columns: [
           DSTableHeader(name: title),
@@ -28,7 +28,7 @@ class NoResultsTable extends StatelessWidget {
             DSTableRow(
               cells: [
                 DSTableCell(
-                  builder: () => DSText.bodyText1(message),
+                  builder: () => DSText(message),
                 ),
               ],
             ),

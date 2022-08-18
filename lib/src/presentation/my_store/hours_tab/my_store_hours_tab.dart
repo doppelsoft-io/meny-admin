@@ -31,7 +31,7 @@ class _MyStoreHoursTab extends HookWidget {
               children: [
                 Row(
                   children: [
-                    DSText.headline5('Store Hours'),
+                    const PageTitle(title: 'Store Hours'),
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {},

@@ -244,11 +244,9 @@ class _ItemForm extends HookWidget {
             elevation: 0,
             iconTheme: const IconThemeData(color: Colors.black),
             backgroundColor: Colors.white,
-            title: const Text(
+            title: DSText(
               'Edit Item',
-              style: TextStyle(
-                color: Colors.black,
-              ),
+              theme: DSTextThemeData.headlineSmall(),
             ),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(8),
@@ -303,17 +301,29 @@ class _ItemForm extends HookWidget {
                         context: context,
                         builder: (_) {
                           return SimpleDialog(
-                            title: DSText.headline6(
+                            title: DSText(
                               'Sell as a stand-alone item?',
+                              theme: DSTextThemeData.custom(
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall!,
+                              ),
                             ),
                             contentPadding: const EdgeInsets.all(24),
                             children: [
-                              DSText.bodyText1(
+                              DSText(
                                 'This determines whether this menu item should appear to customers as a sellable item by itself on the menu.',
+                                theme: DSTextThemeData.custom(
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium!,
+                                ),
                               ),
                               const SizedBox(height: 12),
-                              DSText.bodyText1(
+                              DSText(
                                 'If you are creating a menu item to be used in a modifier group, set this property to "No".',
+                                theme: DSTextThemeData.custom(
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium!,
+                                ),
                               ),
                             ],
                           );
@@ -652,10 +662,14 @@ class _CategorySelector extends StatelessWidget {
       suggestionConfigurationBuilder: (_, category) => SuggestionConfiguration(
         title: category.name,
       ),
-      emptyBuilder: (context) => DSText.bodyText1(
-        'No categories to select.',
-        textAlign: TextAlign.center,
-      ),
+      emptyBuilder: (context) {
+        return DSText(
+          'No categories to select.',
+          theme: DSTextThemeData.custom(
+            style: Theme.of(context).textTheme.bodySmall!,
+          ),
+        );
+      },
       onSelect: (_, category) {
         context.read<CategoryMenuItemsCubit>().createCategoryMenuItem(
               category: category,
@@ -732,9 +746,11 @@ class _ModifierGroupSelector extends StatelessWidget {
             );
       },
       emptyBuilder: (_) {
-        return DSText.bodyText1(
+        return DSText(
           'No modifier groups',
-          textAlign: TextAlign.center,
+          theme: DSTextThemeData.custom(
+            style: Theme.of(context).textTheme.bodySmall!,
+          ),
         );
       },
       textFieldConfiguration: const TextFieldConfiguration(
@@ -811,7 +827,10 @@ class _DietaryLabels extends StatelessWidget {
                     backgroundColor: isSelected
                         ? colorScheme.primary
                         : colorScheme.onBackground,
-                    label: Text(e.stringify()),
+                    label: DSText(
+                      e.stringify(),
+                      theme: DSTextThemeData.labelLarge(),
+                    ),
                     avatar: Icon(
                       _getIcon(e),
                       color: isSelected ? colorScheme.onPrimary : Colors.black,

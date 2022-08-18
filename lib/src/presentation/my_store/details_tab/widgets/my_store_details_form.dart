@@ -56,7 +56,10 @@ class _MyStoreDetailsForm extends HookWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DSText.subtitle1('Name'),
+          DSText(
+            'Name',
+            theme: DSTextThemeData.labelLarge(),
+          ),
           DSVerticalSpacing.smallest(),
           DSTextFormField(
             theme: Themes.theme.textFormFieldThemeData,

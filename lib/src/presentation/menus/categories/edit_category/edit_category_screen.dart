@@ -145,11 +145,9 @@ class _EditCategoryScreen extends HookWidget {
                       elevation: 0,
                       iconTheme: const IconThemeData(color: Colors.black),
                       backgroundColor: Colors.white,
-                      title: const Text(
+                      title: DSText(
                         'Edit Category',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
+                        theme: DSTextThemeData.headlineSmall(),
                       ),
                       bottom: PreferredSize(
                         preferredSize: const Size.fromHeight(8),
@@ -200,85 +198,88 @@ class _EditCategoryScreen extends HookWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            DSText.subtitle1('Name'),
-                            DSVerticalSpacing.smallest(),
-                            DSTextFormField(
-                              theme: Themes.theme.textFormFieldThemeData,
-                              args: DSTextFormFieldArgs(
-                                controller: controller,
-                                autofocus: true,
-                                decoration: const InputDecoration(
-                                  hintText: 'Enter a name',
+                            PageSection(
+                              title: 'Name',
+                              child: DSTextFormField(
+                                theme: Themes.theme.textFormFieldThemeData,
+                                args: DSTextFormFieldArgs(
+                                  controller: controller,
+                                  autofocus: true,
+                                  decoration: const InputDecoration(
+                                    hintText: 'Enter a name',
+                                  ),
+                                  validator: (value) =>
+                                      FormValidatorHelper.validateExists(
+                                    value,
+                                    message:
+                                        'Please enter a name for your category',
+                                  ),
+                                  onFieldSubmitted: (text) {
+                                    final isValid = EditCategoryScreen
+                                        ._formKey.currentState!
+                                        .validate();
+                                    if (!isValid) return;
+                                    context.read<EditCategoryCubit>().update(
+                                          editCategoryState.category.copyWith(
+                                            name: controller.text,
+                                            updatedAt: DateTime.now(),
+                                          ),
+                                        );
+                                  },
                                 ),
-                                validator: (value) =>
-                                    FormValidatorHelper.validateExists(
-                                  value,
-                                  message:
-                                      'Please enter a name for your category',
-                                ),
-                                onFieldSubmitted: (text) {
-                                  final isValid = EditCategoryScreen
-                                      ._formKey.currentState!
-                                      .validate();
-                                  if (!isValid) return;
-                                  context.read<EditCategoryCubit>().update(
-                                        editCategoryState.category.copyWith(
-                                          name: controller.text,
-                                          updatedAt: DateTime.now(),
-                                        ),
-                                      );
-                                },
                               ),
                             ),
-                            DSVerticalSpacing.large(),
-                            DSText.subtitle1('Add to menu'),
-                            DSVerticalSpacing.smallest(),
-                            TagSelector<MenuModel>(
-                              title: 'Select a menu',
-                              context: context,
-                              initialItems: menuCategoriesState.menus,
-                              fetchSuggestions: () async {
-                                final storeId =
-                                    context.read<StoreCubit>().state.store.id!;
-                                return Locator.instance<MenuRepository>()
-                                    .getAll(
-                                      storeId: storeId,
-                                      orderBy: const OrderBy('createdAt'),
-                                    )
-                                    .first;
-                              },
-                              suggestionConfigurationBuilder: (_, menu) =>
-                                  SuggestionConfiguration(
-                                title: menu.name,
-                              ),
-                              emptyBuilder: (context) {
-                                return DSText.bodyText1(
-                                  'No menus to select',
-                                  textAlign: TextAlign.center,
-                                );
-                              },
-                              onSelect: (_, menu) => context
-                                  .read<MenuCategoriesCubit>()
-                                  .createMenuCategory(
-                                    menu: menu,
-                                    category: editCategoryState.category,
-                                  ),
-                              onRemove: (_, menu) => context
-                                  .read<MenuCategoriesCubit>()
-                                  .removeMenuCategory(
-                                    menu: menu,
-                                    category: editCategoryState.category,
-                                  ),
-                              tagConfigurationBuilder: (_, menu) {
-                                return TagConfiguration(
+                            PageSection(
+                              title: 'Add to menu',
+                              child: TagSelector<MenuModel>(
+                                title: 'Select a menu',
+                                context: context,
+                                initialItems: menuCategoriesState.menus,
+                                fetchSuggestions: () async {
+                                  final storeId = context
+                                      .read<StoreCubit>()
+                                      .state
+                                      .store
+                                      .id!;
+                                  return Locator.instance<MenuRepository>()
+                                      .getAll(
+                                        storeId: storeId,
+                                        orderBy: const OrderBy('createdAt'),
+                                      )
+                                      .first;
+                                },
+                                suggestionConfigurationBuilder: (_, menu) =>
+                                    SuggestionConfiguration(
                                   title: menu.name,
-                                  removable: true,
-                                );
-                              },
-                              textFieldConfiguration:
-                                  const TextFieldConfiguration(
-                                decoration: InputDecoration(
-                                  hintText: 'Add to menu',
+                                ),
+                                emptyBuilder: (context) {
+                                  return const DSText(
+                                    'No menus to select',
+                                  );
+                                },
+                                onSelect: (_, menu) => context
+                                    .read<MenuCategoriesCubit>()
+                                    .createMenuCategory(
+                                      menu: menu,
+                                      category: editCategoryState.category,
+                                    ),
+                                onRemove: (_, menu) => context
+                                    .read<MenuCategoriesCubit>()
+                                    .removeMenuCategory(
+                                      menu: menu,
+                                      category: editCategoryState.category,
+                                    ),
+                                tagConfigurationBuilder: (_, menu) {
+                                  return TagConfiguration(
+                                    title: menu.name,
+                                    removable: true,
+                                  );
+                                },
+                                textFieldConfiguration:
+                                    const TextFieldConfiguration(
+                                  decoration: InputDecoration(
+                                    hintText: 'Add to menu',
+                                  ),
                                 ),
                               ),
                             ),

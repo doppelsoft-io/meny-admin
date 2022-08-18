@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
@@ -11,14 +13,38 @@ part 'edit_modifier_group_cubit.freezed.dart';
 class EditModifierGroupCubit extends Cubit<EditModifierGroupState> {
   EditModifierGroupCubit({
     required StoreCubit storeCubit,
+    required String modifierGroupId,
     ModifierGroupRepository? modifierGroupRepository,
   })  : _storeCubit = storeCubit,
+        _modifierGroupId = modifierGroupId,
         _modifierGroupRepository =
             modifierGroupRepository ?? Locator.instance(),
-        super(_Loading(group: ModifierGroupModel.empty()));
+        super(_Loading(group: ModifierGroupModel.empty())) {
+    _subscription?.cancel();
+
+    /// If store already loaded (when already in app)
+    _storeCubit.state.maybeWhen(
+      loaded: (store) {
+        loadItem(id: _modifierGroupId);
+      },
+      orElse: () {
+        /// Otherwise, listen to store stream (reloads page)
+        _subscription = _storeCubit.stream.listen((state) {
+          state.maybeWhen(
+            loaded: (store) {
+              loadItem(id: _modifierGroupId);
+            },
+            orElse: () {},
+          );
+        });
+      },
+    );
+  }
 
   final StoreCubit _storeCubit;
+  final String _modifierGroupId;
   final ModifierGroupRepository _modifierGroupRepository;
+  StreamSubscription<StoreState>? _subscription;
 
   Future<void> loadItem({required String id}) async {
     try {

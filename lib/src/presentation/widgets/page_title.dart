@@ -1,3 +1,4 @@
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
@@ -12,13 +13,9 @@ class PageTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout(
-      mobile: Text(
+      mobile: DSText(
         title,
-        style: Theme.of(context).textTheme.headlineSmall,
-      ),
-      desktop: Text(
-        title,
-        style: Theme.of(context).textTheme.titleLarge,
+        theme: DSTextThemeData.titleLarge(),
       ),
     );
   }

@@ -56,12 +56,9 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 12),
-                DSText.headline3(
+                DSText(
                   title,
-                  styleOverrides: const TextStyle(
-                    color: Colors.black,
-                    height: .9,
-                  ),
+                  theme: DSTextThemeData.headlineLarge(),
                 ),
                 TextButton.icon(
                   style: TextButton.styleFrom(
@@ -142,7 +139,10 @@ class _MenuPreviewScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Menu Preview'),
+            title: DSText(
+              'Menu Preview',
+              theme: DSTextThemeData.headlineLarge(),
+            ),
           ),
           body: BlocListener<CompiledMenuCubit, CompiledMenuState>(
             listener: (context, state) {

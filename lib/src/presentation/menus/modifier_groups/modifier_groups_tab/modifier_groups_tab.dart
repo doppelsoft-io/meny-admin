@@ -116,6 +116,10 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                 onTapItem: _onTapItem,
                 itemBuilder: (_, group) {
                   return ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: DSSpacing.medium,
+                      vertical: DSSpacing.smallest,
+                    ),
                     onTap: () => _onTapItem(context, group),
                     title: Text(group.name),
                     subtitle: Text(
@@ -138,13 +142,19 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                 onTapItem: _onTapItem,
                 columns: [
                   DataColumn2(
-                    label: const Text('Name'),
+                    label: DSText(
+                      'NAME',
+                      theme: DSTextThemeData.labelSmall(),
+                    ),
                     size: ColumnSize.L,
                     onSort: (columnIndex, descending) =>
                         _sort(columnIndex, descending, 'name'),
                   ),
                   DataColumn2(
-                    label: const Text('Created'),
+                    label: DSText(
+                      'CREATED',
+                      theme: DSTextThemeData.labelSmall(),
+                    ),
                     fixedWidth: 200,
                     size: ColumnSize.S,
                     onSort: (columnIndex, descending) =>
@@ -158,21 +168,26 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(group.name),
-                          DSText.caption(
+                          DSText(
+                            group.name,
+                            theme: DSTextThemeData.labelLarge(),
+                          ),
+                          DSText(
                             'Last updated: ${group.updatedAt?.formatWith(
                                   'MM/dd/yy @ h:mm a',
                                 ) ?? ''}',
+                            theme: DSTextThemeData.bodySmall(),
                           ),
                         ],
                       ),
                     ),
                     DataCell(
-                      Text(
+                      DSText(
                         group.createdAt?.formatWith(
                               'MM/dd/yy @ h:mm a',
                             ) ??
                             '',
+                        theme: DSTextThemeData.bodyMedium(),
                       ),
                     ),
                   ];

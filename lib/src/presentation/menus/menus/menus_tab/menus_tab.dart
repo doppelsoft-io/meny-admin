@@ -11,7 +11,7 @@ import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
-import 'package:responsive_framework/responsive_framework.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 
 class MenusTab extends StatelessWidget {
   const MenusTab({Key? key}) : super(key: key);
@@ -102,12 +102,10 @@ class _MenusScreenMenusTab extends HookWidget {
           final isMobile = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
           final menus = menusState.menus;
           final orderBy = menusState.orderBy;
-
-          const action = NewMenuButton();
           const header = PageTitle(title: 'Menus');
+          const action = NewMenuButton();
           const emptyMessage =
               'No menus yet. Click "New" above to get started!';
-
           return Stack(
             children: [
               if (isMobile) ...[
@@ -115,40 +113,20 @@ class _MenusScreenMenusTab extends HookWidget {
                   header: header,
                   action: action,
                   resources: menus,
-                  onTapItem: _onTapItem,
                   emptyMessage: emptyMessage,
-                  itemBuilder: (_, menu) {
+                  onTapItem: _onTapItem,
+                  itemBuilder: (_, item) {
                     return ListTile(
-                      onTap: () {
-                        _onTapItem(context, menu);
-                      },
-                      title: Text(menu.name),
-                      trailing: TextButton(
-                        style: ButtonStyle(
-                          alignment: Alignment.center,
-                          padding: MaterialStateProperty.all(
-                            EdgeInsets.zero,
-                          ),
-                        ),
-                        child: const Text('Preview'),
-                        onPressed: () => ActionService.run(
-                          () => GoRouter.of(context).goNamed(
-                            MenuPreviewScreen.routeName,
-                            params: {
-                              'id': menu.id!,
-                            },
-                          ),
-                          () => AnalyticsService.track(
-                            message: Analytics.menusTabPreviewTapped,
-                            params: {
-                              'menuId': menu.id!,
-                              'menuName': menu.name,
-                            },
-                          ),
-                        ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: DSSpacing.medium,
+                        vertical: DSSpacing.smallest,
                       ),
+                      onTap: () {
+                        _onTapItem(context, item);
+                      },
+                      title: Text(item.name),
                       subtitle: Text(
-                        'Updated: ${menu.updatedAt?.formatWith(
+                        'Updated: ${item.updatedAt?.formatWith(
                               'MM/dd/yy @ h:mm a',
                             ) ?? ''}',
                       ),
@@ -163,17 +141,21 @@ class _MenusScreenMenusTab extends HookWidget {
                   header: header,
                   action: action,
                   resources: menus,
-                  emptyMessage: emptyMessage,
-                  onTapItem: _onTapItem,
                   columns: [
                     DataColumn2(
-                      label: const Text('Name'),
+                      label: DSText(
+                        'NAME',
+                        theme: DSTextThemeData.labelSmall(),
+                      ),
                       size: ColumnSize.L,
                       onSort: (columnIndex, descending) =>
                           _sort(columnIndex, descending, 'name'),
                     ),
                     DataColumn2(
-                      label: const Text('Created'),
+                      label: DSText(
+                        'CREATED',
+                        theme: DSTextThemeData.labelSmall(),
+                      ),
                       fixedWidth: 200,
                       size: ColumnSize.S,
                       onSort: (columnIndex, descending) =>
@@ -192,21 +174,26 @@ class _MenusScreenMenusTab extends HookWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(menu.name),
-                            DSText.caption(
+                            DSText(
+                              menu.name,
+                              theme: DSTextThemeData.labelLarge(),
+                            ),
+                            DSText(
                               'Last updated: ${menu.updatedAt?.formatWith(
                                     'MM/dd/yy @ h:mm a',
                                   ) ?? ''}',
+                              theme: DSTextThemeData.bodySmall(),
                             ),
                           ],
                         ),
                       ),
                       DataCell(
-                        Text(
+                        DSText(
                           menu.createdAt?.formatWith(
                                 'MM/dd/yy @ h:mm a',
                               ) ??
                               '',
+                          theme: DSTextThemeData.bodyMedium(),
                         ),
                       ),
                       DataCell(
@@ -236,6 +223,11 @@ class _MenusScreenMenusTab extends HookWidget {
                         ),
                       ),
                     ];
+                  },
+                  emptyMessage:
+                      'No menus yet. Click "New" above to get started!',
+                  onTapItem: (_, menu) {
+                    _onTapItem(context, menu);
                   },
                 ),
               ],

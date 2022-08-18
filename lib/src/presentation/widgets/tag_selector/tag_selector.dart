@@ -99,7 +99,10 @@ class TagSelector<T> extends HookWidget {
                   context: context,
                   pageBuilder: (_, anim, anim2) {
                     return DSModal(
-                      title: DSText.subtitle1(title ?? 'Select'),
+                      title: DSText(
+                        title ?? 'Select',
+                        theme: DSTextThemeData.titleMedium(),
+                      ),
                       child: FutureBuilder<List<T>>(
                         future: fetchSuggestions(),
                         builder: (context, snapshot) {
@@ -133,11 +136,9 @@ class TagSelector<T> extends HookWidget {
                                       onSelect(context, item);
                                       Navigator.of(context).pop();
                                     },
-                                    title: DSText.subtitle1(
+                                    title: DSText(
                                       config.title,
-                                      styleOverrides: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!,
+                                      theme: DSTextThemeData.bodyLarge(),
                                     ),
                                   );
                                 }

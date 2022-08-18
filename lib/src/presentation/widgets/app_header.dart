@@ -16,58 +16,40 @@ class AppHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final storeState = context.watch<StoreCubit>().state;
     final route = GoRouter.of(context).location;
     final onAuthScreens = route.contains(LoginScreen.routeName) ||
         route.contains(SignupScreen.routeName);
-    const defaultTitle = 'meny';
-
-    final title = storeState.maybeWhen(
-      loaded: (store) => onAuthScreens
-          ? defaultTitle
-          : store.name.isEmpty
-              ? defaultTitle
-              : store.name,
-      orElse: () => defaultTitle,
-    );
 
     return ScreenTypeLayout(
-      mobile: AppBar(
-        elevation: 1,
-        automaticallyImplyLeading: false,
-        title: GestureDetector(
-          onTap: () {
-            GoRouter.of(context).go('/');
-          },
-          child: Text(title),
-        ),
-        centerTitle: false,
-        actions: const [
-          Center(child: AuthActions()),
-        ],
-      ),
-      desktop: Material(
-        color: Themes.colorScheme.onPrimary,
+      mobile: Material(
+        color: Colors.white,
         elevation: 1,
         child: Container(
-          height: 76,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          decoration: const BoxDecoration(),
+          height: double.infinity,
+          padding: const EdgeInsets.symmetric(
+            horizontal: DSSpacing.medium,
+          ),
           child: Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  GoRouter.of(context).go('/');
-                },
-                child: DSText.headline4(
-                  title,
-                  styleOverrides: TextStyle(
-                    color: Themes.colorScheme.primary,
+              DSText(
+                getValueForScreenType(
+                  context: context,
+                  mobile: 'm',
+                  desktop: 'meny',
+                ),
+                theme: DSTextThemeData.custom(
+                  style: TextStyle(
+                    height: 1,
+                    fontSize: DSTextThemeData.displaySmall().style.fontSize,
+                    fontWeight: FontWeight.w900,
+                    color: Themes.primaryColor,
                   ),
                 ),
               ),
-              const Spacer(),
-              const AuthActions(),
+              if (!onAuthScreens) ...[
+                const Spacer(),
+                const Center(child: AuthActions()),
+              ],
             ],
           ),
         ),
@@ -106,11 +88,9 @@ class AuthActions extends HookWidget {
             onPressed: () {
               GoRouter.of(context).pushNamed(SignupScreen.routeName);
             },
-            child: DSText.subtitle1(
+            child: DSText(
               'Create an account',
-              styleOverrides: TextStyle(
-                color: Themes.colorScheme.primary,
-              ),
+              theme: DSTextThemeData.titleSmall(),
             ),
           ),
         );

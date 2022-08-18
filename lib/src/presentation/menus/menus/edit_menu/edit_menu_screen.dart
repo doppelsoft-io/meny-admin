@@ -92,11 +92,9 @@ class _EditMenuScreen extends HookWidget {
                       elevation: 0,
                       iconTheme: const IconThemeData(color: Colors.black),
                       backgroundColor: Colors.white,
-                      title: const Text(
+                      title: DSText(
                         'Edit Menu',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
+                        theme: DSTextThemeData.headlineSmall(),
                       ),
                       bottom: PreferredSize(
                         preferredSize: const Size.fromHeight(8),

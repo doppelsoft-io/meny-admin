@@ -96,6 +96,7 @@ class _SignupScreen extends HookWidget {
               getValueForScreenType<double>(
                 context: context,
                 mobile: kToolbarHeight,
+                tablet: 76,
                 desktop: 76,
               ),
             ),

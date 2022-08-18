@@ -117,6 +117,10 @@ class _MenusScreenItemsTab extends HookWidget {
                   onTapItem: _onTapItem,
                   itemBuilder: (_, item) {
                     return ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: DSSpacing.medium,
+                        vertical: DSSpacing.smallest,
+                      ),
                       onTap: () {
                         _onTapItem(context, item);
                       },
@@ -145,18 +149,27 @@ class _MenusScreenItemsTab extends HookWidget {
                   onTapItem: _onTapItem,
                   emptyMessage: emptyMessage,
                   columns: [
-                    const DataColumn2(
-                      label: Text('Photo'),
+                    DataColumn2(
+                      label: DSText(
+                        'PHOTO',
+                        theme: DSTextThemeData.labelSmall(),
+                      ),
                       fixedWidth: 75,
                     ),
                     DataColumn2(
-                      label: const Text('Name'),
+                      label: DSText(
+                        'NAME',
+                        theme: DSTextThemeData.labelSmall(),
+                      ),
                       size: ColumnSize.L,
                       onSort: (columnIndex, descending) =>
                           _sort(columnIndex, descending, 'name'),
                     ),
                     DataColumn2(
-                      label: const Text('Price'),
+                      label: DSText(
+                        'PRICE',
+                        theme: DSTextThemeData.labelSmall(),
+                      ),
                       fixedWidth: 125,
                       onSort: (columnIndex, descending) => _sort(
                         columnIndex,
@@ -166,7 +179,10 @@ class _MenusScreenItemsTab extends HookWidget {
                       numeric: true,
                     ),
                     DataColumn2(
-                      label: const Text('Created'),
+                      label: DSText(
+                        'CREATED',
+                        theme: DSTextThemeData.labelSmall(),
+                      ),
                       fixedWidth: 200,
                       size: ColumnSize.S,
                       onSort: (columnIndex, descending) =>
@@ -186,24 +202,32 @@ class _MenusScreenItemsTab extends HookWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            DSText.bodyText1(item.name),
-                            DSText.caption(
+                            DSText(
+                              item.name,
+                              theme: DSTextThemeData.labelLarge(),
+                            ),
+                            DSText(
                               'Updated: ${item.updatedAt?.formatWith(
                                     'MM/dd/yy @ h:mm a',
                                   ) ?? ''}',
+                              theme: DSTextThemeData.bodySmall(),
                             ),
                           ],
                         ),
                       ),
                       DataCell(
-                        Text((item.priceInfo.price / 100).toCurrency()),
+                        DSText(
+                          (item.priceInfo.price / 100).toCurrency(),
+                          theme: DSTextThemeData.bodyMedium(),
+                        ),
                       ),
                       DataCell(
-                        Text(
+                        DSText(
                           item.createdAt?.formatWith(
                                 'MM/dd/yy @ h:mm a',
                               ) ??
                               '',
+                          theme: DSTextThemeData.bodyMedium(),
                         ),
                       ),
                     ];

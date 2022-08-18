@@ -58,7 +58,7 @@ class _MyStoreDetailsTab extends HookWidget {
               children: [
                 Row(
                   children: [
-                    DSText.headline5('Store Details'),
+                    const PageTitle(title: 'Store Details'),
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {

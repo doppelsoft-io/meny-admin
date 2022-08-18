@@ -31,7 +31,7 @@ class _MyStoreLocationsTab extends HookWidget {
               children: [
                 Row(
                   children: [
-                    DSText.headline5('Store Locations'),
+                    const PageTitle(title: 'Store Locations'),
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {},

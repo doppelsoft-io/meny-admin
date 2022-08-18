@@ -137,7 +137,13 @@ class _CompiledMenuBuilder extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: DSSpacing.medium),
-                            DSText.headline5(category.name),
+                            DSText(
+                              category.name,
+                              theme: DSTextThemeData.custom(
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall!,
+                              ),
+                            ),
                           ],
                         ),
                         ReorderableListView.builder(
@@ -175,12 +181,24 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        DSText.subtitle1(item.name),
+                                        DSText(
+                                          item.name,
+                                          theme: DSTextThemeData.custom(
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge!,
+                                          ),
+                                        ),
                                         if (item.description != null &&
                                             item.description!.isNotEmpty) ...[
                                           const SizedBox(height: 2),
-                                          DSText.bodyText1(
+                                          DSText(
                                             item.description!,
+                                            theme: DSTextThemeData.custom(
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!,
+                                            ),
                                           ),
                                         ],
                                         const SizedBox(height: 6),
