@@ -16,9 +16,11 @@ dependencies:
   dartz: ^0.10.1
   data_table_2: ^2.3.6
   doppelsoft_core:
-    path: ../doppelsoft-core
+    git:
+      url: git@github.com:doppelsoft-io/doppelsoft-core.git
   doppelsoft_ui:
-    path: ../doppelsoft-ui
+    git:
+      url: git@github.com:doppelsoft-io/doppelsoft-ui.git
   equatable: ^2.0.3
   firebase_auth: ^3.3.17
   firebase_core: ^1.1.1
@@ -39,7 +41,8 @@ dependencies:
   json_annotation: null
   json_serializable: null
   meny_core:
-    path: ../meny-core
+    git:
+      url: git@github.com:doppelsoft-io/meny-core.git
   overlay_support: ^2.0.0
   qr_flutter: ^4.0.0
   responsive_builder: ^0.4.2
@@ -52,6 +55,16 @@ dev_dependencies:
   flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
+
+
+dependency_overrides:
+  doppelsoft_core:
+    path: ../doppelsoft-core
+  doppelsoft_ui:
+    path: ../doppelsoft-ui
+  meny_core:
+    path: ../meny-core
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
