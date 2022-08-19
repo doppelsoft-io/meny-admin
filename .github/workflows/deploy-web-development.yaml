@@ -9,7 +9,27 @@ jobs:
     name: Build Flutter Web
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Checkout Doppelsoft Core
+      uses: actions/checkout@v3
+      with:
+        repository: doppelsoft/doppelsoft-core
+        token: ${{ secrets.PRIVATE_REPO_PERSONAL_ACCESS_TOKEN }} # `GH_PAT` is a secret that contains your PAT
+        path: doppelsoft-core
+    - name: Checkout Doppelsoft UI
+      uses: actions/checkout@v3
+      with:
+        repository: doppelsoft/doppelsoft-ui
+        token: ${{ secrets.PRIVATE_REPO_PERSONAL_ACCESS_TOKEN }} # `GH_PAT` is a secret that contains your PAT
+        path: doppelsoft-ui
+    - name: Checkout Meny Core
+      uses: actions/checkout@v3
+      with:
+        repository: doppelsoft/meny-core
+        token: ${{ secrets.PRIVATE_REPO_PERSONAL_ACCESS_TOKEN }} # `GH_PAT` is a secret that contains your PAT
+        path: meny-core
+    path: my-tools
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
