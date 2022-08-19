@@ -256,16 +256,20 @@ packages:
   doppelsoft_core:
     dependency: "direct main"
     description:
-      path: "../doppelsoft-core"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: ad568a84cbadbcdc71bfae77f5a39588c5ae9755
+      url: "git@github.com:doppelsoft-io/doppelsoft-core.git"
+    source: git
     version: "0.0.1"
   doppelsoft_ui:
     dependency: "direct main"
     description:
-      path: "../doppelsoft-ui"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "09f029f1e4b456422d3708f2e878384fd437b39e"
+      url: "git@github.com:doppelsoft-io/doppelsoft-ui.git"
+    source: git
     version: "0.0.1"
   equatable:
     dependency: "direct main"
@@ -635,9 +639,11 @@ packages:
   meny_core:
     dependency: "direct main"
     description:
-      path: "../meny-core"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: cb95ab11fb7bafd65a278e433ee78f4b29b1952d
+      url: "git@github.com:doppelsoft-io/meny-core.git"
+    source: git
     version: "0.0.1"
   meta:
     dependency: transitive
