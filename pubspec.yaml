@@ -57,13 +57,13 @@ dev_dependencies:
     sdk: flutter
 
 
-dependency_overrides:
-  doppelsoft_core:
-    path: ../doppelsoft-core
-  doppelsoft_ui:
-    path: ../doppelsoft-ui
-  meny_core:
-    path: ../meny-core
+# dependency_overrides:
+#   doppelsoft_core:
+#     path: ../doppelsoft-core
+#   doppelsoft_ui:
+#     path: ../doppelsoft-ui
+#   meny_core:
+    # path: ../meny-core
 
 
 # For information on the generic Dart part of this file, see the
