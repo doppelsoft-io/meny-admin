@@ -1,0 +1,19 @@
+name: Deploy to Firebase Hosting (dev)
+
+on:
+  push:
+    branches: ["development"]
+
+  jobs:
+    build_web:
+      name: Build Flutter Web
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: 3.0.5
+      - run: flutter pub get
+      # - run: flutter test
+      - run: flutter build web --target lib/main_dev.dart --web-renderer canvaskit --release
