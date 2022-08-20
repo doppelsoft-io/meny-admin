@@ -1,5 +1,9 @@
 name: Deploy to Firebase Hosting (dev)
 
+env:
+  PROJECT_ID: meny-admin-development
+  TARGET_FILE: lib/main_development.dart
+
 on:
   push:
     branches: ["development"]
@@ -28,11 +32,11 @@ jobs:
         run: flutter pub get
       - run: flutter config --enable-web
       - name: Build web release
-        run: flutter build web --target lib/main_development.dart --web-renderer canvaskit --release
+        run: flutter build web --target ${{ env.TARGET_FILE }} --web-renderer canvaskit --release
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
           args: deploy --except functions
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_ID: meny-admin-development
+          PROJECT_ID: ${{ env.PROJECT_ID }}
