@@ -26,5 +26,13 @@ jobs:
           cache: true
       - name: run pub get
         run: flutter pub get
+      - run: flutter config --enable-web
       - name: Build web release
         run: flutter build web --target lib/main_development.dart --web-renderer canvaskit --release
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: meny-admin-development
