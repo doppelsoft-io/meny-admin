@@ -13,7 +13,7 @@ Future<void> main() async {
 
   if (UniversalPlatform.isWeb) configureUrl();
 
-  // final localhost = UniversalPlatform.isAndroid ? '10.0.2.2' : 'localhost';
+  final localhost = UniversalPlatform.isAndroid ? '10.0.2.2' : 'localhost';
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
