@@ -1,0 +1,42 @@
+name: Deploy to Firebase Hosting (dev)
+
+env:
+  PROJECT_ID: meny-admin-staging
+  TARGET_FILE: lib/main_staging.dart
+
+on:
+  push:
+    branches: ["staging"]
+
+jobs:
+  build_web:
+    name: Build Flutter Web
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: |
+            ${{ secrets.MENY_CORE_SSH_DEPLOY_KEY }}
+            ${{ secrets.DOPPELSOFT_CORE_SSH_DEPLOY_KEY }}
+            ${{ secrets.DOPPELSOFT_UI_SSH_DEPLOY_KEY }}
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.0.5
+          channel: 'stable'
+          cache: true
+      - name: run pub get
+        run: flutter pub get
+      - run: flutter config --enable-web
+      - name: Build web release
+        run: flutter build web --target ${{ env.TARGET_FILE }} --web-renderer canvaskit --release
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --except functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: ${{ env.PROJECT_ID }}
