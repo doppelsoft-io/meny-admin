@@ -45,6 +45,8 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: [
+            const BackButton(),
+            const SizedBox(width: DSSpacing.medium),
             QrImage(
               data: 'https://google.com',
               size: 74,
@@ -138,12 +140,6 @@ class _MenuPreviewScreen extends StatelessWidget {
     return BlocBuilder<CompiledMenuCubit, CompiledMenuState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            title: DSText(
-              'Menu Preview',
-              theme: DSTextThemeData.headlineLarge(),
-            ),
-          ),
           body: BlocListener<CompiledMenuCubit, CompiledMenuState>(
             listener: (context, state) {
               state.maybeWhen(
