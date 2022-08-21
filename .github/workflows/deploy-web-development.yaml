@@ -33,7 +33,8 @@ jobs:
       - name: Create .env
         run: |
           touch .env
-          echo FLAGSMITH_ENVIRONMENT_KEY=${{ secrets.FLAGSMITH_ENVIRONMENT_KEY_DEV }} >> .env
+          echo "TESTING HERE" >> .env
+          echo "FLAGSMITH_ENVIRONMENT_KEY=${{ secrets.FLAGSMITH_ENVIRONMENT_KEY_DEV }}" >> .env
           cat .env
       - name: Install Flutter
         uses: subosito/flutter-action@v2
