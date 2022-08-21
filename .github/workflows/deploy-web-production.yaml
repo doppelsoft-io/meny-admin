@@ -3,7 +3,7 @@ name: Deploy to Firebase Hosting (dev)
 env:
   PROJECT_ID: meny-admin-production
   TARGET_FILE: lib/main_production.dart
-  FLAGSHIP_API_KEY: ${{ secrets.FLAGSMITH_ENVIRONMENT_KEY_PROD }}
+  FLAGSMITH_API_KEY: ${{ secrets.FLAGSMITH_ENVIRONMENT_KEY_PROD }}
 
 on:
   push:
