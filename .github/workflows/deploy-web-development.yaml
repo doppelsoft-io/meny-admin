@@ -39,12 +39,12 @@ jobs:
       - name: run pub get
         run: flutter pub get
       - run: flutter config --enable-web
-      - name: Create .env
-        run: |
-          touch .env
-          echo "TESTING HERE" >> .env
-          echo "FLAGSMITH_ENVIRONMENT_KEY=${{ secrets.FLAGSMITH_ENVIRONMENT_KEY_DEV }}" >> .env
-          cat .env
+      # - name: Create .env
+      #   run: |
+      #     touch .env
+      #     echo "TESTING HERE" >> .env
+      #     echo "FLAGSMITH_ENVIRONMENT_KEY=${{ secrets.FLAGSMITH_ENVIRONMENT_KEY_DEV }}" >> .env
+      #     cat .env
       - name: Build web release
         run: flutter build web --target ${{ env.TARGET_FILE }} --web-renderer canvaskit --release
       - name: Deploy to Firebase
