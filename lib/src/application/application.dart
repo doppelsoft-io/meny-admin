@@ -8,6 +8,7 @@ export 'compiled_menus/compiled_category_cubit.dart';
 export 'compiled_menus/compiled_menu_cubit.dart';
 export 'compiled_menus/reorder_compiled_category_cubit.dart';
 export 'compiled_menus/reorder_compiled_menu_item_cubit.dart';
+export 'feature_flags/feature_flag_cubit.dart';
 export 'login/login_cubit.dart';
 export 'menu_categories/menu_categories_cubit.dart';
 export 'menu_item_modifier_groups/menu_item_modifier_groups_cubit.dart';

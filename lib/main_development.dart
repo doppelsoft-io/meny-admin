@@ -1,6 +1,7 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:meny_admin/app.dart';
 import 'package:meny_admin/firebase_options_dev.dart';
 import 'package:meny_admin/locator.dart';
@@ -12,6 +13,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (UniversalPlatform.isWeb) configureUrl();
+
+  await dotenv.load();
 
   // final localhost = UniversalPlatform.isAndroid ? '10.0.2.2' : 'localhost';
 
@@ -29,7 +32,7 @@ Future<void> main() async {
 
   // await FirebaseAuth.instance.useEmulator('http://localhost:9099');
 
-  await Locator.setup();
+  await Locator.setup(environment: AppEnvironment.development);
   await HiveService.configure();
 
   runApp(App(environment: AppEnvironment.development));
