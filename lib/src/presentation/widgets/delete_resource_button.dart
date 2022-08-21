@@ -1,14 +1,16 @@
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:meny_admin/themes.dart';
 
 class DeleteResourceButtonArgs {
   DeleteResourceButtonArgs({
     required this.onPressed,
     this.buttonStyle,
-    this.text = 'Delete',
+    this.text = 'DELETE',
     this.textStyle,
   });
 
-  final Function()? onPressed;
+  final void Function()? onPressed;
   final ButtonStyle? buttonStyle;
   final String text;
   final TextStyle? textStyle;
@@ -24,18 +26,13 @@ class DeleteResourceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final buttonStyle = args.buttonStyle ??
-        OutlinedButton.styleFrom(
-          primary: Colors.grey[100],
-        );
-
-    final textStyle =
-        args.textStyle ?? TextStyle(color: Theme.of(context).errorColor);
-
-    return OutlinedButton(
+    return DSButton(
+      theme: DSButtonThemeData.fallback().copyWith(
+        primary: Themes.colorScheme.error,
+      ),
       onPressed: args.onPressed,
-      style: buttonStyle,
-      child: Text(args.text, style: textStyle),
+      type: DSButtonType.outlined,
+      child: Text(args.text),
     );
   }
 }

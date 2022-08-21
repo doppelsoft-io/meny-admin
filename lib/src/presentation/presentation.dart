@@ -22,7 +22,6 @@ export 'menus/menu_items/menu_items_tab/widgets/new_menu_item_button.dart';
 export 'menus/menus/create_menu/create_menu_screen.dart';
 export 'menus/menus/edit_menu/edit_menu_screen.dart';
 export 'menus/menus/edit_menu/widgets/delete_menu_button.dart';
-export 'menus/menus/edit_menu/widgets/save_menu_button.dart';
 export 'menus/menus/menus_tab/menus_tab.dart';
 export 'menus/menus/menus_tab/widgets/new_menu_button.dart';
 export 'menus/menus_screen.dart';

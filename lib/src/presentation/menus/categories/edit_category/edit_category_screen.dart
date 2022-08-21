@@ -336,7 +336,7 @@ class _DeleteCategoryButton extends StatelessWidget {
         return DeleteResourceButton(
           args: DeleteResourceButtonArgs(
             onPressed: deleteCategoryState.maybeWhen(
-              deleting: () => null,
+              deleting: null,
               orElse: () => () async {
                 final value = await DSConfirmDialog.open<bool>(
                   context,

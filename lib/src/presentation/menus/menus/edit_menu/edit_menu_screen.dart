@@ -115,8 +115,16 @@ class _EditMenuScreen extends HookWidget {
                           onDelete: (_) async {
                             final result = await DSConfirmDialog.open<bool>(
                               context,
+                              theme: DSConfirmDialogThemeData.fallback()
+                                  .copyWith(),
                               args: DSConfirmDialogArgs(
                                 title: 'Delete ${editMenuState.menu.name}?',
+                                confirmArgs: DSConfirmDialogConfirmArgs(
+                                  text: 'DELETE',
+                                  theme: DSButtonThemeData.fallback().copyWith(
+                                    primary: Themes.colorScheme.error,
+                                  ),
+                                ),
                                 content: Text(
                                   'This will delete this menu. No categories or items will be affected.',
                                   style: Theme.of(context).textTheme.bodyText1,
@@ -132,21 +140,27 @@ class _EditMenuScreen extends HookWidget {
                           },
                         ),
                         DSHorizontalSpacing.small(),
-                        SaveMenuButton(
-                          onSave: (_) {
-                            final isValid = EditMenuScreen
-                                ._formKey.currentState!
-                                .validate();
+                        Center(
+                          child: DSButton(
+                            theme: DSButtonThemeData.fallback().copyWith(
+                              primary: Themes.primaryColor,
+                            ),
+                            child: const Text('SAVE'),
+                            onPressed: () {
+                              final isValid = EditMenuScreen
+                                  ._formKey.currentState!
+                                  .validate();
 
-                            if (!isValid) return;
+                              if (!isValid) return;
 
-                            context.read<EditMenuCubit>().update(
-                                  editMenuState.menu.copyWith(
-                                    name: controller.text,
-                                    updatedAt: DateTime.now(),
-                                  ),
-                                );
-                          },
+                              context.read<EditMenuCubit>().update(
+                                    editMenuState.menu.copyWith(
+                                      name: controller.text,
+                                      updatedAt: DateTime.now(),
+                                    ),
+                                  );
+                            },
+                          ),
                         ),
                         DSHorizontalSpacing.medium(),
                       ],
