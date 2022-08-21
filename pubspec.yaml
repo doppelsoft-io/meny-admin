@@ -21,7 +21,6 @@ dependencies:
   doppelsoft_ui:
     git:
       url: git@github.com:doppelsoft-io/doppelsoft-ui.git
-  equatable: ^2.0.3
   firebase_auth: ^3.3.17
   firebase_core: ^1.1.1
   firebase_storage: ^10.2.15
