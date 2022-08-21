@@ -95,164 +95,193 @@ class _CompiledMenuBuilder extends StatelessWidget {
                   },
                 ),
               ],
-              child: ReorderableListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.symmetric(
-                  vertical: DSSpacing.medium,
-                  horizontal: DSSpacing.medium,
-                ),
-                shrinkWrap: true,
-                onReorder: (oldIndex, newIndex) {
-                  if (oldIndex < newIndex) {
-                    newIndex -= 1;
-                  }
-                  final category = categories.removeAt(oldIndex);
-                  categories.insert(newIndex, category);
-                  context.read<ReorderCompiledCategoryCubit>().reorder(
-                        menuId: menu.id,
-                        categories: categories,
-                      );
-
-                  context.read<CompiledMenuCubit>().syncCategories(categories);
-                },
-                itemCount: categories.length,
-                buildDefaultDragHandles: false,
-                itemBuilder: (context, categoryIndex) {
-                  final category = categories[categoryIndex];
-                  final items = List<CompiledMenuItemModel>.from(
-                    category.items,
-                  );
-                  return Container(
-                    key: Key(category.id),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: <Widget>[
-                            MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: ReorderableDragStartListener(
-                                index: categoryIndex,
-                                child: const Icon(Icons.menu, size: 28),
-                              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(DSSpacing.medium),
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(text: 'Tip: Press and hold the '),
+                          WidgetSpan(
+                            child: Icon(
+                              Icons.menu,
                             ),
-                            const SizedBox(width: DSSpacing.medium),
-                            DSText(
-                              category.name,
-                              theme: DSTextThemeData.custom(
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall!,
+                          ),
+                          TextSpan(
+                            text:
+                                ' icons to drag and reorder you categories and menu items',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ReorderableListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: DSSpacing.medium,
+                      horizontal: DSSpacing.medium,
+                    ),
+                    shrinkWrap: true,
+                    onReorder: (oldIndex, newIndex) {
+                      if (oldIndex < newIndex) {
+                        newIndex -= 1;
+                      }
+                      final category = categories.removeAt(oldIndex);
+                      categories.insert(newIndex, category);
+                      context.read<ReorderCompiledCategoryCubit>().reorder(
+                            menuId: menu.id,
+                            categories: categories,
+                          );
+
+                      context
+                          .read<CompiledMenuCubit>()
+                          .syncCategories(categories);
+                    },
+                    itemCount: categories.length,
+                    buildDefaultDragHandles: false,
+                    itemBuilder: (context, categoryIndex) {
+                      final category = categories[categoryIndex];
+                      final items = List<CompiledMenuItemModel>.from(
+                        category.items,
+                      );
+                      return Container(
+                        key: Key(category.id),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: <Widget>[
+                                MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: ReorderableDragStartListener(
+                                    index: categoryIndex,
+                                    child: const Icon(Icons.menu, size: 28),
+                                  ),
+                                ),
+                                const SizedBox(width: DSSpacing.medium),
+                                DSText(
+                                  category.name,
+                                  theme: DSTextThemeData.custom(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall!,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            ReorderableListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              buildDefaultDragHandles: false,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: DSSpacing.large,
                               ),
+                              itemCount: items.length,
+                              itemBuilder: (context, itemIndex) {
+                                final item = items[itemIndex];
+                                return Container(
+                                  key: Key(item.id),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: DSSpacing.medium,
+                                    horizontal: DSSpacing.small,
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        child: ReorderableDragStartListener(
+                                          index: itemIndex,
+                                          child: const Icon(
+                                            Icons.menu,
+                                            size: 28,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: DSSpacing.medium),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            DSText(
+                                              item.name,
+                                              theme: DSTextThemeData.custom(
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge!,
+                                              ),
+                                            ),
+                                            if (item.description != null &&
+                                                item.description!
+                                                    .isNotEmpty) ...[
+                                              const SizedBox(height: 2),
+                                              DSText(
+                                                item.description!,
+                                                theme: DSTextThemeData.custom(
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!,
+                                                ),
+                                              ),
+                                            ],
+                                            const SizedBox(height: 6),
+                                            Text(
+                                              (item.priceInfo.price / 100)
+                                                  .toCurrency(),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(width: DSSpacing.medium),
+                                      if (item.imageUrl != null &&
+                                          item.imageUrl!.isNotEmpty)
+                                        DSImageUploadCard(
+                                          url: item.imageUrl ?? '',
+                                          theme: DSImageUploadCardThemeData
+                                                  .fallback()
+                                              .copyWith(
+                                            width: 91,
+                                            height: 73,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              onReorder: (oldIndex, newIndex) {
+                                if (oldIndex < newIndex) {
+                                  newIndex -= 1;
+                                }
+                                final item = items.removeAt(oldIndex);
+                                items.insert(newIndex, item);
+                                context
+                                    .read<ReorderCompiledMenuItemCubit>()
+                                    .reorder(
+                                      category: category,
+                                      items: items,
+                                    );
+
+                                final updatedCategories = categories
+                                  ..remove(category)
+                                  ..insert(
+                                    categoryIndex,
+                                    category.copyWith(items: items),
+                                  );
+                                context
+                                    .read<CompiledMenuCubit>()
+                                    .syncCategories(updatedCategories);
+                              },
                             ),
                           ],
                         ),
-                        ReorderableListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          buildDefaultDragHandles: false,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: DSSpacing.large,
-                          ),
-                          itemCount: items.length,
-                          itemBuilder: (context, itemIndex) {
-                            final item = items[itemIndex];
-                            return Container(
-                              key: Key(item.id),
-                              padding: const EdgeInsets.symmetric(
-                                vertical: DSSpacing.medium,
-                                horizontal: DSSpacing.small,
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: ReorderableDragStartListener(
-                                      index: itemIndex,
-                                      child: const Icon(
-                                        Icons.menu,
-                                        size: 28,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: DSSpacing.medium),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        DSText(
-                                          item.name,
-                                          theme: DSTextThemeData.custom(
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge!,
-                                          ),
-                                        ),
-                                        if (item.description != null &&
-                                            item.description!.isNotEmpty) ...[
-                                          const SizedBox(height: 2),
-                                          DSText(
-                                            item.description!,
-                                            theme: DSTextThemeData.custom(
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!,
-                                            ),
-                                          ),
-                                        ],
-                                        const SizedBox(height: 6),
-                                        Text(
-                                          (item.priceInfo.price / 100)
-                                              .toCurrency(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: DSSpacing.medium),
-                                  if (item.imageUrl != null &&
-                                      item.imageUrl!.isNotEmpty)
-                                    DSImageUploadCard(
-                                      url: item.imageUrl ?? '',
-                                      theme:
-                                          DSImageUploadCardThemeData.fallback()
-                                              .copyWith(
-                                        width: 91,
-                                        height: 73,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            );
-                          },
-                          onReorder: (oldIndex, newIndex) {
-                            if (oldIndex < newIndex) {
-                              newIndex -= 1;
-                            }
-                            final item = items.removeAt(oldIndex);
-                            items.insert(newIndex, item);
-                            context
-                                .read<ReorderCompiledMenuItemCubit>()
-                                .reorder(
-                                  category: category,
-                                  items: items,
-                                );
-
-                            final updatedCategories = categories
-                              ..remove(category)
-                              ..insert(
-                                categoryIndex,
-                                category.copyWith(items: items),
-                              );
-                            context
-                                .read<CompiledMenuCubit>()
-                                .syncCategories(updatedCategories);
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                      );
+                    },
+                  ),
+                ],
               ),
             );
           },
