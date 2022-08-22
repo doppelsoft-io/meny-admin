@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,5 +26,10 @@ Future<void> main() async {
   await Locator.setup(environment: AppEnvironment.production);
   await HiveService.configure();
 
-  runApp(App(environment: AppEnvironment.production));
+  runZonedGuarded(
+    () {
+      runApp(App(environment: AppEnvironment.production));
+    },
+    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
+  );
 }
