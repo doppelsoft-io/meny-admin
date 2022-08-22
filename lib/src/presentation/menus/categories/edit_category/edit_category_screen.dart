@@ -185,7 +185,7 @@ class _EditCategoryScreen extends HookWidget {
                                     ),
                                   );
                             },
-                            child: const Text('Save'),
+                            child: const Text('SAVE'),
                           ),
                         ),
                         DSHorizontalSpacing.medium(),

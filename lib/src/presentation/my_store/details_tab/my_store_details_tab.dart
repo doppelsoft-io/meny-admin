@@ -76,7 +76,7 @@ class _MyStoreDetailsTab extends HookWidget {
                             color: Colors.green.shade50,
                           ),
                         ),
-                        orElse: () => const Text('Save'),
+                        orElse: () => const Text('SAVE'),
                       ),
                     ),
                   ],

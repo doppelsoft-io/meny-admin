@@ -262,7 +262,7 @@ class _EditModifierGroupScreen extends HookWidget {
                                 ),
                               );
                         },
-                        child: const Text('Save'),
+                        child: const Text('SAVE'),
                       ),
                     ),
                     const SizedBox(width: 24),

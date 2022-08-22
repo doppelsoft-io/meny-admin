@@ -268,7 +268,7 @@ class _ItemForm extends HookWidget {
               Center(
                 child: ElevatedButton(
                   onPressed: save,
-                  child: const Text('Save'),
+                  child: const Text('SAVE'),
                 ),
               ),
               DSHorizontalSpacing.medium(),

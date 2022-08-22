@@ -35,7 +35,7 @@ class _MyStoreLocationsTab extends HookWidget {
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {},
-                      child: const Text('Save'),
+                      child: const Text('SAVE'),
                     ),
                   ],
                 ),
