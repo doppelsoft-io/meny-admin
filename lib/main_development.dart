@@ -14,7 +14,7 @@ Future<void> main() async {
 
   if (UniversalPlatform.isWeb) configureUrl();
 
-  await dotenv.load();
+  await dotenv.load(fileName: 'env');
 
   // final localhost = UniversalPlatform.isAndroid ? '10.0.2.2' : 'localhost';
 

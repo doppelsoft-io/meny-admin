@@ -14,7 +14,7 @@ Future<void> main() async {
 
   if (UniversalPlatform.isWeb) configureUrl();
 
-  await dotenv.load();
+  await dotenv.load(fileName: 'env');
 
   // GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
 
