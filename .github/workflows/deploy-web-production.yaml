@@ -3,6 +3,7 @@ name: Deploy to Firebase Hosting (dev)
 env:
   PROJECT_ID: meny-admin-production
   TARGET_FILE: lib/main_production.dart
+  FLAGSMITH_ENVIRONMENT_KEY: ${{ secrets.FLAGSMITH_ENVIRONMENT_KEY_PROD }}
 
 on:
   push:
@@ -31,10 +32,11 @@ jobs:
             ${{ secrets.MENY_CORE_SSH_DEPLOY_KEY }}
             ${{ secrets.DOPPELSOFT_CORE_SSH_DEPLOY_KEY }}
             ${{ secrets.DOPPELSOFT_UI_SSH_DEPLOY_KEY }}
-      - name: Create .env
+      - name: Create env
         run: |
-          touch .env
-          echo "FLAGSMITH_ENVIRONMENT_KEY=${{ secrets.FLAGSMITH_ENVIRONMENT_KEY_PROD }}" >> .env
+          touch env
+          echo "FLAGSMITH_ENVIRONMENT_KEY=${{ env.FLAGSMITH_ENVIRONMENT_KEY }}" >> env
+          cat env
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
