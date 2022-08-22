@@ -40,18 +40,17 @@ jobs:
       - name: run pub get
         run: flutter pub get
       - run: flutter config --enable-web
-      # - name: Create .env
-      #   run: |
-      #     touch .env
-      #     echo "TESTING HERE" >> .env
-      #     echo "FLAGSMITH_ENVIRONMENT_KEY=${{ secrets.FLAGSMITH_ENVIRONMENT_KEY_DEV }}" >> .env
-      #     cat .env
-      - name: Create env file
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-          envkey_FLAGSMITH_ENVIRONMENT_KEY: ${{ env.FLAGSMITH_ENVIRONMENT_KEY }}
-          fail_on_empty: true
-          file_name: env
+      - name: Create .env
+        run: |
+          touch env
+          echo "FLAGSMITH_ENVIRONMENT_KEY=${{ secrets.FLAGSMITH_ENVIRONMENT_KEY_DEV }}" >> env
+          cat env
+      # - name: Create env file
+      #   uses: SpicyPizza/create-envfile@v1.3
+      #   with:
+      #     envkey_FLAGSMITH_ENVIRONMENT_KEY: ${{ env.FLAGSMITH_ENVIRONMENT_KEY }}
+      #     fail_on_empty: true
+      #     file_name: env
 
       - name: Build web release
         run: flutter build web --target ${{ env.TARGET_FILE }} --web-renderer canvaskit --release
