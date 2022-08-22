@@ -31,18 +31,23 @@ class AppHeader extends StatelessWidget {
           ),
           child: Row(
             children: [
-              DSText(
-                getValueForScreenType(
-                  context: context,
-                  mobile: 'm',
-                  desktop: 'meny',
-                ),
-                theme: DSTextThemeData.custom(
-                  style: TextStyle(
-                    height: 1,
-                    fontSize: DSTextThemeData.displaySmall().style.fontSize,
-                    fontWeight: FontWeight.w900,
-                    color: Themes.primaryColor,
+              GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).go('/');
+                },
+                child: DSText(
+                  getValueForScreenType(
+                    context: context,
+                    mobile: 'm',
+                    desktop: 'meny',
+                  ),
+                  theme: DSTextThemeData.custom(
+                    style: TextStyle(
+                      height: 1,
+                      fontSize: DSTextThemeData.displaySmall().style.fontSize,
+                      fontWeight: FontWeight.w900,
+                      color: Themes.primaryColor,
+                    ),
                   ),
                 ),
               ),
