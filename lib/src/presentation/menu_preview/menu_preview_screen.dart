@@ -5,6 +5,7 @@ import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_admin/themes.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
@@ -19,10 +20,10 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Function() onPublish;
 
   @override
-  double get maxExtent => 130;
+  double get maxExtent => 140;
 
   @override
-  double get minExtent => 130;
+  double get minExtent => 140;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate _) => true;
@@ -51,26 +52,25 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
               size: 74,
               padding: EdgeInsets.zero,
             ),
-            const SizedBox(width: 24),
+            const SizedBox(width: DSSpacing.small),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 12),
-                DSText(
-                  title,
-                  theme: DSTextThemeData.headlineLarge(),
-                ),
-                TextButton.icon(
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.topCenter,
-                    visualDensity: VisualDensity.compact,
-                    // fixedSize: const Size(110, 48),
+                Padding(
+                  padding: const EdgeInsets.only(left: DSSpacing.smallest),
+                  child: DSText(
+                    title,
+                    theme: DSTextThemeData.headlineLarge(),
                   ),
+                ),
+                DSButton(
+                  type: DSButtonType.text,
+                  theme: DSButtonThemeData.fallback()
+                      .copyWith(primary: Themes.primaryColor),
                   onPressed: () {},
                   icon: const Icon(Icons.remove_red_eye),
-                  label: const Text('View Online'),
+                  child: const Text('View Online'),
                 ),
               ],
             ),
