@@ -28,8 +28,6 @@ class Locator {
       ],
     );
 
-    await flagsmithClient.getFeatureFlags();
-
     instance
       ..registerSingleton<FlagsmithClient>(flagsmithClient)
       ..registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance)

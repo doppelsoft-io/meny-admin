@@ -2,21 +2,24 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flagsmith/flagsmith.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 
-part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
+part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit({
     AuthRepository? authRepository,
     FirebaseAuth? firebaseAuth,
     StoreCacheService? storeCacheService,
+    FlagsmithClient? flagsmithClient,
   })  : _authRepository = authRepository ?? Locator.instance(),
         _firebaseAuth = firebaseAuth ?? Locator.instance(),
         _storeCacheService = storeCacheService ?? Locator.instance(),
+        _flagsmithClient = flagsmithClient ?? Locator.instance(),
         super(_Initial(user: UserModel.empty())) {
     _authSubscription?.cancel();
     _authSubscription = _firebaseAuth.authStateChanges().listen(userChanged);
@@ -25,6 +28,7 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthRepository _authRepository;
   final FirebaseAuth _firebaseAuth;
   final StoreCacheService _storeCacheService;
+  final FlagsmithClient _flagsmithClient;
 
   StreamSubscription? _authSubscription;
 
@@ -41,6 +45,10 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> userChanged(User? firebaseUser) async {
     if (firebaseUser != null) {
       final userModel = UserModel.fromFirebaseAuthUser(firebaseUser);
+      // ignore: unawaited_futures
+      _flagsmithClient.getFeatureFlags(
+        user: Identity(identifier: userModel.id!),
+      );
       if (firebaseUser.isAnonymous) {
         emit(_Anonymous(user: userModel));
       } else {
