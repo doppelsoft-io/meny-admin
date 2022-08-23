@@ -5,7 +5,7 @@ clean: ## Cleans Flutter project.
 	rm -f pubspec.lock
 	flutter clean
 	flutter pub get
-	(cd ios/; rm -rf Pods Podfile.lock; pod install)
+	(cd ios/; rm -rf Pods Podfile.lock; flutter precache --ios; pod install)
 
 codegen-build: ## Generate codegen files once.
 	flutter pub get
