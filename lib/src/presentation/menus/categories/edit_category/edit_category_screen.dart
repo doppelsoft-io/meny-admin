@@ -345,10 +345,11 @@ class _DeleteCategoryButton extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     confirmArgs: DSConfirmDialogConfirmArgs(
-                        // buttonStyle: ElevatedButton.styleFrom(
-                        //   primary: Theme.of(context).errorColor,
-                        // ),
-                        ),
+                      text: 'DELETE',
+                      theme: DSButtonThemeData.fallback().copyWith(
+                        primary: Themes.colorScheme.error,
+                      ),
+                    ),
                   ),
                 );
                 if (value != null && value) {

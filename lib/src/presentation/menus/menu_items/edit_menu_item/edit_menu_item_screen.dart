@@ -463,15 +463,17 @@ class _DeleteMenuItemButton extends StatelessWidget {
                 final result = await DSConfirmDialog.open<bool>(
                   context,
                   args: DSConfirmDialogArgs(
-                    // buttonStyle: ElevatedButton.styleFrom(
-                    //   primary: Theme.of(context).errorColor,
-                    // ),
                     title: 'Delete ${item.name}?',
                     content: Text(
                       'This will remove this item from all menus',
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    confirmArgs: DSConfirmDialogConfirmArgs(),
+                    confirmArgs: DSConfirmDialogConfirmArgs(
+                      text: 'DELETE',
+                      theme: DSButtonThemeData.fallback().copyWith(
+                        primary: Themes.colorScheme.error,
+                      ),
+                    ),
                   ),
                 );
                 if (result != null && result) {

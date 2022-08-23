@@ -782,47 +782,34 @@ class _DeleteModifierGroupButton extends StatelessWidget {
 
   final ModifierGroupModel group;
 
-  void showConfirmationDialog({
+  Future<void> showConfirmationDialog({
     required BuildContext context,
     required ModifierGroupModel group,
     required List<ModifierGroupItemModel> modifierGroupItems,
-  }) {
-    showDialog<bool>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Delete ${group.name}?'),
-          content: Text(
-            'This will remove this group from all menu items',
-            style: Theme.of(context).textTheme.bodyText1,
+  }) async {
+    final result = await DSConfirmDialog.open<bool>(
+      context,
+      args: DSConfirmDialogArgs(
+        title: 'Delete ${group.name}?',
+        content: Text(
+          'This will remove this group from all menu items',
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+        confirmArgs: DSConfirmDialogConfirmArgs(
+          text: 'DELETE',
+          theme: DSButtonThemeData.fallback().copyWith(
+            primary: Themes.colorScheme.error,
           ),
-          actions: [
-            OutlinedButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-              ),
-              child: const Text('NO'),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(Theme.of(context).errorColor),
-              ),
-              child: const Text('YES'),
-            ),
-          ],
-        );
-      },
-    ).then((value) {
-      if (value != null && value) {
-        context.read<DeleteModifierGroupCubit>().delete(
-              modifierGroup: group,
-              modifierGroupItems: modifierGroupItems,
-            );
-      }
-    });
+        ),
+      ),
+    );
+    if (result != null && result) {
+      // ignore: use_build_context_synchronously
+      await context.read<DeleteModifierGroupCubit>().delete(
+            modifierGroup: group,
+            modifierGroupItems: modifierGroupItems,
+          );
+    }
   }
 
   @override
@@ -853,25 +840,20 @@ class _DeleteModifierGroupButton extends StatelessWidget {
         final modifierGroupItems =
             context.watch<ModifierGroupItemsCubit>().state.modifierGroupItems;
 
-        return OutlinedButton(
-          onPressed: deleteModifierGroupState.maybeWhen(
-            deleting: () {
-              return null;
-            },
-            orElse: () => () {
-              showConfirmationDialog(
-                context: context,
-                group: group,
-                modifierGroupItems: modifierGroupItems,
-              );
-            },
-          ),
-          style: OutlinedButton.styleFrom(
-            primary: Colors.grey[100],
-          ),
-          child: Text(
-            'Delete',
-            style: TextStyle(color: Theme.of(context).errorColor),
+        return DeleteResourceButton(
+          args: DeleteResourceButtonArgs(
+            onPressed: deleteModifierGroupState.maybeWhen(
+              deleting: () {
+                return null;
+              },
+              orElse: () => () {
+                showConfirmationDialog(
+                  context: context,
+                  group: group,
+                  modifierGroupItems: modifierGroupItems,
+                );
+              },
+            ),
           ),
         );
       },
