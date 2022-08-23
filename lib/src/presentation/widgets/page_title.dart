@@ -1,6 +1,5 @@
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 
 class PageTitle extends StatelessWidget {
   const PageTitle({

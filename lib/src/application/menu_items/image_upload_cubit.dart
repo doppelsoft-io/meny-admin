@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:bloc/bloc.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';

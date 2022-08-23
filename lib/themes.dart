@@ -1,6 +1,5 @@
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Themes {
   const Themes._();
@@ -72,7 +71,7 @@ class Themes {
     blurRadius: 4,
   );
 
-  static TextStyle textStyle = GoogleFonts.baloo();
+  static TextStyle textStyle = GoogleFonts.baloo2();
   static TextStyle secondaryTextStyle = GoogleFonts.hind();
 
   static TextTheme secondaryTextTheme =

@@ -4,7 +4,6 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flagsmith/flagsmith.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meny_admin/src/app/app_constants.dart';
 import 'package:meny_admin/src/app/feature_flag_constants.dart';

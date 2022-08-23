@@ -2,8 +2,6 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
@@ -11,7 +9,6 @@ import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
 
 class MenuItemsTab extends StatelessWidget {
   const MenuItemsTab({Key? key}) : super(key: key);

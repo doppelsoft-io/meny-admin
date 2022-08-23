@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';

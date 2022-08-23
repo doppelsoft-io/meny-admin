@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
