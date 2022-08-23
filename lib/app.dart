@@ -2,15 +2,11 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/themes.dart';
-import 'package:meny_admin/unfocus.dart';
-import 'package:overlay_support/overlay_support.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 class App extends StatelessWidget {
   App({
@@ -169,7 +165,7 @@ class App extends StatelessWidget {
               context,
               DSUnfocus(
                 child: DSTextScaleFactorClamper(
-                  child: Unfocus(child: widget!),
+                  child: DSUnfocus(child: widget!),
                 ),
               ),
             ),
