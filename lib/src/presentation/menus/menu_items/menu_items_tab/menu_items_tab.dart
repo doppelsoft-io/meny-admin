@@ -127,11 +127,7 @@ class _MenusScreenItemsTab extends HookWidget {
                       ),
                       title: Text(item.name),
                       trailing: Text((item.priceInfo.price / 100).toCurrency()),
-                      subtitle: Text(
-                        'Updated: ${item.updatedAt?.formatWith(
-                              'MM/dd/yy @ h:mm a',
-                            ) ?? ''}',
-                      ),
+                      subtitle: Text('Updated: ${item.updatedAt?.format()}'),
                       isThreeLine: true,
                     );
                   },
@@ -204,9 +200,7 @@ class _MenusScreenItemsTab extends HookWidget {
                               theme: DSTextThemeData.labelLarge(),
                             ),
                             DSText(
-                              'Updated: ${item.updatedAt?.formatWith(
-                                    'MM/dd/yy @ h:mm a',
-                                  ) ?? ''}',
+                              'Updated: ${item.updatedAt?.format()}',
                               theme: DSTextThemeData.bodySmall(),
                             ),
                           ],
@@ -220,10 +214,7 @@ class _MenusScreenItemsTab extends HookWidget {
                       ),
                       DataCell(
                         DSText(
-                          item.createdAt?.formatWith(
-                                'MM/dd/yy @ h:mm a',
-                              ) ??
-                              '',
+                          item.createdAt?.format() ?? '',
                           theme: DSTextThemeData.bodyMedium(),
                         ),
                       ),

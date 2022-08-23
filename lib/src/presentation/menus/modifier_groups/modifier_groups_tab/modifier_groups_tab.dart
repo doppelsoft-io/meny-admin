@@ -119,11 +119,8 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                     ),
                     onTap: () => _onTapItem(context, group),
                     title: Text(group.name),
-                    subtitle: Text(
-                      'Updated: ${group.updatedAt?.formatWith(
-                            'MM/dd/yy @ h:mm a',
-                          ) ?? ''}',
-                    ),
+                    subtitle:
+                        Text('Updated: ${group.updatedAt?.format() ?? ''}'),
                     isThreeLine: true,
                   );
                 },
@@ -170,9 +167,7 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                             theme: DSTextThemeData.labelLarge(),
                           ),
                           DSText(
-                            'Last updated: ${group.updatedAt?.formatWith(
-                                  'MM/dd/yy @ h:mm a',
-                                ) ?? ''}',
+                            'Last updated: ${group.updatedAt?.format()}',
                             theme: DSTextThemeData.bodySmall(),
                           ),
                         ],
@@ -180,10 +175,7 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                     ),
                     DataCell(
                       DSText(
-                        group.createdAt?.formatWith(
-                              'MM/dd/yy @ h:mm a',
-                            ) ??
-                            '',
+                        group.createdAt?.format() ?? '',
                         theme: DSTextThemeData.bodyMedium(),
                       ),
                     ),

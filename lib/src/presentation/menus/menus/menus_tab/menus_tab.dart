@@ -112,22 +112,17 @@ class _MenusScreenMenusTab extends HookWidget {
                   resources: menus,
                   emptyMessage: emptyMessage,
                   onTapItem: _onTapItem,
-                  itemBuilder: (_, item) {
+                  itemBuilder: (_, menu) {
                     return ListTile(
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: DSSpacing.medium,
                         vertical: DSSpacing.smallest,
                       ),
-                      onTap: () {
-                        _onTapItem(context, item);
-                      },
-                      title: Text(item.name),
-                      subtitle: Text(
-                        'Updated: ${item.updatedAt?.formatWith(
-                              'MM/dd/yy @ h:mm a',
-                            ) ?? ''}',
-                      ),
+                      onTap: () => _onTapItem(context, menu),
+                      title: Text(menu.name),
+                      subtitle: Text('Updated: ${menu.updatedAt?.format()}'),
                       isThreeLine: true,
+                      trailing: PreviewMenuButton(menu: menu),
                     );
                   },
                 ),
@@ -176,9 +171,7 @@ class _MenusScreenMenusTab extends HookWidget {
                               theme: DSTextThemeData.labelLarge(),
                             ),
                             DSText(
-                              'Last updated: ${menu.updatedAt?.formatWith(
-                                    'MM/dd/yy @ h:mm a',
-                                  ) ?? ''}',
+                              'Last updated: ${menu.updatedAt?.format()}',
                               theme: DSTextThemeData.bodySmall(),
                             ),
                           ],
@@ -186,39 +179,11 @@ class _MenusScreenMenusTab extends HookWidget {
                       ),
                       DataCell(
                         DSText(
-                          menu.createdAt?.formatWith(
-                                'MM/dd/yy @ h:mm a',
-                              ) ??
-                              '',
+                          menu.createdAt?.format() ?? '',
                           theme: DSTextThemeData.bodyMedium(),
                         ),
                       ),
-                      DataCell(
-                        TextButton(
-                          style: ButtonStyle(
-                            alignment: Alignment.center,
-                            padding: MaterialStateProperty.all(
-                              EdgeInsets.zero,
-                            ),
-                          ),
-                          child: const Text('Preview'),
-                          onPressed: () => ActionService.run(
-                            () => GoRouter.of(context).goNamed(
-                              MenuPreviewScreen.routeName,
-                              params: {
-                                'id': menu.id!,
-                              },
-                            ),
-                            () => AnalyticsService.track(
-                              message: Analytics.menusTabPreviewTapped,
-                              params: {
-                                'menuId': menu.id!,
-                                'menuName': menu.name,
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
+                      DataCell(PreviewMenuButton(menu: menu)),
                     ];
                   },
                   emptyMessage:

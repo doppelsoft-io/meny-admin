@@ -116,11 +116,8 @@ class _MenusScreenCategoriesTab extends HookWidget {
                         horizontal: DSSpacing.medium,
                         vertical: DSSpacing.smallest,
                       ),
-                      subtitle: Text(
-                        'Updated: ${category.updatedAt?.formatWith(
-                              'MM/dd/yy @ h:mm a',
-                            ) ?? ''}',
-                      ),
+                      subtitle:
+                          Text('Updated: ${category.updatedAt?.format()}'),
                       isThreeLine: true,
                     );
                   },
@@ -167,9 +164,7 @@ class _MenusScreenCategoriesTab extends HookWidget {
                               theme: DSTextThemeData.labelLarge(),
                             ),
                             DSText(
-                              'Last updated: ${category.updatedAt?.formatWith(
-                                    'MM/dd/yy @ h:mm a',
-                                  ) ?? ''}',
+                              'Last updated: ${category.updatedAt?.format()}',
                               theme: DSTextThemeData.bodySmall(),
                             ),
                           ],
@@ -177,10 +172,7 @@ class _MenusScreenCategoriesTab extends HookWidget {
                       ),
                       DataCell(
                         DSText(
-                          category.createdAt?.formatWith(
-                                'MM/dd/yy @ h:mm a',
-                              ) ??
-                              '',
+                          category.createdAt?.format() ?? '',
                           theme: DSTextThemeData.bodyMedium(),
                         ),
                       ),

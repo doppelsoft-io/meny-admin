@@ -24,6 +24,7 @@ export 'menus/menus/edit_menu/edit_menu_screen.dart';
 export 'menus/menus/edit_menu/widgets/delete_menu_button.dart';
 export 'menus/menus/menus_tab/menus_tab.dart';
 export 'menus/menus/menus_tab/widgets/new_menu_button.dart';
+export 'menus/menus/menus_tab/widgets/preview_menu_button.dart';
 export 'menus/menus_screen.dart';
 export 'menus/modifier_groups/create_modifier_group/create_modifier_group_screen.dart';
 export 'menus/modifier_groups/edit_modifier_group/edit_modifier_group_screen.dart';
