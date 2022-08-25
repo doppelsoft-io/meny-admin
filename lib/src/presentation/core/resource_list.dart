@@ -85,13 +85,19 @@ class ResourceList<T> extends StatelessWidget {
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         itemBuilder: (_, i) {
+          if (resources.isEmpty) {
+            return Padding(
+              padding: const EdgeInsets.all(DSSpacing.medium),
+              child: DSText(emptyMessage),
+            );
+          }
           final resource = resources[i];
           return itemBuilder(_, resource);
         },
         separatorBuilder: (_, i) {
           return const Divider(height: 0);
         },
-        itemCount: resources.length,
+        itemCount: resources.isEmpty ? 1 : resources.length,
       ),
     );
   }
