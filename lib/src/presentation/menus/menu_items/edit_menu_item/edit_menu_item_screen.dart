@@ -506,7 +506,7 @@ class _ImageUpload extends StatelessWidget {
     return BlocConsumer<ImageUploadCubit, ImageUploadState>(
       listener: (context, state) {
         state.maybeWhen(
-          picked: (file, url) =>
+          picked: (file, url, bytes) =>
               context.read<ImageUploadCubit>().upload(item: item),
           orElse: () {},
         );
@@ -518,7 +518,8 @@ class _ImageUpload extends StatelessWidget {
             DSImageUploadCard(
               url: state.url,
               processing: state.maybeWhen(
-                uploading: (_, __) => true,
+                seeding: (_, __, ___) => true,
+                uploading: (_, __, ___) => true,
                 orElse: () => false,
               ),
               onTap: () => context.read<ImageUploadCubit>().pick(),

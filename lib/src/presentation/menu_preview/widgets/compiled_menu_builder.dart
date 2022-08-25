@@ -3,6 +3,7 @@ import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
+import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -238,11 +239,11 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                       const SizedBox(width: DSSpacing.medium),
                                       if (item.imageUrl != null &&
                                           item.imageUrl!.isNotEmpty)
-                                        DSImageUploadCard(
-                                          url: item.imageUrl ?? '',
-                                          theme: DSImageUploadCardThemeData
-                                                  .fallback()
-                                              .copyWith(
+                                        MenuItemImage(
+                                          imageUrl: item.imageUrl ?? '',
+                                          theme:
+                                              DSMemoryImageThemeData.fallback()
+                                                  .copyWith(
                                             width: 91,
                                             height: 73,
                                           ),

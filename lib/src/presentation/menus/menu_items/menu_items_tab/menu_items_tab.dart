@@ -118,13 +118,8 @@ class _MenusScreenItemsTab extends HookWidget {
                         horizontal: DSSpacing.medium,
                         vertical: DSSpacing.smallest,
                       ),
-                      onTap: () {
-                        _onTapItem(context, item);
-                      },
-                      leading: DSImageUploadCard(
-                        theme: DSImageUploadCardThemeData.thumbnail(),
-                        url: item.imageUrl ?? '',
-                      ),
+                      onTap: () => _onTapItem(context, item),
+                      leading: MenuItemImage(imageUrl: item.imageUrl ?? ''),
                       title: Text(item.name),
                       trailing: Text((item.priceInfo.price / 100).toCurrency()),
                       subtitle: Text('Updated: ${item.updatedAt?.format()}'),
@@ -184,12 +179,7 @@ class _MenusScreenItemsTab extends HookWidget {
                   ],
                   cellsBuilder: (_, item) {
                     return [
-                      DataCell(
-                        DSImageUploadCard(
-                          theme: DSImageUploadCardThemeData.thumbnail(),
-                          url: item.imageUrl ?? '',
-                        ),
-                      ),
+                      DataCell(MenuItemImage(imageUrl: item.imageUrl ?? '')),
                       DataCell(
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

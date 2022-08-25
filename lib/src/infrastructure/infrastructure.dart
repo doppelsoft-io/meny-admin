@@ -3,6 +3,8 @@ export 'categories/category_repository.dart';
 export 'category_menu_items/category_menu_items_repository.dart';
 export 'compiled_menus/compiled_menu_repository.dart';
 export 'i_resources_repository.dart';
+export 'images/image_picker_facade.dart';
+export 'images/image_uploader_facade.dart';
 export 'menu_categories/menu_category_repository.dart';
 export 'menu_item_modifier_groups/menu_item_modifier_group_repository.dart';
 export 'menu_items/menu_item_repository.dart';

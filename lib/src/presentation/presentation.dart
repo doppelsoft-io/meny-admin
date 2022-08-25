@@ -18,6 +18,7 @@ export 'menus/menu_items/edit_menu_item/widgets/menu_item_name_field.dart';
 export 'menus/menu_items/edit_menu_item/widgets/menu_item_price_field.dart';
 export 'menus/menu_items/edit_menu_item/widgets/menu_item_tax_info_field.dart';
 export 'menus/menu_items/menu_items_tab/menu_items_tab.dart';
+export 'menus/menu_items/menu_items_tab/widgets/menu_item_image.dart';
 export 'menus/menu_items/menu_items_tab/widgets/new_menu_item_button.dart';
 export 'menus/menus/create_menu/create_menu_screen.dart';
 export 'menus/menus/edit_menu/edit_menu_screen.dart';
