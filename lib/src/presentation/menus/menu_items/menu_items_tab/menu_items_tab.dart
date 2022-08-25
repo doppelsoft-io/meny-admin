@@ -123,7 +123,6 @@ class _MenusScreenItemsTab extends HookWidget {
                       title: Text(item.name),
                       trailing: Text((item.priceInfo.price / 100).toCurrency()),
                       subtitle: Text('Updated: ${item.updatedAt?.format()}'),
-                      isThreeLine: true,
                     );
                   },
                 ),

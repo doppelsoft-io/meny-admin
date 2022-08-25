@@ -515,20 +515,19 @@ class _ImageUpload extends StatelessWidget {
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DSImageUploadCard(
-              url: state.url,
-              processing: state.maybeWhen(
-                seeding: (_, __, ___) => true,
-                uploading: (_, __, ___) => true,
-                orElse: () => false,
-              ),
+            GestureDetector(
               onTap: () => context.read<ImageUploadCubit>().pick(),
-              emptyBuilder: () => Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Center(child: Icon(Icons.image)),
-                  Text('Click to upload')
-                ],
+              child: DSMemoryImage(
+                theme: DSMemoryImageThemeData.fallback(),
+                args: DSMemoryImageArgs(
+                  url: state.url,
+                  bytes: state.bytes,
+                  processing: state.maybeWhen(
+                    seeding: (_, __, ___) => true,
+                    uploading: (_, __, ___) => true,
+                    orElse: () => false,
+                  ),
+                ),
               ),
             ),
           ],
