@@ -120,7 +120,6 @@ class _CompiledMenuBuilder extends StatelessWidget {
                   ReorderableListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.symmetric(
-                      vertical: DSSpacing.medium,
                       horizontal: DSSpacing.medium,
                     ),
                     shrinkWrap: true,
@@ -176,7 +175,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                               shrinkWrap: true,
                               buildDefaultDragHandles: false,
                               padding: const EdgeInsets.symmetric(
-                                vertical: DSSpacing.large,
+                                vertical: DSSpacing.medium,
                               ),
                               itemCount: items.length,
                               itemBuilder: (context, itemIndex) {
