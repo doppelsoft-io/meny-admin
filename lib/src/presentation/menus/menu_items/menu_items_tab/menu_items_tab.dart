@@ -120,9 +120,15 @@ class _MenusScreenItemsTab extends HookWidget {
                       ),
                       onTap: () => _onTapItem(context, item),
                       leading: MenuItemImage(imageUrl: item.imageUrl ?? ''),
-                      title: Text(item.name),
+                      title: DSText(
+                        item.name,
+                        theme: DSTextThemeData.labelLarge(),
+                      ),
+                      subtitle: DSText(
+                        'Updated: ${item.updatedAt?.format()}',
+                        theme: DSTextThemeData.bodySmall(),
+                      ),
                       trailing: Text((item.priceInfo.price / 100).toCurrency()),
-                      subtitle: Text('Updated: ${item.updatedAt?.format()}'),
                     );
                   },
                 ),
