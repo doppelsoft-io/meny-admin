@@ -117,9 +117,7 @@ class App extends StatelessWidget {
       final onAuth = onLogin || onSignup;
 
       return authCubit.state.maybeWhen(
-        initial: (_) {
-          return onAuth ? null : '/login';
-        },
+        initial: (_) => null,
         unauthenticated: (_) {
           return onAuth ? null : '/login';
         },
