@@ -267,7 +267,7 @@ class _EditModifierGroupScreen extends HookWidget {
                   ],
                 ),
                 body: SingleChildScrollView(
-                  padding: const EdgeInsets.all(DSSpacing.medium),
+                  padding: const EdgeInsets.all(DSSpacing.sm),
                   child: Form(
                     key: EditModifierGroupScreen._formKey,
                     child: Column(

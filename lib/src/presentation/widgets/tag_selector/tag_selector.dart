@@ -129,7 +129,7 @@ class TagSelector<T> extends HookWidget {
                                   return ListTile(
                                     visualDensity: VisualDensity.standard,
                                     contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: DSSpacing.medium,
+                                      horizontal: DSSpacing.sm,
                                     ),
                                     onTap: () {
                                       onSelect(context, item);

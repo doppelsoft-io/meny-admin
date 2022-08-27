@@ -114,8 +114,8 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
                 itemBuilder: (_, group) {
                   return ListTile(
                     contentPadding: const EdgeInsets.symmetric(
-                      horizontal: DSSpacing.medium,
-                      vertical: DSSpacing.smallest,
+                      horizontal: DSSpacing.sm,
+                      vertical: DSSpacing.xxs,
                     ),
                     onTap: () => _onTapItem(context, group),
                     title: Text(group.name),

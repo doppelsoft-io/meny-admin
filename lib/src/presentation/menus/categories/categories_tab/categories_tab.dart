@@ -113,8 +113,8 @@ class _MenusScreenCategoriesTab extends HookWidget {
                       onTap: () => _onTapItem(context, category),
                       title: Text(category.name),
                       contentPadding: const EdgeInsets.symmetric(
-                        horizontal: DSSpacing.medium,
-                        vertical: DSSpacing.smallest,
+                        horizontal: DSSpacing.sm,
+                        vertical: DSSpacing.xxs,
                       ),
                       subtitle:
                           Text('Updated: ${category.updatedAt?.format()}'),

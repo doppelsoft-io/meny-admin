@@ -99,7 +99,10 @@ class _CompiledMenuBuilder extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.all(DSSpacing.medium),
+                    padding: EdgeInsets.symmetric(
+                      vertical: DSSpacing.lg,
+                      horizontal: DSSpacing.sm,
+                    ),
                     child: Text.rich(
                       TextSpan(
                         children: [
@@ -120,7 +123,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                   ReorderableListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.symmetric(
-                      horizontal: DSSpacing.medium,
+                      horizontal: DSSpacing.sm,
                     ),
                     shrinkWrap: true,
                     onReorder: (oldIndex, newIndex) {
@@ -159,14 +162,10 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                     child: const Icon(Icons.menu, size: 28),
                                   ),
                                 ),
-                                const SizedBox(width: DSSpacing.medium),
+                                const SizedBox(width: DSSpacing.sm),
                                 DSText(
                                   category.name,
-                                  theme: DSTextThemeData.custom(
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!,
-                                  ),
+                                  theme: DSTextThemeData.titleLarge(),
                                 ),
                               ],
                             ),
@@ -175,7 +174,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                               shrinkWrap: true,
                               buildDefaultDragHandles: false,
                               padding: const EdgeInsets.symmetric(
-                                vertical: DSSpacing.medium,
+                                vertical: DSSpacing.xs,
                               ),
                               itemCount: items.length,
                               itemBuilder: (context, itemIndex) {
@@ -183,8 +182,8 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                 return Container(
                                   key: Key(item.id),
                                   padding: const EdgeInsets.symmetric(
-                                    vertical: DSSpacing.medium,
-                                    horizontal: DSSpacing.small,
+                                    vertical: DSSpacing.sm,
+                                    horizontal: DSSpacing.md,
                                   ),
                                   child: Row(
                                     crossAxisAlignment:
@@ -196,11 +195,11 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                           index: itemIndex,
                                           child: const Icon(
                                             Icons.menu,
-                                            size: 28,
+                                            size: 24,
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(width: DSSpacing.medium),
+                                      const SizedBox(width: DSSpacing.sm),
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment:
@@ -208,11 +207,8 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                           children: [
                                             DSText(
                                               item.name,
-                                              theme: DSTextThemeData.custom(
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge!,
-                                              ),
+                                              theme:
+                                                  DSTextThemeData.titleMedium(),
                                             ),
                                             if (item.description != null &&
                                                 item.description!
@@ -235,7 +231,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                      const SizedBox(width: DSSpacing.medium),
+                                      const SizedBox(width: DSSpacing.sm),
                                       if (item.imageUrl != null &&
                                           item.imageUrl!.isNotEmpty)
                                         MenuItemImage(

@@ -115,8 +115,8 @@ class _MenusScreenItemsTab extends HookWidget {
                   itemBuilder: (_, item) {
                     return ListTile(
                       contentPadding: const EdgeInsets.symmetric(
-                        horizontal: DSSpacing.medium,
-                        vertical: DSSpacing.smallest,
+                        horizontal: DSSpacing.sm,
+                        vertical: DSSpacing.xxs,
                       ),
                       onTap: () => _onTapItem(context, item),
                       leading: MenuItemImage(imageUrl: item.imageUrl ?? ''),

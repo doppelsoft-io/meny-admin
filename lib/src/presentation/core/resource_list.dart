@@ -21,7 +21,7 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
       elevation: 1,
       child: Container(
         height: 85,
-        padding: const EdgeInsets.all(DSSpacing.medium),
+        padding: const EdgeInsets.all(DSSpacing.sm),
         child: Row(
           children: [
             header,
@@ -87,7 +87,7 @@ class ResourceList<T> extends StatelessWidget {
         itemBuilder: (_, i) {
           if (resources.isEmpty) {
             return Padding(
-              padding: const EdgeInsets.all(DSSpacing.medium),
+              padding: const EdgeInsets.all(DSSpacing.sm),
               child: DSText(emptyMessage),
             );
           }

@@ -32,8 +32,8 @@ class ResourceTable<T> extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: DSSpacing.medium,
-            vertical: DSSpacing.small,
+            horizontal: DSSpacing.sm,
+            vertical: DSSpacing.xs,
           ),
           child: Row(
             children: [
@@ -50,12 +50,12 @@ class ResourceTable<T> extends StatelessWidget {
             empty: Container(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.all(DSSpacing.medium),
+                padding: const EdgeInsets.all(DSSpacing.sm),
                 child: Text(emptyMessage),
               ),
             ),
             dataRowHeight: 68,
-            horizontalMargin: DSSpacing.medium,
+            horizontalMargin: DSSpacing.sm,
             columns: columns,
             rows: resources
                 .map(

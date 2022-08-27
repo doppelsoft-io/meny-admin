@@ -8,7 +8,7 @@ class LoadingTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(DSSpacing.small),
+      padding: const EdgeInsets.all(DSSpacing.xs),
       child: Column(
         children: <Widget>[
           Expanded(
@@ -25,7 +25,7 @@ class LoadingTable extends StatelessWidget {
                         height: 28,
                         color: Colors.white,
                         padding: const EdgeInsets.symmetric(
-                          vertical: DSSpacing.large,
+                          vertical: DSSpacing.md,
                         ),
                       ),
                       const Spacer(),
@@ -34,7 +34,7 @@ class LoadingTable extends StatelessWidget {
                         height: 50,
                         color: Colors.white,
                         padding: const EdgeInsets.symmetric(
-                          vertical: DSSpacing.large,
+                          vertical: DSSpacing.md,
                         ),
                       ),
                     ],

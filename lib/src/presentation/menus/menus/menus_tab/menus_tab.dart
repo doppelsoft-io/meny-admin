@@ -115,8 +115,8 @@ class _MenusScreenMenusTab extends HookWidget {
                   itemBuilder: (_, menu) {
                     return ListTile(
                       contentPadding: const EdgeInsets.symmetric(
-                        horizontal: DSSpacing.medium,
-                        vertical: DSSpacing.smallest,
+                        horizontal: DSSpacing.sm,
+                        vertical: DSSpacing.xxs,
                       ),
                       onTap: () => _onTapItem(context, menu),
                       title: Text(menu.name),

@@ -40,25 +40,25 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
         color: Colors.grey[100],
       ),
       child: Container(
-        padding: const EdgeInsets.all(DSSpacing.medium),
+        padding: const EdgeInsets.all(DSSpacing.sm),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: [
             const BackButton(),
-            const SizedBox(width: DSSpacing.medium),
+            const SizedBox(width: DSSpacing.sm),
             QrImage(
               data: 'https://google.com',
               size: 74,
               padding: EdgeInsets.zero,
             ),
-            const SizedBox(width: DSSpacing.small),
+            const SizedBox(width: DSSpacing.xs),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: DSSpacing.smallest),
+                  padding: const EdgeInsets.only(left: DSSpacing.xxs),
                   child: DSText(
                     title,
                     theme: DSTextThemeData.headlineLarge(),

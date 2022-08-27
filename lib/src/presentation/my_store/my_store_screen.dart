@@ -60,7 +60,7 @@ class _MyStorePage extends HookWidget {
               ),
             ),
             body: Padding(
-              padding: const EdgeInsets.all(DSSpacing.medium),
+              padding: const EdgeInsets.all(DSSpacing.sm),
               child: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
                 children: [

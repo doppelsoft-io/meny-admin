@@ -101,9 +101,9 @@ class _LoginScreen extends HookWidget {
             padding: EdgeInsets.all(
               getValueForScreenType<double>(
                 context: context,
-                mobile: DSSpacing.small,
-                tablet: DSSpacing.medium,
-                desktop: DSSpacing.medium,
+                mobile: DSSpacing.xs,
+                tablet: DSSpacing.sm,
+                desktop: DSSpacing.sm,
               ),
             ),
             child: DSBlock(

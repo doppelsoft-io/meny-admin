@@ -25,7 +25,7 @@ class AppHeader extends StatelessWidget {
         child: Container(
           height: double.infinity,
           padding: const EdgeInsets.symmetric(
-            horizontal: DSSpacing.medium,
+            horizontal: DSSpacing.sm,
           ),
           child: Row(
             children: [

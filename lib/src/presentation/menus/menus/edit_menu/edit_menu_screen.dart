@@ -164,7 +164,7 @@ class _EditMenuScreen extends HookWidget {
                       ],
                     ),
                     body: SingleChildScrollView(
-                      padding: const EdgeInsets.all(DSSpacing.medium),
+                      padding: const EdgeInsets.all(DSSpacing.sm),
                       child: Form(
                         key: EditMenuScreen._formKey,
                         child: Column(

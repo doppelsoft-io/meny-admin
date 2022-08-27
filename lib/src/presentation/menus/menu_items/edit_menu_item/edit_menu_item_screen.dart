@@ -273,7 +273,7 @@ class _ItemForm extends HookWidget {
             ],
           ),
           body: SingleChildScrollView(
-            padding: const EdgeInsets.all(DSSpacing.medium),
+            padding: const EdgeInsets.all(DSSpacing.sm),
             child: Form(
               key: EditMenuItemScreen._formKey,
               child: Column(
