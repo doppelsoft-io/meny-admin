@@ -14,7 +14,7 @@ class PageTitle extends StatelessWidget {
     return ScreenTypeLayout(
       mobile: DSText(
         title,
-        theme: DSTextThemeData.titleLarge(),
+        theme: const DSTextThemeData.h2(),
       ),
     );
   }

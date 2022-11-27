@@ -45,24 +45,24 @@ class _MenusScreenCategoriesTab extends HookWidget {
       const [],
     );
 
-    void _sort(
-      int columnIndex,
-      bool descending,
-      String name,
-    ) {
+    void sort({
+      required int columnIndex,
+      required bool descending,
+      required String name,
+    }) {
       final storeCubit = context.read<StoreCubit>();
       final storeId = storeCubit.state.store.id;
       context.read<CategoriesCubit>().load(
             storeId: storeId!,
             orderBy: OrderBy(
-              name,
+              field: name,
               descending: !descending,
               sortColumnIndex: columnIndex,
             ),
           );
     }
 
-    void _onTapItem(BuildContext context, CategoryModel category) {
+    void onTapItem(BuildContext context, CategoryModel category) {
       ActionService.run(
         () {
           GoRouter.of(context).goNamed(
@@ -107,18 +107,14 @@ class _MenusScreenCategoriesTab extends HookWidget {
                   action: action,
                   resources: categories,
                   emptyMessage: emptyMessage,
-                  onTapItem: _onTapItem,
                   itemBuilder: (_, category) {
-                    return ListTile(
-                      onTap: () => _onTapItem(context, category),
-                      title: Text(category.name),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: DSSpacing.sm,
-                        vertical: DSSpacing.xxs,
+                    return DSListTile(
+                      args: DSListTileArgs(
+                        onTap: () => onTapItem(context, category),
+                        title: category.name,
+                        subtitle:
+                            Text('Updated: ${category.updatedAt?.format()}'),
                       ),
-                      subtitle:
-                          Text('Updated: ${category.updatedAt?.format()}'),
-                      isThreeLine: true,
                     );
                   },
                 ),
@@ -130,28 +126,34 @@ class _MenusScreenCategoriesTab extends HookWidget {
                   action: action,
                   columns: [
                     DataColumn2(
-                      label: DSText(
+                      label: const DSText(
                         'NAME',
-                        theme: DSTextThemeData.labelSmall(),
+                        theme: DSTextThemeData.c2(),
                       ),
                       size: ColumnSize.L,
-                      onSort: (columnIndex, descending) =>
-                          _sort(columnIndex, descending, 'name'),
+                      onSort: (columnIndex, descending) => sort(
+                        columnIndex: columnIndex,
+                        descending: descending,
+                        name: 'name',
+                      ),
                     ),
                     DataColumn2(
-                      label: DSText(
+                      label: const DSText(
                         'CREATED',
-                        theme: DSTextThemeData.labelSmall(),
+                        theme: DSTextThemeData.c2(),
                       ),
                       fixedWidth: 200,
                       size: ColumnSize.S,
-                      onSort: (columnIndex, descending) =>
-                          _sort(columnIndex, descending, 'createdAt'),
+                      onSort: (columnIndex, descending) => sort(
+                        columnIndex: columnIndex,
+                        descending: descending,
+                        name: 'createdAt',
+                      ),
                     ),
                   ],
                   resources: categories,
                   emptyMessage: emptyMessage,
-                  onTapItem: _onTapItem,
+                  onTapItem: onTapItem,
                   cellsBuilder: (context, category) {
                     return <DataCell>[
                       DataCell(
@@ -161,11 +163,11 @@ class _MenusScreenCategoriesTab extends HookWidget {
                           children: [
                             DSText(
                               category.name,
-                              theme: DSTextThemeData.labelLarge(),
+                              theme: const DSTextThemeData.b4(),
                             ),
                             DSText(
                               'Last updated: ${category.updatedAt?.format()}',
-                              theme: DSTextThemeData.bodySmall(),
+                              theme: const DSTextThemeData.c2(),
                             ),
                           ],
                         ),
@@ -173,7 +175,7 @@ class _MenusScreenCategoriesTab extends HookWidget {
                       DataCell(
                         DSText(
                           category.createdAt?.format() ?? '',
-                          theme: DSTextThemeData.bodyMedium(),
+                          theme: const DSTextThemeData.b5(),
                         ),
                       ),
                     ];

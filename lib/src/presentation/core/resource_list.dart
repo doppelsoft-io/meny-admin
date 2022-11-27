@@ -51,7 +51,6 @@ class ResourceList<T> extends StatelessWidget {
     required this.action,
     required this.resources,
     required this.itemBuilder,
-    required this.onTapItem,
     required this.emptyMessage,
     this.sortColumnIndex,
     this.sortAscending = true,
@@ -61,7 +60,6 @@ class ResourceList<T> extends StatelessWidget {
   final Widget action;
   final List<T> resources;
   final Widget Function(BuildContext, T) itemBuilder;
-  final Function(BuildContext, T) onTapItem;
   final String emptyMessage;
   final int? sortColumnIndex;
   final bool sortAscending;

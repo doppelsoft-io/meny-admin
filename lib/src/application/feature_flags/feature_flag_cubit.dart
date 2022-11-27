@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:doppelsoft_core/doppelsoft_core.dart';
-import 'package:flagsmith/flagsmith.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_core/meny_core.dart';
 
 part 'feature_flag_cubit.freezed.dart';
 part 'feature_flag_state.dart';

@@ -1,20 +1,8 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:meny_admin/themes.dart';
 
-class DeleteResourceButtonArgs {
-  DeleteResourceButtonArgs({
-    required this.onPressed,
-    this.buttonStyle,
-    this.text = 'DELETE',
-    this.textStyle,
-  });
-
-  final void Function()? onPressed;
-  final ButtonStyle? buttonStyle;
-  final String text;
-  final TextStyle? textStyle;
-}
+part 'delete_resource_button.freezed.dart';
 
 class DeleteResourceButton extends StatelessWidget {
   const DeleteResourceButton({
@@ -27,12 +15,20 @@ class DeleteResourceButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DSButton(
-      theme: DSButtonThemeData.fallback().copyWith(
-        primary: Themes.colorScheme.error,
+      text: args.text,
+      theme: const DSButtonThemeData.elevated(
+        backgroundColor: grey200Color,
+        textTheme: DSTextThemeData.b4(color: blackColor),
       ),
       onPressed: args.onPressed,
-      type: DSButtonType.outlined,
-      child: Text(args.text),
     );
   }
+}
+
+@freezed
+class DeleteResourceButtonArgs with _$DeleteResourceButtonArgs {
+  const factory DeleteResourceButtonArgs({
+    required void Function()? onPressed,
+    @Default('Delete') String text,
+  }) = _DeleteResourceButtonArgs;
 }

@@ -92,13 +92,14 @@ class _EditMenuItemScreen extends HookWidget {
           return AlertDialog(
             title: const Text('Close without saving?'),
             actions: [
-              ElevatedButton(
+              DSButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('YES'),
+                text: 'Yes',
               ),
-              OutlinedButton(
+              DSButton(
+                theme: const DSButtonThemeData.outlined(),
                 onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('NO'),
+                text: 'No',
               ),
             ],
           );
@@ -240,11 +241,11 @@ class _ItemForm extends HookWidget {
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
-            iconTheme: const IconThemeData(color: Colors.black),
             backgroundColor: Colors.white,
-            title: DSText(
+            leading: const DSBackButton(),
+            title: const DSText(
               'Edit Item',
-              theme: DSTextThemeData.headlineSmall(),
+              theme: DSTextThemeData.h2(),
             ),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(8),
@@ -262,11 +263,11 @@ class _ItemForm extends HookWidget {
             ),
             actions: [
               Center(child: _DeleteMenuItemButton(item: item)),
-              DSHorizontalSpacing.small(),
+              DSHorizontalSpacing.smallest(),
               Center(
-                child: ElevatedButton(
+                child: DSButton(
                   onPressed: save,
-                  child: const Text('SAVE'),
+                  text: 'Save',
                 ),
               ),
               DSHorizontalSpacing.medium(),
@@ -299,29 +300,20 @@ class _ItemForm extends HookWidget {
                         context: context,
                         builder: (_) {
                           return SimpleDialog(
-                            title: DSText(
+                            title: const DSText(
                               'Sell as a stand-alone item?',
-                              theme: DSTextThemeData.custom(
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall!,
-                              ),
+                              theme: DSTextThemeData.h3(),
                             ),
                             contentPadding: const EdgeInsets.all(24),
                             children: [
-                              DSText(
+                              const DSText(
                                 'This determines whether this menu item should appear to customers as a sellable item by itself on the menu.',
-                                theme: DSTextThemeData.custom(
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium!,
-                                ),
+                                theme: DSTextThemeData.b5(),
                               ),
-                              const SizedBox(height: 12),
-                              DSText(
+                              DSVerticalSpacing.smallest(),
+                              const DSText(
                                 'If you are creating a menu item to be used in a modifier group, set this property to "No".',
-                                theme: DSTextThemeData.custom(
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium!,
-                                ),
+                                theme: DSTextThemeData.b5(),
                               ),
                             ],
                           );
@@ -331,39 +323,51 @@ class _ItemForm extends HookWidget {
                     child: Row(
                       children: [
                         IntrinsicWidth(
-                          child: RadioListTile(
-                            value: true,
-                            groupValue: item.type == MenuItemType.item,
-                            onChanged: (v) {
-                              final updatedItem = item.copyWith(
-                                type: MenuItemType.item,
-                              );
-                              context.read<EditMenuItemCubit>().update(
-                                    updatedItem,
-                                    save: false,
-                                  );
-                            },
-                            title: const Text(
-                              'Yes',
+                          child: DSRadioListTile<bool>(
+                            theme: DSRadioThemeData(
+                              fillColor: effectiveTheme.colorScheme.primary,
+                            ),
+                            args: DSRadioArgs(
+                              value: true,
+                              groupValue: item.type == MenuItemType.item,
+                              onChanged: (v) {
+                                final updatedItem = item.copyWith(
+                                  type: MenuItemType.item,
+                                );
+                                context.read<EditMenuItemCubit>().update(
+                                      updatedItem,
+                                      save: false,
+                                    );
+                              },
+                              title: const DSText(
+                                'Yes',
+                                theme: DSTextThemeData.b5(),
+                              ),
                             ),
                           ),
                         ),
                         DSHorizontalSpacing.large(),
                         IntrinsicWidth(
-                          child: RadioListTile(
-                            value: false,
-                            groupValue: item.type == MenuItemType.item,
-                            onChanged: (v) {
-                              final updatedItem = item.copyWith(
-                                type: MenuItemType.modifierGroup,
-                              );
-                              context.read<EditMenuItemCubit>().update(
-                                    updatedItem,
-                                    save: false,
-                                  );
-                            },
-                            title: const Text(
-                              'No',
+                          child: DSRadioListTile(
+                            theme: DSRadioThemeData(
+                              fillColor: effectiveTheme.colorScheme.primary,
+                            ),
+                            args: DSRadioArgs<bool>(
+                              value: false,
+                              groupValue: item.type == MenuItemType.item,
+                              onChanged: (v) {
+                                final updatedItem = item.copyWith(
+                                  type: MenuItemType.modifierGroup,
+                                );
+                                context.read<EditMenuItemCubit>().update(
+                                      updatedItem,
+                                      save: false,
+                                    );
+                              },
+                              title: const DSText(
+                                'No',
+                                theme: DSTextThemeData.b5(),
+                              ),
                             ),
                           ),
                         ),
@@ -468,11 +472,8 @@ class _DeleteMenuItemButton extends StatelessWidget {
                       'This will remove this item from all menus',
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    confirmArgs: DSConfirmDialogConfirmArgs(
-                      text: 'DELETE',
-                      theme: DSButtonThemeData.fallback().copyWith(
-                        primary: Themes.colorScheme.error,
-                      ),
+                    confirmArgs: const DSConfirmDialogConfirmArgs(
+                      text: 'Delete',
                     ),
                   ),
                 );
@@ -564,7 +565,10 @@ class _SuspensionRules extends HookWidget {
               child: SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 enableFeedback: true,
-                title: const Text('Item out of stock?'),
+                title: const DSText(
+                  'Item out of stock?',
+                  theme: DSTextThemeData.b1(),
+                ),
                 value: item.suspensionRules != null,
                 onChanged: (outOfStock) {
                   if (outOfStock) {
@@ -596,7 +600,6 @@ class _SuspensionRules extends HookWidget {
             if (item.suspensionRules != null) ...[
               DSVerticalSpacing.small(),
               DSTextFormField(
-                theme: Themes.theme.textFormFieldThemeData,
                 args: DSTextFormFieldArgs(
                   controller: suspensionReasonController,
                   onChanged: (reason) {
@@ -655,7 +658,7 @@ class _CategorySelector extends StatelessWidget {
         return Locator.instance<CategoryRepository>()
             .getAll(
               storeId: storeId,
-              orderBy: const OrderBy('createdAt'),
+              orderBy: const OrderBy(),
             )
             .first;
       },
@@ -663,11 +666,9 @@ class _CategorySelector extends StatelessWidget {
         title: category.name,
       ),
       emptyBuilder: (context) {
-        return DSText(
+        return const DSText(
           'No categories to select.',
-          theme: DSTextThemeData.custom(
-            style: Theme.of(context).textTheme.bodySmall!,
-          ),
+          theme: DSTextThemeData.b4(),
         );
       },
       onSelect: (_, category) {
@@ -746,11 +747,9 @@ class _ModifierGroupSelector extends StatelessWidget {
             );
       },
       emptyBuilder: (_) {
-        return DSText(
+        return const DSText(
           'No modifier groups',
-          theme: DSTextThemeData.custom(
-            style: Theme.of(context).textTheme.bodySmall!,
-          ),
+          theme: DSTextThemeData.b4(),
         );
       },
       textFieldConfiguration: const TextFieldConfiguration(
@@ -829,7 +828,7 @@ class _DietaryLabels extends StatelessWidget {
                         : colorScheme.onBackground,
                     label: DSText(
                       e.stringify(),
-                      theme: DSTextThemeData.labelLarge(),
+                      theme: const DSTextThemeData.b4(),
                     ),
                     avatar: Icon(
                       _getIcon(e),

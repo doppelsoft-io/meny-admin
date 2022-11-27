@@ -27,17 +27,17 @@ class PageSection extends StatelessWidget {
           children: [
             DSText(
               title,
-              theme: DSTextThemeData.titleMedium(),
+              theme: const DSTextThemeData.b1(),
             ),
             if (caption != null) ...[
-              const SizedBox(width: 5),
+              DSHorizontalSpacing.smallest(),
               DSText(
                 caption!,
-                theme: DSTextThemeData.bodySmall(),
+                theme: const DSTextThemeData.c2(),
               ),
             ],
             if (onInfoTapped != null) ...[
-              const SizedBox(width: 5),
+              DSHorizontalSpacing.smallest(),
               GestureDetector(
                 onTap: () => onInfoTapped!(context),
                 child: const Icon(
@@ -48,11 +48,13 @@ class PageSection extends StatelessWidget {
             ]
           ],
         ),
-        if (subtitle != null)
+        if (subtitle != null) ...[
+          DSVerticalSpacing.smallest(),
           DSText(
             subtitle!,
-            theme: DSTextThemeData.bodySmall(),
+            theme: const DSTextThemeData.b5(),
           ),
+        ],
         DSVerticalSpacing.smallest(),
         child,
         DSVerticalSpacing.large(),

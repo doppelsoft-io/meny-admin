@@ -32,10 +32,10 @@ mixin _$SignupState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(StoreModel store, String email, String password)? initial,
-    TResult Function(StoreModel store, String email, String password)?
+    TResult? Function(StoreModel store, String email, String password)? initial,
+    TResult? Function(StoreModel store, String email, String password)?
         signingIn,
-    TResult Function(StoreModel store, String email, String password,
+    TResult? Function(StoreModel store, String email, String password,
             Either<CustomException, bool> result)?
         done,
   }) =>
@@ -60,9 +60,9 @@ mixin _$SignupState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_SigningIn value)? signingIn,
-    TResult Function(_Done value)? done,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_SigningIn value)? signingIn,
+    TResult? Function(_Done value)? done,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -83,46 +83,51 @@ mixin _$SignupState {
 abstract class $SignupStateCopyWith<$Res> {
   factory $SignupStateCopyWith(
           SignupState value, $Res Function(SignupState) then) =
-      _$SignupStateCopyWithImpl<$Res>;
+      _$SignupStateCopyWithImpl<$Res, SignupState>;
+  @useResult
   $Res call({StoreModel store, String email, String password});
 
   $StoreModelCopyWith<$Res> get store;
 }
 
 /// @nodoc
-class _$SignupStateCopyWithImpl<$Res> implements $SignupStateCopyWith<$Res> {
+class _$SignupStateCopyWithImpl<$Res, $Val extends SignupState>
+    implements $SignupStateCopyWith<$Res> {
   _$SignupStateCopyWithImpl(this._value, this._then);
 
-  final SignupState _value;
   // ignore: unused_field
-  final $Res Function(SignupState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? store = freezed,
-    Object? email = freezed,
-    Object? password = freezed,
+    Object? store = null,
+    Object? email = null,
+    Object? password = null,
   }) {
     return _then(_value.copyWith(
-      store: store == freezed
+      store: null == store
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as StoreModel,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      password: password == freezed
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $StoreModelCopyWith<$Res> get store {
     return $StoreModelCopyWith<$Res>(_value.store, (value) {
-      return _then(_value.copyWith(store: value));
+      return _then(_value.copyWith(store: value) as $Val);
     });
   }
 }
@@ -133,6 +138,7 @@ abstract class _$$_InitialCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({StoreModel store, String email, String password});
 
   @override
@@ -140,30 +146,29 @@ abstract class _$$_InitialCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$SignupStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+      : super(_value, _then);
 
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? store = freezed,
-    Object? email = freezed,
-    Object? password = freezed,
+    Object? store = null,
+    Object? email = null,
+    Object? password = null,
   }) {
     return _then(_$_Initial(
-      store: store == freezed
+      store: null == store
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as StoreModel,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      password: password == freezed
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
@@ -195,20 +200,18 @@ class _$_Initial implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Initial &&
-            const DeepCollectionEquality().equals(other.store, store) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.password, password));
+            (identical(other.store, store) || other.store == store) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(store),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(password));
+  int get hashCode => Object.hash(runtimeType, store, email, password);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
       __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
@@ -229,10 +232,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(StoreModel store, String email, String password)? initial,
-    TResult Function(StoreModel store, String email, String password)?
+    TResult? Function(StoreModel store, String email, String password)? initial,
+    TResult? Function(StoreModel store, String email, String password)?
         signingIn,
-    TResult Function(StoreModel store, String email, String password,
+    TResult? Function(StoreModel store, String email, String password,
             Either<CustomException, bool> result)?
         done,
   }) {
@@ -269,9 +272,9 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_SigningIn value)? signingIn,
-    TResult Function(_Done value)? done,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_SigningIn value)? signingIn,
+    TResult? Function(_Done value)? done,
   }) {
     return initial?.call(this);
   }
@@ -316,6 +319,7 @@ abstract class _$$_SigningInCopyWith<$Res>
           _$_SigningIn value, $Res Function(_$_SigningIn) then) =
       __$$_SigningInCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({StoreModel store, String email, String password});
 
   @override
@@ -323,31 +327,30 @@ abstract class _$$_SigningInCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SigningInCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
+class __$$_SigningInCopyWithImpl<$Res>
+    extends _$SignupStateCopyWithImpl<$Res, _$_SigningIn>
     implements _$$_SigningInCopyWith<$Res> {
   __$$_SigningInCopyWithImpl(
       _$_SigningIn _value, $Res Function(_$_SigningIn) _then)
-      : super(_value, (v) => _then(v as _$_SigningIn));
+      : super(_value, _then);
 
-  @override
-  _$_SigningIn get _value => super._value as _$_SigningIn;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? store = freezed,
-    Object? email = freezed,
-    Object? password = freezed,
+    Object? store = null,
+    Object? email = null,
+    Object? password = null,
   }) {
     return _then(_$_SigningIn(
-      store: store == freezed
+      store: null == store
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as StoreModel,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      password: password == freezed
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
@@ -378,20 +381,18 @@ class _$_SigningIn implements _SigningIn {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SigningIn &&
-            const DeepCollectionEquality().equals(other.store, store) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.password, password));
+            (identical(other.store, store) || other.store == store) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(store),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(password));
+  int get hashCode => Object.hash(runtimeType, store, email, password);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SigningInCopyWith<_$_SigningIn> get copyWith =>
       __$$_SigningInCopyWithImpl<_$_SigningIn>(this, _$identity);
 
@@ -412,10 +413,10 @@ class _$_SigningIn implements _SigningIn {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(StoreModel store, String email, String password)? initial,
-    TResult Function(StoreModel store, String email, String password)?
+    TResult? Function(StoreModel store, String email, String password)? initial,
+    TResult? Function(StoreModel store, String email, String password)?
         signingIn,
-    TResult Function(StoreModel store, String email, String password,
+    TResult? Function(StoreModel store, String email, String password,
             Either<CustomException, bool> result)?
         done,
   }) {
@@ -452,9 +453,9 @@ class _$_SigningIn implements _SigningIn {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_SigningIn value)? signingIn,
-    TResult Function(_Done value)? done,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_SigningIn value)? signingIn,
+    TResult? Function(_Done value)? done,
   }) {
     return signingIn?.call(this);
   }
@@ -497,6 +498,7 @@ abstract class _$$_DoneCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
   factory _$$_DoneCopyWith(_$_Done value, $Res Function(_$_Done) then) =
       __$$_DoneCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {StoreModel store,
       String email,
@@ -508,35 +510,34 @@ abstract class _$$_DoneCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_DoneCopyWithImpl<$Res> extends _$SignupStateCopyWithImpl<$Res>
+class __$$_DoneCopyWithImpl<$Res>
+    extends _$SignupStateCopyWithImpl<$Res, _$_Done>
     implements _$$_DoneCopyWith<$Res> {
   __$$_DoneCopyWithImpl(_$_Done _value, $Res Function(_$_Done) _then)
-      : super(_value, (v) => _then(v as _$_Done));
+      : super(_value, _then);
 
-  @override
-  _$_Done get _value => super._value as _$_Done;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? store = freezed,
-    Object? email = freezed,
-    Object? password = freezed,
-    Object? result = freezed,
+    Object? store = null,
+    Object? email = null,
+    Object? password = null,
+    Object? result = null,
   }) {
     return _then(_$_Done(
-      store: store == freezed
+      store: null == store
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as StoreModel,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      password: password == freezed
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as Either<CustomException, bool>,
@@ -572,22 +573,19 @@ class _$_Done implements _Done {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Done &&
-            const DeepCollectionEquality().equals(other.store, store) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.password, password) &&
-            const DeepCollectionEquality().equals(other.result, result));
+            (identical(other.store, store) || other.store == store) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.result, result) || other.result == result));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(store),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(password),
-      const DeepCollectionEquality().hash(result));
+  int get hashCode => Object.hash(runtimeType, store, email, password, result);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DoneCopyWith<_$_Done> get copyWith =>
       __$$_DoneCopyWithImpl<_$_Done>(this, _$identity);
 
@@ -608,10 +606,10 @@ class _$_Done implements _Done {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(StoreModel store, String email, String password)? initial,
-    TResult Function(StoreModel store, String email, String password)?
+    TResult? Function(StoreModel store, String email, String password)? initial,
+    TResult? Function(StoreModel store, String email, String password)?
         signingIn,
-    TResult Function(StoreModel store, String email, String password,
+    TResult? Function(StoreModel store, String email, String password,
             Either<CustomException, bool> result)?
         done,
   }) {
@@ -648,9 +646,9 @@ class _$_Done implements _Done {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_SigningIn value)? signingIn,
-    TResult Function(_Done value)? done,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_SigningIn value)? signingIn,
+    TResult? Function(_Done value)? done,
   }) {
     return done?.call(this);
   }

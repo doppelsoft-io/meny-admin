@@ -25,9 +25,9 @@ mixin _$LoginState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loggingIn,
-    TResult Function(Either<CustomException, UserModel> result)? done,
+    TResult? Function()? initial,
+    TResult? Function()? loggingIn,
+    TResult? Function(Either<CustomException, UserModel> result)? done,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$LoginState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_LoggingIn value)? loggingIn,
-    TResult Function(_Done value)? done,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_LoggingIn value)? loggingIn,
+    TResult? Function(_Done value)? done,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,16 +66,18 @@ mixin _$LoginState {
 abstract class $LoginStateCopyWith<$Res> {
   factory $LoginStateCopyWith(
           LoginState value, $Res Function(LoginState) then) =
-      _$LoginStateCopyWithImpl<$Res>;
+      _$LoginStateCopyWithImpl<$Res, LoginState>;
 }
 
 /// @nodoc
-class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
+class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
+    implements $LoginStateCopyWith<$Res> {
   _$LoginStateCopyWithImpl(this._value, this._then);
 
-  final LoginState _value;
   // ignore: unused_field
-  final $Res Function(LoginState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -86,13 +88,11 @@ abstract class _$$_InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
-
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -127,9 +127,9 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loggingIn,
-    TResult Function(Either<CustomException, UserModel> result)? done,
+    TResult? Function()? initial,
+    TResult? Function()? loggingIn,
+    TResult? Function(Either<CustomException, UserModel> result)? done,
   }) {
     return initial?.call();
   }
@@ -161,9 +161,9 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_LoggingIn value)? loggingIn,
-    TResult Function(_Done value)? done,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_LoggingIn value)? loggingIn,
+    TResult? Function(_Done value)? done,
   }) {
     return initial?.call(this);
   }
@@ -195,14 +195,12 @@ abstract class _$$_LoggingInCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_LoggingInCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
+class __$$_LoggingInCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$_LoggingIn>
     implements _$$_LoggingInCopyWith<$Res> {
   __$$_LoggingInCopyWithImpl(
       _$_LoggingIn _value, $Res Function(_$_LoggingIn) _then)
-      : super(_value, (v) => _then(v as _$_LoggingIn));
-
-  @override
-  _$_LoggingIn get _value => super._value as _$_LoggingIn;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -237,9 +235,9 @@ class _$_LoggingIn implements _LoggingIn {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loggingIn,
-    TResult Function(Either<CustomException, UserModel> result)? done,
+    TResult? Function()? initial,
+    TResult? Function()? loggingIn,
+    TResult? Function(Either<CustomException, UserModel> result)? done,
   }) {
     return loggingIn?.call();
   }
@@ -271,9 +269,9 @@ class _$_LoggingIn implements _LoggingIn {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_LoggingIn value)? loggingIn,
-    TResult Function(_Done value)? done,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_LoggingIn value)? loggingIn,
+    TResult? Function(_Done value)? done,
   }) {
     return loggingIn?.call(this);
   }
@@ -301,24 +299,24 @@ abstract class _LoggingIn implements LoginState {
 abstract class _$$_DoneCopyWith<$Res> {
   factory _$$_DoneCopyWith(_$_Done value, $Res Function(_$_Done) then) =
       __$$_DoneCopyWithImpl<$Res>;
+  @useResult
   $Res call({Either<CustomException, UserModel> result});
 }
 
 /// @nodoc
-class __$$_DoneCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
+class __$$_DoneCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$_Done>
     implements _$$_DoneCopyWith<$Res> {
   __$$_DoneCopyWithImpl(_$_Done _value, $Res Function(_$_Done) _then)
-      : super(_value, (v) => _then(v as _$_Done));
+      : super(_value, _then);
 
-  @override
-  _$_Done get _value => super._value as _$_Done;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
+    Object? result = null,
   }) {
     return _then(_$_Done(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as Either<CustomException, UserModel>,
@@ -344,15 +342,15 @@ class _$_Done implements _Done {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Done &&
-            const DeepCollectionEquality().equals(other.result, result));
+            (identical(other.result, result) || other.result == result));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(result));
+  int get hashCode => Object.hash(runtimeType, result);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DoneCopyWith<_$_Done> get copyWith =>
       __$$_DoneCopyWithImpl<_$_Done>(this, _$identity);
 
@@ -369,9 +367,9 @@ class _$_Done implements _Done {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loggingIn,
-    TResult Function(Either<CustomException, UserModel> result)? done,
+    TResult? Function()? initial,
+    TResult? Function()? loggingIn,
+    TResult? Function(Either<CustomException, UserModel> result)? done,
   }) {
     return done?.call(result);
   }
@@ -403,9 +401,9 @@ class _$_Done implements _Done {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_LoggingIn value)? loggingIn,
-    TResult Function(_Done value)? done,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_LoggingIn value)? loggingIn,
+    TResult? Function(_Done value)? done,
   }) {
     return done?.call(this);
   }

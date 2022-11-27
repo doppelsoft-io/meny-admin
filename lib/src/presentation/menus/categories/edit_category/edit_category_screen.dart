@@ -7,7 +7,6 @@ import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
-import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
 class EditCategoryScreen extends StatelessWidget {
@@ -65,7 +64,7 @@ class _EditCategoryScreen extends HookWidget {
       text: editCategoryState.category.name,
     );
 
-    Future<bool> _onWillPop({
+    Future<bool> onWillPop({
       required BuildContext context,
       required List<MenuModel> menus,
       required CategoryModel category,
@@ -77,13 +76,13 @@ class _EditCategoryScreen extends HookWidget {
             return AlertDialog(
               title: const Text('Close without saving?'),
               actions: [
-                ElevatedButton(
+                DSButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('YES'),
+                  text: 'Yes',
                 ),
-                OutlinedButton(
+                DSButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text('NO'),
+                  text: 'No',
                 ),
               ],
             );
@@ -103,7 +102,7 @@ class _EditCategoryScreen extends HookWidget {
     }
 
     return WillPopScope(
-      onWillPop: () => _onWillPop(
+      onWillPop: () => onWillPop(
         context: context,
         category: editCategoryState.category,
         menus: menuCategoriesState.menus,
@@ -141,11 +140,11 @@ class _EditCategoryScreen extends HookWidget {
                   return Scaffold(
                     appBar: AppBar(
                       elevation: 0,
-                      iconTheme: const IconThemeData(color: Colors.black),
                       backgroundColor: Colors.white,
-                      title: DSText(
+                      leading: const DSBackButton(),
+                      title: const DSText(
                         'Edit Category',
-                        theme: DSTextThemeData.headlineSmall(),
+                        theme: DSTextThemeData.h3(),
                       ),
                       bottom: PreferredSize(
                         preferredSize: const Size.fromHeight(8),
@@ -168,9 +167,9 @@ class _EditCategoryScreen extends HookWidget {
                             menus: menuCategoriesState.menus,
                           ),
                         ),
-                        DSHorizontalSpacing.small(),
+                        DSHorizontalSpacing.smallest(),
                         Center(
-                          child: ElevatedButton(
+                          child: DSButton(
                             onPressed: () {
                               final isValid = EditCategoryScreen
                                   ._formKey.currentState!
@@ -183,7 +182,7 @@ class _EditCategoryScreen extends HookWidget {
                                     ),
                                   );
                             },
-                            child: const Text('SAVE'),
+                            text: 'Save',
                           ),
                         ),
                         DSHorizontalSpacing.medium(),
@@ -199,7 +198,6 @@ class _EditCategoryScreen extends HookWidget {
                             PageSection(
                               title: 'Name',
                               child: DSTextFormField(
-                                theme: Themes.theme.textFormFieldThemeData,
                                 args: DSTextFormFieldArgs(
                                   controller: controller,
                                   autofocus: true,
@@ -242,7 +240,7 @@ class _EditCategoryScreen extends HookWidget {
                                   return Locator.instance<MenuRepository>()
                                       .getAll(
                                         storeId: storeId,
-                                        orderBy: const OrderBy('createdAt'),
+                                        orderBy: const OrderBy(),
                                       )
                                       .first;
                                 },
@@ -344,11 +342,8 @@ class _DeleteCategoryButton extends StatelessWidget {
                       'This will remove this category from all menus.\nNote: this will NOT delete any menu items that were in this category',
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    confirmArgs: DSConfirmDialogConfirmArgs(
-                      text: 'DELETE',
-                      theme: DSButtonThemeData.fallback().copyWith(
-                        primary: Themes.colorScheme.error,
-                      ),
+                    confirmArgs: const DSConfirmDialogConfirmArgs(
+                      text: 'Delete',
                     ),
                   ),
                 );

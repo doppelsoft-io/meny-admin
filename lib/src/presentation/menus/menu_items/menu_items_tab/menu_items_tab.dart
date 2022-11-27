@@ -3,6 +3,7 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/domain/domain.dart';
@@ -21,6 +22,14 @@ class MenuItemsTab extends StatelessWidget {
           create: (context) => MenuItemsCubit(
             authCubit: context.read<AuthCubit>(),
           ),
+        ),
+        BlocProvider<BulkDeleteMenuItemsCubit>(
+          create: (context) => BulkDeleteMenuItemsCubit(
+            storeCubit: context.read<StoreCubit>(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => ResourceTableItemSelectorCubit<MenuItemModel>(),
         ),
       ],
       child: _MenusScreenItemsTab(),
@@ -45,26 +54,27 @@ class _MenusScreenItemsTab extends HookWidget {
       const [],
     );
 
-    void _sort(
-      int columnIndex,
-      bool descending,
-      String name,
-    ) {
+    void sort({
+      required int columnIndex,
+      required bool descending,
+      required String name,
+    }) {
       final storeCubit = context.read<StoreCubit>();
       final storeId = storeCubit.state.store.id;
       context.read<MenuItemsCubit>().load(
             storeId: storeId!,
             orderBy: OrderBy(
-              name,
+              field: name,
               descending: !descending,
               sortColumnIndex: columnIndex,
             ),
           );
     }
 
-    void _onTapItem(BuildContext context, MenuItemModel item) {
+    void onTapItem(BuildContext context, MenuItemModel item) {
       ActionService.run(
         () {
+          context.read<ResourceTableItemSelectorCubit<MenuItemModel>>().clear();
           GoRouter.of(context).pushNamed(
             EditMenuItemScreen.routeName,
             params: {
@@ -92,6 +102,33 @@ class _MenusScreenItemsTab extends HookWidget {
             }
           },
         ),
+        BlocListener<BulkDeleteMenuItemsCubit, BulkDeleteMenuItemsState>(
+          listener: (context, state) {
+            state.maybeWhen(
+              error: (exception) {
+                DialogService.showErrorDialog(
+                  context: context,
+                  failure: CustomException(message: exception.toString()),
+                );
+              },
+              success: () {
+                final items = context
+                    .read<ResourceTableItemSelectorCubit<MenuItemModel>>()
+                    .state
+                    .items;
+                Locator.instance<ToastService>().showNotification(
+                  Text(
+                    '${items.length == 1 ? '1 item' : '${items.length} items'} successfully deleted.',
+                  ),
+                );
+                context
+                    .read<ResourceTableItemSelectorCubit<MenuItemModel>>()
+                    .clear();
+              },
+              orElse: () {},
+            );
+          },
+        ),
       ],
       child: menuItemsState.maybeWhen(
         orElse: () {
@@ -103,6 +140,10 @@ class _MenusScreenItemsTab extends HookWidget {
           const emptyMessage =
               'No items yet. Click "New" above to get started!';
 
+          final resourceItemSelectorState = context
+              .watch<ResourceTableItemSelectorCubit<MenuItemModel>>()
+              .state;
+
           return Stack(
             children: [
               if (isMobile) ...[
@@ -111,75 +152,110 @@ class _MenusScreenItemsTab extends HookWidget {
                   action: action,
                   resources: items,
                   emptyMessage: emptyMessage,
-                  onTapItem: _onTapItem,
                   itemBuilder: (_, item) {
-                    return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: DSSpacing.sm,
-                        vertical: DSSpacing.xxs,
+                    return DSListTile(
+                      args: DSListTileArgs(
+                        leading: MenuItemImage(imageUrl: item.imageUrl ?? ''),
+                        title: item.name,
+                        subtitle: DSText(
+                          'Updated: ${item.updatedAt?.format()}',
+                          theme: const DSTextThemeData.b5(),
+                        ),
+                        trailing:
+                            Text((item.priceInfo.price / 100).toCurrency()),
+                        onTap: () => onTapItem(context, item),
                       ),
-                      onTap: () => _onTapItem(context, item),
-                      leading: MenuItemImage(imageUrl: item.imageUrl ?? ''),
-                      title: DSText(
-                        item.name,
-                        theme: DSTextThemeData.labelLarge(),
-                      ),
-                      subtitle: DSText(
-                        'Updated: ${item.updatedAt?.format()}',
-                        theme: DSTextThemeData.bodySmall(),
-                      ),
-                      trailing: Text((item.priceInfo.price / 100).toCurrency()),
                     );
                   },
                 ),
               ] else ...[
                 ResourceTable<MenuItemModel>(
                   header: header,
+                  toolbar: resourceItemSelectorState.items.isNotEmpty
+                      ? const MenuItemsToolbar()
+                      : null,
                   action: action,
                   resources: items,
                   sortColumnIndex: orderBy.sortColumnIndex,
                   sortAscending: !orderBy.descending,
-                  onTapItem: _onTapItem,
+                  onTapItem: onTapItem,
                   emptyMessage: emptyMessage,
+                  onSelectAll: (selected) {
+                    if (selected ?? false) {
+                      for (final item in items) {
+                        context
+                            .read<
+                                ResourceTableItemSelectorCubit<MenuItemModel>>()
+                            .add(item);
+                      }
+                    } else {
+                      for (final item in resourceItemSelectorState.items) {
+                        context
+                            .read<
+                                ResourceTableItemSelectorCubit<MenuItemModel>>()
+                            .remove(item);
+                      }
+                    }
+                  },
+                  isSelected: (resource) {
+                    return resourceItemSelectorState.items.contains(resource);
+                  },
+                  onSelectChanged: (selected, resource) {
+                    if (selected ?? false) {
+                      context
+                          .read<ResourceTableItemSelectorCubit<MenuItemModel>>()
+                          .add(resource);
+                    } else {
+                      context
+                          .read<ResourceTableItemSelectorCubit<MenuItemModel>>()
+                          .remove(resource);
+                    }
+                  },
                   columns: [
-                    DataColumn2(
+                    const DataColumn2(
                       label: DSText(
                         'PHOTO',
-                        theme: DSTextThemeData.labelSmall(),
+                        theme: DSTextThemeData.c2(),
                       ),
                       fixedWidth: 75,
                     ),
                     DataColumn2(
-                      label: DSText(
+                      label: const DSText(
                         'NAME',
-                        theme: DSTextThemeData.labelSmall(),
+                        theme: DSTextThemeData.c2(),
                       ),
                       size: ColumnSize.L,
-                      onSort: (columnIndex, descending) =>
-                          _sort(columnIndex, descending, 'name'),
+                      onSort: (columnIndex, descending) => sort(
+                        columnIndex: columnIndex,
+                        descending: descending,
+                        name: 'name',
+                      ),
                     ),
                     DataColumn2(
-                      label: DSText(
+                      label: const DSText(
                         'PRICE',
-                        theme: DSTextThemeData.labelSmall(),
+                        theme: DSTextThemeData.c2(),
                       ),
                       fixedWidth: 125,
-                      onSort: (columnIndex, descending) => _sort(
-                        columnIndex,
-                        descending,
-                        'priceInfo.price',
+                      onSort: (columnIndex, descending) => sort(
+                        columnIndex: columnIndex,
+                        descending: descending,
+                        name: 'priceInfo.price',
                       ),
                       numeric: true,
                     ),
                     DataColumn2(
-                      label: DSText(
+                      label: const DSText(
                         'CREATED',
-                        theme: DSTextThemeData.labelSmall(),
+                        theme: DSTextThemeData.c2(),
                       ),
                       fixedWidth: 200,
                       size: ColumnSize.S,
-                      onSort: (columnIndex, descending) =>
-                          _sort(columnIndex, descending, 'createdAt'),
+                      onSort: (columnIndex, descending) => sort(
+                        columnIndex: columnIndex,
+                        descending: descending,
+                        name: 'createdAt',
+                      ),
                     ),
                   ],
                   cellsBuilder: (_, item) {
@@ -192,11 +268,11 @@ class _MenusScreenItemsTab extends HookWidget {
                           children: [
                             DSText(
                               item.name,
-                              theme: DSTextThemeData.labelLarge(),
+                              theme: const DSTextThemeData.b4(),
                             ),
                             DSText(
                               'Updated: ${item.updatedAt?.format()}',
-                              theme: DSTextThemeData.bodySmall(),
+                              theme: const DSTextThemeData.c2(),
                             ),
                           ],
                         ),
@@ -204,13 +280,13 @@ class _MenusScreenItemsTab extends HookWidget {
                       DataCell(
                         DSText(
                           (item.priceInfo.price / 100).toCurrency(),
-                          theme: DSTextThemeData.bodyMedium(),
+                          theme: const DSTextThemeData.b5(),
                         ),
                       ),
                       DataCell(
                         DSText(
                           item.createdAt?.format() ?? '',
-                          theme: DSTextThemeData.bodyMedium(),
+                          theme: const DSTextThemeData.b5(),
                         ),
                       ),
                     ];
@@ -234,5 +310,47 @@ class _MenusScreenItemsTab extends HookWidget {
         },
       ),
     );
+  }
+}
+
+class MenuItemsToolbar extends StatelessWidget {
+  const MenuItemsToolbar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DSToolbar(
+      items: [
+        DSToolbarItem.icon(
+          onPressed: () => bulkDeleteItems(context),
+          icon: Icons.delete,
+          tooltip: 'Delete',
+        ),
+      ],
+    );
+  }
+
+  Future<void> bulkDeleteItems(BuildContext context) async {
+    final resourceItemSelectorState =
+        context.read<ResourceTableItemSelectorCubit<MenuItemModel>>().state;
+    final result = await DSConfirmDialog.open<bool>(
+      context,
+      args: const DSConfirmDialogArgs(
+        title: 'Are you sure?',
+        content: Text(
+          'This will remove all items from any menus they appear on. This action cannot be undone.',
+        ),
+        confirmArgs: DSConfirmDialogConfirmArgs(
+          text: 'Yes, Delete',
+        ),
+      ),
+    );
+    if (result != null && result) {
+      // ignore: use_build_context_synchronously
+      await context.read<BulkDeleteMenuItemsCubit>().batchDelete(
+            menuItemIds: resourceItemSelectorState.items
+                .map((item) => item.id!)
+                .toList(),
+          );
+    }
   }
 }

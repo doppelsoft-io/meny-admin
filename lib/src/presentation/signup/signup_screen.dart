@@ -7,7 +7,6 @@ import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
-import 'package:meny_admin/themes.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -122,7 +121,6 @@ class _SignupScreen extends HookWidget {
                     PageSection(
                       title: 'Business Name',
                       child: DSTextFormField(
-                        theme: Themes.theme.textFormFieldThemeData,
                         args: DSTextFormFieldArgs(
                           autocorrect: false,
                           autovalidateMode: AutovalidateMode.always,
@@ -154,7 +152,6 @@ class _SignupScreen extends HookWidget {
                     PageSection(
                       title: 'Email',
                       child: DSTextFormField(
-                        theme: Themes.theme.textFormFieldThemeData,
                         args: DSTextFormFieldArgs(
                           autocorrect: false,
                           controller: emailController,
@@ -189,7 +186,6 @@ class _SignupScreen extends HookWidget {
                     PageSection(
                       title: 'Password',
                       child: DSTextFormField(
-                        theme: Themes.theme.textFormFieldThemeData,
                         args: DSTextFormFieldArgs(
                           controller: passwordController,
                           keyboardType: TextInputType.visiblePassword,
@@ -206,11 +202,7 @@ class _SignupScreen extends HookWidget {
                     DSVerticalSpacing.small(),
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize:
-                              const Size.fromHeight(kMinInteractiveDimension),
-                        ),
+                      child: DSButton(
                         onPressed: [
                           storeNameController.text,
                           emailController.text,
@@ -234,25 +226,27 @@ class _SignupScreen extends HookWidget {
                                       );
                                 }
                               },
-                        child: state.maybeMap(
-                          signingIn: (_) => SizedBox(
-                            height: 18,
-                            width: 18,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.green.shade50,
-                            ),
-                          ),
-                          orElse: () => const Text('Sign Up'),
-                        ),
+                        text: 'Sign Up',
+                        // child: state.maybeMap(
+                        //   signingIn: (_) => SizedBox(
+                        //     height: 18,
+                        //     width: 18,
+                        //     child: CircularProgressIndicator(
+                        //       strokeWidth: 2,
+                        //       color: Colors.green.shade50,
+                        //     ),
+                        //   ),
+                        //   orElse: () => const Text('Sign Up'),
+                        // ),
                       ),
                     ),
                     DSVerticalSpacing.medium(),
-                    TextButton(
+                    DSButton(
+                      theme: const DSButtonThemeData.text(),
                       onPressed: () {
                         GoRouter.of(context).goNamed(LoginScreen.routeName);
                       },
-                      child: const Text('Already have an account?'),
+                      text: 'Already have an account?',
                     ),
                   ],
                 ),

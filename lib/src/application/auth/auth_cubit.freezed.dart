@@ -27,10 +27,10 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserModel user)? initial,
-    TResult Function(UserModel user)? unauthenticated,
-    TResult Function(UserModel user)? authenticated,
-    TResult Function(UserModel user)? anonymous,
+    TResult? Function(UserModel user)? initial,
+    TResult? Function(UserModel user)? unauthenticated,
+    TResult? Function(UserModel user)? authenticated,
+    TResult? Function(UserModel user)? anonymous,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -52,10 +52,10 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Unauthenticated value)? unauthenticated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Anonymous value)? anonymous,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Anonymous value)? anonymous,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -76,36 +76,41 @@ mixin _$AuthState {
 /// @nodoc
 abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
-      _$AuthStateCopyWithImpl<$Res>;
+      _$AuthStateCopyWithImpl<$Res, AuthState>;
+  @useResult
   $Res call({UserModel user});
 
   $UserModelCopyWith<$Res> get user;
 }
 
 /// @nodoc
-class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
+class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
+    implements $AuthStateCopyWith<$Res> {
   _$AuthStateCopyWithImpl(this._value, this._then);
 
-  final AuthState _value;
   // ignore: unused_field
-  final $Res Function(AuthState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
     return _then(_value.copyWith(
-      user: user == freezed
+      user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserModelCopyWith<$Res> get user {
     return $UserModelCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value));
+      return _then(_value.copyWith(user: value) as $Val);
     });
   }
 }
@@ -116,6 +121,7 @@ abstract class _$$_InitialCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({UserModel user});
 
   @override
@@ -123,20 +129,19 @@ abstract class _$$_InitialCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+      : super(_value, _then);
 
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
     return _then(_$_Initial(
-      user: user == freezed
+      user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel,
@@ -162,15 +167,15 @@ class _$_Initial implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Initial &&
-            const DeepCollectionEquality().equals(other.user, user));
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
       __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
@@ -188,10 +193,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserModel user)? initial,
-    TResult Function(UserModel user)? unauthenticated,
-    TResult Function(UserModel user)? authenticated,
-    TResult Function(UserModel user)? anonymous,
+    TResult? Function(UserModel user)? initial,
+    TResult? Function(UserModel user)? unauthenticated,
+    TResult? Function(UserModel user)? authenticated,
+    TResult? Function(UserModel user)? anonymous,
   }) {
     return initial?.call(user);
   }
@@ -225,10 +230,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Unauthenticated value)? unauthenticated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Anonymous value)? anonymous,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Anonymous value)? anonymous,
   }) {
     return initial?.call(this);
   }
@@ -267,6 +272,7 @@ abstract class _$$_UnauthenticatedCopyWith<$Res>
           _$_Unauthenticated value, $Res Function(_$_Unauthenticated) then) =
       __$$_UnauthenticatedCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({UserModel user});
 
   @override
@@ -275,21 +281,19 @@ abstract class _$$_UnauthenticatedCopyWith<$Res>
 
 /// @nodoc
 class __$$_UnauthenticatedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$_Unauthenticated>
     implements _$$_UnauthenticatedCopyWith<$Res> {
   __$$_UnauthenticatedCopyWithImpl(
       _$_Unauthenticated _value, $Res Function(_$_Unauthenticated) _then)
-      : super(_value, (v) => _then(v as _$_Unauthenticated));
+      : super(_value, _then);
 
-  @override
-  _$_Unauthenticated get _value => super._value as _$_Unauthenticated;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
     return _then(_$_Unauthenticated(
-      user: user == freezed
+      user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel,
@@ -315,15 +319,15 @@ class _$_Unauthenticated implements _Unauthenticated {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Unauthenticated &&
-            const DeepCollectionEquality().equals(other.user, user));
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UnauthenticatedCopyWith<_$_Unauthenticated> get copyWith =>
       __$$_UnauthenticatedCopyWithImpl<_$_Unauthenticated>(this, _$identity);
 
@@ -341,10 +345,10 @@ class _$_Unauthenticated implements _Unauthenticated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserModel user)? initial,
-    TResult Function(UserModel user)? unauthenticated,
-    TResult Function(UserModel user)? authenticated,
-    TResult Function(UserModel user)? anonymous,
+    TResult? Function(UserModel user)? initial,
+    TResult? Function(UserModel user)? unauthenticated,
+    TResult? Function(UserModel user)? authenticated,
+    TResult? Function(UserModel user)? anonymous,
   }) {
     return unauthenticated?.call(user);
   }
@@ -378,10 +382,10 @@ class _$_Unauthenticated implements _Unauthenticated {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Unauthenticated value)? unauthenticated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Anonymous value)? anonymous,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Anonymous value)? anonymous,
   }) {
     return unauthenticated?.call(this);
   }
@@ -421,6 +425,7 @@ abstract class _$$_AuthenticatedCopyWith<$Res>
           _$_Authenticated value, $Res Function(_$_Authenticated) then) =
       __$$_AuthenticatedCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({UserModel user});
 
   @override
@@ -428,21 +433,20 @@ abstract class _$$_AuthenticatedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AuthenticatedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+class __$$_AuthenticatedCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$_Authenticated>
     implements _$$_AuthenticatedCopyWith<$Res> {
   __$$_AuthenticatedCopyWithImpl(
       _$_Authenticated _value, $Res Function(_$_Authenticated) _then)
-      : super(_value, (v) => _then(v as _$_Authenticated));
+      : super(_value, _then);
 
-  @override
-  _$_Authenticated get _value => super._value as _$_Authenticated;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
     return _then(_$_Authenticated(
-      user: user == freezed
+      user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel,
@@ -468,15 +472,15 @@ class _$_Authenticated implements _Authenticated {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Authenticated &&
-            const DeepCollectionEquality().equals(other.user, user));
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AuthenticatedCopyWith<_$_Authenticated> get copyWith =>
       __$$_AuthenticatedCopyWithImpl<_$_Authenticated>(this, _$identity);
 
@@ -494,10 +498,10 @@ class _$_Authenticated implements _Authenticated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserModel user)? initial,
-    TResult Function(UserModel user)? unauthenticated,
-    TResult Function(UserModel user)? authenticated,
-    TResult Function(UserModel user)? anonymous,
+    TResult? Function(UserModel user)? initial,
+    TResult? Function(UserModel user)? unauthenticated,
+    TResult? Function(UserModel user)? authenticated,
+    TResult? Function(UserModel user)? anonymous,
   }) {
     return authenticated?.call(user);
   }
@@ -531,10 +535,10 @@ class _$_Authenticated implements _Authenticated {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Unauthenticated value)? unauthenticated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Anonymous value)? anonymous,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Anonymous value)? anonymous,
   }) {
     return authenticated?.call(this);
   }
@@ -572,6 +576,7 @@ abstract class _$$_AnonymousCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
           _$_Anonymous value, $Res Function(_$_Anonymous) then) =
       __$$_AnonymousCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({UserModel user});
 
   @override
@@ -579,21 +584,20 @@ abstract class _$$_AnonymousCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AnonymousCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+class __$$_AnonymousCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$_Anonymous>
     implements _$$_AnonymousCopyWith<$Res> {
   __$$_AnonymousCopyWithImpl(
       _$_Anonymous _value, $Res Function(_$_Anonymous) _then)
-      : super(_value, (v) => _then(v as _$_Anonymous));
+      : super(_value, _then);
 
-  @override
-  _$_Anonymous get _value => super._value as _$_Anonymous;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
     return _then(_$_Anonymous(
-      user: user == freezed
+      user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel,
@@ -619,15 +623,15 @@ class _$_Anonymous implements _Anonymous {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Anonymous &&
-            const DeepCollectionEquality().equals(other.user, user));
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AnonymousCopyWith<_$_Anonymous> get copyWith =>
       __$$_AnonymousCopyWithImpl<_$_Anonymous>(this, _$identity);
 
@@ -645,10 +649,10 @@ class _$_Anonymous implements _Anonymous {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserModel user)? initial,
-    TResult Function(UserModel user)? unauthenticated,
-    TResult Function(UserModel user)? authenticated,
-    TResult Function(UserModel user)? anonymous,
+    TResult? Function(UserModel user)? initial,
+    TResult? Function(UserModel user)? unauthenticated,
+    TResult? Function(UserModel user)? authenticated,
+    TResult? Function(UserModel user)? anonymous,
   }) {
     return anonymous?.call(user);
   }
@@ -682,10 +686,10 @@ class _$_Anonymous implements _Anonymous {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Unauthenticated value)? unauthenticated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Anonymous value)? anonymous,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Anonymous value)? anonymous,
   }) {
     return anonymous?.call(this);
   }

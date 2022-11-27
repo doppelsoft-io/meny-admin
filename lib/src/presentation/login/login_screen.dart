@@ -7,7 +7,6 @@ import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
-import 'package:meny_admin/themes.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -118,7 +117,6 @@ class _LoginScreen extends HookWidget {
                     ),
                     DSVerticalSpacing.medium(),
                     DSTextFormField(
-                      theme: Themes.theme.textFormFieldThemeData,
                       args: DSTextFormFieldArgs(
                         autocorrect: false,
                         controller: emailController,
@@ -152,7 +150,6 @@ class _LoginScreen extends HookWidget {
                     ),
                     DSVerticalSpacing.small(),
                     DSTextFormField(
-                      theme: Themes.theme.textFormFieldThemeData,
                       args: DSTextFormFieldArgs(
                         controller: passwordController,
                         obscureText: true,
@@ -179,11 +176,7 @@ class _LoginScreen extends HookWidget {
                     DSVerticalSpacing.small(),
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize:
-                              const Size.fromHeight(kMinInteractiveDimension),
-                        ),
+                      child: DSButton(
                         onPressed: state.maybeWhen(
                           loggingIn: () => null,
                           orElse: () {
@@ -194,25 +187,27 @@ class _LoginScreen extends HookWidget {
                             return submit;
                           },
                         ),
-                        child: state.maybeWhen(
-                          loggingIn: () => SizedBox(
-                            height: 18,
-                            width: 18,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.green.shade50,
-                            ),
-                          ),
-                          orElse: () => const Text('Log In'),
-                        ),
+                        text: 'Log In',
+                        // child: state.maybeWhen(
+                        //   loggingIn: () => SizedBox(
+                        //     height: 18,
+                        //     width: 18,
+                        //     child: CircularProgressIndicator(
+                        //       strokeWidth: 2,
+                        //       color: Colors.green.shade50,
+                        //     ),
+                        //   ),
+                        //   orElse: () => const Text('Log In'),
+                        // ),
                       ),
                     ),
                     DSVerticalSpacing.medium(),
-                    TextButton(
+                    DSButton(
+                      theme: const DSButtonThemeData.text(),
                       onPressed: () {
                         GoRouter.of(context).pushNamed(SignupScreen.routeName);
                       },
-                      child: const Text("Don't have an account?"),
+                      text: "Don't have an account?",
                     ),
                   ],
                 ),

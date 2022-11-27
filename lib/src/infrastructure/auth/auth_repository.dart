@@ -43,17 +43,24 @@ class AuthRepository {
 
   Future<UserModel> getCurrentUser() async {
     StreamSubscription<User?>? subscription;
+    Completer<User?> completer;
     try {
-      final completer = Completer<User?>();
-      subscription =
-          _firebaseAuth.authStateChanges().listen(completer.complete);
-      final currentUser = await completer.future;
-
-      await subscription.cancel();
+      completer = Completer<User>();
+      final currentUser = _firebaseAuth.currentUser;
       if (currentUser != null) {
+        completer.complete(currentUser);
+        await subscription?.cancel();
         return UserModel.fromFirebaseAuthUser(currentUser);
       } else {
-        return UserModel.empty();
+        subscription =
+            _firebaseAuth.authStateChanges().listen(completer.complete);
+        final currentUser = await completer.future;
+        await subscription.cancel();
+        if (currentUser != null) {
+          return UserModel.fromFirebaseAuthUser(currentUser);
+        } else {
+          return UserModel.empty();
+        }
       }
     } catch (err) {
       await subscription?.cancel();

@@ -1,6 +1,5 @@
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:meny_admin/themes.dart';
 
 class MenuItemDescriptionField extends StatelessWidget {
   const MenuItemDescriptionField({
@@ -27,10 +26,10 @@ class _MenuItemDescriptionField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DSTextFormField(
-      theme: Themes.theme.textFormFieldThemeData.copyWith(
-        maxLines: 3,
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-      ),
+      // theme: DSTheme.of(context).textFormFieldThemeData.copyWith(
+      //       maxLines: 3,
+      //       floatingLabelBehavior: FloatingLabelBehavior.always,
+      //     ),
       args: DSTextFormFieldArgs(
         controller: controller,
         autocorrect: false,

@@ -33,7 +33,6 @@ class MenuItemsCubit extends Cubit<MenuItemsState> {
   Future<void> load({
     required String storeId,
     OrderBy orderBy = const OrderBy(
-      'createdAt',
       sortColumnIndex: 3,
     ),
   }) async {

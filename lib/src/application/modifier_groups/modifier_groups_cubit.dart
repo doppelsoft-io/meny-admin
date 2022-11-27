@@ -33,7 +33,7 @@ class ModifierGroupsCubit extends Cubit<ModifierGroupsState> {
 
   Future<void> load({
     required String storeId,
-    OrderBy orderBy = const OrderBy('createdAt', sortColumnIndex: 1),
+    OrderBy orderBy = const OrderBy(sortColumnIndex: 1),
   }) async {
     emit(
       _Loading(

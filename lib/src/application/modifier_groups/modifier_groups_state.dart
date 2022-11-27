@@ -4,7 +4,7 @@ part of 'modifier_groups_cubit.dart';
 class ModifierGroupsState with _$ModifierGroupsState {
   const factory ModifierGroupsState.loading({
     @Default(<ModifierGroupModel>[]) List<ModifierGroupModel> groups,
-    @Default(OrderBy('createdAt')) OrderBy orderBy,
+    @Default(OrderBy()) OrderBy orderBy,
   }) = _Loading;
 
   const factory ModifierGroupsState.loaded({

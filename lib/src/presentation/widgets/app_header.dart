@@ -1,6 +1,6 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
@@ -30,22 +30,15 @@ class AppHeader extends StatelessWidget {
           child: Row(
             children: [
               GestureDetector(
-                onTap: () {
-                  GoRouter.of(context).go('/');
-                },
+                onTap: () => GoRouter.of(context).go('/'),
                 child: DSText(
                   getValueForScreenType(
                     context: context,
                     mobile: 'm',
                     desktop: 'meny',
                   ),
-                  theme: DSTextThemeData.custom(
-                    style: TextStyle(
-                      height: 1,
-                      fontSize: DSTextThemeData.displaySmall().style.fontSize,
-                      fontWeight: FontWeight.w900,
-                      color: Themes.primaryColor,
-                    ),
+                  theme: DSTextThemeData.h1(
+                    color: effectiveTheme.colorScheme.primary,
                   ),
                 ),
               ),
@@ -87,14 +80,14 @@ class AuthActions extends HookWidget {
       orElse: () {
         return Visibility(
           visible: !onAuthScreens,
-          child: TextButton(
+          child: DSButton(
             onPressed: () {
               GoRouter.of(context).pushNamed(SignupScreen.routeName);
             },
-            child: DSText(
-              'Create an account',
-              theme: DSTextThemeData.titleSmall(),
-            ),
+            // theme: const DSButtonThemeData(
+            //   textTheme: DSTextThemeData.b1(),
+            // ),
+            text: 'Create an account',
           ),
         );
       },

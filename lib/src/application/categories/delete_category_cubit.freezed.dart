@@ -26,10 +26,10 @@ mixin _$DeleteCategoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? deleting,
-    TResult Function()? success,
-    TResult Function(Exception exception)? error,
+    TResult? Function()? initial,
+    TResult? Function()? deleting,
+    TResult? Function()? success,
+    TResult? Function(Exception exception)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$DeleteCategoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Deleting value)? deleting,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,17 +72,18 @@ mixin _$DeleteCategoryState {
 abstract class $DeleteCategoryStateCopyWith<$Res> {
   factory $DeleteCategoryStateCopyWith(
           DeleteCategoryState value, $Res Function(DeleteCategoryState) then) =
-      _$DeleteCategoryStateCopyWithImpl<$Res>;
+      _$DeleteCategoryStateCopyWithImpl<$Res, DeleteCategoryState>;
 }
 
 /// @nodoc
-class _$DeleteCategoryStateCopyWithImpl<$Res>
+class _$DeleteCategoryStateCopyWithImpl<$Res, $Val extends DeleteCategoryState>
     implements $DeleteCategoryStateCopyWith<$Res> {
   _$DeleteCategoryStateCopyWithImpl(this._value, this._then);
 
-  final DeleteCategoryState _value;
   // ignore: unused_field
-  final $Res Function(DeleteCategoryState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -94,13 +95,10 @@ abstract class _$$_InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$DeleteCategoryStateCopyWithImpl<$Res>
+    extends _$DeleteCategoryStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
-
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -136,10 +134,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? deleting,
-    TResult Function()? success,
-    TResult Function(Exception exception)? error,
+    TResult? Function()? initial,
+    TResult? Function()? deleting,
+    TResult? Function()? success,
+    TResult? Function(Exception exception)? error,
   }) {
     return initial?.call();
   }
@@ -173,10 +171,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Deleting value)? deleting,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -210,14 +208,11 @@ abstract class _$$_DeletingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_DeletingCopyWithImpl<$Res>
-    extends _$DeleteCategoryStateCopyWithImpl<$Res>
+    extends _$DeleteCategoryStateCopyWithImpl<$Res, _$_Deleting>
     implements _$$_DeletingCopyWith<$Res> {
   __$$_DeletingCopyWithImpl(
       _$_Deleting _value, $Res Function(_$_Deleting) _then)
-      : super(_value, (v) => _then(v as _$_Deleting));
-
-  @override
-  _$_Deleting get _value => super._value as _$_Deleting;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -253,10 +248,10 @@ class _$_Deleting implements _Deleting {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? deleting,
-    TResult Function()? success,
-    TResult Function(Exception exception)? error,
+    TResult? Function()? initial,
+    TResult? Function()? deleting,
+    TResult? Function()? success,
+    TResult? Function(Exception exception)? error,
   }) {
     return deleting?.call();
   }
@@ -290,10 +285,10 @@ class _$_Deleting implements _Deleting {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Deleting value)? deleting,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return deleting?.call(this);
   }
@@ -327,13 +322,10 @@ abstract class _$$_SuccessCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SuccessCopyWithImpl<$Res>
-    extends _$DeleteCategoryStateCopyWithImpl<$Res>
+    extends _$DeleteCategoryStateCopyWithImpl<$Res, _$_Success>
     implements _$$_SuccessCopyWith<$Res> {
   __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
-      : super(_value, (v) => _then(v as _$_Success));
-
-  @override
-  _$_Success get _value => super._value as _$_Success;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -369,10 +361,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? deleting,
-    TResult Function()? success,
-    TResult Function(Exception exception)? error,
+    TResult? Function()? initial,
+    TResult? Function()? deleting,
+    TResult? Function()? success,
+    TResult? Function(Exception exception)? error,
   }) {
     return success?.call();
   }
@@ -406,10 +398,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Deleting value)? deleting,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return success?.call(this);
   }
@@ -438,25 +430,24 @@ abstract class _Success implements DeleteCategoryState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({Exception exception});
 }
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$DeleteCategoryStateCopyWithImpl<$Res>
+    extends _$DeleteCategoryStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? exception = freezed,
+    Object? exception = null,
   }) {
     return _then(_$_Error(
-      exception: exception == freezed
+      exception: null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
@@ -482,15 +473,16 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(exception));
+  int get hashCode => Object.hash(runtimeType, exception);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -508,10 +500,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? deleting,
-    TResult Function()? success,
-    TResult Function(Exception exception)? error,
+    TResult? Function()? initial,
+    TResult? Function()? deleting,
+    TResult? Function()? success,
+    TResult? Function(Exception exception)? error,
   }) {
     return error?.call(exception);
   }
@@ -545,10 +537,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Deleting value)? deleting,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

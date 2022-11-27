@@ -191,7 +191,7 @@ class _DesktopLayout extends StatelessWidget {
                     selectedIcon: Icon(tuple.value2),
                     label: DSText(
                       tuple.value3,
-                      theme: DSTextThemeData.titleMedium(),
+                      theme: const DSTextThemeData.b4(),
                     ),
                   ),
                 )

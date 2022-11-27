@@ -1,7 +1,6 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:meny_admin/themes.dart';
 
 class MenuItemNameField extends StatelessWidget {
   const MenuItemNameField({
@@ -28,7 +27,6 @@ class _MenuItemNameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DSTextFormField(
-      theme: Themes.theme.textFormFieldThemeData,
       args: DSTextFormFieldArgs(
         controller: controller,
         autofocus: true,

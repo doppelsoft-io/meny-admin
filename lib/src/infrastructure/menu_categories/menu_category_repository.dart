@@ -88,14 +88,14 @@ class MenuCategoryRepository {
     OrderBy? orderBy,
   }) {
     try {
-      final _orderBy = orderBy ??= OrderBy.fallback();
+      final orderFilter = orderBy ??= const OrderBy();
 
       return _firebaseFirestore
           .collection(Paths.stores)
           .doc(storeId)
           .collection(Paths.menuCategories)
           .where('menuId', isEqualTo: menuId)
-          .orderBy(_orderBy.field, descending: _orderBy.descending)
+          .orderBy(orderFilter.field, descending: orderFilter.descending)
           .snapshots()
           .map(
             (doc) => doc.docs.map(MenuCategoryModel.fromSnapshot).toList(),
@@ -108,7 +108,7 @@ class MenuCategoryRepository {
   Future<List<MenuCategoryModel>> getForCategory({
     required String storeId,
     required String categoryId,
-    OrderBy orderBy = const OrderBy('createdAt'),
+    OrderBy orderBy = const OrderBy(),
   }) {
     try {
       return streamForCategory(
@@ -124,7 +124,7 @@ class MenuCategoryRepository {
   Stream<List<MenuCategoryModel>> streamForCategory({
     required String storeId,
     required String categoryId,
-    OrderBy orderBy = const OrderBy('createdAt'),
+    OrderBy orderBy = const OrderBy(),
   }) {
     try {
       return _firebaseFirestore

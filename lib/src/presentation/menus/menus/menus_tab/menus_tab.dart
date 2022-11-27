@@ -47,24 +47,24 @@ class _MenusScreenMenusTab extends HookWidget {
       const [],
     );
 
-    void _sort(
-      int columnIndex,
-      bool descending,
-      String name,
-    ) {
+    void sort({
+      required int columnIndex,
+      required bool descending,
+      required String name,
+    }) {
       final storeCubit = context.read<StoreCubit>();
       final storeId = storeCubit.state.store.id;
       context.read<MenusCubit>().load(
             storeId: storeId!,
             orderBy: OrderBy(
-              name,
+              field: name,
               descending: !descending,
               sortColumnIndex: columnIndex,
             ),
           );
     }
 
-    void _onTapItem(BuildContext context, MenuModel menu) {
+    void onTapItem(BuildContext context, MenuModel menu) {
       ActionService.run(
         () {
           GoRouter.of(context).goNamed(
@@ -111,18 +111,14 @@ class _MenusScreenMenusTab extends HookWidget {
                   action: action,
                   resources: menus,
                   emptyMessage: emptyMessage,
-                  onTapItem: _onTapItem,
                   itemBuilder: (_, menu) {
-                    return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: DSSpacing.sm,
-                        vertical: DSSpacing.xxs,
+                    return DSListTile(
+                      args: DSListTileArgs(
+                        onTap: () => onTapItem(context, menu),
+                        title: menu.name,
+                        subtitle: Text('Updated: ${menu.updatedAt?.format()}'),
+                        trailing: PreviewMenuButton(menu: menu),
                       ),
-                      onTap: () => _onTapItem(context, menu),
-                      title: Text(menu.name),
-                      subtitle: Text('Updated: ${menu.updatedAt?.format()}'),
-                      isThreeLine: true,
-                      trailing: PreviewMenuButton(menu: menu),
                     );
                   },
                 ),
@@ -135,23 +131,29 @@ class _MenusScreenMenusTab extends HookWidget {
                   resources: menus,
                   columns: [
                     DataColumn2(
-                      label: DSText(
+                      label: const DSText(
                         'NAME',
-                        theme: DSTextThemeData.labelSmall(),
+                        theme: DSTextThemeData.c2(),
                       ),
                       size: ColumnSize.L,
-                      onSort: (columnIndex, descending) =>
-                          _sort(columnIndex, descending, 'name'),
+                      onSort: (columnIndex, descending) => sort(
+                        columnIndex: columnIndex,
+                        descending: descending,
+                        name: 'name',
+                      ),
                     ),
                     DataColumn2(
-                      label: DSText(
+                      label: const DSText(
                         'CREATED',
-                        theme: DSTextThemeData.labelSmall(),
+                        theme: DSTextThemeData.c2(),
                       ),
                       fixedWidth: 200,
                       size: ColumnSize.S,
-                      onSort: (columnIndex, descending) =>
-                          _sort(columnIndex, descending, 'createdAt'),
+                      onSort: (columnIndex, descending) => sort(
+                        columnIndex: columnIndex,
+                        descending: descending,
+                        name: 'createdAt',
+                      ),
                     ),
                     const DataColumn2(
                       label: Text(''),
@@ -168,11 +170,11 @@ class _MenusScreenMenusTab extends HookWidget {
                           children: [
                             DSText(
                               menu.name,
-                              theme: DSTextThemeData.labelLarge(),
+                              theme: const DSTextThemeData.b4(),
                             ),
                             DSText(
                               'Last updated: ${menu.updatedAt?.format()}',
-                              theme: DSTextThemeData.bodySmall(),
+                              theme: const DSTextThemeData.c2(),
                             ),
                           ],
                         ),
@@ -180,7 +182,7 @@ class _MenusScreenMenusTab extends HookWidget {
                       DataCell(
                         DSText(
                           menu.createdAt?.format() ?? '',
-                          theme: DSTextThemeData.bodyMedium(),
+                          theme: const DSTextThemeData.b5(),
                         ),
                       ),
                       DataCell(PreviewMenuButton(menu: menu)),
@@ -189,7 +191,7 @@ class _MenusScreenMenusTab extends HookWidget {
                   emptyMessage:
                       'No menus yet. Click "New" above to get started!',
                   onTapItem: (_, menu) {
-                    _onTapItem(context, menu);
+                    onTapItem(context, menu);
                   },
                 ),
               ],

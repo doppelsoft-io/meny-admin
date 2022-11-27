@@ -61,16 +61,16 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
                   padding: const EdgeInsets.only(left: DSSpacing.xxs),
                   child: DSText(
                     title,
-                    theme: DSTextThemeData.headlineLarge(),
+                    theme: const DSTextThemeData.d3(),
                   ),
                 ),
                 DSButton(
-                  type: DSButtonType.text,
-                  theme: DSButtonThemeData.fallback()
-                      .copyWith(primary: Themes.primaryColor),
+                  theme: DSButtonThemeData.text(
+                    foregroundColor: effectiveTheme.colorScheme.primary,
+                  ),
                   onPressed: () {},
                   icon: const Icon(Icons.remove_red_eye),
-                  child: const Text('View Online'),
+                  text: 'View Online',
                 ),
               ],
             ),
@@ -79,20 +79,21 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
               children: [
                 SizedBox(
                   width: 100,
-                  child: ElevatedButton(
+                  child: DSButton(
                     onPressed: publishing ? null : onPublish,
-                    child: publishing
-                        ? SizedBox(
-                            height: 15,
-                            width: 15,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.green.shade50,
-                              ),
-                            ),
-                          )
-                        : const Text('Publish'),
+                    text: 'Publish',
+                    // child: publishing
+                    //     ? SizedBox(
+                    //         height: 15,
+                    //         width: 15,
+                    //         child: Center(
+                    //           child: CircularProgressIndicator(
+                    //             strokeWidth: 2,
+                    //             color: Colors.green.shade50,
+                    //           ),
+                    //         ),
+                    //       )
+                    //     : const Text('Publish'),
                   ),
                 ),
               ],

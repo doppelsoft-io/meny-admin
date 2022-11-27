@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/domain/core/order_by.dart';
@@ -38,7 +37,7 @@ class ModifierGroupItemsCubit extends Cubit<ModifierGroupItemsState> {
     final menuItems = await _menuItemRepository
         .getAll(
           storeId: storeId,
-          orderBy: OrderBy.fallback(),
+          orderBy: const OrderBy(),
         )
         .first;
 

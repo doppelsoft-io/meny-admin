@@ -165,7 +165,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                 const SizedBox(width: DSSpacing.sm),
                                 DSText(
                                   category.name,
-                                  theme: DSTextThemeData.titleLarge(),
+                                  theme: const DSTextThemeData.h2(),
                                 ),
                               ],
                             ),
@@ -207,8 +207,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                           children: [
                                             DSText(
                                               item.name,
-                                              theme:
-                                                  DSTextThemeData.titleMedium(),
+                                              theme: const DSTextThemeData.b1(),
                                             ),
                                             if (item.description != null &&
                                                 item.description!
@@ -216,17 +215,15 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                               const SizedBox(height: 2),
                                               DSText(
                                                 item.description!,
-                                                theme: DSTextThemeData.custom(
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!,
-                                                ),
+                                                theme:
+                                                    const DSTextThemeData.b5(),
                                               ),
                                             ],
                                             const SizedBox(height: 6),
-                                            Text(
+                                            DSText(
                                               (item.priceInfo.price / 100)
                                                   .toCurrency(),
+                                              theme: const DSTextThemeData.b5(),
                                             ),
                                           ],
                                         ),
@@ -237,7 +234,7 @@ class _CompiledMenuBuilder extends StatelessWidget {
                                         MenuItemImage(
                                           imageUrl: item.imageUrl ?? '',
                                           theme:
-                                              DSMemoryImageThemeData.fallback()
+                                              DSNetworkImageThemeData.fallback()
                                                   .copyWith(
                                             width: 91,
                                             height: 73,

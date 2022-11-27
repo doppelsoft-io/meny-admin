@@ -40,19 +40,19 @@ mixin _$MenuCategoriesState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         initial,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         adding,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         removing,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         success,
-    TResult Function(List<MenuCategoryModel> menuCategories,
+    TResult? Function(List<MenuCategoryModel> menuCategories,
             List<MenuModel> menus, Exception exception)?
         error,
   }) =>
@@ -88,11 +88,11 @@ mixin _$MenuCategoriesState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -115,34 +115,37 @@ mixin _$MenuCategoriesState {
 abstract class $MenuCategoriesStateCopyWith<$Res> {
   factory $MenuCategoriesStateCopyWith(
           MenuCategoriesState value, $Res Function(MenuCategoriesState) then) =
-      _$MenuCategoriesStateCopyWithImpl<$Res>;
+      _$MenuCategoriesStateCopyWithImpl<$Res, MenuCategoriesState>;
+  @useResult
   $Res call({List<MenuCategoryModel> menuCategories, List<MenuModel> menus});
 }
 
 /// @nodoc
-class _$MenuCategoriesStateCopyWithImpl<$Res>
+class _$MenuCategoriesStateCopyWithImpl<$Res, $Val extends MenuCategoriesState>
     implements $MenuCategoriesStateCopyWith<$Res> {
   _$MenuCategoriesStateCopyWithImpl(this._value, this._then);
 
-  final MenuCategoriesState _value;
   // ignore: unused_field
-  final $Res Function(MenuCategoriesState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? menuCategories = freezed,
-    Object? menus = freezed,
+    Object? menuCategories = null,
+    Object? menus = null,
   }) {
     return _then(_value.copyWith(
-      menuCategories: menuCategories == freezed
+      menuCategories: null == menuCategories
           ? _value.menuCategories
           : menuCategories // ignore: cast_nullable_to_non_nullable
               as List<MenuCategoryModel>,
-      menus: menus == freezed
+      menus: null == menus
           ? _value.menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuModel>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -153,30 +156,29 @@ abstract class _$$_InitialCopyWith<$Res>
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<MenuCategoryModel> menuCategories, List<MenuModel> menus});
 }
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$MenuCategoriesStateCopyWithImpl<$Res>
+    extends _$MenuCategoriesStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+      : super(_value, _then);
 
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? menuCategories = freezed,
-    Object? menus = freezed,
+    Object? menuCategories = null,
+    Object? menus = null,
   }) {
     return _then(_$_Initial(
-      menuCategories: menuCategories == freezed
+      menuCategories: null == menuCategories
           ? _value._menuCategories
           : menuCategories // ignore: cast_nullable_to_non_nullable
               as List<MenuCategoryModel>,
-      menus: menus == freezed
+      menus: null == menus
           ? _value._menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuModel>,
@@ -233,6 +235,7 @@ class _$_Initial implements _Initial {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
       __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
@@ -261,19 +264,19 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         initial,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         adding,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         removing,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         success,
-    TResult Function(List<MenuCategoryModel> menuCategories,
+    TResult? Function(List<MenuCategoryModel> menuCategories,
             List<MenuModel> menus, Exception exception)?
         error,
   }) {
@@ -321,11 +324,11 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -368,30 +371,29 @@ abstract class _$$_AddingCopyWith<$Res>
   factory _$$_AddingCopyWith(_$_Adding value, $Res Function(_$_Adding) then) =
       __$$_AddingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<MenuCategoryModel> menuCategories, List<MenuModel> menus});
 }
 
 /// @nodoc
 class __$$_AddingCopyWithImpl<$Res>
-    extends _$MenuCategoriesStateCopyWithImpl<$Res>
+    extends _$MenuCategoriesStateCopyWithImpl<$Res, _$_Adding>
     implements _$$_AddingCopyWith<$Res> {
   __$$_AddingCopyWithImpl(_$_Adding _value, $Res Function(_$_Adding) _then)
-      : super(_value, (v) => _then(v as _$_Adding));
+      : super(_value, _then);
 
-  @override
-  _$_Adding get _value => super._value as _$_Adding;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? menuCategories = freezed,
-    Object? menus = freezed,
+    Object? menuCategories = null,
+    Object? menus = null,
   }) {
     return _then(_$_Adding(
-      menuCategories: menuCategories == freezed
+      menuCategories: null == menuCategories
           ? _value._menuCategories
           : menuCategories // ignore: cast_nullable_to_non_nullable
               as List<MenuCategoryModel>,
-      menus: menus == freezed
+      menus: null == menus
           ? _value._menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuModel>,
@@ -445,6 +447,7 @@ class _$_Adding implements _Adding {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AddingCopyWith<_$_Adding> get copyWith =>
       __$$_AddingCopyWithImpl<_$_Adding>(this, _$identity);
 
@@ -473,19 +476,19 @@ class _$_Adding implements _Adding {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         initial,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         adding,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         removing,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         success,
-    TResult Function(List<MenuCategoryModel> menuCategories,
+    TResult? Function(List<MenuCategoryModel> menuCategories,
             List<MenuModel> menus, Exception exception)?
         error,
   }) {
@@ -533,11 +536,11 @@ class _$_Adding implements _Adding {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return adding?.call(this);
   }
@@ -581,31 +584,30 @@ abstract class _$$_RemovingCopyWith<$Res>
           _$_Removing value, $Res Function(_$_Removing) then) =
       __$$_RemovingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<MenuCategoryModel> menuCategories, List<MenuModel> menus});
 }
 
 /// @nodoc
 class __$$_RemovingCopyWithImpl<$Res>
-    extends _$MenuCategoriesStateCopyWithImpl<$Res>
+    extends _$MenuCategoriesStateCopyWithImpl<$Res, _$_Removing>
     implements _$$_RemovingCopyWith<$Res> {
   __$$_RemovingCopyWithImpl(
       _$_Removing _value, $Res Function(_$_Removing) _then)
-      : super(_value, (v) => _then(v as _$_Removing));
+      : super(_value, _then);
 
-  @override
-  _$_Removing get _value => super._value as _$_Removing;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? menuCategories = freezed,
-    Object? menus = freezed,
+    Object? menuCategories = null,
+    Object? menus = null,
   }) {
     return _then(_$_Removing(
-      menuCategories: menuCategories == freezed
+      menuCategories: null == menuCategories
           ? _value._menuCategories
           : menuCategories // ignore: cast_nullable_to_non_nullable
               as List<MenuCategoryModel>,
-      menus: menus == freezed
+      menus: null == menus
           ? _value._menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuModel>,
@@ -659,6 +661,7 @@ class _$_Removing implements _Removing {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_RemovingCopyWith<_$_Removing> get copyWith =>
       __$$_RemovingCopyWithImpl<_$_Removing>(this, _$identity);
 
@@ -687,19 +690,19 @@ class _$_Removing implements _Removing {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         initial,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         adding,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         removing,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         success,
-    TResult Function(List<MenuCategoryModel> menuCategories,
+    TResult? Function(List<MenuCategoryModel> menuCategories,
             List<MenuModel> menus, Exception exception)?
         error,
   }) {
@@ -747,11 +750,11 @@ class _$_Removing implements _Removing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return removing?.call(this);
   }
@@ -795,30 +798,29 @@ abstract class _$$_SuccessCopyWith<$Res>
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<MenuCategoryModel> menuCategories, List<MenuModel> menus});
 }
 
 /// @nodoc
 class __$$_SuccessCopyWithImpl<$Res>
-    extends _$MenuCategoriesStateCopyWithImpl<$Res>
+    extends _$MenuCategoriesStateCopyWithImpl<$Res, _$_Success>
     implements _$$_SuccessCopyWith<$Res> {
   __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
-      : super(_value, (v) => _then(v as _$_Success));
+      : super(_value, _then);
 
-  @override
-  _$_Success get _value => super._value as _$_Success;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? menuCategories = freezed,
-    Object? menus = freezed,
+    Object? menuCategories = null,
+    Object? menus = null,
   }) {
     return _then(_$_Success(
-      menuCategories: menuCategories == freezed
+      menuCategories: null == menuCategories
           ? _value._menuCategories
           : menuCategories // ignore: cast_nullable_to_non_nullable
               as List<MenuCategoryModel>,
-      menus: menus == freezed
+      menus: null == menus
           ? _value._menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuModel>,
@@ -872,6 +874,7 @@ class _$_Success implements _Success {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
@@ -900,19 +903,19 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         initial,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         adding,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         removing,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         success,
-    TResult Function(List<MenuCategoryModel> menuCategories,
+    TResult? Function(List<MenuCategoryModel> menuCategories,
             List<MenuModel> menus, Exception exception)?
         error,
   }) {
@@ -960,11 +963,11 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return success?.call(this);
   }
@@ -1007,6 +1010,7 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<MenuCategoryModel> menuCategories,
       List<MenuModel> menus,
@@ -1015,30 +1019,28 @@ abstract class _$$_ErrorCopyWith<$Res>
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$MenuCategoriesStateCopyWithImpl<$Res>
+    extends _$MenuCategoriesStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? menuCategories = freezed,
-    Object? menus = freezed,
-    Object? exception = freezed,
+    Object? menuCategories = null,
+    Object? menus = null,
+    Object? exception = null,
   }) {
     return _then(_$_Error(
-      menuCategories: menuCategories == freezed
+      menuCategories: null == menuCategories
           ? _value._menuCategories
           : menuCategories // ignore: cast_nullable_to_non_nullable
               as List<MenuCategoryModel>,
-      menus: menus == freezed
+      menus: null == menus
           ? _value._menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuModel>,
-      exception: exception == freezed
+      exception: null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
@@ -1086,7 +1088,8 @@ class _$_Error implements _Error {
             const DeepCollectionEquality()
                 .equals(other._menuCategories, _menuCategories) &&
             const DeepCollectionEquality().equals(other._menus, _menus) &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @override
@@ -1094,10 +1097,11 @@ class _$_Error implements _Error {
       runtimeType,
       const DeepCollectionEquality().hash(_menuCategories),
       const DeepCollectionEquality().hash(_menus),
-      const DeepCollectionEquality().hash(exception));
+      exception);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -1126,19 +1130,19 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         initial,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         adding,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         removing,
-    TResult Function(
+    TResult? Function(
             List<MenuCategoryModel> menuCategories, List<MenuModel> menus)?
         success,
-    TResult Function(List<MenuCategoryModel> menuCategories,
+    TResult? Function(List<MenuCategoryModel> menuCategories,
             List<MenuModel> menus, Exception exception)?
         error,
   }) {
@@ -1186,11 +1190,11 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

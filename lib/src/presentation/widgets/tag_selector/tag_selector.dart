@@ -1,7 +1,6 @@
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:meny_admin/themes.dart';
 
 class TextFieldConfiguration {
   const TextFieldConfiguration({
@@ -88,7 +87,6 @@ class TagSelector<T> extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DSTextFormField(
-            theme: Themes.theme.textFormFieldThemeData,
             args: DSTextFormFieldArgs(
               controller: TextEditingController(),
               focusNode: focusNode,
@@ -100,7 +98,7 @@ class TagSelector<T> extends HookWidget {
                     return DSModal(
                       title: DSText(
                         title ?? 'Select',
-                        theme: DSTextThemeData.titleMedium(),
+                        theme: const DSTextThemeData.b1(),
                       ),
                       child: FutureBuilder<List<T>>(
                         future: fetchSuggestions(),
@@ -126,18 +124,13 @@ class TagSelector<T> extends HookWidget {
                                     item,
                                   );
 
-                                  return ListTile(
-                                    visualDensity: VisualDensity.standard,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: DSSpacing.sm,
-                                    ),
-                                    onTap: () {
-                                      onSelect(context, item);
-                                      Navigator.of(context).pop();
-                                    },
-                                    title: DSText(
-                                      config.title,
-                                      theme: DSTextThemeData.bodyLarge(),
+                                  return DSListTile(
+                                    args: DSListTileArgs(
+                                      onTap: () {
+                                        onSelect(context, item);
+                                        Navigator.of(context).pop();
+                                      },
+                                      title: config.title,
                                     ),
                                   );
                                 }

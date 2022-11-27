@@ -14,8 +14,6 @@
 				"development",
 				"--target",
 				"lib/main_development.dart",
-				"--web-port",
-				"8080"
 			]
 		},
 		{
@@ -28,7 +26,7 @@
 				"staging",
 				"--target",
 				"lib/main_staging.dart",
-				"--host",
+				"--web-port",
 				"8080"
 			]
 		},

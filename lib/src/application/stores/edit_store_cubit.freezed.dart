@@ -27,10 +27,10 @@ mixin _$EditStoreState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(StoreModel store)? initial,
-    TResult Function(StoreModel store)? saving,
-    TResult Function(StoreModel store)? success,
-    TResult Function(StoreModel store, Exception exception)? error,
+    TResult? Function(StoreModel store)? initial,
+    TResult? Function(StoreModel store)? saving,
+    TResult? Function(StoreModel store)? success,
+    TResult? Function(StoreModel store, Exception exception)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -52,10 +52,10 @@ mixin _$EditStoreState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Saving value)? saving,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -77,37 +77,41 @@ mixin _$EditStoreState {
 abstract class $EditStoreStateCopyWith<$Res> {
   factory $EditStoreStateCopyWith(
           EditStoreState value, $Res Function(EditStoreState) then) =
-      _$EditStoreStateCopyWithImpl<$Res>;
+      _$EditStoreStateCopyWithImpl<$Res, EditStoreState>;
+  @useResult
   $Res call({StoreModel store});
 
   $StoreModelCopyWith<$Res> get store;
 }
 
 /// @nodoc
-class _$EditStoreStateCopyWithImpl<$Res>
+class _$EditStoreStateCopyWithImpl<$Res, $Val extends EditStoreState>
     implements $EditStoreStateCopyWith<$Res> {
   _$EditStoreStateCopyWithImpl(this._value, this._then);
 
-  final EditStoreState _value;
   // ignore: unused_field
-  final $Res Function(EditStoreState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? store = freezed,
+    Object? store = null,
   }) {
     return _then(_value.copyWith(
-      store: store == freezed
+      store: null == store
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as StoreModel,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $StoreModelCopyWith<$Res> get store {
     return $StoreModelCopyWith<$Res>(_value.store, (value) {
-      return _then(_value.copyWith(store: value));
+      return _then(_value.copyWith(store: value) as $Val);
     });
   }
 }
@@ -119,6 +123,7 @@ abstract class _$$_InitialCopyWith<$Res>
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({StoreModel store});
 
   @override
@@ -126,20 +131,19 @@ abstract class _$$_InitialCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res> extends _$EditStoreStateCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$EditStoreStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+      : super(_value, _then);
 
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? store = freezed,
+    Object? store = null,
   }) {
     return _then(_$_Initial(
-      store: store == freezed
+      store: null == store
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as StoreModel,
@@ -165,15 +169,15 @@ class _$_Initial implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Initial &&
-            const DeepCollectionEquality().equals(other.store, store));
+            (identical(other.store, store) || other.store == store));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(store));
+  int get hashCode => Object.hash(runtimeType, store);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
       __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
@@ -191,10 +195,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(StoreModel store)? initial,
-    TResult Function(StoreModel store)? saving,
-    TResult Function(StoreModel store)? success,
-    TResult Function(StoreModel store, Exception exception)? error,
+    TResult? Function(StoreModel store)? initial,
+    TResult? Function(StoreModel store)? saving,
+    TResult? Function(StoreModel store)? success,
+    TResult? Function(StoreModel store, Exception exception)? error,
   }) {
     return initial?.call(store);
   }
@@ -228,10 +232,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Saving value)? saving,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -269,6 +273,7 @@ abstract class _$$_SavingCopyWith<$Res>
   factory _$$_SavingCopyWith(_$_Saving value, $Res Function(_$_Saving) then) =
       __$$_SavingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({StoreModel store});
 
   @override
@@ -276,20 +281,19 @@ abstract class _$$_SavingCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SavingCopyWithImpl<$Res> extends _$EditStoreStateCopyWithImpl<$Res>
+class __$$_SavingCopyWithImpl<$Res>
+    extends _$EditStoreStateCopyWithImpl<$Res, _$_Saving>
     implements _$$_SavingCopyWith<$Res> {
   __$$_SavingCopyWithImpl(_$_Saving _value, $Res Function(_$_Saving) _then)
-      : super(_value, (v) => _then(v as _$_Saving));
+      : super(_value, _then);
 
-  @override
-  _$_Saving get _value => super._value as _$_Saving;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? store = freezed,
+    Object? store = null,
   }) {
     return _then(_$_Saving(
-      store: store == freezed
+      store: null == store
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as StoreModel,
@@ -315,15 +319,15 @@ class _$_Saving implements _Saving {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Saving &&
-            const DeepCollectionEquality().equals(other.store, store));
+            (identical(other.store, store) || other.store == store));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(store));
+  int get hashCode => Object.hash(runtimeType, store);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SavingCopyWith<_$_Saving> get copyWith =>
       __$$_SavingCopyWithImpl<_$_Saving>(this, _$identity);
 
@@ -341,10 +345,10 @@ class _$_Saving implements _Saving {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(StoreModel store)? initial,
-    TResult Function(StoreModel store)? saving,
-    TResult Function(StoreModel store)? success,
-    TResult Function(StoreModel store, Exception exception)? error,
+    TResult? Function(StoreModel store)? initial,
+    TResult? Function(StoreModel store)? saving,
+    TResult? Function(StoreModel store)? success,
+    TResult? Function(StoreModel store, Exception exception)? error,
   }) {
     return saving?.call(store);
   }
@@ -378,10 +382,10 @@ class _$_Saving implements _Saving {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Saving value)? saving,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return saving?.call(this);
   }
@@ -420,6 +424,7 @@ abstract class _$$_SuccessCopyWith<$Res>
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({StoreModel store});
 
   @override
@@ -427,20 +432,19 @@ abstract class _$$_SuccessCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SuccessCopyWithImpl<$Res> extends _$EditStoreStateCopyWithImpl<$Res>
+class __$$_SuccessCopyWithImpl<$Res>
+    extends _$EditStoreStateCopyWithImpl<$Res, _$_Success>
     implements _$$_SuccessCopyWith<$Res> {
   __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
-      : super(_value, (v) => _then(v as _$_Success));
+      : super(_value, _then);
 
-  @override
-  _$_Success get _value => super._value as _$_Success;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? store = freezed,
+    Object? store = null,
   }) {
     return _then(_$_Success(
-      store: store == freezed
+      store: null == store
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as StoreModel,
@@ -466,15 +470,15 @@ class _$_Success implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Success &&
-            const DeepCollectionEquality().equals(other.store, store));
+            (identical(other.store, store) || other.store == store));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(store));
+  int get hashCode => Object.hash(runtimeType, store);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
@@ -492,10 +496,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(StoreModel store)? initial,
-    TResult Function(StoreModel store)? saving,
-    TResult Function(StoreModel store)? success,
-    TResult Function(StoreModel store, Exception exception)? error,
+    TResult? Function(StoreModel store)? initial,
+    TResult? Function(StoreModel store)? saving,
+    TResult? Function(StoreModel store)? success,
+    TResult? Function(StoreModel store, Exception exception)? error,
   }) {
     return success?.call(store);
   }
@@ -529,10 +533,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Saving value)? saving,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return success?.call(this);
   }
@@ -570,6 +574,7 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({StoreModel store, Exception exception});
 
   @override
@@ -577,25 +582,24 @@ abstract class _$$_ErrorCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$EditStoreStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$EditStoreStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? store = freezed,
-    Object? exception = freezed,
+    Object? store = null,
+    Object? exception = null,
   }) {
     return _then(_$_Error(
-      store: store == freezed
+      store: null == store
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as StoreModel,
-      exception: exception == freezed
+      exception: null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
@@ -623,18 +627,17 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            const DeepCollectionEquality().equals(other.store, store) &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            (identical(other.store, store) || other.store == store) &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(store),
-      const DeepCollectionEquality().hash(exception));
+  int get hashCode => Object.hash(runtimeType, store, exception);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -652,10 +655,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(StoreModel store)? initial,
-    TResult Function(StoreModel store)? saving,
-    TResult Function(StoreModel store)? success,
-    TResult Function(StoreModel store, Exception exception)? error,
+    TResult? Function(StoreModel store)? initial,
+    TResult? Function(StoreModel store)? saving,
+    TResult? Function(StoreModel store)? success,
+    TResult? Function(StoreModel store, Exception exception)? error,
   }) {
     return error?.call(store, exception);
   }
@@ -689,10 +692,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Saving value)? saving,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

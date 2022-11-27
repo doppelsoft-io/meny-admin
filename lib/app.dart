@@ -153,17 +153,20 @@ class App extends StatelessWidget {
           ),
         ],
         child: MaterialApp.router(
+          theme: effectiveTheme.toThemeData(),
           routeInformationProvider: router.routeInformationProvider,
           routeInformationParser: router.routeInformationParser,
           routerDelegate: router.routerDelegate,
-          theme: Themes.defaultTheme,
           debugShowCheckedModeBanner: false,
           builder: (context, widget) => ResponsiveWrapper.builder(
             BouncingScrollWrapper.builder(
               context,
-              DSUnfocus(
-                child: DSTextScaleFactorClamper(
-                  child: DSUnfocus(child: widget!),
+              DSTheme(
+                data: effectiveTheme,
+                child: DSUnfocus(
+                  child: DSTextScaleFactorClamper(
+                    child: widget!,
+                  ),
                 ),
               ),
             ),

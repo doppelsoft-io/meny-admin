@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
-import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
 class PreviewMenuButton extends StatelessWidget {
@@ -14,11 +13,12 @@ class PreviewMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DSButton(
-      type: DSButtonType.text,
-      theme: DSButtonThemeData.fallback().copyWith(
-        primary: Themes.primaryColor,
+      theme: DSButtonThemeData.text(
+        textTheme: const DSButtonThemeData.text().textTheme.copyWith(
+              decoration: TextDecoration.underline,
+            ),
       ),
-      child: const Text('Preview'),
+      text: 'Preview',
       onPressed: () => ActionService.run(
         () => GoRouter.of(context).goNamed(
           MenuPreviewScreen.routeName,

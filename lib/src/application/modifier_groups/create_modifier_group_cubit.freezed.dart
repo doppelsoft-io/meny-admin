@@ -28,10 +28,10 @@ mixin _$CreateModifierGroupState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ModifierGroupModel group)? initial,
-    TResult Function(ModifierGroupModel group)? creating,
-    TResult Function(ModifierGroupModel group)? created,
-    TResult Function(ModifierGroupModel group, Exception exception)? error,
+    TResult? Function(ModifierGroupModel group)? initial,
+    TResult? Function(ModifierGroupModel group)? creating,
+    TResult? Function(ModifierGroupModel group)? created,
+    TResult? Function(ModifierGroupModel group, Exception exception)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -53,10 +53,10 @@ mixin _$CreateModifierGroupState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -78,37 +78,42 @@ mixin _$CreateModifierGroupState {
 abstract class $CreateModifierGroupStateCopyWith<$Res> {
   factory $CreateModifierGroupStateCopyWith(CreateModifierGroupState value,
           $Res Function(CreateModifierGroupState) then) =
-      _$CreateModifierGroupStateCopyWithImpl<$Res>;
+      _$CreateModifierGroupStateCopyWithImpl<$Res, CreateModifierGroupState>;
+  @useResult
   $Res call({ModifierGroupModel group});
 
   $ModifierGroupModelCopyWith<$Res> get group;
 }
 
 /// @nodoc
-class _$CreateModifierGroupStateCopyWithImpl<$Res>
+class _$CreateModifierGroupStateCopyWithImpl<$Res,
+        $Val extends CreateModifierGroupState>
     implements $CreateModifierGroupStateCopyWith<$Res> {
   _$CreateModifierGroupStateCopyWithImpl(this._value, this._then);
 
-  final CreateModifierGroupState _value;
   // ignore: unused_field
-  final $Res Function(CreateModifierGroupState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? group = freezed,
+    Object? group = null,
   }) {
     return _then(_value.copyWith(
-      group: group == freezed
+      group: null == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as ModifierGroupModel,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ModifierGroupModelCopyWith<$Res> get group {
     return $ModifierGroupModelCopyWith<$Res>(_value.group, (value) {
-      return _then(_value.copyWith(group: value));
+      return _then(_value.copyWith(group: value) as $Val);
     });
   }
 }
@@ -120,6 +125,7 @@ abstract class _$$_InitialCopyWith<$Res>
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({ModifierGroupModel group});
 
   @override
@@ -128,20 +134,18 @@ abstract class _$$_InitialCopyWith<$Res>
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$CreateModifierGroupStateCopyWithImpl<$Res>
+    extends _$CreateModifierGroupStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+      : super(_value, _then);
 
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? group = freezed,
+    Object? group = null,
   }) {
     return _then(_$_Initial(
-      group: group == freezed
+      group: null == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as ModifierGroupModel,
@@ -167,15 +171,15 @@ class _$_Initial implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Initial &&
-            const DeepCollectionEquality().equals(other.group, group));
+            (identical(other.group, group) || other.group == group));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(group));
+  int get hashCode => Object.hash(runtimeType, group);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
       __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
@@ -194,10 +198,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ModifierGroupModel group)? initial,
-    TResult Function(ModifierGroupModel group)? creating,
-    TResult Function(ModifierGroupModel group)? created,
-    TResult Function(ModifierGroupModel group, Exception exception)? error,
+    TResult? Function(ModifierGroupModel group)? initial,
+    TResult? Function(ModifierGroupModel group)? creating,
+    TResult? Function(ModifierGroupModel group)? created,
+    TResult? Function(ModifierGroupModel group, Exception exception)? error,
   }) {
     return initial?.call(group);
   }
@@ -231,10 +235,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -274,6 +278,7 @@ abstract class _$$_CreatingCopyWith<$Res>
           _$_Creating value, $Res Function(_$_Creating) then) =
       __$$_CreatingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({ModifierGroupModel group});
 
   @override
@@ -282,21 +287,19 @@ abstract class _$$_CreatingCopyWith<$Res>
 
 /// @nodoc
 class __$$_CreatingCopyWithImpl<$Res>
-    extends _$CreateModifierGroupStateCopyWithImpl<$Res>
+    extends _$CreateModifierGroupStateCopyWithImpl<$Res, _$_Creating>
     implements _$$_CreatingCopyWith<$Res> {
   __$$_CreatingCopyWithImpl(
       _$_Creating _value, $Res Function(_$_Creating) _then)
-      : super(_value, (v) => _then(v as _$_Creating));
+      : super(_value, _then);
 
-  @override
-  _$_Creating get _value => super._value as _$_Creating;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? group = freezed,
+    Object? group = null,
   }) {
     return _then(_$_Creating(
-      group: group == freezed
+      group: null == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as ModifierGroupModel,
@@ -322,15 +325,15 @@ class _$_Creating implements _Creating {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Creating &&
-            const DeepCollectionEquality().equals(other.group, group));
+            (identical(other.group, group) || other.group == group));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(group));
+  int get hashCode => Object.hash(runtimeType, group);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CreatingCopyWith<_$_Creating> get copyWith =>
       __$$_CreatingCopyWithImpl<_$_Creating>(this, _$identity);
 
@@ -349,10 +352,10 @@ class _$_Creating implements _Creating {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ModifierGroupModel group)? initial,
-    TResult Function(ModifierGroupModel group)? creating,
-    TResult Function(ModifierGroupModel group)? created,
-    TResult Function(ModifierGroupModel group, Exception exception)? error,
+    TResult? Function(ModifierGroupModel group)? initial,
+    TResult? Function(ModifierGroupModel group)? creating,
+    TResult? Function(ModifierGroupModel group)? created,
+    TResult? Function(ModifierGroupModel group, Exception exception)? error,
   }) {
     return creating?.call(group);
   }
@@ -386,10 +389,10 @@ class _$_Creating implements _Creating {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return creating?.call(this);
   }
@@ -429,6 +432,7 @@ abstract class _$$_CreatedCopyWith<$Res>
           _$_Created value, $Res Function(_$_Created) then) =
       __$$_CreatedCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({ModifierGroupModel group});
 
   @override
@@ -437,20 +441,18 @@ abstract class _$$_CreatedCopyWith<$Res>
 
 /// @nodoc
 class __$$_CreatedCopyWithImpl<$Res>
-    extends _$CreateModifierGroupStateCopyWithImpl<$Res>
+    extends _$CreateModifierGroupStateCopyWithImpl<$Res, _$_Created>
     implements _$$_CreatedCopyWith<$Res> {
   __$$_CreatedCopyWithImpl(_$_Created _value, $Res Function(_$_Created) _then)
-      : super(_value, (v) => _then(v as _$_Created));
+      : super(_value, _then);
 
-  @override
-  _$_Created get _value => super._value as _$_Created;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? group = freezed,
+    Object? group = null,
   }) {
     return _then(_$_Created(
-      group: group == freezed
+      group: null == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as ModifierGroupModel,
@@ -476,15 +478,15 @@ class _$_Created implements _Created {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Created &&
-            const DeepCollectionEquality().equals(other.group, group));
+            (identical(other.group, group) || other.group == group));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(group));
+  int get hashCode => Object.hash(runtimeType, group);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CreatedCopyWith<_$_Created> get copyWith =>
       __$$_CreatedCopyWithImpl<_$_Created>(this, _$identity);
 
@@ -503,10 +505,10 @@ class _$_Created implements _Created {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ModifierGroupModel group)? initial,
-    TResult Function(ModifierGroupModel group)? creating,
-    TResult Function(ModifierGroupModel group)? created,
-    TResult Function(ModifierGroupModel group, Exception exception)? error,
+    TResult? Function(ModifierGroupModel group)? initial,
+    TResult? Function(ModifierGroupModel group)? creating,
+    TResult? Function(ModifierGroupModel group)? created,
+    TResult? Function(ModifierGroupModel group, Exception exception)? error,
   }) {
     return created?.call(group);
   }
@@ -540,10 +542,10 @@ class _$_Created implements _Created {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return created?.call(this);
   }
@@ -582,6 +584,7 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({ModifierGroupModel group, Exception exception});
 
   @override
@@ -590,25 +593,23 @@ abstract class _$$_ErrorCopyWith<$Res>
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$CreateModifierGroupStateCopyWithImpl<$Res>
+    extends _$CreateModifierGroupStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? group = freezed,
-    Object? exception = freezed,
+    Object? group = null,
+    Object? exception = null,
   }) {
     return _then(_$_Error(
-      group: group == freezed
+      group: null == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as ModifierGroupModel,
-      exception: exception == freezed
+      exception: null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
@@ -636,18 +637,17 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            const DeepCollectionEquality().equals(other.group, group) &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            (identical(other.group, group) || other.group == group) &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(group),
-      const DeepCollectionEquality().hash(exception));
+  int get hashCode => Object.hash(runtimeType, group, exception);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -666,10 +666,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ModifierGroupModel group)? initial,
-    TResult Function(ModifierGroupModel group)? creating,
-    TResult Function(ModifierGroupModel group)? created,
-    TResult Function(ModifierGroupModel group, Exception exception)? error,
+    TResult? Function(ModifierGroupModel group)? initial,
+    TResult? Function(ModifierGroupModel group)? creating,
+    TResult? Function(ModifierGroupModel group)? created,
+    TResult? Function(ModifierGroupModel group, Exception exception)? error,
   }) {
     return error?.call(group, exception);
   }
@@ -703,10 +703,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

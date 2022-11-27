@@ -29,11 +29,11 @@ mixin _$CompiledMenuState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CompiledMenuModel response)? loading,
-    TResult Function(CompiledMenuModel response)? loaded,
-    TResult Function(CompiledMenuModel response)? publishing,
-    TResult Function(CompiledMenuModel response)? published,
-    TResult Function(CompiledMenuModel response, Exception exception)? error,
+    TResult? Function(CompiledMenuModel response)? loading,
+    TResult? Function(CompiledMenuModel response)? loaded,
+    TResult? Function(CompiledMenuModel response)? publishing,
+    TResult? Function(CompiledMenuModel response)? published,
+    TResult? Function(CompiledMenuModel response, Exception exception)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,11 +57,11 @@ mixin _$CompiledMenuState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Publishing value)? publishing,
-    TResult Function(_Published value)? published,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Publishing value)? publishing,
+    TResult? Function(_Published value)? published,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -84,37 +84,41 @@ mixin _$CompiledMenuState {
 abstract class $CompiledMenuStateCopyWith<$Res> {
   factory $CompiledMenuStateCopyWith(
           CompiledMenuState value, $Res Function(CompiledMenuState) then) =
-      _$CompiledMenuStateCopyWithImpl<$Res>;
+      _$CompiledMenuStateCopyWithImpl<$Res, CompiledMenuState>;
+  @useResult
   $Res call({CompiledMenuModel response});
 
   $CompiledMenuModelCopyWith<$Res> get response;
 }
 
 /// @nodoc
-class _$CompiledMenuStateCopyWithImpl<$Res>
+class _$CompiledMenuStateCopyWithImpl<$Res, $Val extends CompiledMenuState>
     implements $CompiledMenuStateCopyWith<$Res> {
   _$CompiledMenuStateCopyWithImpl(this._value, this._then);
 
-  final CompiledMenuState _value;
   // ignore: unused_field
-  final $Res Function(CompiledMenuState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = freezed,
+    Object? response = null,
   }) {
     return _then(_value.copyWith(
-      response: response == freezed
+      response: null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
               as CompiledMenuModel,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $CompiledMenuModelCopyWith<$Res> get response {
     return $CompiledMenuModelCopyWith<$Res>(_value.response, (value) {
-      return _then(_value.copyWith(response: value));
+      return _then(_value.copyWith(response: value) as $Val);
     });
   }
 }
@@ -126,6 +130,7 @@ abstract class _$$_LoadingCopyWith<$Res>
           _$_Loading value, $Res Function(_$_Loading) then) =
       __$$_LoadingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({CompiledMenuModel response});
 
   @override
@@ -134,20 +139,18 @@ abstract class _$$_LoadingCopyWith<$Res>
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$CompiledMenuStateCopyWithImpl<$Res>
+    extends _$CompiledMenuStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
-      : super(_value, (v) => _then(v as _$_Loading));
+      : super(_value, _then);
 
-  @override
-  _$_Loading get _value => super._value as _$_Loading;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = freezed,
+    Object? response = null,
   }) {
     return _then(_$_Loading(
-      response: response == freezed
+      response: null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
               as CompiledMenuModel,
@@ -173,15 +176,16 @@ class _$_Loading implements _Loading {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loading &&
-            const DeepCollectionEquality().equals(other.response, response));
+            (identical(other.response, response) ||
+                other.response == response));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(response));
+  int get hashCode => Object.hash(runtimeType, response);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
       __$$_LoadingCopyWithImpl<_$_Loading>(this, _$identity);
 
@@ -201,11 +205,11 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CompiledMenuModel response)? loading,
-    TResult Function(CompiledMenuModel response)? loaded,
-    TResult Function(CompiledMenuModel response)? publishing,
-    TResult Function(CompiledMenuModel response)? published,
-    TResult Function(CompiledMenuModel response, Exception exception)? error,
+    TResult? Function(CompiledMenuModel response)? loading,
+    TResult? Function(CompiledMenuModel response)? loaded,
+    TResult? Function(CompiledMenuModel response)? publishing,
+    TResult? Function(CompiledMenuModel response)? published,
+    TResult? Function(CompiledMenuModel response, Exception exception)? error,
   }) {
     return loading?.call(response);
   }
@@ -241,11 +245,11 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Publishing value)? publishing,
-    TResult Function(_Published value)? published,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Publishing value)? publishing,
+    TResult? Function(_Published value)? published,
+    TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
   }
@@ -285,6 +289,7 @@ abstract class _$$_LoadedCopyWith<$Res>
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({CompiledMenuModel response});
 
   @override
@@ -293,20 +298,18 @@ abstract class _$$_LoadedCopyWith<$Res>
 
 /// @nodoc
 class __$$_LoadedCopyWithImpl<$Res>
-    extends _$CompiledMenuStateCopyWithImpl<$Res>
+    extends _$CompiledMenuStateCopyWithImpl<$Res, _$_Loaded>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
-      : super(_value, (v) => _then(v as _$_Loaded));
+      : super(_value, _then);
 
-  @override
-  _$_Loaded get _value => super._value as _$_Loaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = freezed,
+    Object? response = null,
   }) {
     return _then(_$_Loaded(
-      response: response == freezed
+      response: null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
               as CompiledMenuModel,
@@ -332,15 +335,16 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
-            const DeepCollectionEquality().equals(other.response, response));
+            (identical(other.response, response) ||
+                other.response == response));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(response));
+  int get hashCode => Object.hash(runtimeType, response);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
@@ -360,11 +364,11 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CompiledMenuModel response)? loading,
-    TResult Function(CompiledMenuModel response)? loaded,
-    TResult Function(CompiledMenuModel response)? publishing,
-    TResult Function(CompiledMenuModel response)? published,
-    TResult Function(CompiledMenuModel response, Exception exception)? error,
+    TResult? Function(CompiledMenuModel response)? loading,
+    TResult? Function(CompiledMenuModel response)? loaded,
+    TResult? Function(CompiledMenuModel response)? publishing,
+    TResult? Function(CompiledMenuModel response)? published,
+    TResult? Function(CompiledMenuModel response, Exception exception)? error,
   }) {
     return loaded?.call(response);
   }
@@ -400,11 +404,11 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Publishing value)? publishing,
-    TResult Function(_Published value)? published,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Publishing value)? publishing,
+    TResult? Function(_Published value)? published,
+    TResult? Function(_Error value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -445,6 +449,7 @@ abstract class _$$_PublishingCopyWith<$Res>
           _$_Publishing value, $Res Function(_$_Publishing) then) =
       __$$_PublishingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({CompiledMenuModel response});
 
   @override
@@ -453,21 +458,19 @@ abstract class _$$_PublishingCopyWith<$Res>
 
 /// @nodoc
 class __$$_PublishingCopyWithImpl<$Res>
-    extends _$CompiledMenuStateCopyWithImpl<$Res>
+    extends _$CompiledMenuStateCopyWithImpl<$Res, _$_Publishing>
     implements _$$_PublishingCopyWith<$Res> {
   __$$_PublishingCopyWithImpl(
       _$_Publishing _value, $Res Function(_$_Publishing) _then)
-      : super(_value, (v) => _then(v as _$_Publishing));
+      : super(_value, _then);
 
-  @override
-  _$_Publishing get _value => super._value as _$_Publishing;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = freezed,
+    Object? response = null,
   }) {
     return _then(_$_Publishing(
-      response: response == freezed
+      response: null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
               as CompiledMenuModel,
@@ -493,15 +496,16 @@ class _$_Publishing implements _Publishing {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Publishing &&
-            const DeepCollectionEquality().equals(other.response, response));
+            (identical(other.response, response) ||
+                other.response == response));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(response));
+  int get hashCode => Object.hash(runtimeType, response);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PublishingCopyWith<_$_Publishing> get copyWith =>
       __$$_PublishingCopyWithImpl<_$_Publishing>(this, _$identity);
 
@@ -521,11 +525,11 @@ class _$_Publishing implements _Publishing {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CompiledMenuModel response)? loading,
-    TResult Function(CompiledMenuModel response)? loaded,
-    TResult Function(CompiledMenuModel response)? publishing,
-    TResult Function(CompiledMenuModel response)? published,
-    TResult Function(CompiledMenuModel response, Exception exception)? error,
+    TResult? Function(CompiledMenuModel response)? loading,
+    TResult? Function(CompiledMenuModel response)? loaded,
+    TResult? Function(CompiledMenuModel response)? publishing,
+    TResult? Function(CompiledMenuModel response)? published,
+    TResult? Function(CompiledMenuModel response, Exception exception)? error,
   }) {
     return publishing?.call(response);
   }
@@ -561,11 +565,11 @@ class _$_Publishing implements _Publishing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Publishing value)? publishing,
-    TResult Function(_Published value)? published,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Publishing value)? publishing,
+    TResult? Function(_Published value)? published,
+    TResult? Function(_Error value)? error,
   }) {
     return publishing?.call(this);
   }
@@ -606,6 +610,7 @@ abstract class _$$_PublishedCopyWith<$Res>
           _$_Published value, $Res Function(_$_Published) then) =
       __$$_PublishedCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({CompiledMenuModel response});
 
   @override
@@ -614,21 +619,19 @@ abstract class _$$_PublishedCopyWith<$Res>
 
 /// @nodoc
 class __$$_PublishedCopyWithImpl<$Res>
-    extends _$CompiledMenuStateCopyWithImpl<$Res>
+    extends _$CompiledMenuStateCopyWithImpl<$Res, _$_Published>
     implements _$$_PublishedCopyWith<$Res> {
   __$$_PublishedCopyWithImpl(
       _$_Published _value, $Res Function(_$_Published) _then)
-      : super(_value, (v) => _then(v as _$_Published));
+      : super(_value, _then);
 
-  @override
-  _$_Published get _value => super._value as _$_Published;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = freezed,
+    Object? response = null,
   }) {
     return _then(_$_Published(
-      response: response == freezed
+      response: null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
               as CompiledMenuModel,
@@ -654,15 +657,16 @@ class _$_Published implements _Published {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Published &&
-            const DeepCollectionEquality().equals(other.response, response));
+            (identical(other.response, response) ||
+                other.response == response));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(response));
+  int get hashCode => Object.hash(runtimeType, response);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PublishedCopyWith<_$_Published> get copyWith =>
       __$$_PublishedCopyWithImpl<_$_Published>(this, _$identity);
 
@@ -682,11 +686,11 @@ class _$_Published implements _Published {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CompiledMenuModel response)? loading,
-    TResult Function(CompiledMenuModel response)? loaded,
-    TResult Function(CompiledMenuModel response)? publishing,
-    TResult Function(CompiledMenuModel response)? published,
-    TResult Function(CompiledMenuModel response, Exception exception)? error,
+    TResult? Function(CompiledMenuModel response)? loading,
+    TResult? Function(CompiledMenuModel response)? loaded,
+    TResult? Function(CompiledMenuModel response)? publishing,
+    TResult? Function(CompiledMenuModel response)? published,
+    TResult? Function(CompiledMenuModel response, Exception exception)? error,
   }) {
     return published?.call(response);
   }
@@ -722,11 +726,11 @@ class _$_Published implements _Published {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Publishing value)? publishing,
-    TResult Function(_Published value)? published,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Publishing value)? publishing,
+    TResult? Function(_Published value)? published,
+    TResult? Function(_Error value)? error,
   }) {
     return published?.call(this);
   }
@@ -766,6 +770,7 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({CompiledMenuModel response, Exception exception});
 
   @override
@@ -773,25 +778,24 @@ abstract class _$$_ErrorCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$CompiledMenuStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$CompiledMenuStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = freezed,
-    Object? exception = freezed,
+    Object? response = null,
+    Object? exception = null,
   }) {
     return _then(_$_Error(
-      response: response == freezed
+      response: null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
               as CompiledMenuModel,
-      exception: exception == freezed
+      exception: null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
@@ -819,18 +823,18 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            const DeepCollectionEquality().equals(other.response, response) &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            (identical(other.response, response) ||
+                other.response == response) &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(response),
-      const DeepCollectionEquality().hash(exception));
+  int get hashCode => Object.hash(runtimeType, response, exception);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -850,11 +854,11 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CompiledMenuModel response)? loading,
-    TResult Function(CompiledMenuModel response)? loaded,
-    TResult Function(CompiledMenuModel response)? publishing,
-    TResult Function(CompiledMenuModel response)? published,
-    TResult Function(CompiledMenuModel response, Exception exception)? error,
+    TResult? Function(CompiledMenuModel response)? loading,
+    TResult? Function(CompiledMenuModel response)? loaded,
+    TResult? Function(CompiledMenuModel response)? publishing,
+    TResult? Function(CompiledMenuModel response)? published,
+    TResult? Function(CompiledMenuModel response, Exception exception)? error,
   }) {
     return error?.call(response, exception);
   }
@@ -890,11 +894,11 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Publishing value)? publishing,
-    TResult Function(_Published value)? published,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Publishing value)? publishing,
+    TResult? Function(_Published value)? published,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

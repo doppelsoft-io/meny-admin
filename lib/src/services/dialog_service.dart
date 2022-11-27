@@ -1,4 +1,5 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 
 class DialogService {
@@ -30,14 +31,9 @@ class DialogService {
           ),
           content: Text(failure.toString()),
           actions: [
-            TextButton(
+            DSButton(
               onPressed: () => Navigator.of(context).pop(),
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(
-                  Theme.of(context).errorColor,
-                ),
-              ),
-              child: const Text('OK'),
+              text: 'OK',
             ),
           ],
         );

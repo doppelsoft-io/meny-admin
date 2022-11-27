@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
-import 'package:flagsmith/flagsmith.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
+import 'package:meny_core/meny_core.dart';
 
 part 'flagsmith_state.dart';
 part 'flagsmith_cubit.freezed.dart';

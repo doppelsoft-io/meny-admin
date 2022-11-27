@@ -4,7 +4,7 @@ part of 'categories_cubit.dart';
 class CategoriesState with _$CategoriesState {
   const factory CategoriesState.loading({
     @Default(<CategoryModel>[]) List<CategoryModel> categories,
-    @Default(OrderBy('createdAt')) OrderBy orderBy,
+    @Default(OrderBy()) OrderBy orderBy,
   }) = _Loading;
 
   const factory CategoriesState.loaded({

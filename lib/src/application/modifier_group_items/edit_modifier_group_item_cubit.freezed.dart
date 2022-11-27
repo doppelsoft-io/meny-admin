@@ -31,10 +31,10 @@ mixin _$EditModifierGroupItemState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? initial,
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? updating,
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? success,
-    TResult Function(
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? initial,
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? updating,
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? success,
+    TResult? Function(
             ModifierGroupItemModel modifierGroupItem, Exception exception)?
         error,
   }) =>
@@ -60,10 +60,10 @@ mixin _$EditModifierGroupItemState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -85,38 +85,44 @@ mixin _$EditModifierGroupItemState {
 abstract class $EditModifierGroupItemStateCopyWith<$Res> {
   factory $EditModifierGroupItemStateCopyWith(EditModifierGroupItemState value,
           $Res Function(EditModifierGroupItemState) then) =
-      _$EditModifierGroupItemStateCopyWithImpl<$Res>;
+      _$EditModifierGroupItemStateCopyWithImpl<$Res,
+          EditModifierGroupItemState>;
+  @useResult
   $Res call({ModifierGroupItemModel modifierGroupItem});
 
   $ModifierGroupItemModelCopyWith<$Res> get modifierGroupItem;
 }
 
 /// @nodoc
-class _$EditModifierGroupItemStateCopyWithImpl<$Res>
+class _$EditModifierGroupItemStateCopyWithImpl<$Res,
+        $Val extends EditModifierGroupItemState>
     implements $EditModifierGroupItemStateCopyWith<$Res> {
   _$EditModifierGroupItemStateCopyWithImpl(this._value, this._then);
 
-  final EditModifierGroupItemState _value;
   // ignore: unused_field
-  final $Res Function(EditModifierGroupItemState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? modifierGroupItem = freezed,
+    Object? modifierGroupItem = null,
   }) {
     return _then(_value.copyWith(
-      modifierGroupItem: modifierGroupItem == freezed
+      modifierGroupItem: null == modifierGroupItem
           ? _value.modifierGroupItem
           : modifierGroupItem // ignore: cast_nullable_to_non_nullable
               as ModifierGroupItemModel,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ModifierGroupItemModelCopyWith<$Res> get modifierGroupItem {
     return $ModifierGroupItemModelCopyWith<$Res>(_value.modifierGroupItem,
         (value) {
-      return _then(_value.copyWith(modifierGroupItem: value));
+      return _then(_value.copyWith(modifierGroupItem: value) as $Val);
     });
   }
 }
@@ -128,6 +134,7 @@ abstract class _$$_InitialCopyWith<$Res>
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({ModifierGroupItemModel modifierGroupItem});
 
   @override
@@ -136,20 +143,18 @@ abstract class _$$_InitialCopyWith<$Res>
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$EditModifierGroupItemStateCopyWithImpl<$Res>
+    extends _$EditModifierGroupItemStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+      : super(_value, _then);
 
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? modifierGroupItem = freezed,
+    Object? modifierGroupItem = null,
   }) {
     return _then(_$_Initial(
-      modifierGroupItem: modifierGroupItem == freezed
+      modifierGroupItem: null == modifierGroupItem
           ? _value.modifierGroupItem
           : modifierGroupItem // ignore: cast_nullable_to_non_nullable
               as ModifierGroupItemModel,
@@ -175,16 +180,16 @@ class _$_Initial implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Initial &&
-            const DeepCollectionEquality()
-                .equals(other.modifierGroupItem, modifierGroupItem));
+            (identical(other.modifierGroupItem, modifierGroupItem) ||
+                other.modifierGroupItem == modifierGroupItem));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(modifierGroupItem));
+  int get hashCode => Object.hash(runtimeType, modifierGroupItem);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
       __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
@@ -205,10 +210,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? initial,
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? updating,
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? success,
-    TResult Function(
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? initial,
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? updating,
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? success,
+    TResult? Function(
             ModifierGroupItemModel modifierGroupItem, Exception exception)?
         error,
   }) {
@@ -246,10 +251,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -289,6 +294,7 @@ abstract class _$$_UpdatingCopyWith<$Res>
           _$_Updating value, $Res Function(_$_Updating) then) =
       __$$_UpdatingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({ModifierGroupItemModel modifierGroupItem});
 
   @override
@@ -297,21 +303,19 @@ abstract class _$$_UpdatingCopyWith<$Res>
 
 /// @nodoc
 class __$$_UpdatingCopyWithImpl<$Res>
-    extends _$EditModifierGroupItemStateCopyWithImpl<$Res>
+    extends _$EditModifierGroupItemStateCopyWithImpl<$Res, _$_Updating>
     implements _$$_UpdatingCopyWith<$Res> {
   __$$_UpdatingCopyWithImpl(
       _$_Updating _value, $Res Function(_$_Updating) _then)
-      : super(_value, (v) => _then(v as _$_Updating));
+      : super(_value, _then);
 
-  @override
-  _$_Updating get _value => super._value as _$_Updating;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? modifierGroupItem = freezed,
+    Object? modifierGroupItem = null,
   }) {
     return _then(_$_Updating(
-      modifierGroupItem: modifierGroupItem == freezed
+      modifierGroupItem: null == modifierGroupItem
           ? _value.modifierGroupItem
           : modifierGroupItem // ignore: cast_nullable_to_non_nullable
               as ModifierGroupItemModel,
@@ -337,16 +341,16 @@ class _$_Updating implements _Updating {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Updating &&
-            const DeepCollectionEquality()
-                .equals(other.modifierGroupItem, modifierGroupItem));
+            (identical(other.modifierGroupItem, modifierGroupItem) ||
+                other.modifierGroupItem == modifierGroupItem));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(modifierGroupItem));
+  int get hashCode => Object.hash(runtimeType, modifierGroupItem);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UpdatingCopyWith<_$_Updating> get copyWith =>
       __$$_UpdatingCopyWithImpl<_$_Updating>(this, _$identity);
 
@@ -367,10 +371,10 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? initial,
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? updating,
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? success,
-    TResult Function(
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? initial,
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? updating,
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? success,
+    TResult? Function(
             ModifierGroupItemModel modifierGroupItem, Exception exception)?
         error,
   }) {
@@ -408,10 +412,10 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return updating?.call(this);
   }
@@ -451,6 +455,7 @@ abstract class _$$_SuccessCopyWith<$Res>
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({ModifierGroupItemModel modifierGroupItem});
 
   @override
@@ -459,20 +464,18 @@ abstract class _$$_SuccessCopyWith<$Res>
 
 /// @nodoc
 class __$$_SuccessCopyWithImpl<$Res>
-    extends _$EditModifierGroupItemStateCopyWithImpl<$Res>
+    extends _$EditModifierGroupItemStateCopyWithImpl<$Res, _$_Success>
     implements _$$_SuccessCopyWith<$Res> {
   __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
-      : super(_value, (v) => _then(v as _$_Success));
+      : super(_value, _then);
 
-  @override
-  _$_Success get _value => super._value as _$_Success;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? modifierGroupItem = freezed,
+    Object? modifierGroupItem = null,
   }) {
     return _then(_$_Success(
-      modifierGroupItem: modifierGroupItem == freezed
+      modifierGroupItem: null == modifierGroupItem
           ? _value.modifierGroupItem
           : modifierGroupItem // ignore: cast_nullable_to_non_nullable
               as ModifierGroupItemModel,
@@ -498,16 +501,16 @@ class _$_Success implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Success &&
-            const DeepCollectionEquality()
-                .equals(other.modifierGroupItem, modifierGroupItem));
+            (identical(other.modifierGroupItem, modifierGroupItem) ||
+                other.modifierGroupItem == modifierGroupItem));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(modifierGroupItem));
+  int get hashCode => Object.hash(runtimeType, modifierGroupItem);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
@@ -528,10 +531,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? initial,
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? updating,
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? success,
-    TResult Function(
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? initial,
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? updating,
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? success,
+    TResult? Function(
             ModifierGroupItemModel modifierGroupItem, Exception exception)?
         error,
   }) {
@@ -569,10 +572,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return success?.call(this);
   }
@@ -611,6 +614,7 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({ModifierGroupItemModel modifierGroupItem, Exception exception});
 
   @override
@@ -619,25 +623,23 @@ abstract class _$$_ErrorCopyWith<$Res>
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$EditModifierGroupItemStateCopyWithImpl<$Res>
+    extends _$EditModifierGroupItemStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? modifierGroupItem = freezed,
-    Object? exception = freezed,
+    Object? modifierGroupItem = null,
+    Object? exception = null,
   }) {
     return _then(_$_Error(
-      modifierGroupItem: modifierGroupItem == freezed
+      modifierGroupItem: null == modifierGroupItem
           ? _value.modifierGroupItem
           : modifierGroupItem // ignore: cast_nullable_to_non_nullable
               as ModifierGroupItemModel,
-      exception: exception == freezed
+      exception: null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
@@ -665,19 +667,18 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            const DeepCollectionEquality()
-                .equals(other.modifierGroupItem, modifierGroupItem) &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            (identical(other.modifierGroupItem, modifierGroupItem) ||
+                other.modifierGroupItem == modifierGroupItem) &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(modifierGroupItem),
-      const DeepCollectionEquality().hash(exception));
+  int get hashCode => Object.hash(runtimeType, modifierGroupItem, exception);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -698,10 +699,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? initial,
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? updating,
-    TResult Function(ModifierGroupItemModel modifierGroupItem)? success,
-    TResult Function(
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? initial,
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? updating,
+    TResult? Function(ModifierGroupItemModel modifierGroupItem)? success,
+    TResult? Function(
             ModifierGroupItemModel modifierGroupItem, Exception exception)?
         error,
   }) {
@@ -739,10 +740,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

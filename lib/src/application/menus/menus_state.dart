@@ -4,7 +4,7 @@ part of 'menus_cubit.dart';
 class MenusState with _$MenusState {
   const factory MenusState.loading({
     @Default(<MenuModel>[]) List<MenuModel> menus,
-    @Default(OrderBy('createdAt')) OrderBy orderBy,
+    @Default(OrderBy()) OrderBy orderBy,
   }) = _Loading;
 
   const factory MenusState.loaded({

@@ -61,7 +61,7 @@ class ModifierGroupItemRepository {
   Stream<List<ModifierGroupItemModel>> streamForMenuItem({
     required String storeId,
     required String menuItemId,
-    OrderBy orderBy = const OrderBy('createdAt'),
+    OrderBy orderBy = const OrderBy(),
   }) {
     return _firebaseFirestore
         .collection(Paths.stores)
@@ -78,7 +78,7 @@ class ModifierGroupItemRepository {
   Stream<List<ModifierGroupItemModel>> streamForModifierGroup({
     required String storeId,
     required String modifierGroupId,
-    OrderBy orderBy = const OrderBy('createdAt'),
+    OrderBy orderBy = const OrderBy(),
   }) {
     return _firebaseFirestore
         .collection(Paths.stores)

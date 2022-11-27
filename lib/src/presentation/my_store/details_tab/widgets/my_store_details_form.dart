@@ -2,7 +2,6 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/src/application/application.dart';
-import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
 class MyStoreDetailsForm extends StatelessWidget {
@@ -54,13 +53,12 @@ class _MyStoreDetailsForm extends HookWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DSText(
+          const DSText(
             'Name',
-            theme: DSTextThemeData.labelLarge(),
+            theme: DSTextThemeData.b1(),
           ),
           DSVerticalSpacing.smallest(),
           DSTextFormField(
-            theme: Themes.theme.textFormFieldThemeData,
             args: DSTextFormFieldArgs(
               controller: storeNameController,
               onChanged: onNameChanged,

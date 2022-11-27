@@ -34,12 +34,12 @@ mixin _$ImageUploadState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(XFile file, String url, Uint8List bytes)? initial,
-    TResult Function(XFile file, String url, Uint8List bytes)? seeding,
-    TResult Function(XFile file, String url, Uint8List bytes)? picked,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploading,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploaded,
-    TResult Function(
+    TResult? Function(XFile file, String url, Uint8List bytes)? initial,
+    TResult? Function(XFile file, String url, Uint8List bytes)? seeding,
+    TResult? Function(XFile file, String url, Uint8List bytes)? picked,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploading,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploaded,
+    TResult? Function(
             XFile file, String url, Exception exception, Uint8List bytes)?
         error,
   }) =>
@@ -69,12 +69,12 @@ mixin _$ImageUploadState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Seeding value)? seeding,
-    TResult Function(_Picked value)? picked,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Seeding value)? seeding,
+    TResult? Function(_Picked value)? picked,
+    TResult? Function(_Uploading value)? uploading,
+    TResult? Function(_Uploaded value)? uploaded,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -98,39 +98,42 @@ mixin _$ImageUploadState {
 abstract class $ImageUploadStateCopyWith<$Res> {
   factory $ImageUploadStateCopyWith(
           ImageUploadState value, $Res Function(ImageUploadState) then) =
-      _$ImageUploadStateCopyWithImpl<$Res>;
+      _$ImageUploadStateCopyWithImpl<$Res, ImageUploadState>;
+  @useResult
   $Res call({XFile file, String url, Uint8List bytes});
 }
 
 /// @nodoc
-class _$ImageUploadStateCopyWithImpl<$Res>
+class _$ImageUploadStateCopyWithImpl<$Res, $Val extends ImageUploadState>
     implements $ImageUploadStateCopyWith<$Res> {
   _$ImageUploadStateCopyWithImpl(this._value, this._then);
 
-  final ImageUploadState _value;
   // ignore: unused_field
-  final $Res Function(ImageUploadState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
-    Object? url = freezed,
-    Object? bytes = freezed,
+    Object? file = null,
+    Object? url = null,
+    Object? bytes = null,
   }) {
     return _then(_value.copyWith(
-      file: file == freezed
+      file: null == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
               as XFile,
-      url: url == freezed
+      url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      bytes: bytes == freezed
+      bytes: null == bytes
           ? _value.bytes
           : bytes // ignore: cast_nullable_to_non_nullable
               as Uint8List,
-    ));
+    ) as $Val);
   }
 }
 
@@ -141,35 +144,34 @@ abstract class _$$_InitialCopyWith<$Res>
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({XFile file, String url, Uint8List bytes});
 }
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$ImageUploadStateCopyWithImpl<$Res>
+    extends _$ImageUploadStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+      : super(_value, _then);
 
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
-    Object? url = freezed,
-    Object? bytes = freezed,
+    Object? file = null,
+    Object? url = null,
+    Object? bytes = null,
   }) {
     return _then(_$_Initial(
-      file: file == freezed
+      file: null == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
               as XFile,
-      url: url == freezed
+      url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      bytes: bytes == freezed
+      bytes: null == bytes
           ? _value.bytes
           : bytes // ignore: cast_nullable_to_non_nullable
               as Uint8List,
@@ -200,20 +202,18 @@ class _$_Initial implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Initial &&
-            const DeepCollectionEquality().equals(other.file, file) &&
-            const DeepCollectionEquality().equals(other.url, url) &&
+            (identical(other.file, file) || other.file == file) &&
+            (identical(other.url, url) || other.url == url) &&
             const DeepCollectionEquality().equals(other.bytes, bytes));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(file),
-      const DeepCollectionEquality().hash(url),
-      const DeepCollectionEquality().hash(bytes));
+      runtimeType, file, url, const DeepCollectionEquality().hash(bytes));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
       __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
@@ -236,12 +236,12 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(XFile file, String url, Uint8List bytes)? initial,
-    TResult Function(XFile file, String url, Uint8List bytes)? seeding,
-    TResult Function(XFile file, String url, Uint8List bytes)? picked,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploading,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploaded,
-    TResult Function(
+    TResult? Function(XFile file, String url, Uint8List bytes)? initial,
+    TResult? Function(XFile file, String url, Uint8List bytes)? seeding,
+    TResult? Function(XFile file, String url, Uint8List bytes)? picked,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploading,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploaded,
+    TResult? Function(
             XFile file, String url, Exception exception, Uint8List bytes)?
         error,
   }) {
@@ -283,12 +283,12 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Seeding value)? seeding,
-    TResult Function(_Picked value)? picked,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Seeding value)? seeding,
+    TResult? Function(_Picked value)? picked,
+    TResult? Function(_Uploading value)? uploading,
+    TResult? Function(_Uploaded value)? uploaded,
+    TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -336,35 +336,34 @@ abstract class _$$_SeedingCopyWith<$Res>
           _$_Seeding value, $Res Function(_$_Seeding) then) =
       __$$_SeedingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({XFile file, String url, Uint8List bytes});
 }
 
 /// @nodoc
 class __$$_SeedingCopyWithImpl<$Res>
-    extends _$ImageUploadStateCopyWithImpl<$Res>
+    extends _$ImageUploadStateCopyWithImpl<$Res, _$_Seeding>
     implements _$$_SeedingCopyWith<$Res> {
   __$$_SeedingCopyWithImpl(_$_Seeding _value, $Res Function(_$_Seeding) _then)
-      : super(_value, (v) => _then(v as _$_Seeding));
+      : super(_value, _then);
 
-  @override
-  _$_Seeding get _value => super._value as _$_Seeding;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
-    Object? url = freezed,
-    Object? bytes = freezed,
+    Object? file = null,
+    Object? url = null,
+    Object? bytes = null,
   }) {
     return _then(_$_Seeding(
-      file: file == freezed
+      file: null == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
               as XFile,
-      url: url == freezed
+      url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      bytes: bytes == freezed
+      bytes: null == bytes
           ? _value.bytes
           : bytes // ignore: cast_nullable_to_non_nullable
               as Uint8List,
@@ -395,20 +394,18 @@ class _$_Seeding implements _Seeding {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Seeding &&
-            const DeepCollectionEquality().equals(other.file, file) &&
-            const DeepCollectionEquality().equals(other.url, url) &&
+            (identical(other.file, file) || other.file == file) &&
+            (identical(other.url, url) || other.url == url) &&
             const DeepCollectionEquality().equals(other.bytes, bytes));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(file),
-      const DeepCollectionEquality().hash(url),
-      const DeepCollectionEquality().hash(bytes));
+      runtimeType, file, url, const DeepCollectionEquality().hash(bytes));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SeedingCopyWith<_$_Seeding> get copyWith =>
       __$$_SeedingCopyWithImpl<_$_Seeding>(this, _$identity);
 
@@ -431,12 +428,12 @@ class _$_Seeding implements _Seeding {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(XFile file, String url, Uint8List bytes)? initial,
-    TResult Function(XFile file, String url, Uint8List bytes)? seeding,
-    TResult Function(XFile file, String url, Uint8List bytes)? picked,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploading,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploaded,
-    TResult Function(
+    TResult? Function(XFile file, String url, Uint8List bytes)? initial,
+    TResult? Function(XFile file, String url, Uint8List bytes)? seeding,
+    TResult? Function(XFile file, String url, Uint8List bytes)? picked,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploading,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploaded,
+    TResult? Function(
             XFile file, String url, Exception exception, Uint8List bytes)?
         error,
   }) {
@@ -478,12 +475,12 @@ class _$_Seeding implements _Seeding {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Seeding value)? seeding,
-    TResult Function(_Picked value)? picked,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Seeding value)? seeding,
+    TResult? Function(_Picked value)? picked,
+    TResult? Function(_Uploading value)? uploading,
+    TResult? Function(_Uploaded value)? uploaded,
+    TResult? Function(_Error value)? error,
   }) {
     return seeding?.call(this);
   }
@@ -530,34 +527,34 @@ abstract class _$$_PickedCopyWith<$Res>
   factory _$$_PickedCopyWith(_$_Picked value, $Res Function(_$_Picked) then) =
       __$$_PickedCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({XFile file, String url, Uint8List bytes});
 }
 
 /// @nodoc
-class __$$_PickedCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
+class __$$_PickedCopyWithImpl<$Res>
+    extends _$ImageUploadStateCopyWithImpl<$Res, _$_Picked>
     implements _$$_PickedCopyWith<$Res> {
   __$$_PickedCopyWithImpl(_$_Picked _value, $Res Function(_$_Picked) _then)
-      : super(_value, (v) => _then(v as _$_Picked));
+      : super(_value, _then);
 
-  @override
-  _$_Picked get _value => super._value as _$_Picked;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
-    Object? url = freezed,
-    Object? bytes = freezed,
+    Object? file = null,
+    Object? url = null,
+    Object? bytes = null,
   }) {
     return _then(_$_Picked(
-      file: file == freezed
+      file: null == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
               as XFile,
-      url: url == freezed
+      url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      bytes: bytes == freezed
+      bytes: null == bytes
           ? _value.bytes
           : bytes // ignore: cast_nullable_to_non_nullable
               as Uint8List,
@@ -587,20 +584,18 @@ class _$_Picked implements _Picked {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Picked &&
-            const DeepCollectionEquality().equals(other.file, file) &&
-            const DeepCollectionEquality().equals(other.url, url) &&
+            (identical(other.file, file) || other.file == file) &&
+            (identical(other.url, url) || other.url == url) &&
             const DeepCollectionEquality().equals(other.bytes, bytes));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(file),
-      const DeepCollectionEquality().hash(url),
-      const DeepCollectionEquality().hash(bytes));
+      runtimeType, file, url, const DeepCollectionEquality().hash(bytes));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PickedCopyWith<_$_Picked> get copyWith =>
       __$$_PickedCopyWithImpl<_$_Picked>(this, _$identity);
 
@@ -623,12 +618,12 @@ class _$_Picked implements _Picked {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(XFile file, String url, Uint8List bytes)? initial,
-    TResult Function(XFile file, String url, Uint8List bytes)? seeding,
-    TResult Function(XFile file, String url, Uint8List bytes)? picked,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploading,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploaded,
-    TResult Function(
+    TResult? Function(XFile file, String url, Uint8List bytes)? initial,
+    TResult? Function(XFile file, String url, Uint8List bytes)? seeding,
+    TResult? Function(XFile file, String url, Uint8List bytes)? picked,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploading,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploaded,
+    TResult? Function(
             XFile file, String url, Exception exception, Uint8List bytes)?
         error,
   }) {
@@ -670,12 +665,12 @@ class _$_Picked implements _Picked {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Seeding value)? seeding,
-    TResult Function(_Picked value)? picked,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Seeding value)? seeding,
+    TResult? Function(_Picked value)? picked,
+    TResult? Function(_Uploading value)? uploading,
+    TResult? Function(_Uploaded value)? uploaded,
+    TResult? Function(_Error value)? error,
   }) {
     return picked?.call(this);
   }
@@ -723,36 +718,35 @@ abstract class _$$_UploadingCopyWith<$Res>
           _$_Uploading value, $Res Function(_$_Uploading) then) =
       __$$_UploadingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({XFile file, String url, Uint8List bytes});
 }
 
 /// @nodoc
 class __$$_UploadingCopyWithImpl<$Res>
-    extends _$ImageUploadStateCopyWithImpl<$Res>
+    extends _$ImageUploadStateCopyWithImpl<$Res, _$_Uploading>
     implements _$$_UploadingCopyWith<$Res> {
   __$$_UploadingCopyWithImpl(
       _$_Uploading _value, $Res Function(_$_Uploading) _then)
-      : super(_value, (v) => _then(v as _$_Uploading));
+      : super(_value, _then);
 
-  @override
-  _$_Uploading get _value => super._value as _$_Uploading;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
-    Object? url = freezed,
-    Object? bytes = freezed,
+    Object? file = null,
+    Object? url = null,
+    Object? bytes = null,
   }) {
     return _then(_$_Uploading(
-      file: file == freezed
+      file: null == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
               as XFile,
-      url: url == freezed
+      url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      bytes: bytes == freezed
+      bytes: null == bytes
           ? _value.bytes
           : bytes // ignore: cast_nullable_to_non_nullable
               as Uint8List,
@@ -783,20 +777,18 @@ class _$_Uploading implements _Uploading {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Uploading &&
-            const DeepCollectionEquality().equals(other.file, file) &&
-            const DeepCollectionEquality().equals(other.url, url) &&
+            (identical(other.file, file) || other.file == file) &&
+            (identical(other.url, url) || other.url == url) &&
             const DeepCollectionEquality().equals(other.bytes, bytes));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(file),
-      const DeepCollectionEquality().hash(url),
-      const DeepCollectionEquality().hash(bytes));
+      runtimeType, file, url, const DeepCollectionEquality().hash(bytes));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UploadingCopyWith<_$_Uploading> get copyWith =>
       __$$_UploadingCopyWithImpl<_$_Uploading>(this, _$identity);
 
@@ -819,12 +811,12 @@ class _$_Uploading implements _Uploading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(XFile file, String url, Uint8List bytes)? initial,
-    TResult Function(XFile file, String url, Uint8List bytes)? seeding,
-    TResult Function(XFile file, String url, Uint8List bytes)? picked,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploading,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploaded,
-    TResult Function(
+    TResult? Function(XFile file, String url, Uint8List bytes)? initial,
+    TResult? Function(XFile file, String url, Uint8List bytes)? seeding,
+    TResult? Function(XFile file, String url, Uint8List bytes)? picked,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploading,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploaded,
+    TResult? Function(
             XFile file, String url, Exception exception, Uint8List bytes)?
         error,
   }) {
@@ -866,12 +858,12 @@ class _$_Uploading implements _Uploading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Seeding value)? seeding,
-    TResult Function(_Picked value)? picked,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Seeding value)? seeding,
+    TResult? Function(_Picked value)? picked,
+    TResult? Function(_Uploading value)? uploading,
+    TResult? Function(_Uploaded value)? uploaded,
+    TResult? Function(_Error value)? error,
   }) {
     return uploading?.call(this);
   }
@@ -919,36 +911,35 @@ abstract class _$$_UploadedCopyWith<$Res>
           _$_Uploaded value, $Res Function(_$_Uploaded) then) =
       __$$_UploadedCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({XFile file, String url, Uint8List bytes});
 }
 
 /// @nodoc
 class __$$_UploadedCopyWithImpl<$Res>
-    extends _$ImageUploadStateCopyWithImpl<$Res>
+    extends _$ImageUploadStateCopyWithImpl<$Res, _$_Uploaded>
     implements _$$_UploadedCopyWith<$Res> {
   __$$_UploadedCopyWithImpl(
       _$_Uploaded _value, $Res Function(_$_Uploaded) _then)
-      : super(_value, (v) => _then(v as _$_Uploaded));
+      : super(_value, _then);
 
-  @override
-  _$_Uploaded get _value => super._value as _$_Uploaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
-    Object? url = freezed,
-    Object? bytes = freezed,
+    Object? file = null,
+    Object? url = null,
+    Object? bytes = null,
   }) {
     return _then(_$_Uploaded(
-      file: file == freezed
+      file: null == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
               as XFile,
-      url: url == freezed
+      url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      bytes: bytes == freezed
+      bytes: null == bytes
           ? _value.bytes
           : bytes // ignore: cast_nullable_to_non_nullable
               as Uint8List,
@@ -979,20 +970,18 @@ class _$_Uploaded implements _Uploaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Uploaded &&
-            const DeepCollectionEquality().equals(other.file, file) &&
-            const DeepCollectionEquality().equals(other.url, url) &&
+            (identical(other.file, file) || other.file == file) &&
+            (identical(other.url, url) || other.url == url) &&
             const DeepCollectionEquality().equals(other.bytes, bytes));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(file),
-      const DeepCollectionEquality().hash(url),
-      const DeepCollectionEquality().hash(bytes));
+      runtimeType, file, url, const DeepCollectionEquality().hash(bytes));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UploadedCopyWith<_$_Uploaded> get copyWith =>
       __$$_UploadedCopyWithImpl<_$_Uploaded>(this, _$identity);
 
@@ -1015,12 +1004,12 @@ class _$_Uploaded implements _Uploaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(XFile file, String url, Uint8List bytes)? initial,
-    TResult Function(XFile file, String url, Uint8List bytes)? seeding,
-    TResult Function(XFile file, String url, Uint8List bytes)? picked,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploading,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploaded,
-    TResult Function(
+    TResult? Function(XFile file, String url, Uint8List bytes)? initial,
+    TResult? Function(XFile file, String url, Uint8List bytes)? seeding,
+    TResult? Function(XFile file, String url, Uint8List bytes)? picked,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploading,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploaded,
+    TResult? Function(
             XFile file, String url, Exception exception, Uint8List bytes)?
         error,
   }) {
@@ -1062,12 +1051,12 @@ class _$_Uploaded implements _Uploaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Seeding value)? seeding,
-    TResult Function(_Picked value)? picked,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Seeding value)? seeding,
+    TResult? Function(_Picked value)? picked,
+    TResult? Function(_Uploading value)? uploading,
+    TResult? Function(_Uploaded value)? uploaded,
+    TResult? Function(_Error value)? error,
   }) {
     return uploaded?.call(this);
   }
@@ -1114,39 +1103,39 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({XFile file, String url, Exception exception, Uint8List bytes});
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$ImageUploadStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
-    Object? url = freezed,
-    Object? exception = freezed,
-    Object? bytes = freezed,
+    Object? file = null,
+    Object? url = null,
+    Object? exception = null,
+    Object? bytes = null,
   }) {
     return _then(_$_Error(
-      file: file == freezed
+      file: null == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
               as XFile,
-      url: url == freezed
+      url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      exception: exception == freezed
+      exception: null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
-      bytes: bytes == freezed
+      bytes: null == bytes
           ? _value.bytes
           : bytes // ignore: cast_nullable_to_non_nullable
               as Uint8List,
@@ -1182,22 +1171,20 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            const DeepCollectionEquality().equals(other.file, file) &&
-            const DeepCollectionEquality().equals(other.url, url) &&
-            const DeepCollectionEquality().equals(other.exception, exception) &&
+            (identical(other.file, file) || other.file == file) &&
+            (identical(other.url, url) || other.url == url) &&
+            (identical(other.exception, exception) ||
+                other.exception == exception) &&
             const DeepCollectionEquality().equals(other.bytes, bytes));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(file),
-      const DeepCollectionEquality().hash(url),
-      const DeepCollectionEquality().hash(exception),
+  int get hashCode => Object.hash(runtimeType, file, url, exception,
       const DeepCollectionEquality().hash(bytes));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -1220,12 +1207,12 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(XFile file, String url, Uint8List bytes)? initial,
-    TResult Function(XFile file, String url, Uint8List bytes)? seeding,
-    TResult Function(XFile file, String url, Uint8List bytes)? picked,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploading,
-    TResult Function(XFile file, String url, Uint8List bytes)? uploaded,
-    TResult Function(
+    TResult? Function(XFile file, String url, Uint8List bytes)? initial,
+    TResult? Function(XFile file, String url, Uint8List bytes)? seeding,
+    TResult? Function(XFile file, String url, Uint8List bytes)? picked,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploading,
+    TResult? Function(XFile file, String url, Uint8List bytes)? uploaded,
+    TResult? Function(
             XFile file, String url, Exception exception, Uint8List bytes)?
         error,
   }) {
@@ -1267,12 +1254,12 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Seeding value)? seeding,
-    TResult Function(_Picked value)? picked,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Seeding value)? seeding,
+    TResult? Function(_Picked value)? picked,
+    TResult? Function(_Uploading value)? uploading,
+    TResult? Function(_Uploaded value)? uploaded,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

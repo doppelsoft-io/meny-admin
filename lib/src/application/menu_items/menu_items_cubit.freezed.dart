@@ -31,9 +31,9 @@ mixin _$MenuItemsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
-    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
-    TResult Function(
+    TResult? Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult? Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult? Function(
             List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
         error,
   }) =>
@@ -57,9 +57,9 @@ mixin _$MenuItemsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -80,34 +80,47 @@ mixin _$MenuItemsState {
 abstract class $MenuItemsStateCopyWith<$Res> {
   factory $MenuItemsStateCopyWith(
           MenuItemsState value, $Res Function(MenuItemsState) then) =
-      _$MenuItemsStateCopyWithImpl<$Res>;
+      _$MenuItemsStateCopyWithImpl<$Res, MenuItemsState>;
+  @useResult
   $Res call({List<MenuItemModel> items, OrderBy orderBy});
+
+  $OrderByCopyWith<$Res> get orderBy;
 }
 
 /// @nodoc
-class _$MenuItemsStateCopyWithImpl<$Res>
+class _$MenuItemsStateCopyWithImpl<$Res, $Val extends MenuItemsState>
     implements $MenuItemsStateCopyWith<$Res> {
   _$MenuItemsStateCopyWithImpl(this._value, this._then);
 
-  final MenuItemsState _value;
   // ignore: unused_field
-  final $Res Function(MenuItemsState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = freezed,
-    Object? orderBy = freezed,
+    Object? items = null,
+    Object? orderBy = null,
   }) {
     return _then(_value.copyWith(
-      items: items == freezed
+      items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
-      orderBy: orderBy == freezed
+      orderBy: null == orderBy
           ? _value.orderBy
           : orderBy // ignore: cast_nullable_to_non_nullable
               as OrderBy,
-    ));
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OrderByCopyWith<$Res> get orderBy {
+    return $OrderByCopyWith<$Res>(_value.orderBy, (value) {
+      return _then(_value.copyWith(orderBy: value) as $Val);
+    });
   }
 }
 
@@ -118,29 +131,32 @@ abstract class _$$_LoadingCopyWith<$Res>
           _$_Loading value, $Res Function(_$_Loading) then) =
       __$$_LoadingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<MenuItemModel> items, OrderBy orderBy});
+
+  @override
+  $OrderByCopyWith<$Res> get orderBy;
 }
 
 /// @nodoc
-class __$$_LoadingCopyWithImpl<$Res> extends _$MenuItemsStateCopyWithImpl<$Res>
+class __$$_LoadingCopyWithImpl<$Res>
+    extends _$MenuItemsStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
-      : super(_value, (v) => _then(v as _$_Loading));
+      : super(_value, _then);
 
-  @override
-  _$_Loading get _value => super._value as _$_Loading;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = freezed,
-    Object? orderBy = freezed,
+    Object? items = null,
+    Object? orderBy = null,
   }) {
     return _then(_$_Loading(
-      items: items == freezed
+      items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
-      orderBy: orderBy == freezed
+      orderBy: null == orderBy
           ? _value.orderBy
           : orderBy // ignore: cast_nullable_to_non_nullable
               as OrderBy,
@@ -153,7 +169,7 @@ class __$$_LoadingCopyWithImpl<$Res> extends _$MenuItemsStateCopyWithImpl<$Res>
 class _$_Loading implements _Loading {
   const _$_Loading(
       {final List<MenuItemModel> items = const <MenuItemModel>[],
-      this.orderBy = const OrderBy('createdAt')})
+      this.orderBy = const OrderBy()})
       : _items = items;
 
   final List<MenuItemModel> _items;
@@ -179,17 +195,16 @@ class _$_Loading implements _Loading {
         (other.runtimeType == runtimeType &&
             other is _$_Loading &&
             const DeepCollectionEquality().equals(other._items, _items) &&
-            const DeepCollectionEquality().equals(other.orderBy, orderBy));
+            (identical(other.orderBy, orderBy) || other.orderBy == orderBy));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_items),
-      const DeepCollectionEquality().hash(orderBy));
+      runtimeType, const DeepCollectionEquality().hash(_items), orderBy);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
       __$$_LoadingCopyWithImpl<_$_Loading>(this, _$identity);
 
@@ -210,9 +225,9 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
-    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
-    TResult Function(
+    TResult? Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult? Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult? Function(
             List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
         error,
   }) {
@@ -248,9 +263,9 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
   }
@@ -290,29 +305,32 @@ abstract class _$$_LoadedCopyWith<$Res>
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<MenuItemModel> items, OrderBy orderBy});
+
+  @override
+  $OrderByCopyWith<$Res> get orderBy;
 }
 
 /// @nodoc
-class __$$_LoadedCopyWithImpl<$Res> extends _$MenuItemsStateCopyWithImpl<$Res>
+class __$$_LoadedCopyWithImpl<$Res>
+    extends _$MenuItemsStateCopyWithImpl<$Res, _$_Loaded>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
-      : super(_value, (v) => _then(v as _$_Loaded));
+      : super(_value, _then);
 
-  @override
-  _$_Loaded get _value => super._value as _$_Loaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = freezed,
-    Object? orderBy = freezed,
+    Object? items = null,
+    Object? orderBy = null,
   }) {
     return _then(_$_Loaded(
-      items: items == freezed
+      items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
-      orderBy: orderBy == freezed
+      orderBy: null == orderBy
           ? _value.orderBy
           : orderBy // ignore: cast_nullable_to_non_nullable
               as OrderBy,
@@ -348,17 +366,16 @@ class _$_Loaded implements _Loaded {
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
             const DeepCollectionEquality().equals(other._items, _items) &&
-            const DeepCollectionEquality().equals(other.orderBy, orderBy));
+            (identical(other.orderBy, orderBy) || other.orderBy == orderBy));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_items),
-      const DeepCollectionEquality().hash(orderBy));
+      runtimeType, const DeepCollectionEquality().hash(_items), orderBy);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
@@ -379,9 +396,9 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
-    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
-    TResult Function(
+    TResult? Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult? Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult? Function(
             List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
         error,
   }) {
@@ -417,9 +434,9 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -460,34 +477,37 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<MenuItemModel> items, OrderBy orderBy, Exception exception});
+
+  @override
+  $OrderByCopyWith<$Res> get orderBy;
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$MenuItemsStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$MenuItemsStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = freezed,
-    Object? orderBy = freezed,
-    Object? exception = freezed,
+    Object? items = null,
+    Object? orderBy = null,
+    Object? exception = null,
   }) {
     return _then(_$_Error(
-      items: items == freezed
+      items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
-      orderBy: orderBy == freezed
+      orderBy: null == orderBy
           ? _value.orderBy
           : orderBy // ignore: cast_nullable_to_non_nullable
               as OrderBy,
-      exception: exception == freezed
+      exception: null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
@@ -527,19 +547,18 @@ class _$_Error implements _Error {
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
             const DeepCollectionEquality().equals(other._items, _items) &&
-            const DeepCollectionEquality().equals(other.orderBy, orderBy) &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            (identical(other.orderBy, orderBy) || other.orderBy == orderBy) &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_items),
-      const DeepCollectionEquality().hash(orderBy),
-      const DeepCollectionEquality().hash(exception));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_items), orderBy, exception);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -560,9 +579,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
-    TResult Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
-    TResult Function(
+    TResult? Function(List<MenuItemModel> items, OrderBy orderBy)? loading,
+    TResult? Function(List<MenuItemModel> items, OrderBy orderBy)? loaded,
+    TResult? Function(
             List<MenuItemModel> items, OrderBy orderBy, Exception exception)?
         error,
   }) {
@@ -598,9 +617,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

@@ -1,17 +1,12 @@
-class OrderBy {
-  const OrderBy(
-    this.field, {
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 
-    /// Firbase default
-    this.descending = true,
-    this.sortColumnIndex,
-  });
+part 'order_by.freezed.dart';
 
-  factory OrderBy.fallback() {
-    return const OrderBy('createdAt');
-  }
-
-  final String field;
-  final bool descending;
-  final int? sortColumnIndex;
+@freezed
+class OrderBy with _$OrderBy {
+  const factory OrderBy({
+    @Default('createdAt') String field,
+    @Default(true) bool descending,
+    int? sortColumnIndex,
+  }) = _OrderBy;
 }

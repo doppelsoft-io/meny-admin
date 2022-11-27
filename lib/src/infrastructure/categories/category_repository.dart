@@ -31,13 +31,16 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
     String? path,
     FirebaseFirestore? firebaseFirestore,
     LoggerService? loggerService,
+    UuidService? uuidService,
   })  : _loggerService = loggerService ?? Locator.instance(),
+        _uuidService = uuidService ?? Locator.instance(),
         super(
           path: path ?? Paths.categories,
           firebaseFirestore: firebaseFirestore ?? FirebaseFirestore.instance,
         );
 
   final LoggerService _loggerService;
+  final UuidService _uuidService;
 
   Future<CategoryModel> get({
     required String storeId,
@@ -74,9 +77,10 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
     required CategoryModel resource,
   }) async {
     try {
-      final document = await firebaseFirestore
+      final document = firebaseFirestore
           .categoryEntitiesCollection(storeId: storeId)
-          .add(resource.toJson());
+          .doc(_uuidService.uuid);
+      await document.set(resource.toJson());
       final snapshot = await document.get();
       return CategoryModel.fromSnapshot(snapshot);
     } catch (err) {

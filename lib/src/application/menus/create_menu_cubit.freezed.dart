@@ -27,10 +27,10 @@ mixin _$CreateMenuState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MenuModel menu)? initial,
-    TResult Function(MenuModel menu)? creating,
-    TResult Function(MenuModel menu)? created,
-    TResult Function(MenuModel menu, Exception exception)? error,
+    TResult? Function(MenuModel menu)? initial,
+    TResult? Function(MenuModel menu)? creating,
+    TResult? Function(MenuModel menu)? created,
+    TResult? Function(MenuModel menu, Exception exception)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -52,10 +52,10 @@ mixin _$CreateMenuState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -77,37 +77,41 @@ mixin _$CreateMenuState {
 abstract class $CreateMenuStateCopyWith<$Res> {
   factory $CreateMenuStateCopyWith(
           CreateMenuState value, $Res Function(CreateMenuState) then) =
-      _$CreateMenuStateCopyWithImpl<$Res>;
+      _$CreateMenuStateCopyWithImpl<$Res, CreateMenuState>;
+  @useResult
   $Res call({MenuModel menu});
 
   $MenuModelCopyWith<$Res> get menu;
 }
 
 /// @nodoc
-class _$CreateMenuStateCopyWithImpl<$Res>
+class _$CreateMenuStateCopyWithImpl<$Res, $Val extends CreateMenuState>
     implements $CreateMenuStateCopyWith<$Res> {
   _$CreateMenuStateCopyWithImpl(this._value, this._then);
 
-  final CreateMenuState _value;
   // ignore: unused_field
-  final $Res Function(CreateMenuState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? menu = freezed,
+    Object? menu = null,
   }) {
     return _then(_value.copyWith(
-      menu: menu == freezed
+      menu: null == menu
           ? _value.menu
           : menu // ignore: cast_nullable_to_non_nullable
               as MenuModel,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MenuModelCopyWith<$Res> get menu {
     return $MenuModelCopyWith<$Res>(_value.menu, (value) {
-      return _then(_value.copyWith(menu: value));
+      return _then(_value.copyWith(menu: value) as $Val);
     });
   }
 }
@@ -119,6 +123,7 @@ abstract class _$$_InitialCopyWith<$Res>
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({MenuModel menu});
 
   @override
@@ -126,20 +131,19 @@ abstract class _$$_InitialCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res> extends _$CreateMenuStateCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$CreateMenuStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+      : super(_value, _then);
 
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? menu = freezed,
+    Object? menu = null,
   }) {
     return _then(_$_Initial(
-      menu: menu == freezed
+      menu: null == menu
           ? _value.menu
           : menu // ignore: cast_nullable_to_non_nullable
               as MenuModel,
@@ -165,15 +169,15 @@ class _$_Initial implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Initial &&
-            const DeepCollectionEquality().equals(other.menu, menu));
+            (identical(other.menu, menu) || other.menu == menu));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(menu));
+  int get hashCode => Object.hash(runtimeType, menu);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
       __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
@@ -191,10 +195,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MenuModel menu)? initial,
-    TResult Function(MenuModel menu)? creating,
-    TResult Function(MenuModel menu)? created,
-    TResult Function(MenuModel menu, Exception exception)? error,
+    TResult? Function(MenuModel menu)? initial,
+    TResult? Function(MenuModel menu)? creating,
+    TResult? Function(MenuModel menu)? created,
+    TResult? Function(MenuModel menu, Exception exception)? error,
   }) {
     return initial?.call(menu);
   }
@@ -228,10 +232,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -270,6 +274,7 @@ abstract class _$$_CreatingCopyWith<$Res>
           _$_Creating value, $Res Function(_$_Creating) then) =
       __$$_CreatingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({MenuModel menu});
 
   @override
@@ -278,21 +283,19 @@ abstract class _$$_CreatingCopyWith<$Res>
 
 /// @nodoc
 class __$$_CreatingCopyWithImpl<$Res>
-    extends _$CreateMenuStateCopyWithImpl<$Res>
+    extends _$CreateMenuStateCopyWithImpl<$Res, _$_Creating>
     implements _$$_CreatingCopyWith<$Res> {
   __$$_CreatingCopyWithImpl(
       _$_Creating _value, $Res Function(_$_Creating) _then)
-      : super(_value, (v) => _then(v as _$_Creating));
+      : super(_value, _then);
 
-  @override
-  _$_Creating get _value => super._value as _$_Creating;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? menu = freezed,
+    Object? menu = null,
   }) {
     return _then(_$_Creating(
-      menu: menu == freezed
+      menu: null == menu
           ? _value.menu
           : menu // ignore: cast_nullable_to_non_nullable
               as MenuModel,
@@ -318,15 +321,15 @@ class _$_Creating implements _Creating {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Creating &&
-            const DeepCollectionEquality().equals(other.menu, menu));
+            (identical(other.menu, menu) || other.menu == menu));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(menu));
+  int get hashCode => Object.hash(runtimeType, menu);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CreatingCopyWith<_$_Creating> get copyWith =>
       __$$_CreatingCopyWithImpl<_$_Creating>(this, _$identity);
 
@@ -344,10 +347,10 @@ class _$_Creating implements _Creating {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MenuModel menu)? initial,
-    TResult Function(MenuModel menu)? creating,
-    TResult Function(MenuModel menu)? created,
-    TResult Function(MenuModel menu, Exception exception)? error,
+    TResult? Function(MenuModel menu)? initial,
+    TResult? Function(MenuModel menu)? creating,
+    TResult? Function(MenuModel menu)? created,
+    TResult? Function(MenuModel menu, Exception exception)? error,
   }) {
     return creating?.call(menu);
   }
@@ -381,10 +384,10 @@ class _$_Creating implements _Creating {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return creating?.call(this);
   }
@@ -423,6 +426,7 @@ abstract class _$$_CreatedCopyWith<$Res>
           _$_Created value, $Res Function(_$_Created) then) =
       __$$_CreatedCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({MenuModel menu});
 
   @override
@@ -430,20 +434,19 @@ abstract class _$$_CreatedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CreatedCopyWithImpl<$Res> extends _$CreateMenuStateCopyWithImpl<$Res>
+class __$$_CreatedCopyWithImpl<$Res>
+    extends _$CreateMenuStateCopyWithImpl<$Res, _$_Created>
     implements _$$_CreatedCopyWith<$Res> {
   __$$_CreatedCopyWithImpl(_$_Created _value, $Res Function(_$_Created) _then)
-      : super(_value, (v) => _then(v as _$_Created));
+      : super(_value, _then);
 
-  @override
-  _$_Created get _value => super._value as _$_Created;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? menu = freezed,
+    Object? menu = null,
   }) {
     return _then(_$_Created(
-      menu: menu == freezed
+      menu: null == menu
           ? _value.menu
           : menu // ignore: cast_nullable_to_non_nullable
               as MenuModel,
@@ -469,15 +472,15 @@ class _$_Created implements _Created {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Created &&
-            const DeepCollectionEquality().equals(other.menu, menu));
+            (identical(other.menu, menu) || other.menu == menu));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(menu));
+  int get hashCode => Object.hash(runtimeType, menu);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CreatedCopyWith<_$_Created> get copyWith =>
       __$$_CreatedCopyWithImpl<_$_Created>(this, _$identity);
 
@@ -495,10 +498,10 @@ class _$_Created implements _Created {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MenuModel menu)? initial,
-    TResult Function(MenuModel menu)? creating,
-    TResult Function(MenuModel menu)? created,
-    TResult Function(MenuModel menu, Exception exception)? error,
+    TResult? Function(MenuModel menu)? initial,
+    TResult? Function(MenuModel menu)? creating,
+    TResult? Function(MenuModel menu)? created,
+    TResult? Function(MenuModel menu, Exception exception)? error,
   }) {
     return created?.call(menu);
   }
@@ -532,10 +535,10 @@ class _$_Created implements _Created {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return created?.call(this);
   }
@@ -573,6 +576,7 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({MenuModel menu, Exception exception});
 
   @override
@@ -580,25 +584,24 @@ abstract class _$$_ErrorCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$CreateMenuStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$CreateMenuStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? menu = freezed,
-    Object? exception = freezed,
+    Object? menu = null,
+    Object? exception = null,
   }) {
     return _then(_$_Error(
-      menu: menu == freezed
+      menu: null == menu
           ? _value.menu
           : menu // ignore: cast_nullable_to_non_nullable
               as MenuModel,
-      exception: exception == freezed
+      exception: null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
@@ -626,18 +629,17 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            const DeepCollectionEquality().equals(other.menu, menu) &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            (identical(other.menu, menu) || other.menu == menu) &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(menu),
-      const DeepCollectionEquality().hash(exception));
+  int get hashCode => Object.hash(runtimeType, menu, exception);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -655,10 +657,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MenuModel menu)? initial,
-    TResult Function(MenuModel menu)? creating,
-    TResult Function(MenuModel menu)? created,
-    TResult Function(MenuModel menu, Exception exception)? error,
+    TResult? Function(MenuModel menu)? initial,
+    TResult? Function(MenuModel menu)? creating,
+    TResult? Function(MenuModel menu)? created,
+    TResult? Function(MenuModel menu, Exception exception)? error,
   }) {
     return error?.call(menu, exception);
   }
@@ -692,10 +694,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

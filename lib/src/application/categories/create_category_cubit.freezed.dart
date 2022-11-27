@@ -28,10 +28,10 @@ mixin _$CreateCategoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CategoryModel category)? initial,
-    TResult Function(CategoryModel category)? creating,
-    TResult Function(CategoryModel category)? created,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult? Function(CategoryModel category)? initial,
+    TResult? Function(CategoryModel category)? creating,
+    TResult? Function(CategoryModel category)? created,
+    TResult? Function(CategoryModel category, Exception exception)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -53,10 +53,10 @@ mixin _$CreateCategoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -78,37 +78,41 @@ mixin _$CreateCategoryState {
 abstract class $CreateCategoryStateCopyWith<$Res> {
   factory $CreateCategoryStateCopyWith(
           CreateCategoryState value, $Res Function(CreateCategoryState) then) =
-      _$CreateCategoryStateCopyWithImpl<$Res>;
+      _$CreateCategoryStateCopyWithImpl<$Res, CreateCategoryState>;
+  @useResult
   $Res call({CategoryModel category});
 
   $CategoryModelCopyWith<$Res> get category;
 }
 
 /// @nodoc
-class _$CreateCategoryStateCopyWithImpl<$Res>
+class _$CreateCategoryStateCopyWithImpl<$Res, $Val extends CreateCategoryState>
     implements $CreateCategoryStateCopyWith<$Res> {
   _$CreateCategoryStateCopyWithImpl(this._value, this._then);
 
-  final CreateCategoryState _value;
   // ignore: unused_field
-  final $Res Function(CreateCategoryState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? category = freezed,
+    Object? category = null,
   }) {
     return _then(_value.copyWith(
-      category: category == freezed
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryModel,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $CategoryModelCopyWith<$Res> get category {
     return $CategoryModelCopyWith<$Res>(_value.category, (value) {
-      return _then(_value.copyWith(category: value));
+      return _then(_value.copyWith(category: value) as $Val);
     });
   }
 }
@@ -120,6 +124,7 @@ abstract class _$$_InitialCopyWith<$Res>
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({CategoryModel category});
 
   @override
@@ -128,20 +133,18 @@ abstract class _$$_InitialCopyWith<$Res>
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$CreateCategoryStateCopyWithImpl<$Res>
+    extends _$CreateCategoryStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+      : super(_value, _then);
 
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? category = freezed,
+    Object? category = null,
   }) {
     return _then(_$_Initial(
-      category: category == freezed
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryModel,
@@ -167,15 +170,16 @@ class _$_Initial implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Initial &&
-            const DeepCollectionEquality().equals(other.category, category));
+            (identical(other.category, category) ||
+                other.category == category));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(category));
+  int get hashCode => Object.hash(runtimeType, category);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
       __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
@@ -194,10 +198,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CategoryModel category)? initial,
-    TResult Function(CategoryModel category)? creating,
-    TResult Function(CategoryModel category)? created,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult? Function(CategoryModel category)? initial,
+    TResult? Function(CategoryModel category)? creating,
+    TResult? Function(CategoryModel category)? created,
+    TResult? Function(CategoryModel category, Exception exception)? error,
   }) {
     return initial?.call(category);
   }
@@ -231,10 +235,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -273,6 +277,7 @@ abstract class _$$_CreatingCopyWith<$Res>
           _$_Creating value, $Res Function(_$_Creating) then) =
       __$$_CreatingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({CategoryModel category});
 
   @override
@@ -281,21 +286,19 @@ abstract class _$$_CreatingCopyWith<$Res>
 
 /// @nodoc
 class __$$_CreatingCopyWithImpl<$Res>
-    extends _$CreateCategoryStateCopyWithImpl<$Res>
+    extends _$CreateCategoryStateCopyWithImpl<$Res, _$_Creating>
     implements _$$_CreatingCopyWith<$Res> {
   __$$_CreatingCopyWithImpl(
       _$_Creating _value, $Res Function(_$_Creating) _then)
-      : super(_value, (v) => _then(v as _$_Creating));
+      : super(_value, _then);
 
-  @override
-  _$_Creating get _value => super._value as _$_Creating;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? category = freezed,
+    Object? category = null,
   }) {
     return _then(_$_Creating(
-      category: category == freezed
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryModel,
@@ -321,15 +324,16 @@ class _$_Creating implements _Creating {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Creating &&
-            const DeepCollectionEquality().equals(other.category, category));
+            (identical(other.category, category) ||
+                other.category == category));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(category));
+  int get hashCode => Object.hash(runtimeType, category);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CreatingCopyWith<_$_Creating> get copyWith =>
       __$$_CreatingCopyWithImpl<_$_Creating>(this, _$identity);
 
@@ -348,10 +352,10 @@ class _$_Creating implements _Creating {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CategoryModel category)? initial,
-    TResult Function(CategoryModel category)? creating,
-    TResult Function(CategoryModel category)? created,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult? Function(CategoryModel category)? initial,
+    TResult? Function(CategoryModel category)? creating,
+    TResult? Function(CategoryModel category)? created,
+    TResult? Function(CategoryModel category, Exception exception)? error,
   }) {
     return creating?.call(category);
   }
@@ -385,10 +389,10 @@ class _$_Creating implements _Creating {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return creating?.call(this);
   }
@@ -428,6 +432,7 @@ abstract class _$$_CreatedCopyWith<$Res>
           _$_Created value, $Res Function(_$_Created) then) =
       __$$_CreatedCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({CategoryModel category});
 
   @override
@@ -436,20 +441,18 @@ abstract class _$$_CreatedCopyWith<$Res>
 
 /// @nodoc
 class __$$_CreatedCopyWithImpl<$Res>
-    extends _$CreateCategoryStateCopyWithImpl<$Res>
+    extends _$CreateCategoryStateCopyWithImpl<$Res, _$_Created>
     implements _$$_CreatedCopyWith<$Res> {
   __$$_CreatedCopyWithImpl(_$_Created _value, $Res Function(_$_Created) _then)
-      : super(_value, (v) => _then(v as _$_Created));
+      : super(_value, _then);
 
-  @override
-  _$_Created get _value => super._value as _$_Created;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? category = freezed,
+    Object? category = null,
   }) {
     return _then(_$_Created(
-      category: category == freezed
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryModel,
@@ -475,15 +478,16 @@ class _$_Created implements _Created {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Created &&
-            const DeepCollectionEquality().equals(other.category, category));
+            (identical(other.category, category) ||
+                other.category == category));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(category));
+  int get hashCode => Object.hash(runtimeType, category);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CreatedCopyWith<_$_Created> get copyWith =>
       __$$_CreatedCopyWithImpl<_$_Created>(this, _$identity);
 
@@ -502,10 +506,10 @@ class _$_Created implements _Created {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CategoryModel category)? initial,
-    TResult Function(CategoryModel category)? creating,
-    TResult Function(CategoryModel category)? created,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult? Function(CategoryModel category)? initial,
+    TResult? Function(CategoryModel category)? creating,
+    TResult? Function(CategoryModel category)? created,
+    TResult? Function(CategoryModel category, Exception exception)? error,
   }) {
     return created?.call(category);
   }
@@ -539,10 +543,10 @@ class _$_Created implements _Created {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return created?.call(this);
   }
@@ -580,6 +584,7 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({CategoryModel category, Exception exception});
 
   @override
@@ -588,25 +593,23 @@ abstract class _$$_ErrorCopyWith<$Res>
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$CreateCategoryStateCopyWithImpl<$Res>
+    extends _$CreateCategoryStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? category = freezed,
-    Object? exception = freezed,
+    Object? category = null,
+    Object? exception = null,
   }) {
     return _then(_$_Error(
-      category: category == freezed
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryModel,
-      exception: exception == freezed
+      exception: null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
@@ -634,18 +637,18 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            const DeepCollectionEquality().equals(other.category, category) &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(category),
-      const DeepCollectionEquality().hash(exception));
+  int get hashCode => Object.hash(runtimeType, category, exception);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -664,10 +667,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CategoryModel category)? initial,
-    TResult Function(CategoryModel category)? creating,
-    TResult Function(CategoryModel category)? created,
-    TResult Function(CategoryModel category, Exception exception)? error,
+    TResult? Function(CategoryModel category)? initial,
+    TResult? Function(CategoryModel category)? creating,
+    TResult? Function(CategoryModel category)? created,
+    TResult? Function(CategoryModel category, Exception exception)? error,
   }) {
     return error?.call(category, exception);
   }
@@ -701,10 +704,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Creating value)? creating,
-    TResult Function(_Created value)? created,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Creating value)? creating,
+    TResult? Function(_Created value)? created,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

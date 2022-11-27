@@ -70,7 +70,7 @@ class CategoryMenuItemsRepository {
   Future<List<CategoryMenuItemModel>> getForCategory({
     required String storeId,
     required String categoryId,
-    OrderBy orderBy = const OrderBy('createdAt'),
+    OrderBy orderBy = const OrderBy(),
   }) async {
     return streamForCategory(
       storeId: storeId,
@@ -82,7 +82,7 @@ class CategoryMenuItemsRepository {
   Future<List<CategoryMenuItemModel>> getForMenuItem({
     required String storeId,
     required String menuItemId,
-    OrderBy orderBy = const OrderBy('createdAt'),
+    OrderBy orderBy = const OrderBy(),
   }) async {
     return streamForMenuItem(
       storeId: storeId,
@@ -94,7 +94,7 @@ class CategoryMenuItemsRepository {
   Stream<List<CategoryMenuItemModel>> streamForCategory({
     required String storeId,
     required String categoryId,
-    OrderBy orderBy = const OrderBy('createdAt'),
+    OrderBy orderBy = const OrderBy(),
   }) {
     try {
       return _firebaseFirestore
@@ -115,7 +115,7 @@ class CategoryMenuItemsRepository {
   Stream<List<CategoryMenuItemModel>> streamForMenuItem({
     required String storeId,
     required String menuItemId,
-    OrderBy orderBy = const OrderBy('createdAt'),
+    OrderBy orderBy = const OrderBy(),
   }) {
     try {
       return _firebaseFirestore

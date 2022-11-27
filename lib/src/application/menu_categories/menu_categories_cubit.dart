@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/domain/domain.dart';
@@ -37,7 +36,7 @@ class MenuCategoriesCubit extends Cubit<MenuCategoriesState> {
     final menus = await _menuRepository
         .getAll(
           storeId: storeId,
-          orderBy: OrderBy.fallback(),
+          orderBy: const OrderBy(),
         )
         .first;
 

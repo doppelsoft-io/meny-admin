@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +10,11 @@ class MenuItemImage extends StatelessWidget {
   }) : super(key: key);
 
   final String imageUrl;
-  final DSMemoryImageThemeData? theme;
+  final DSNetworkImageThemeData? theme;
 
   @override
   Widget build(BuildContext context) {
-    final theme = this.theme ?? DSMemoryImageThemeData.thumbnail();
+    final theme = this.theme ?? DSNetworkImageThemeData.thumbnail();
 
     return BlocProvider(
       create: (context) => ImageDisplayCubit()..seed(imageUrl),
@@ -36,12 +34,10 @@ class _MenuItemImage extends HookWidget {
   }) : super(key: key);
 
   final String imageUrl;
-  final DSMemoryImageThemeData theme;
+  final DSNetworkImageThemeData theme;
 
   @override
   Widget build(BuildContext context) {
-    final imageDisplayState = context.watch<ImageDisplayCubit>().state;
-
     useEffect(
       () {
         context.read<ImageDisplayCubit>().seed(imageUrl);
@@ -50,18 +46,10 @@ class _MenuItemImage extends HookWidget {
       [imageUrl],
     );
 
-    return DSMemoryImage(
+    return DSNetworkImage(
       theme: theme,
-      args: DSMemoryImageArgs(
+      args: DSNetworkImageArgs(
         url: imageUrl,
-        bytes: imageDisplayState.maybeWhen(
-          loaded: (url, bytes) => bytes,
-          orElse: () => Uint8List.fromList([]),
-        ),
-        processing: imageDisplayState.maybeWhen(
-          loading: (_, __) => true,
-          orElse: () => false,
-        ),
       ),
     );
   }

@@ -1,6 +1,11 @@
+import 'package:doppelsoft_ui/doppelsoft_ui.dart'
+    show
+        DSTextThemeData,
+        NotificationPosition,
+        showOverlay,
+        showSimpleNotification,
+        toast;
 import 'package:flutter/material.dart';
-import 'package:meny_admin/themes.dart';
-import 'package:overlay_support/overlay_support.dart' as lib;
 
 enum ToastType {
   info,
@@ -12,15 +17,15 @@ class ToastService {
 
   final ColorScheme colorScheme;
 
-  void toast(String message) {
-    lib.toast(message);
+  void initToast(String message) {
+    toast(message);
   }
 
-  void showOverlay(
+  void initOverlay(
     Widget notification, [
     ToastType? type = ToastType.info,
   ]) {
-    lib.showOverlay(
+    showOverlay(
       (context, progress) {
         return Transform.translate(
           offset: Tween<Offset>(
@@ -34,7 +39,9 @@ class ToastService {
             ).transform(progress),
             child: SafeArea(
               child: DefaultTextStyle(
-                style: Themes.textStyle.copyWith(color: colorScheme.onPrimary),
+                style: DSTextThemeData.b5(
+                  color: colorScheme.onPrimary,
+                ).style,
                 child: Center(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(4),
@@ -68,11 +75,11 @@ class ToastService {
     final foregroundColor =
         type == ToastType.error ? colorScheme.onError : colorScheme.onPrimary;
 
-    lib.showSimpleNotification(
+    showSimpleNotification(
       notification,
       background: backgroundColor,
       foreground: foregroundColor,
-      position: lib.NotificationPosition.bottom,
+      position: NotificationPosition.bottom,
     );
   }
 }

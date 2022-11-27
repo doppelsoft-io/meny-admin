@@ -9,7 +9,6 @@ import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/src/utils/utils.dart';
-import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
 enum MaxItemChoice {
@@ -224,9 +223,10 @@ class _EditModifierGroupScreen extends HookWidget {
                 appBar: AppBar(
                   elevation: 0,
                   backgroundColor: Colors.white,
-                  title: DSText(
+                  leading: const DSBackButton(),
+                  title: const DSText(
                     'Edit Modifier Group',
-                    theme: DSTextThemeData.headlineSmall(),
+                    theme: DSTextThemeData.h3(),
                   ),
                   bottom: PreferredSize(
                     preferredSize: const Size.fromHeight(8),
@@ -244,9 +244,9 @@ class _EditModifierGroupScreen extends HookWidget {
                   ),
                   actions: [
                     Center(child: _DeleteModifierGroupButton(group: group)),
-                    const SizedBox(width: 12),
+                    DSHorizontalSpacing.smallest(),
                     Center(
-                      child: ElevatedButton(
+                      child: DSButton(
                         onPressed: () {
                           final isValid = EditModifierGroupScreen
                               ._formKey.currentState!
@@ -260,7 +260,7 @@ class _EditModifierGroupScreen extends HookWidget {
                                 ),
                               );
                         },
-                        child: const Text('SAVE'),
+                        text: 'Save',
                       ),
                     ),
                     const SizedBox(width: 24),
@@ -276,7 +276,6 @@ class _EditModifierGroupScreen extends HookWidget {
                         PageSection(
                           title: 'Name',
                           child: DSTextFormField(
-                            theme: Themes.theme.textFormFieldThemeData,
                             args: DSTextFormFieldArgs(
                               autofocus: true,
                               controller: params.nameController,
@@ -319,7 +318,7 @@ class _EditModifierGroupScreen extends HookWidget {
                               return Locator.instance<MenuItemRepository>()
                                   .getAll(
                                     storeId: storeId,
-                                    orderBy: OrderBy.fallback(),
+                                    orderBy: const OrderBy(),
                                   )
                                   .first;
                             },
@@ -396,31 +395,31 @@ class _EditModifierGroupScreen extends HookWidget {
                                 style: Theme.of(context).textTheme.caption,
                               ),
                               DSVerticalSpacing.small(),
-                              CheckboxListTile(
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                title: const Text(
-                                  'Require customers to select an item?',
+                              DSCheckbox(
+                                args: DSCheckboxArgs(
+                                  title: const Text(
+                                    'Require customers to select an item?',
+                                  ),
+                                  value: !editModifierGroupState.group
+                                      .quantityConstraints.minPermittedOptional,
+                                  onChanged: (minPermittedOptional) {
+                                    if (minPermittedOptional != null) {
+                                      final quantityConstraints =
+                                          editModifierGroupState
+                                              .group.quantityConstraints;
+                                      final updatedQuantityConstraints =
+                                          quantityConstraints.copyWith(
+                                        minPermittedOptional:
+                                            !minPermittedOptional,
+                                      );
+                                      context
+                                          .read<EditModifierGroupCubit>()
+                                          .updateQuantityConstraints(
+                                            updatedQuantityConstraints,
+                                          );
+                                    }
+                                  },
                                 ),
-                                value: !editModifierGroupState.group
-                                    .quantityConstraints.minPermittedOptional,
-                                onChanged: (minPermittedOptional) {
-                                  if (minPermittedOptional != null) {
-                                    final quantityConstraints =
-                                        editModifierGroupState
-                                            .group.quantityConstraints;
-                                    final updatedQuantityConstraints =
-                                        quantityConstraints.copyWith(
-                                      minPermittedOptional:
-                                          !minPermittedOptional,
-                                    );
-                                    context
-                                        .read<EditModifierGroupCubit>()
-                                        .updateQuantityConstraints(
-                                          updatedQuantityConstraints,
-                                        );
-                                  }
-                                },
                               ),
                               DSVerticalSpacing.small(),
                               if (editModifierGroupState
@@ -430,29 +429,29 @@ class _EditModifierGroupScreen extends HookWidget {
                                 Row(
                                   children: [
                                     IntrinsicWidth(
-                                      child: CheckboxListTile(
-                                        controlAffinity:
-                                            ListTileControlAffinity.leading,
-                                        title: const Text(
-                                          "What's the maximum amount of items customers can select?",
+                                      child: DSCheckbox(
+                                        args: DSCheckboxArgs(
+                                          title: const Text(
+                                            "What's the maximum amount of items customers can select?",
+                                          ),
+                                          value: true,
+                                          onChanged: (val) {
+                                            final quantityConstraints =
+                                                editModifierGroupState
+                                                    .group.quantityConstraints;
+
+                                            final updatedQuantityConstraints =
+                                                quantityConstraints.copyWith(
+                                              minPermittedOptional: false,
+                                            );
+
+                                            context
+                                                .read<EditModifierGroupCubit>()
+                                                .updateQuantityConstraints(
+                                                  updatedQuantityConstraints,
+                                                );
+                                          },
                                         ),
-                                        value: true,
-                                        onChanged: (val) {
-                                          final quantityConstraints =
-                                              editModifierGroupState
-                                                  .group.quantityConstraints;
-
-                                          final updatedQuantityConstraints =
-                                              quantityConstraints.copyWith(
-                                            minPermittedOptional: false,
-                                          );
-
-                                          context
-                                              .read<EditModifierGroupCubit>()
-                                              .updateQuantityConstraints(
-                                                updatedQuantityConstraints,
-                                              );
-                                        },
                                       ),
                                     ),
                                     const SizedBox(width: 12),
@@ -460,8 +459,6 @@ class _EditModifierGroupScreen extends HookWidget {
                                       constraints:
                                           const BoxConstraints(maxWidth: 100),
                                       child: DSTextFormField(
-                                        theme:
-                                            Themes.theme.textFormFieldThemeData,
                                         args: DSTextFormFieldArgs(
                                           controller: params
                                               .quantityConstraintsOptionalMaxItemsController,
@@ -487,8 +484,6 @@ class _EditModifierGroupScreen extends HookWidget {
                                       child: SizedBox(
                                         height: 60,
                                         child: DSTextFormFieldThemeWrapper(
-                                          theme: Themes
-                                              .theme.textFormFieldThemeData,
                                           child: DropdownButtonFormField<
                                               MaxItemChoice>(
                                             value: params.maxItemChoice.value,
@@ -522,8 +517,6 @@ class _EditModifierGroupScreen extends HookWidget {
                                       constraints:
                                           const BoxConstraints(maxWidth: 100),
                                       child: DSTextFormField(
-                                        theme:
-                                            Themes.theme.textFormFieldThemeData,
                                         args: DSTextFormFieldArgs(
                                           controller: params
                                               .quantityConstraintsRequiredMaxItemsController,
@@ -595,13 +588,13 @@ class _EditModifierGroupScreen extends HookWidget {
           return AlertDialog(
             title: const Text('Close without saving?'),
             actions: [
-              ElevatedButton(
+              DSButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('YES'),
+                text: 'Yes',
               ),
-              OutlinedButton(
+              DSButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('NO'),
+                text: 'No',
               ),
             ],
           );
@@ -689,7 +682,6 @@ class _ModifierGroupItem extends HookWidget {
             width: 200,
             padding: const EdgeInsets.all(8),
             child: DSTextFormField(
-              theme: Themes.theme.textFormFieldThemeData,
               args: DSTextFormFieldArgs(
                 controller: controller,
                 focusNode: focusNode,
@@ -735,24 +727,16 @@ class _ModifierGroupItem extends HookWidget {
                 builder: (_) => AlertDialog(
                   title: const Text('Delete?'),
                   actions: [
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        primary: Colors.black,
-                      ),
+                    DSButton(
                       onPressed: () {
                         Navigator.of(context).pop(false);
                       },
-                      child: const Text('Cancel'),
+                      text: 'Cancel',
                     ),
-                    const SizedBox(width: 5),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).errorColor,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop(true);
-                      },
-                      child: const Text('Yes'),
+                    DSHorizontalSpacing.smallest(),
+                    DSButton(
+                      onPressed: () => Navigator.of(context).pop(true),
+                      text: 'Yes',
                     ),
                   ],
                 ),
@@ -795,11 +779,8 @@ class _DeleteModifierGroupButton extends StatelessWidget {
           'This will remove this group from all menu items',
           style: Theme.of(context).textTheme.bodyText1,
         ),
-        confirmArgs: DSConfirmDialogConfirmArgs(
-          text: 'DELETE',
-          theme: DSButtonThemeData.fallback().copyWith(
-            primary: Themes.colorScheme.error,
-          ),
+        confirmArgs: const DSConfirmDialogConfirmArgs(
+          text: 'Delete',
         ),
       ),
     );

@@ -5,7 +5,6 @@ import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
-import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
 class EditMenuScreen extends StatelessWidget {
@@ -88,11 +87,11 @@ class _EditMenuScreen extends HookWidget {
                   return Scaffold(
                     appBar: AppBar(
                       elevation: 0,
-                      iconTheme: const IconThemeData(color: Colors.black),
                       backgroundColor: Colors.white,
-                      title: DSText(
+                      leading: const DSBackButton(),
+                      title: const DSText(
                         'Edit Menu',
-                        theme: DSTextThemeData.headlineSmall(),
+                        theme: DSTextThemeData.h3(),
                       ),
                       bottom: PreferredSize(
                         preferredSize: const Size.fromHeight(8),
@@ -113,15 +112,10 @@ class _EditMenuScreen extends HookWidget {
                           onDelete: (_) async {
                             final result = await DSConfirmDialog.open<bool>(
                               context,
-                              theme: DSConfirmDialogThemeData.fallback()
-                                  .copyWith(),
                               args: DSConfirmDialogArgs(
                                 title: 'Delete ${editMenuState.menu.name}?',
-                                confirmArgs: DSConfirmDialogConfirmArgs(
-                                  text: 'DELETE',
-                                  theme: DSButtonThemeData.fallback().copyWith(
-                                    primary: Themes.colorScheme.error,
-                                  ),
+                                confirmArgs: const DSConfirmDialogConfirmArgs(
+                                  text: 'Delete',
                                 ),
                                 content: Text(
                                   'This will delete this menu. No categories or items will be affected.',
@@ -137,13 +131,11 @@ class _EditMenuScreen extends HookWidget {
                             }
                           },
                         ),
-                        DSHorizontalSpacing.small(),
+                        DSHorizontalSpacing.smallest(),
                         Center(
                           child: DSButton(
-                            theme: DSButtonThemeData.fallback().copyWith(
-                              primary: Themes.primaryColor,
-                            ),
-                            child: const Text('SAVE'),
+                            // theme: DSButtonThemeData.,
+                            text: 'Save',
                             onPressed: () {
                               final isValid = EditMenuScreen
                                   ._formKey.currentState!
@@ -173,7 +165,6 @@ class _EditMenuScreen extends HookWidget {
                             PageSection(
                               title: 'Name',
                               child: DSTextFormField(
-                                theme: Themes.theme.textFormFieldThemeData,
                                 args: DSTextFormFieldArgs(
                                   controller: controller,
                                   autofocus: true,
@@ -230,11 +221,11 @@ class _EditMenuScreen extends HookWidget {
               title: 'Close without saving?',
               content: const SizedBox.shrink(),
               cancelArgs: DSConfirmDialogCancelArgs(
-                text: 'NO',
+                text: 'No',
                 onPressed: () => Navigator.of(context).pop(false),
               ),
               confirmArgs: DSConfirmDialogConfirmArgs(
-                text: 'YES',
+                text: 'Yes',
                 onPressed: () => Navigator.of(context).pop(true),
                 // buttonStyle: ElevatedButton.styleFrom(
                 //   primary: Theme.of(context).errorColor,

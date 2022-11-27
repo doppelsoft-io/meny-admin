@@ -44,7 +44,6 @@ class _MyStoreDetailsTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final storeState = context.watch<StoreCubit>().state;
-    final editStoreState = context.watch<EditStoreCubit>().state;
 
     return SingleChildScrollView(
       child: storeState.maybeWhen(
@@ -58,24 +57,14 @@ class _MyStoreDetailsTab extends HookWidget {
                   children: [
                     const PageTitle(title: 'Store Details'),
                     const Spacer(),
-                    ElevatedButton(
+                    DSButton(
                       onPressed: () {
                         final isValid =
                             MyStoreDetailsForm.formKey.currentState!.validate();
                         if (!isValid) return;
                         context.read<EditStoreCubit>().save();
                       },
-                      child: editStoreState.maybeWhen(
-                        saving: (_) => SizedBox(
-                          height: 18,
-                          width: 18,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.green.shade50,
-                          ),
-                        ),
-                        orElse: () => const Text('SAVE'),
-                      ),
+                      text: 'Save',
                     ),
                   ],
                 ),

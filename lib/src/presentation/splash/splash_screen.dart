@@ -1,7 +1,7 @@
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/themes.dart';
-import 'package:shimmer/shimmer.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Themes.primaryColor,
+        color: effectiveTheme.colorScheme.primary,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

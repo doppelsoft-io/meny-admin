@@ -62,7 +62,7 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
       final menuCategories = await _menuCategoryRepository.getForMenu(
         storeId: storeId,
         menuId: menu.id!,
-        orderBy: const OrderBy('position', descending: false),
+        orderBy: const OrderBy(field: 'position', descending: false),
       );
       final categoryFutures = List.generate(
         menuCategories.length,
@@ -77,7 +77,7 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
               await _categoryMenuItemsRepository.getForCategory(
             storeId: storeId,
             categoryId: categoryId,
-            orderBy: const OrderBy('position', descending: false),
+            orderBy: const OrderBy(field: 'position', descending: false),
           );
 
           final categoryMenuItemFutures = List.generate(

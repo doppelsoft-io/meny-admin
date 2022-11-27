@@ -7,6 +7,7 @@ class ResourceTable<T> extends StatelessWidget {
     Key? key,
     required this.header,
     required this.action,
+    this.toolbar,
     required this.resources,
     required this.columns,
     required this.cellsBuilder,
@@ -14,10 +15,14 @@ class ResourceTable<T> extends StatelessWidget {
     required this.emptyMessage,
     this.sortColumnIndex,
     this.sortAscending = true,
+    this.onSelectAll,
+    this.onSelectChanged,
+    this.isSelected,
   }) : super(key: key);
 
   final Widget header;
   final Widget action;
+  final Widget? toolbar;
   final List<T> resources;
   final List<DataColumn2> columns;
   final List<DataCell> Function(BuildContext, T) cellsBuilder;
@@ -25,19 +30,24 @@ class ResourceTable<T> extends StatelessWidget {
   final String emptyMessage;
   final int? sortColumnIndex;
   final bool sortAscending;
+  final Function(bool?)? onSelectAll;
+  final Function(bool?, T)? onSelectChanged;
+  final bool Function(T)? isSelected;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: DSSpacing.sm,
-            vertical: DSSpacing.xs,
+          padding: EdgeInsets.only(
+            left: toolbar != null ? DSSpacing.xs : DSSpacing.sm,
+            right: DSSpacing.sm,
+            top: DSSpacing.xs,
+            bottom: DSSpacing.xs,
           ),
           child: Row(
             children: [
-              header,
+              if (toolbar != null) toolbar! else header,
               const Spacer(),
               action,
             ],
@@ -45,6 +55,7 @@ class ResourceTable<T> extends StatelessWidget {
         ),
         Expanded(
           child: DataTable2(
+            onSelectAll: onSelectAll,
             sortColumnIndex: sortColumnIndex,
             sortAscending: sortAscending,
             empty: Container(
@@ -60,6 +71,12 @@ class ResourceTable<T> extends StatelessWidget {
             rows: resources
                 .map(
                   (resource) => DataRow2(
+                    selected:
+                        // ignore: avoid_bool_literals_in_conditional_expressions
+                        isSelected != null ? isSelected!(resource) : false,
+                    onSelectChanged: onSelectChanged != null
+                        ? (selected) => onSelectChanged!(selected, resource)
+                        : null,
                     onTap: () => onTapItem(context, resource),
                     cells: cellsBuilder(context, resource),
                   ),

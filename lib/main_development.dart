@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/app.dart';
 import 'package:meny_admin/firebase_options_dev.dart';
@@ -29,9 +31,14 @@ Future<void> main() async {
   //   persistenceEnabled: false,
   // );
 
+  if (kIsWeb) {
+    await FirebaseFirestore.instance
+        .enablePersistence(const PersistenceSettings(synchronizeTabs: true));
+  }
+
   // FirebaseFunctions.instance.useFunctionsEmulator(localhost, 5001);
 
-  // await FirebaseAuth.instance.useEmulator('http://localhost:9099');
+  // await FirebaseAuth.instance.useAuthEmulator(localhost, 9099);
 
   await Locator.setup(environment: AppEnvironment.development);
   await HiveService.configure();

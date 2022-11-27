@@ -40,6 +40,7 @@ export 'signup/signup_screen.dart';
 export 'splash/splash_screen.dart';
 export 'widgets/app_header.dart';
 export 'widgets/delete_resource_button.dart';
+export 'widgets/ds_back_button.dart';
 export 'widgets/error_display.dart';
 export 'widgets/loading_display.dart';
 export 'widgets/page_action_button.dart';

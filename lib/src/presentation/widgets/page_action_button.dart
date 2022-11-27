@@ -1,5 +1,5 @@
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 
 class PageActionButton extends StatelessWidget {
   const PageActionButton({
@@ -20,29 +20,20 @@ class PageActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout(
-      tablet: ElevatedButton.icon(
-        label: Text(mobileTitle ?? title),
+      tablet: DSButton(
         icon: Icon(iconData ?? Icons.add),
         onPressed: isDisabled ? null : onPressed,
-        style: const ButtonStyle(
-          visualDensity: VisualDensity.comfortable,
-        ),
+        text: mobileTitle ?? title,
       ),
-      mobile: ElevatedButton.icon(
-        label: Text(mobileTitle ?? title),
+      mobile: DSButton(
         icon: Icon(iconData ?? Icons.add),
         onPressed: isDisabled ? null : onPressed,
-        style: const ButtonStyle(
-          visualDensity: VisualDensity.compact,
-        ),
+        text: mobileTitle ?? title,
       ),
-      desktop: ElevatedButton.icon(
-        label: Text(title),
+      desktop: DSButton(
         icon: Icon(iconData ?? Icons.add),
         onPressed: isDisabled ? null : onPressed,
-        style: const ButtonStyle(
-          visualDensity: VisualDensity.standard,
-        ),
+        text: title,
       ),
     );
   }

@@ -45,22 +45,22 @@ mixin _$ModifierGroupItemsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         initial,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         adding,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         removing,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         updating,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         success,
-    TResult Function(
+    TResult? Function(
             List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems,
             Exception exception)?
@@ -104,12 +104,12 @@ mixin _$ModifierGroupItemsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -133,36 +133,40 @@ mixin _$ModifierGroupItemsState {
 abstract class $ModifierGroupItemsStateCopyWith<$Res> {
   factory $ModifierGroupItemsStateCopyWith(ModifierGroupItemsState value,
           $Res Function(ModifierGroupItemsState) then) =
-      _$ModifierGroupItemsStateCopyWithImpl<$Res>;
+      _$ModifierGroupItemsStateCopyWithImpl<$Res, ModifierGroupItemsState>;
+  @useResult
   $Res call(
       {List<MenuItemModel> items,
       List<ModifierGroupItemModel> modifierGroupItems});
 }
 
 /// @nodoc
-class _$ModifierGroupItemsStateCopyWithImpl<$Res>
+class _$ModifierGroupItemsStateCopyWithImpl<$Res,
+        $Val extends ModifierGroupItemsState>
     implements $ModifierGroupItemsStateCopyWith<$Res> {
   _$ModifierGroupItemsStateCopyWithImpl(this._value, this._then);
 
-  final ModifierGroupItemsState _value;
   // ignore: unused_field
-  final $Res Function(ModifierGroupItemsState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = freezed,
-    Object? modifierGroupItems = freezed,
+    Object? items = null,
+    Object? modifierGroupItems = null,
   }) {
     return _then(_value.copyWith(
-      items: items == freezed
+      items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
-      modifierGroupItems: modifierGroupItems == freezed
+      modifierGroupItems: null == modifierGroupItems
           ? _value.modifierGroupItems
           : modifierGroupItems // ignore: cast_nullable_to_non_nullable
               as List<ModifierGroupItemModel>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -173,6 +177,7 @@ abstract class _$$_InitialCopyWith<$Res>
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<MenuItemModel> items,
       List<ModifierGroupItemModel> modifierGroupItems});
@@ -180,25 +185,23 @@ abstract class _$$_InitialCopyWith<$Res>
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$ModifierGroupItemsStateCopyWithImpl<$Res>
+    extends _$ModifierGroupItemsStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+      : super(_value, _then);
 
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = freezed,
-    Object? modifierGroupItems = freezed,
+    Object? items = null,
+    Object? modifierGroupItems = null,
   }) {
     return _then(_$_Initial(
-      items: items == freezed
+      items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
-      modifierGroupItems: modifierGroupItems == freezed
+      modifierGroupItems: null == modifierGroupItems
           ? _value._modifierGroupItems
           : modifierGroupItems // ignore: cast_nullable_to_non_nullable
               as List<ModifierGroupItemModel>,
@@ -255,6 +258,7 @@ class _$_Initial implements _Initial {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
       __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
@@ -288,22 +292,22 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         initial,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         adding,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         removing,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         updating,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         success,
-    TResult Function(
+    TResult? Function(
             List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems,
             Exception exception)?
@@ -359,12 +363,12 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -408,6 +412,7 @@ abstract class _$$_AddingCopyWith<$Res>
   factory _$$_AddingCopyWith(_$_Adding value, $Res Function(_$_Adding) then) =
       __$$_AddingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<MenuItemModel> items,
       List<ModifierGroupItemModel> modifierGroupItems});
@@ -415,25 +420,23 @@ abstract class _$$_AddingCopyWith<$Res>
 
 /// @nodoc
 class __$$_AddingCopyWithImpl<$Res>
-    extends _$ModifierGroupItemsStateCopyWithImpl<$Res>
+    extends _$ModifierGroupItemsStateCopyWithImpl<$Res, _$_Adding>
     implements _$$_AddingCopyWith<$Res> {
   __$$_AddingCopyWithImpl(_$_Adding _value, $Res Function(_$_Adding) _then)
-      : super(_value, (v) => _then(v as _$_Adding));
+      : super(_value, _then);
 
-  @override
-  _$_Adding get _value => super._value as _$_Adding;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = freezed,
-    Object? modifierGroupItems = freezed,
+    Object? items = null,
+    Object? modifierGroupItems = null,
   }) {
     return _then(_$_Adding(
-      items: items == freezed
+      items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
-      modifierGroupItems: modifierGroupItems == freezed
+      modifierGroupItems: null == modifierGroupItems
           ? _value._modifierGroupItems
           : modifierGroupItems // ignore: cast_nullable_to_non_nullable
               as List<ModifierGroupItemModel>,
@@ -487,6 +490,7 @@ class _$_Adding implements _Adding {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AddingCopyWith<_$_Adding> get copyWith =>
       __$$_AddingCopyWithImpl<_$_Adding>(this, _$identity);
 
@@ -520,22 +524,22 @@ class _$_Adding implements _Adding {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         initial,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         adding,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         removing,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         updating,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         success,
-    TResult Function(
+    TResult? Function(
             List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems,
             Exception exception)?
@@ -591,12 +595,12 @@ class _$_Adding implements _Adding {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return adding?.call(this);
   }
@@ -642,6 +646,7 @@ abstract class _$$_RemovingCopyWith<$Res>
           _$_Removing value, $Res Function(_$_Removing) then) =
       __$$_RemovingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<MenuItemModel> items,
       List<ModifierGroupItemModel> modifierGroupItems});
@@ -649,26 +654,24 @@ abstract class _$$_RemovingCopyWith<$Res>
 
 /// @nodoc
 class __$$_RemovingCopyWithImpl<$Res>
-    extends _$ModifierGroupItemsStateCopyWithImpl<$Res>
+    extends _$ModifierGroupItemsStateCopyWithImpl<$Res, _$_Removing>
     implements _$$_RemovingCopyWith<$Res> {
   __$$_RemovingCopyWithImpl(
       _$_Removing _value, $Res Function(_$_Removing) _then)
-      : super(_value, (v) => _then(v as _$_Removing));
+      : super(_value, _then);
 
-  @override
-  _$_Removing get _value => super._value as _$_Removing;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = freezed,
-    Object? modifierGroupItems = freezed,
+    Object? items = null,
+    Object? modifierGroupItems = null,
   }) {
     return _then(_$_Removing(
-      items: items == freezed
+      items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
-      modifierGroupItems: modifierGroupItems == freezed
+      modifierGroupItems: null == modifierGroupItems
           ? _value._modifierGroupItems
           : modifierGroupItems // ignore: cast_nullable_to_non_nullable
               as List<ModifierGroupItemModel>,
@@ -722,6 +725,7 @@ class _$_Removing implements _Removing {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_RemovingCopyWith<_$_Removing> get copyWith =>
       __$$_RemovingCopyWithImpl<_$_Removing>(this, _$identity);
 
@@ -755,22 +759,22 @@ class _$_Removing implements _Removing {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         initial,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         adding,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         removing,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         updating,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         success,
-    TResult Function(
+    TResult? Function(
             List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems,
             Exception exception)?
@@ -826,12 +830,12 @@ class _$_Removing implements _Removing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return removing?.call(this);
   }
@@ -877,6 +881,7 @@ abstract class _$$_UpdatingCopyWith<$Res>
           _$_Updating value, $Res Function(_$_Updating) then) =
       __$$_UpdatingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<MenuItemModel> items,
       List<ModifierGroupItemModel> modifierGroupItems});
@@ -884,26 +889,24 @@ abstract class _$$_UpdatingCopyWith<$Res>
 
 /// @nodoc
 class __$$_UpdatingCopyWithImpl<$Res>
-    extends _$ModifierGroupItemsStateCopyWithImpl<$Res>
+    extends _$ModifierGroupItemsStateCopyWithImpl<$Res, _$_Updating>
     implements _$$_UpdatingCopyWith<$Res> {
   __$$_UpdatingCopyWithImpl(
       _$_Updating _value, $Res Function(_$_Updating) _then)
-      : super(_value, (v) => _then(v as _$_Updating));
+      : super(_value, _then);
 
-  @override
-  _$_Updating get _value => super._value as _$_Updating;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = freezed,
-    Object? modifierGroupItems = freezed,
+    Object? items = null,
+    Object? modifierGroupItems = null,
   }) {
     return _then(_$_Updating(
-      items: items == freezed
+      items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
-      modifierGroupItems: modifierGroupItems == freezed
+      modifierGroupItems: null == modifierGroupItems
           ? _value._modifierGroupItems
           : modifierGroupItems // ignore: cast_nullable_to_non_nullable
               as List<ModifierGroupItemModel>,
@@ -957,6 +960,7 @@ class _$_Updating implements _Updating {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UpdatingCopyWith<_$_Updating> get copyWith =>
       __$$_UpdatingCopyWithImpl<_$_Updating>(this, _$identity);
 
@@ -990,22 +994,22 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         initial,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         adding,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         removing,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         updating,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         success,
-    TResult Function(
+    TResult? Function(
             List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems,
             Exception exception)?
@@ -1061,12 +1065,12 @@ class _$_Updating implements _Updating {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return updating?.call(this);
   }
@@ -1112,6 +1116,7 @@ abstract class _$$_SuccessCopyWith<$Res>
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<MenuItemModel> items,
       List<ModifierGroupItemModel> modifierGroupItems});
@@ -1119,25 +1124,23 @@ abstract class _$$_SuccessCopyWith<$Res>
 
 /// @nodoc
 class __$$_SuccessCopyWithImpl<$Res>
-    extends _$ModifierGroupItemsStateCopyWithImpl<$Res>
+    extends _$ModifierGroupItemsStateCopyWithImpl<$Res, _$_Success>
     implements _$$_SuccessCopyWith<$Res> {
   __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
-      : super(_value, (v) => _then(v as _$_Success));
+      : super(_value, _then);
 
-  @override
-  _$_Success get _value => super._value as _$_Success;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = freezed,
-    Object? modifierGroupItems = freezed,
+    Object? items = null,
+    Object? modifierGroupItems = null,
   }) {
     return _then(_$_Success(
-      items: items == freezed
+      items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
-      modifierGroupItems: modifierGroupItems == freezed
+      modifierGroupItems: null == modifierGroupItems
           ? _value._modifierGroupItems
           : modifierGroupItems // ignore: cast_nullable_to_non_nullable
               as List<ModifierGroupItemModel>,
@@ -1191,6 +1194,7 @@ class _$_Success implements _Success {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
@@ -1224,22 +1228,22 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         initial,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         adding,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         removing,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         updating,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         success,
-    TResult Function(
+    TResult? Function(
             List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems,
             Exception exception)?
@@ -1295,12 +1299,12 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return success?.call(this);
   }
@@ -1345,6 +1349,7 @@ abstract class _$$_ErrorCopyWith<$Res>
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<MenuItemModel> items,
       List<ModifierGroupItemModel> modifierGroupItems,
@@ -1353,30 +1358,28 @@ abstract class _$$_ErrorCopyWith<$Res>
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$ModifierGroupItemsStateCopyWithImpl<$Res>
+    extends _$ModifierGroupItemsStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = freezed,
-    Object? modifierGroupItems = freezed,
-    Object? exception = freezed,
+    Object? items = null,
+    Object? modifierGroupItems = null,
+    Object? exception = null,
   }) {
     return _then(_$_Error(
-      items: items == freezed
+      items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<MenuItemModel>,
-      modifierGroupItems: modifierGroupItems == freezed
+      modifierGroupItems: null == modifierGroupItems
           ? _value._modifierGroupItems
           : modifierGroupItems // ignore: cast_nullable_to_non_nullable
               as List<ModifierGroupItemModel>,
-      exception: exception == freezed
+      exception: null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as Exception,
@@ -1424,7 +1427,8 @@ class _$_Error implements _Error {
             const DeepCollectionEquality().equals(other._items, _items) &&
             const DeepCollectionEquality()
                 .equals(other._modifierGroupItems, _modifierGroupItems) &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @override
@@ -1432,10 +1436,11 @@ class _$_Error implements _Error {
       runtimeType,
       const DeepCollectionEquality().hash(_items),
       const DeepCollectionEquality().hash(_modifierGroupItems),
-      const DeepCollectionEquality().hash(exception));
+      exception);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -1469,22 +1474,22 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         initial,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         adding,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         removing,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         updating,
-    TResult Function(List<MenuItemModel> items,
+    TResult? Function(List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems)?
         success,
-    TResult Function(
+    TResult? Function(
             List<MenuItemModel> items,
             List<ModifierGroupItemModel> modifierGroupItems,
             Exception exception)?
@@ -1540,12 +1545,12 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Adding value)? adding,
-    TResult Function(_Removing value)? removing,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Adding value)? adding,
+    TResult? Function(_Removing value)? removing,
+    TResult? Function(_Updating value)? updating,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
+import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/extensions/extensions.dart';
 import 'package:meny_admin/src/infrastructure/i_resources_repository.dart';
@@ -27,13 +28,19 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
     required String path,
     required FirebaseFirestore firebaseFirestore,
     required LoggerService loggerService,
+    UuidService? uuidService,
   })  : _loggerService = loggerService,
+        _uuidService = uuidService ?? Locator.instance(),
         super(
           path: path,
           firebaseFirestore: firebaseFirestore,
         );
 
+  static const String namespace = 'menus';
+
   final LoggerService _loggerService;
+
+  final UuidService _uuidService;
 
   Future<MenuModel> get({
     required String storeId,
@@ -70,9 +77,10 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
     required MenuModel resource,
   }) async {
     try {
-      final document = await firebaseFirestore
+      final document = firebaseFirestore
           .menuEntitiesCollection(storeId: storeId)
-          .add(resource.toJson());
+          .doc(_uuidService.uuid);
+      await document.set(resource.toJson());
       final snapshot = await document.get();
       return MenuModel.fromSnapshot(snapshot);
     } catch (err) {

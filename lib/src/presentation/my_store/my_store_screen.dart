@@ -1,6 +1,6 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meny_admin/src/app/feature_flag_constants.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
@@ -28,10 +28,10 @@ class _MyStorePage extends HookWidget {
     return featureFlagState.maybeWhen(
       loaded: (enabled) {
         final tabs = [
-          const Tab(text: 'Details'),
+          const DSTab(text: 'Details'),
           if (enabled) ...[
-            const Tab(text: 'Hours'),
-            const Tab(text: 'Locations'),
+            const DSTab(text: 'Hours'),
+            const DSTab(text: 'Locations'),
           ],
         ];
         return DefaultTabController(

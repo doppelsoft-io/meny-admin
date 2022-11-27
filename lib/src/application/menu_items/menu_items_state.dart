@@ -4,7 +4,7 @@ part of 'menu_items_cubit.dart';
 class MenuItemsState with _$MenuItemsState {
   const factory MenuItemsState.loading({
     @Default(<MenuItemModel>[]) List<MenuItemModel> items,
-    @Default(OrderBy('createdAt')) OrderBy orderBy,
+    @Default(OrderBy()) OrderBy orderBy,
   }) = _Loading;
 
   const factory MenuItemsState.loaded({
