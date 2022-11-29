@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_core/meny_core.dart';
 
@@ -10,14 +11,14 @@ part 'compiled_category_cubit.freezed.dart';
 
 class CompiledCategoryCubit extends Cubit<CompiledCategoryState> {
   CompiledCategoryCubit({
+    required StoreCubit storeCubit,
     CompiledMenuRepository? compiledMenuRepository,
-    StoreCacheService? storeCacheService,
-  })  : _compiledMenuRepository = compiledMenuRepository ?? Locator.instance(),
-        _storeCacheService = storeCacheService ?? Locator.instance(),
+  })  : _storeCubit = storeCubit,
+        _compiledMenuRepository = compiledMenuRepository ?? Locator.instance(),
         super(CompiledCategoryState.initial());
 
+  final StoreCubit _storeCubit;
   final CompiledMenuRepository _compiledMenuRepository;
-  final StoreCacheService _storeCacheService;
   late StreamSubscription _subscription;
 
   @override
@@ -30,7 +31,7 @@ class CompiledCategoryCubit extends Cubit<CompiledCategoryState> {
     required String menuId,
   }) async {
     try {
-      final storeId = await _storeCacheService.get('storeId');
+      final storeId = _storeCubit.state.store.id!;
       _subscription = _compiledMenuRepository
           .getCategoriesForMenu(
         storeId: storeId,

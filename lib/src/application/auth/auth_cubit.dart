@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:doppelsoft_core/doppelsoft_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_core/meny_core.dart';
@@ -13,11 +12,9 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit({
     AuthRepository? authRepository,
     FirebaseAuth? firebaseAuth,
-    StoreCacheService? storeCacheService,
     FlagsmithClient? flagsmithClient,
   })  : _authRepository = authRepository ?? Locator.instance(),
         _firebaseAuth = firebaseAuth ?? Locator.instance(),
-        _storeCacheService = storeCacheService ?? Locator.instance(),
         _flagsmithClient = flagsmithClient ?? Locator.instance(),
         super(_Initial(user: UserModel.empty())) {
     _authSubscription?.cancel();
@@ -26,7 +23,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   final AuthRepository _authRepository;
   final FirebaseAuth _firebaseAuth;
-  final StoreCacheService _storeCacheService;
   final FlagsmithClient _flagsmithClient;
 
   StreamSubscription? _authSubscription;
@@ -73,7 +69,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> logout() async {
     /// Remove storeId from cache
-    await _storeCacheService.remove('storeId');
 
     await Future.wait([
       /// Logout

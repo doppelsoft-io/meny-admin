@@ -11,7 +11,6 @@ export 'menu_items/menu_item_repository.dart';
 export 'menus/menu_repository.dart';
 export 'modifier_group_items/modifier_group_item_repository.dart';
 export 'modifier_groups/modifier_group_repository.dart';
-export 'stores/store_cache_service.dart';
 export 'stores/store_repository.dart';
 export 'stores/store_roles.dart';
 export 'users/user_model.dart';

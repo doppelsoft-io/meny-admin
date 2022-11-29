@@ -14,20 +14,18 @@ class StoreCubit extends Cubit<StoreState> {
   StoreCubit({
     required AuthCubit authCubit,
     StoreRepository? storeRepository,
-    StoreCacheService? storeCacheService,
   })  : _authCubit = authCubit,
         _storeRepository = storeRepository ?? Locator.instance(),
-        _storeCacheService = storeCacheService ?? Locator.instance(),
         super(_Loading(store: StoreModel.empty())) {
     _authSubscription?.cancel();
 
     _authSubscription = _authCubit.stream.listen((state) {
       state.maybeWhen(
         authenticated: (user) {
-          loadStoreForUser(user: user);
+          loadStoreForUser(user);
         },
         anonymous: (user) {
-          loadStoreForUser(user: user);
+          loadStoreForUser(user);
         },
         unauthenticated: (user) {
           emit(_Loading(store: StoreModel.empty()));
@@ -39,7 +37,6 @@ class StoreCubit extends Cubit<StoreState> {
 
   final AuthCubit _authCubit;
   final StoreRepository _storeRepository;
-  final StoreCacheService _storeCacheService;
 
   StreamSubscription? _authSubscription;
   StreamSubscription? _storeSubscription;
@@ -63,11 +60,10 @@ class StoreCubit extends Cubit<StoreState> {
   Future<void> setStore(StoreModel store) async {
     assert(store.id != null && store.id!.isNotEmpty, 'store.id is empty');
     developer.log('MEE: store ${store.id}');
-    await _storeCacheService.save(store.id!);
     emit(state.copyWith(store: store));
   }
 
-  Future<void> loadStoreForUser({required UserModel user}) async {
+  Future<void> loadStoreForUser(UserModel user) async {
     try {
       if (user == UserModel.empty()) {
         emit(
