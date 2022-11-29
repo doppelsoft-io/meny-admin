@@ -2,6 +2,7 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -45,7 +46,11 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const BackButton(),
+            BackButton(
+              onPressed: () {
+                Locator.instance<NavigatorHelper>().goHome();
+              },
+            ),
             const SizedBox(width: DSSpacing.sm),
             QrImage(
               data: 'https://google.com',
