@@ -34,7 +34,7 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.0.5
+          flutter-version: 3.3.9
           channel: 'stable'
           cache: true
       - name: run pub get
