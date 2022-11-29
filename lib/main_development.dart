@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:doppelsoft_core/doppelsoft_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/app.dart';
 import 'package:meny_admin/firebase_options_dev.dart';
@@ -28,10 +27,6 @@ Future<void> main() async {
   //   sslEnabled: false,
   //   persistenceEnabled: false,
   // );
-
-  if (kIsWeb) {
-    await FirebaseFirestore.instance.enablePersistence();
-  }
 
   // FirebaseFunctions.instance.useFunctionsEmulator(localhost, 5001);
 
