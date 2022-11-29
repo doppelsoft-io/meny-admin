@@ -33,7 +33,7 @@ class PreviewMenuButton extends StatelessWidget {
               'id': menu.id!,
             },
           ),
-        );
+        ).call();
       },
     );
   }
