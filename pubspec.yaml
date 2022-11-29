@@ -36,13 +36,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-dependency_overrides:
-  doppelsoft_core:
-    path: ../doppelsoft-core
-  doppelsoft_ui:
-    path: ../doppelsoft-ui
-  meny_core:
-    path: ../meny-core
+# dependency_overrides:
+#   doppelsoft_core:
+#     path: ../doppelsoft-core
+#   doppelsoft_ui:
+#     path: ../doppelsoft-ui
+#   meny_core:
+#     path: ../meny-core
 
 flutter:
   uses-material-design: true
