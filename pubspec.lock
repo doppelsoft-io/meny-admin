@@ -662,7 +662,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "230b8f4e3d33f041ea318aa843090dd84589cb24"
+      resolved-ref: f10813c8fb55bfd96a17714b614337018d92cddc
       url: "git@github.com:doppelsoft-io/meny-core.git"
     source: git
     version: "0.0.1"
@@ -708,6 +708,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  package_info_plus:
+    dependency: transitive
+    description:
+      name: package_info_plus
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.2"
+  package_info_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: package_info_plus_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   path:
     dependency: transitive
     description:
@@ -883,6 +897,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.7"
+  sentry:
+    dependency: transitive
+    description:
+      name: sentry
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.17.0"
+  sentry_flutter:
+    dependency: transitive
+    description:
+      name: sentry_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.17.0"
   shelf:
     dependency: transitive
     description:
