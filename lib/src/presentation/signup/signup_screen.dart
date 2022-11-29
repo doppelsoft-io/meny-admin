@@ -1,8 +1,8 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -74,10 +74,12 @@ class _SignupScreen extends HookWidget {
                 failure: failure,
               ),
               (result) {
-                GoRouter.of(context).go('/');
+                Locator.instance<NavigatorHelper>().goHome();
 
-                Locator.instance<ToastService>().showNotification(
-                  const Text('Your sign up was successful!'),
+                Locator.instance<ToastService>().init(
+                  const DSToast.notification(
+                    text: 'Your sign up was successful!',
+                  ),
                 );
               },
             );
@@ -244,7 +246,8 @@ class _SignupScreen extends HookWidget {
                     DSButton(
                       theme: const DSButtonThemeData.text(),
                       onPressed: () {
-                        GoRouter.of(context).goNamed(LoginScreen.routeName);
+                        Locator.instance<NavigatorHelper>()
+                            .goNamed(LoginScreen.routeName);
                       },
                       text: 'Already have an account?',
                     ),

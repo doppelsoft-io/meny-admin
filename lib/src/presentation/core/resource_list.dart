@@ -1,13 +1,14 @@
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:meny_admin/src/presentation/presentation.dart';
 
 class _HeaderDelegate extends SliverPersistentHeaderDelegate {
   _HeaderDelegate({
-    required this.header,
+    required this.title,
     required this.action,
   });
 
-  final Widget header;
+  final String title;
   final Widget action;
 
   @override
@@ -16,20 +17,9 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return Material(
-      color: Colors.white,
-      elevation: 1,
-      child: Container(
-        height: 85,
-        padding: const EdgeInsets.all(DSSpacing.sm),
-        child: Row(
-          children: [
-            header,
-            const Spacer(),
-            action,
-          ],
-        ),
-      ),
+    return ResourceTableHeader(
+      title: title,
+      actions: [action],
     );
   }
 
@@ -47,7 +37,7 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
 class ResourceList<T> extends StatelessWidget {
   const ResourceList({
     Key? key,
-    required this.header,
+    required this.title,
     required this.action,
     required this.resources,
     required this.itemBuilder,
@@ -56,7 +46,7 @@ class ResourceList<T> extends StatelessWidget {
     this.sortAscending = true,
   }) : super(key: key);
 
-  final Widget header;
+  final String title;
   final Widget action;
   final List<T> resources;
   final Widget Function(BuildContext, T) itemBuilder;
@@ -73,7 +63,7 @@ class ResourceList<T> extends StatelessWidget {
             pinned: true,
             floating: true,
             delegate: _HeaderDelegate(
-              header: header,
+              title: title,
               action: action,
             ),
           ),

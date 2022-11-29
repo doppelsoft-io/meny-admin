@@ -1,7 +1,8 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/dialog_service.dart';
@@ -43,15 +44,14 @@ class _CreateCategoryScreen extends HookWidget {
             DSLoadingIndicator.dialog(context);
           },
           error: (_, exception) {
-            Navigator.of(context).pop();
+            Locator.instance<NavigatorHelper>().goHome();
             DialogService.showErrorDialog(
               context: context,
               failure: CustomException(message: exception.toString()),
             );
           },
           created: (_) {
-            Navigator.of(context).pop();
-            GoRouter.of(context).goNamed(
+            Locator.instance<NavigatorHelper>().goNamed(
               EditCategoryScreen.routeName,
               params: {'id': _.id!},
             );

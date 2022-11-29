@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:doppelsoft_core/doppelsoft_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_admin/src/services/services.dart';
+import 'package:meny_core/meny_core.dart';
 
 class AnonymousUserException extends CustomException {
   const AnonymousUserException({String? message}) : super(message: message);

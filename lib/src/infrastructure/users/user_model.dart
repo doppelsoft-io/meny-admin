@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:doppelsoft_core/doppelsoft_core.dart';
+import 'package:meny_core/meny_core.dart' as meny_core
+    show DocumentSnapshot, User;
 
 part 'user_model.g.dart';
 part 'user_model.freezed.dart';
@@ -25,7 +25,7 @@ class UserModel with _$UserModel {
     );
   }
 
-  factory UserModel.fromSnapshot(DocumentSnapshot snap) {
+  factory UserModel.fromSnapshot(meny_core.DocumentSnapshot snap) {
     try {
       final data = snap.data()!;
       final json = data as Map<String, dynamic>;
@@ -35,7 +35,7 @@ class UserModel with _$UserModel {
     }
   }
 
-  factory UserModel.fromFirebaseAuthUser(auth.User user) {
+  factory UserModel.fromFirebaseAuthUser(meny_core.User user) {
     return UserModel(
       id: user.uid,
       email: user.email ?? '',

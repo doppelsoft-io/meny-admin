@@ -1,16 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/app.dart';
 import 'package:meny_admin/firebase_options_dev.dart';
 import 'package:meny_admin/locator.dart';
-import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/web_url_strategy.dart';
+import 'package:meny_core/meny_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +39,6 @@ Future<void> main() async {
   // await FirebaseAuth.instance.useAuthEmulator(localhost, 9099);
 
   await Locator.setup(environment: AppEnvironment.development);
-  await HiveService.configure();
 
   runZonedGuarded(
     () {

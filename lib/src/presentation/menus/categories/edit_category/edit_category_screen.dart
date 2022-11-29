@@ -2,6 +2,7 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
@@ -111,9 +112,11 @@ class _EditCategoryScreen extends HookWidget {
         listener: (context, editCategoryState) {
           editCategoryState.maybeWhen(
             success: (category) {
-              Navigator.pop(context);
-              Locator.instance<ToastService>().showNotification(
-                Text('Your category ${category.name} has been saved'),
+              Locator.instance<NavigatorHelper>().goHome();
+              Locator.instance<ToastService>().init(
+                DSToast.notification(
+                  text: 'Your category ${category.name} has been saved',
+                ),
               );
             },
             error: (category, exception) {
@@ -310,16 +313,17 @@ class _DeleteCategoryButton extends StatelessWidget {
       listener: (context, deleteCategoryState) {
         deleteCategoryState.maybeWhen(
           success: () {
-            Navigator.of(context).pop();
+            Locator.instance<NavigatorHelper>().goHome();
             if (category.name.isNotEmpty) {
-              Locator.instance<ToastService>().showNotification(
-                Text('Your category ${category.name} has been deleted'),
-                ToastType.error,
+              Locator.instance<ToastService>().init(
+                DSToast.notification(
+                  text: 'Your category ${category.name} has been deleted',
+                ),
               );
             }
           },
           error: (exception) {
-            Navigator.of(context).pop();
+            Locator.instance<NavigatorHelper>().goHome();
             DialogService.showErrorDialog(
               context: context,
               failure: CustomException(message: exception.toString()),

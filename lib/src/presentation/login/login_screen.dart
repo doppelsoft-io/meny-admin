@@ -3,6 +3,7 @@ import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -73,10 +74,11 @@ class _LoginScreen extends HookWidget {
                 if (GoRouter.of(context).canPop()) {
                   GoRouter.of(context).pop();
                 } else {
-                  GoRouter.of(context).go('/');
+                  Locator.instance<NavigatorHelper>().goHome();
                 }
-                Locator.instance<ToastService>()
-                    .showNotification(const Text("You're logged in!"));
+                Locator.instance<ToastService>().init(
+                  const DSToast.notification(text: "You're logged in!"),
+                );
               },
             );
           },
@@ -205,7 +207,8 @@ class _LoginScreen extends HookWidget {
                     DSButton(
                       theme: const DSButtonThemeData.text(),
                       onPressed: () {
-                        GoRouter.of(context).pushNamed(SignupScreen.routeName);
+                        Locator.instance<NavigatorHelper>()
+                            .goNamed(SignupScreen.routeName);
                       },
                       text: "Don't have an account?",
                     ),

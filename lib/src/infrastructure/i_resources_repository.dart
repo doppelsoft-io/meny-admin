@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meny_admin/src/domain/domain.dart';
+import 'package:meny_core/meny_core.dart';
 
 abstract class IResourcesRepository<T> {
   IResourcesRepository({

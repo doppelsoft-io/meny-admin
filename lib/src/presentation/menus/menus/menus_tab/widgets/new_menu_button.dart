@@ -1,6 +1,7 @@
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 
 class NewMenuButton extends StatelessWidget {
@@ -21,17 +22,10 @@ class _NewMenuButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final createMenuState = context.watch<CreateMenuCubit>().state;
-
     return PageActionButton(
       title: 'New',
-      // isDisabled: createMenuState.maybeWhen(
-      //   orElse: () => false,
-      //   creating: (_) => true,
-      // ),
       onPressed: () {
-        // context.read<CreateMenuCubit>().create();
-        GoRouter.of(context).pushNamed(CreateMenuScreen.routeName);
+        Locator.instance<NavigatorHelper>().goNamed(CreateMenuScreen.routeName);
       },
     );
   }

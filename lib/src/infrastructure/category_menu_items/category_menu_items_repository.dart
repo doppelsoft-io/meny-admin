@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/constants/paths.dart';

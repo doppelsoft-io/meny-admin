@@ -145,9 +145,9 @@ class _MenuPreviewScreen extends StatelessWidget {
               state.maybeWhen(
                 publishing: (_) {},
                 published: (menu) {
-                  Locator.instance<ToastService>().showNotification(
-                    const Text(
-                      'Your menu has been published',
+                  Locator.instance<ToastService>().init(
+                    const DSToast.notification(
+                      text: 'Your menu has been published',
                     ),
                   );
                 },

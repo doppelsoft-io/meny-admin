@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/paths.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
+import 'package:meny_core/meny_core.dart';
 
 part 'bulk_delete_menu_items_state.dart';
 part 'bulk_delete_menu_items_cubit.freezed.dart';

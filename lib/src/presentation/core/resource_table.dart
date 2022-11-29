@@ -1,11 +1,12 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:meny_admin/src/presentation/presentation.dart';
 
 class ResourceTable<T> extends StatelessWidget {
   const ResourceTable({
     Key? key,
-    required this.header,
+    required this.title,
     required this.action,
     this.toolbar,
     required this.resources,
@@ -20,7 +21,7 @@ class ResourceTable<T> extends StatelessWidget {
     this.isSelected,
   }) : super(key: key);
 
-  final Widget header;
+  final String title;
   final Widget action;
   final Widget? toolbar;
   final List<T> resources;
@@ -38,20 +39,11 @@ class ResourceTable<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.only(
-            left: toolbar != null ? DSSpacing.xs : DSSpacing.sm,
-            right: DSSpacing.sm,
-            top: DSSpacing.xs,
-            bottom: DSSpacing.xs,
-          ),
-          child: Row(
-            children: [
-              if (toolbar != null) toolbar! else header,
-              const Spacer(),
-              action,
-            ],
-          ),
+        ResourceTableHeader(
+          title: title,
+          toolbar: toolbar,
+          showToolbar: toolbar != null,
+          actions: [action],
         ),
         Expanded(
           child: DataTable2(

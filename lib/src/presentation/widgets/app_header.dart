@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -30,7 +31,7 @@ class AppHeader extends StatelessWidget {
           child: Row(
             children: [
               GestureDetector(
-                onTap: () => GoRouter.of(context).go('/'),
+                onTap: () => Locator.instance<NavigatorHelper>().goHome(),
                 child: DSText(
                   getValueForScreenType(
                     context: context,
@@ -70,8 +71,8 @@ class AuthActions extends HookWidget {
           onPressed: () {
             context.read<AuthCubit>().logout();
 
-            Locator.instance<ToastService>().showNotification(
-              const Text('Logged out!'),
+            Locator.instance<ToastService>().init(
+              const DSToast.notification(text: 'Logged out!'),
             );
           },
           icon: const FaIcon(FontAwesomeIcons.rightFromBracket),
@@ -82,7 +83,8 @@ class AuthActions extends HookWidget {
           visible: !onAuthScreens,
           child: DSButton(
             onPressed: () {
-              GoRouter.of(context).pushNamed(SignupScreen.routeName);
+              Locator.instance<NavigatorHelper>()
+                  .goNamed(SignupScreen.routeName);
             },
             // theme: const DSButtonThemeData(
             //   textTheme: DSTextThemeData.b1(),

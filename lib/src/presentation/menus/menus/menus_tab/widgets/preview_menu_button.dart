@@ -1,6 +1,7 @@
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -20,7 +21,7 @@ class PreviewMenuButton extends StatelessWidget {
       ),
       text: 'Preview',
       onPressed: () => ActionService.run(
-        () => GoRouter.of(context).goNamed(
+        () => Locator.instance<NavigatorHelper>().goNamed(
           MenuPreviewScreen.routeName,
           params: {
             'id': menu.id!,

@@ -2,7 +2,8 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/domain/domain.dart';
@@ -65,7 +66,7 @@ class _MenusScreenCategoriesTab extends HookWidget {
     void onTapItem(BuildContext context, CategoryModel category) {
       ActionService.run(
         () {
-          GoRouter.of(context).goNamed(
+          Locator.instance<NavigatorHelper>().goNamed(
             EditCategoryScreen.routeName,
             params: {
               'id': category.id!,
@@ -95,7 +96,6 @@ class _MenusScreenCategoriesTab extends HookWidget {
           final categories = categoriesState.categories;
           final orderBy = categoriesState.orderBy;
           const action = NewCategoryButton();
-          const header = PageTitle(title: 'Categories');
           const emptyMessage =
               'No categories yet. Click "New" above to get started!';
 
@@ -103,7 +103,7 @@ class _MenusScreenCategoriesTab extends HookWidget {
             children: [
               if (isMobile) ...[
                 ResourceList<CategoryModel>(
-                  header: header,
+                  title: 'Categories',
                   action: action,
                   resources: categories,
                   emptyMessage: emptyMessage,
@@ -120,9 +120,9 @@ class _MenusScreenCategoriesTab extends HookWidget {
                 ),
               ] else ...[
                 ResourceTable<CategoryModel>(
+                  title: 'Categories',
                   sortAscending: !orderBy.descending,
                   sortColumnIndex: orderBy.sortColumnIndex,
-                  header: header,
                   action: action,
                   columns: [
                     DataColumn2(

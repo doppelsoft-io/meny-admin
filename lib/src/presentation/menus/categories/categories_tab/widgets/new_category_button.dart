@@ -1,6 +1,7 @@
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 
 class NewCategoryButton extends StatelessWidget {
@@ -20,7 +21,8 @@ class _NewCategoryButton extends HookWidget {
     return PageActionButton(
       title: 'New',
       onPressed: () {
-        GoRouter.of(context).pushNamed(CreateCategoryScreen.routeName);
+        Locator.instance<NavigatorHelper>()
+            .goNamed(CreateCategoryScreen.routeName);
       },
     );
   }

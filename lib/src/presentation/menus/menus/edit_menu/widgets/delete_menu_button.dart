@@ -1,6 +1,8 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
+import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -37,10 +39,9 @@ class _DeleteMenuButton extends StatelessWidget {
       listener: (context, deleteMenuState) {
         deleteMenuState.maybeWhen(
           success: () {
-            Navigator.of(context).pop();
-            Locator.instance<ToastService>().showNotification(
-              const Text('Your menu has been deleted'),
-              ToastType.error,
+            Locator.instance<NavigatorHelper>().goHome();
+            Locator.instance<ToastService>().init(
+              const DSToast.notification(text: 'Your menu has been deleted'),
             );
           },
           error: (exception) {

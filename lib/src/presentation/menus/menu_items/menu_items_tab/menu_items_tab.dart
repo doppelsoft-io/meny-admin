@@ -2,8 +2,8 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/domain/domain.dart';
@@ -75,7 +75,7 @@ class _MenusScreenItemsTab extends HookWidget {
       ActionService.run(
         () {
           context.read<ResourceTableItemSelectorCubit<MenuItemModel>>().clear();
-          GoRouter.of(context).pushNamed(
+          Locator.instance<NavigatorHelper>().goNamed(
             EditMenuItemScreen.routeName,
             params: {
               'id': item.id!,
@@ -116,9 +116,10 @@ class _MenusScreenItemsTab extends HookWidget {
                     .read<ResourceTableItemSelectorCubit<MenuItemModel>>()
                     .state
                     .items;
-                Locator.instance<ToastService>().showNotification(
-                  Text(
-                    '${items.length == 1 ? '1 item' : '${items.length} items'} successfully deleted.',
+                Locator.instance<ToastService>().init(
+                  DSToast.notification(
+                    text:
+                        '${items.length == 1 ? '1 item' : '${items.length} items'} successfully deleted.',
                   ),
                 );
                 context
@@ -136,7 +137,6 @@ class _MenusScreenItemsTab extends HookWidget {
           final items = menuItemsState.items;
           final orderBy = menuItemsState.orderBy;
           const action = NewMenuItemButton();
-          const header = PageTitle(title: 'Items');
           const emptyMessage =
               'No items yet. Click "New" above to get started!';
 
@@ -148,7 +148,7 @@ class _MenusScreenItemsTab extends HookWidget {
             children: [
               if (isMobile) ...[
                 ResourceList<MenuItemModel>(
-                  header: header,
+                  title: 'Items',
                   action: action,
                   resources: items,
                   emptyMessage: emptyMessage,
@@ -170,7 +170,7 @@ class _MenusScreenItemsTab extends HookWidget {
                 ),
               ] else ...[
                 ResourceTable<MenuItemModel>(
-                  header: header,
+                  title: 'Items',
                   toolbar: resourceItemSelectorState.items.isNotEmpty
                       ? const MenuItemsToolbar()
                       : null,

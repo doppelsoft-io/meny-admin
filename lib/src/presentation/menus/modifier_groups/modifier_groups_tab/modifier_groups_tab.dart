@@ -2,7 +2,8 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/domain/domain.dart';
@@ -77,7 +78,7 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
     void onTapItem(BuildContext context, ModifierGroupModel group) {
       ActionService.run(
         () {
-          GoRouter.of(context).goNamed(
+          Locator.instance<NavigatorHelper>().goNamed(
             EditModifierGroupScreen.routeName,
             params: {'id': group.id!},
           );
@@ -98,7 +99,6 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
         final groups = modifierGroupsState.groups;
         final orderBy = modifierGroupsState.orderBy;
         const action = NewModifierGroupButton();
-        const header = PageTitle(title: 'Modifier Groups');
         const emptyMessage =
             'No modifier groups yet. Click "New" above to get started!';
 
@@ -106,7 +106,7 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
           children: [
             if (isMobile) ...[
               ResourceList<ModifierGroupModel>(
-                header: header,
+                title: 'Modifier Groups',
                 action: action,
                 resources: groups,
                 emptyMessage: emptyMessage,
@@ -123,9 +123,9 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
               ),
             ] else ...[
               ResourceTable<ModifierGroupModel>(
+                title: 'Modifier Groups',
                 sortAscending: !orderBy.descending,
                 sortColumnIndex: orderBy.sortColumnIndex,
-                header: header,
                 action: action,
                 resources: groups,
                 emptyMessage: emptyMessage,

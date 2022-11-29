@@ -73,8 +73,8 @@ class _CompiledMenuBuilder extends StatelessWidget {
                   listener: (context, state) {
                     state.maybeMap(
                       success: (_) {
-                        Locator.instance<ToastService>().showNotification(
-                          const Text('Categories saved'),
+                        Locator.instance<ToastService>().init(
+                          const DSToast.notification(text: 'Categories saved'),
                         );
                       },
                       orElse: () {},
@@ -86,8 +86,8 @@ class _CompiledMenuBuilder extends StatelessWidget {
                   listener: (context, state) {
                     state.maybeMap(
                       success: (_) {
-                        Locator.instance<ToastService>().showNotification(
-                          const Text('Items saved'),
+                        Locator.instance<ToastService>().init(
+                          const DSToast.notification(text: 'Items saved'),
                         );
                       },
                       orElse: () {},

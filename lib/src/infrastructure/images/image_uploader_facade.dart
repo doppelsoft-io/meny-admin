@@ -1,5 +1,5 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:meny_core/meny_core.dart';
 
 class ImageUploaderFacade implements IImageUploaderFacade {
   ImageUploaderFacade(this._firebaseStorage);

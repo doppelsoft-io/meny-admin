@@ -3,6 +3,7 @@ import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
@@ -193,9 +194,11 @@ class _EditModifierGroupScreen extends HookWidget {
         listener: (context, editModifierGroupState) {
           editModifierGroupState.maybeWhen(
             success: (group) {
-              Navigator.pop(context);
-              Locator.instance<ToastService>().showNotification(
-                Text('Your modifier group ${group.name} has been saved'),
+              Locator.instance<NavigatorHelper>().goHome();
+              Locator.instance<ToastService>().init(
+                DSToast.notification(
+                  text: 'Your modifier group ${group.name} has been saved',
+                ),
               );
             },
             error: (category, exception) {
@@ -799,11 +802,12 @@ class _DeleteModifierGroupButton extends StatelessWidget {
       listener: (context, deleteModifierGroupState) {
         deleteModifierGroupState.maybeWhen(
           success: () {
-            Navigator.of(context).pop();
+            Locator.instance<NavigatorHelper>().goHome();
             if (group.name.isNotEmpty) {
-              Locator.instance<ToastService>().showNotification(
-                Text('Your modifier group ${group.name} has been deleted'),
-                ToastType.error,
+              Locator.instance<ToastService>().init(
+                DSToast.notification(
+                  text: 'Your modifier group ${group.name} has been deleted',
+                ),
               );
             }
           },

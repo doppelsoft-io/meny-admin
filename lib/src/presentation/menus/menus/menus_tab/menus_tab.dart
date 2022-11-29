@@ -2,7 +2,8 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/domain/domain.dart';
@@ -67,7 +68,7 @@ class _MenusScreenMenusTab extends HookWidget {
     void onTapItem(BuildContext context, MenuModel menu) {
       ActionService.run(
         () {
-          GoRouter.of(context).goNamed(
+          Locator.instance<NavigatorHelper>().goNamed(
             EditMenuScreen.routeName,
             params: {
               'id': menu.id!,
@@ -99,7 +100,6 @@ class _MenusScreenMenusTab extends HookWidget {
           final isMobile = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
           final menus = menusState.menus;
           final orderBy = menusState.orderBy;
-          const header = PageTitle(title: 'Menus');
           const action = NewMenuButton();
           const emptyMessage =
               'No menus yet. Click "New" above to get started!';
@@ -107,7 +107,7 @@ class _MenusScreenMenusTab extends HookWidget {
             children: [
               if (isMobile) ...[
                 ResourceList<MenuModel>(
-                  header: header,
+                  title: 'Menus',
                   action: action,
                   resources: menus,
                   emptyMessage: emptyMessage,
@@ -126,7 +126,7 @@ class _MenusScreenMenusTab extends HookWidget {
                 ResourceTable<MenuModel>(
                   sortColumnIndex: orderBy.sortColumnIndex,
                   sortAscending: !orderBy.descending,
-                  header: header,
+                  title: 'Menus',
                   action: action,
                   resources: menus,
                   columns: [

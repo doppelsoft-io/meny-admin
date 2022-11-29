@@ -2,8 +2,9 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
+import 'package:meny_admin/src/app/feature_flag_constants.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
@@ -67,6 +68,9 @@ class EditMenuItemScreen extends StatelessWidget {
           create: (context) => ImageUploadCubit(
             storeCubit: context.read<StoreCubit>(),
           ),
+        ),
+        BlocProvider<FlagsmithCubit>(
+          create: (context) => FlagsmithCubit(),
         ),
       ],
       child: const _EditMenuItemScreen(),
@@ -136,14 +140,16 @@ class _EditMenuItemScreen extends HookWidget {
         listener: (context, editMenuItemState) {
           editMenuItemState.maybeWhen(
             success: (item) {
-              Navigator.pop(context);
-              Locator.instance<ToastService>().showNotification(
-                Text('Your item ${item.name} has been saved'),
+              Locator.instance<NavigatorHelper>().goHome();
+              Locator.instance<ToastService>().init(
+                DSToast.notification(
+                  text: 'Your item ${item.name} has been saved',
+                ),
               );
             },
             error: (item, exception) {
               if (exception is AnonymousUserException) {
-                GoRouter.of(context).go('/');
+                Locator.instance<NavigatorHelper>().goHome();
               } else {
                 DialogService.showErrorDialog(
                   context: context,
@@ -191,6 +197,9 @@ class _ItemForm extends HookWidget {
     final editMenuItemState = context.watch<EditMenuItemCubit>().state;
     final deleteMenuItemState = context.watch<DeleteMenuItemCubit>().state;
     final imageUploadState = context.watch<ImageUploadCubit>().state;
+    final isModifierGroupsEnabled = context
+        .watch<FlagsmithCubit>()
+        .isFeatureFlagEnabled(FeatureFlags.modifierGroupManagement);
 
     useEffect(
       () {
@@ -400,7 +409,8 @@ class _ItemForm extends HookWidget {
                         'Select which categories this item will appear in',
                     child: _CategorySelector(item: item),
                   ),
-                  if (item.type == MenuItemType.item) ...[
+                  if (isModifierGroupsEnabled &&
+                      item.type == MenuItemType.item) ...[
                     PageSection(
                       title: 'Modifier Groups',
                       child: _ModifierGroupSelector(item: item),
@@ -435,11 +445,12 @@ class _DeleteMenuItemButton extends StatelessWidget {
       listener: (context, deleteMenuItemState) {
         deleteMenuItemState.maybeWhen(
           success: () {
-            Navigator.of(context).pop();
+            Locator.instance<NavigatorHelper>().goHome();
             if (item.name.isNotEmpty) {
-              Locator.instance<ToastService>().showNotification(
-                Text('Your item ${item.name} has been deleted'),
-                ToastType.error,
+              Locator.instance<ToastService>().init(
+                DSToast.notification(
+                  text: 'Your item ${item.name} has been deleted',
+                ),
               );
             }
           },
@@ -562,13 +573,19 @@ class _SuspensionRules extends HookWidget {
           children: [
             SizedBox(
               width: 225,
-              child: SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                enableFeedback: true,
-                title: const DSText(
-                  'Item out of stock?',
-                  theme: DSTextThemeData.b1(),
+              child: DSSwitchListTile(
+                theme: DSSwitchListTileThemeData.forColorScheme(
+                  effectiveTheme.colorScheme,
                 ),
+                title: 'Item out of stock?',
+
+                // visualDensity: VisualDensity.compact,
+                // contentPadding: EdgeInsets.zero,
+                // enableFeedback: true,
+                // title: const DSText(
+                //   'Item out of stock?',
+                //   theme: DSTextThemeData.b1(),
+                // ),
                 value: item.suspensionRules != null,
                 onChanged: (outOfStock) {
                   if (outOfStock) {
@@ -594,7 +611,6 @@ class _SuspensionRules extends HookWidget {
                         );
                   }
                 },
-                visualDensity: VisualDensity.compact,
               ),
             ),
             if (item.suspensionRules != null) ...[

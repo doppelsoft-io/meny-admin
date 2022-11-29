@@ -1,15 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:doppelsoft_core/doppelsoft_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/app/app_constants.dart';
 import 'package:meny_admin/src/app/feature_flag_constants.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/paths.dart';
 import 'package:meny_admin/src/infrastructure/infrastructure.dart';
 import 'package:meny_admin/src/services/services.dart';
-import 'package:meny_admin/themes.dart';
 import 'package:meny_core/meny_core.dart';
 
 class Locator {
@@ -18,6 +15,8 @@ class Locator {
   static GetIt instance = GetIt.instance;
 
   static Future<void> setup({required AppEnvironment environment}) async {
+    final navigatorKey = GlobalKey<NavigatorState>();
+
     final flagsmithClient = await FlagsmithClient.init(
       apiKey: dotenv.get(AppConstants.flagsmithEnvironmentKey),
       config: const FlagsmithConfig(),
@@ -28,17 +27,16 @@ class Locator {
     );
 
     instance
+      ..registerSingleton<GlobalKey<NavigatorState>>(navigatorKey)
+      ..registerSingleton<NavigatorHelper>(NavigatorHelper())
       ..registerSingleton<FlagsmithClient>(flagsmithClient)
       ..registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance)
       ..registerSingleton<FirebaseFunctions>(FirebaseFunctions.instance)
       ..registerSingleton<FirebaseAuth>(FirebaseAuth.instance)
       ..registerSingleton<FirebaseStorage>(FirebaseStorage.instance)
-      ..registerSingleton<StoreCacheService>(StoreCacheService())
       ..registerSingleton<LoggerService>(const LoggerService())
       ..registerSingleton<UuidService>(UuidService())
-      ..registerSingleton<ToastService>(
-        ToastService(colorScheme: effectiveTheme.colorScheme),
-      )
+      ..registerSingleton<ToastService>(ToastService())
       ..registerSingleton<AuthRepository>(
         AuthRepository(
           loggerService: const LoggerService(prepend: 'AuthRepository'),

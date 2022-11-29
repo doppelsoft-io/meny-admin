@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/themes.dart';
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 class App extends StatelessWidget {
   App({
@@ -20,6 +23,7 @@ class App extends StatelessWidget {
   final AppEnvironment environment;
 
   late final router = GoRouter(
+    navigatorKey: navigatorKey,
     debugLogDiagnostics: true,
     initialLocation: '/',
     routes: [
@@ -110,7 +114,7 @@ class App extends StatelessWidget {
         ],
       ),
     ],
-    redirect: (state) {
+    redirect: (context, state) {
       final location = state.subloc;
       final onLogin = location == '/${LoginScreen.routeName}';
       final onSignup = location == '/${SignupScreen.routeName}';
@@ -132,9 +136,6 @@ class App extends StatelessWidget {
         },
       );
     },
-    refreshListenable: GoRouterRefreshStream(
-      authCubit.stream,
-    ),
     errorBuilder: (_, state) => ErrorScreen(state.error!),
   );
 
@@ -154,10 +155,9 @@ class App extends StatelessWidget {
         ],
         child: MaterialApp.router(
           theme: effectiveTheme.toThemeData(),
-          routeInformationProvider: router.routeInformationProvider,
-          routeInformationParser: router.routeInformationParser,
-          routerDelegate: router.routerDelegate,
+          routerConfig: router,
           debugShowCheckedModeBanner: false,
+          title: 'Meny',
           builder: (context, widget) => ResponsiveWrapper.builder(
             BouncingScrollWrapper.builder(
               context,
@@ -201,7 +201,7 @@ class ErrorScreen extends StatelessWidget {
           children: [
             SelectableText(error.toString()),
             TextButton(
-              onPressed: () => context.go('/'),
+              onPressed: () => Locator.instance<NavigatorHelper>().goHome(),
               child: const Text('Home'),
             ),
           ],

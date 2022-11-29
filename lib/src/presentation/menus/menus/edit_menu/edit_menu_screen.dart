@@ -2,6 +2,7 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
+import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -55,10 +56,13 @@ class _EditMenuScreen extends HookWidget {
       orElse: DSLoadingIndicator.new,
       loaded: (store) {
         return WillPopScope(
-          onWillPop: () => _onWillPop(
-            context: context,
-            menu: editMenuState.menu,
-          ),
+          onWillPop: () async {
+            final result = await _onWillPop(
+              context: context,
+              menu: editMenuState.menu,
+            );
+            return result;
+          },
           child: BlocConsumer<EditMenuCubit, EditMenuState>(
             listener: (context, editMenuState) {
               editMenuState.maybeWhen(
@@ -66,10 +70,13 @@ class _EditMenuScreen extends HookWidget {
                   controller.text = menu.name;
                 },
                 success: (menu) {
-                  Locator.instance<ToastService>().showNotification(
-                    Text('Your menu ${menu.name} has been saved'),
+                  Locator.instance<NavigatorHelper>().goHome();
+
+                  Locator.instance<ToastService>().init(
+                    DSToast.notification(
+                      text: 'Your menu ${menu.name} has been saved',
+                    ),
                   );
-                  Navigator.pop(context);
                 },
                 error: (_, exception) {
                   DialogService.showErrorDialog(
@@ -134,7 +141,6 @@ class _EditMenuScreen extends HookWidget {
                         DSHorizontalSpacing.smallest(),
                         Center(
                           child: DSButton(
-                            // theme: DSButtonThemeData.,
                             text: 'Save',
                             onPressed: () {
                               final isValid = EditMenuScreen
@@ -227,9 +233,6 @@ class _EditMenuScreen extends HookWidget {
               confirmArgs: DSConfirmDialogConfirmArgs(
                 text: 'Yes',
                 onPressed: () => Navigator.of(context).pop(true),
-                // buttonStyle: ElevatedButton.styleFrom(
-                //   primary: Theme.of(context).errorColor,
-                // ),
               ),
             ),
           );

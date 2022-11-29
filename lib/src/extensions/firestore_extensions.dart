@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meny_admin/src/constants/paths.dart';
+import 'package:meny_core/meny_core.dart';
 
 extension FirebaseFirestoreX on FirebaseFirestore {
   CollectionReference usersCollection() => collection(Paths.users);
