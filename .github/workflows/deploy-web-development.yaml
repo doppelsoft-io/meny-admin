@@ -4,6 +4,7 @@ env:
   PROJECT_ID: meny-admin-development
   TARGET_FILE: lib/main_development.dart
   FLAGSMITH_ENVIRONMENT_KEY: ${{ secrets.FLAGSMITH_ENVIRONMENT_KEY_DEV }}
+  SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
 on:
   push:
@@ -44,6 +45,7 @@ jobs:
         run: |
           touch env
           echo "FLAGSMITH_ENVIRONMENT_KEY=${{ env.FLAGSMITH_ENVIRONMENT_KEY }}" >> env
+          echo "SENTRY_DSN=${{ env.SENTRY_DSN }}" >> env
           cat env
       - name: Build web release
         run: flutter build web --target ${{ env.TARGET_FILE }} --web-renderer canvaskit --release
