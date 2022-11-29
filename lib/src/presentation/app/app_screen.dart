@@ -3,6 +3,7 @@ import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/domain/core/action_object.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/tabs.dart';
@@ -110,32 +111,24 @@ class _ScreenContent extends StatelessWidget {
                 ),
               ),
               tablet: _DesktopLayout(
-                onSelect: (index) {
-                  ActionService.run(
-                    () => selectedIndex.value = index,
-                    () => AnalyticsService.track(
-                      message: Analytics.tabTapped,
-                      params: {
-                        'tab': pages[index].toString(),
-                      },
-                    ),
-                  );
-                },
+                onSelect: (index) => ActionObject(
+                  eventName: Analytics.tabTapped,
+                  params: {
+                    'tab': pages[index].toString(),
+                  },
+                  callback: () => selectedIndex.value = index,
+                ).call(),
                 selectedIndex: selectedIndex.value,
                 child: pages[selectedIndex.value],
               ),
               desktop: _DesktopLayout(
-                onSelect: (index) {
-                  ActionService.run(
-                    () => selectedIndex.value = index,
-                    () => AnalyticsService.track(
-                      message: Analytics.tabTapped,
-                      params: {
-                        'tab': pages[index].toString(),
-                      },
-                    ),
-                  );
-                },
+                onSelect: (index) => ActionObject(
+                  eventName: Analytics.tabTapped,
+                  params: {
+                    'tab': pages[index].toString(),
+                  },
+                  callback: () => selectedIndex.value = index,
+                ).call(),
                 selectedIndex: selectedIndex.value,
                 child: pages[selectedIndex.value],
               ),

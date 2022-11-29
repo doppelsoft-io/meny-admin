@@ -2,6 +2,8 @@ import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/navigator.dart';
+import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/domain/core/action_object.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 
 class NewCategoryButton extends StatelessWidget {
@@ -20,10 +22,13 @@ class _NewCategoryButton extends HookWidget {
   Widget build(BuildContext context) {
     return PageActionButton(
       title: 'New',
-      onPressed: () {
-        Locator.instance<NavigatorHelper>()
-            .goNamed(CreateCategoryScreen.routeName);
-      },
+      onPressed: ActionObject(
+        eventName: Analytics.categoriesTabNewTapped,
+        callback: () {
+          Locator.instance<NavigatorHelper>()
+              .goNamed(CreateCategoryScreen.routeName);
+        },
+      ),
     );
   }
 }

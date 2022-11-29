@@ -41,6 +41,8 @@ class _MenusScreenItemsTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final menuItemsState = context.watch<MenuItemsCubit>().state;
+    final bulkDeleteMenuItemsState =
+        context.watch<BulkDeleteMenuItemsCubit>().state;
 
     useEffect(
       () {
@@ -72,8 +74,13 @@ class _MenusScreenItemsTab extends HookWidget {
     }
 
     void onTapItem(BuildContext context, MenuItemModel item) {
-      ActionService.run(
-        () {
+      ActionObject(
+        eventName: Analytics.itemsTabItemSelected,
+        params: {
+          'itemId': item.id!,
+          'itemName': item.name,
+        },
+        callback: () {
           context.read<ResourceTableItemSelectorCubit<MenuItemModel>>().clear();
           Locator.instance<NavigatorHelper>().goNamed(
             EditMenuItemScreen.routeName,
@@ -82,14 +89,7 @@ class _MenusScreenItemsTab extends HookWidget {
             },
           );
         },
-        () => AnalyticsService.track(
-          message: Analytics.itemsTabItemSelected,
-          params: {
-            'itemId': item.id!,
-            'itemName': item.name,
-          },
-        ),
-      );
+      ).call();
     }
 
     return MultiBlocListener(
@@ -301,7 +301,10 @@ class _MenusScreenItemsTab extends HookWidget {
                 maintainState: true,
                 visible: menuItemsState.maybeWhen(
                   loading: (_, __) => true,
-                  orElse: () => false,
+                  orElse: () => bulkDeleteMenuItemsState.maybeWhen(
+                    deleting: () => true,
+                    orElse: () => false,
+                  ),
                 ),
                 child: const LinearProgressIndicator(),
               )

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:meny_admin/src/app/feature_flag_constants.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/domain/core/action_object.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
-import 'package:meny_admin/src/services/services.dart';
 
 class MenusScreen extends StatelessWidget {
   const MenusScreen({Key? key}) : super(key: key);
@@ -48,15 +48,13 @@ class _MenusScreen extends StatelessWidget {
               flexibleSpace: TabBar(
                 enableFeedback: true,
                 onTap: (index) async {
-                  ActionService.run(
-                    () {},
-                    () => AnalyticsService.track(
-                      message: Analytics.menusTabTabTapped,
-                      params: {
-                        'tab': tabs[index].text ?? '',
-                      },
-                    ),
-                  );
+                  ActionObject(
+                    eventName: Analytics.menusTabTabTapped,
+                    params: {
+                      'tab': tabs[index].text ?? '',
+                    },
+                    callback: () {},
+                  ).call();
                 },
                 isScrollable: true,
                 indicatorWeight: 4,

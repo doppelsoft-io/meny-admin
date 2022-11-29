@@ -36,7 +36,8 @@ class Locator {
       ..registerSingleton<FirebaseStorage>(FirebaseStorage.instance)
       ..registerSingleton<LoggerService>(const LoggerService())
       ..registerSingleton<UuidService>(UuidService())
-      ..registerSingleton<ToastService>(ToastService())
+      ..registerSingleton<ToastService>(const ToastService())
+      ..registerSingleton<AnalyticsService>(const AnalyticsService())
       ..registerSingleton<AuthRepository>(
         AuthRepository(
           loggerService: const LoggerService(prepend: 'AuthRepository'),

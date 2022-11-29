@@ -8,7 +8,6 @@ import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
-import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
 class MenusTab extends StatelessWidget {
@@ -66,8 +65,9 @@ class _MenusScreenMenusTab extends HookWidget {
     }
 
     void onTapItem(BuildContext context, MenuModel menu) {
-      ActionService.run(
-        () {
+      ActionObject(
+        eventName: Analytics.menusTabItemSelected,
+        callback: () {
           Locator.instance<NavigatorHelper>().goNamed(
             EditMenuScreen.routeName,
             params: {
@@ -75,10 +75,7 @@ class _MenusScreenMenusTab extends HookWidget {
             },
           );
         },
-        () => AnalyticsService.track(
-          message: Analytics.menusTabItemSelected,
-        ),
-      );
+      ).call();
     }
 
     return MultiBlocListener(

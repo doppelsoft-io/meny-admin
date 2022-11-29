@@ -21,4 +21,6 @@ class NavigatorHelper {
       extra: extra,
     );
   }
+
+  void pop() => navigatorKey.currentState?.context.pop();
 }

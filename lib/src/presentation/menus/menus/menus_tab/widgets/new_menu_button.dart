@@ -2,6 +2,8 @@ import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/navigator.dart';
+import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/domain/core/action_object.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 
 class NewMenuButton extends StatelessWidget {
@@ -24,9 +26,13 @@ class _NewMenuButton extends HookWidget {
   Widget build(BuildContext context) {
     return PageActionButton(
       title: 'New',
-      onPressed: () {
-        Locator.instance<NavigatorHelper>().goNamed(CreateMenuScreen.routeName);
-      },
+      onPressed: ActionObject(
+        eventName: Analytics.menusTabNewTapped,
+        callback: () {
+          Locator.instance<NavigatorHelper>()
+              .goNamed(CreateMenuScreen.routeName);
+        },
+      ),
     );
   }
 }

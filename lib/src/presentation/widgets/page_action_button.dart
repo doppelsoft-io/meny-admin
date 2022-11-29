@@ -14,7 +14,7 @@ class PageActionButton extends StatelessWidget {
   final String title;
   final String? mobileTitle;
   final IconData? iconData;
-  final Function() onPressed;
+  final VoidCallback onPressed;
   final bool isDisabled;
 
   @override

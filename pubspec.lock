@@ -270,16 +270,20 @@ packages:
   doppelsoft_core:
     dependency: "direct main"
     description:
-      path: "../doppelsoft-core"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "125adb18841443f5888a2375e02df6f52729c98c"
+      url: "git@github.com:doppelsoft-io/doppelsoft-core.git"
+    source: git
     version: "0.0.1"
   doppelsoft_ui:
     dependency: "direct main"
     description:
-      path: "../doppelsoft-ui"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "0c21e981268dfdeaa55b203e15f280582472fd6c"
+      url: "git@github.com:doppelsoft-io/doppelsoft-ui.git"
+    source: git
     version: "0.0.1"
   encrypt:
     dependency: transitive
@@ -656,9 +660,11 @@ packages:
   meny_core:
     dependency: "direct main"
     description:
-      path: "../meny-core"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "230b8f4e3d33f041ea318aa843090dd84589cb24"
+      url: "git@github.com:doppelsoft-io/meny-core.git"
+    source: git
     version: "0.0.1"
   meta:
     dependency: transitive

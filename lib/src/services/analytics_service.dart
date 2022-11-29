@@ -1,9 +1,9 @@
 import 'dart:developer' as developer;
 
 class AnalyticsService {
-  const AnalyticsService._();
+  const AnalyticsService();
 
-  static void track({
+  void track({
     required String message,
     Map<String, String>? params,
   }) {

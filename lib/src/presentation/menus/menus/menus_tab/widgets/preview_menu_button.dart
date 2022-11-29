@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
+import 'package:meny_admin/src/domain/core/action_object.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
-import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
 class PreviewMenuButton extends StatelessWidget {
@@ -20,21 +20,21 @@ class PreviewMenuButton extends StatelessWidget {
             ),
       ),
       text: 'Preview',
-      onPressed: () => ActionService.run(
-        () => Locator.instance<NavigatorHelper>().goNamed(
-          MenuPreviewScreen.routeName,
-          params: {
-            'id': menu.id!,
-          },
-        ),
-        () => AnalyticsService.track(
-          message: Analytics.menusTabPreviewTapped,
+      onPressed: () {
+        ActionObject(
+          eventName: Analytics.menusTabPreviewTapped,
           params: {
             'menuId': menu.id!,
             'menuName': menu.name,
           },
-        ),
-      ),
+          callback: () => Locator.instance<NavigatorHelper>().goNamed(
+            MenuPreviewScreen.routeName,
+            params: {
+              'id': menu.id!,
+            },
+          ),
+        );
+      },
     );
   }
 }

@@ -8,7 +8,6 @@ import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
-import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
 class CategoriesTab extends StatelessWidget {
@@ -64,8 +63,9 @@ class _MenusScreenCategoriesTab extends HookWidget {
     }
 
     void onTapItem(BuildContext context, CategoryModel category) {
-      ActionService.run(
-        () {
+      ActionObject(
+        eventName: Analytics.categoriesTabItemSelected,
+        callback: () {
           Locator.instance<NavigatorHelper>().goNamed(
             EditCategoryScreen.routeName,
             params: {
@@ -73,10 +73,7 @@ class _MenusScreenCategoriesTab extends HookWidget {
             },
           );
         },
-        () => AnalyticsService.track(
-          message: Analytics.categoriesTabItemSelected,
-        ),
-      );
+      ).call();
     }
 
     return MultiBlocListener(

@@ -8,7 +8,6 @@ import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/constants/analytics.dart';
 import 'package:meny_admin/src/domain/domain.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
-import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_core/meny_core.dart';
 
 class ModifierGroupsTab extends StatelessWidget {
@@ -76,21 +75,19 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
     }
 
     void onTapItem(BuildContext context, ModifierGroupModel group) {
-      ActionService.run(
-        () {
+      ActionObject(
+        eventName: Analytics.modifierGroupsTabModifierGroupSelected,
+        params: {
+          'groupId': group.id!,
+          'groupName': group.name,
+        },
+        callback: () {
           Locator.instance<NavigatorHelper>().goNamed(
             EditModifierGroupScreen.routeName,
             params: {'id': group.id!},
           );
         },
-        () => AnalyticsService.track(
-          message: Analytics.modifierGroupsTabModifierGroupSelected,
-          params: {
-            'groupId': group.id!,
-            'groupName': group.name,
-          },
-        ),
-      );
+      ).call();
     }
 
     return modifierGroupsState.maybeWhen(

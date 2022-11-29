@@ -45,15 +45,6 @@ class _MyStorePage extends HookWidget {
               automaticallyImplyLeading: false,
               flexibleSpace: TabBar(
                 physics: const NeverScrollableScrollPhysics(),
-                // onTap: (index) => ActionService.run(
-                //   () => null,
-                //   () => AnalyticsService.track(
-                //     message: Analytics.menusTabTabTapped,
-                //     params: {
-                //       'tab': _tabs[index].text ?? '',
-                //     },
-                //   ),
-                // ),
                 isScrollable: true,
                 indicatorWeight: 4,
                 tabs: tabs,
