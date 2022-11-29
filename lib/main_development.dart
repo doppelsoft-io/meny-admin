@@ -30,8 +30,7 @@ Future<void> main() async {
   // );
 
   if (kIsWeb) {
-    await FirebaseFirestore.instance
-        .enablePersistence(const PersistenceSettings(synchronizeTabs: true));
+    await FirebaseFirestore.instance.enablePersistence();
   }
 
   // FirebaseFunctions.instance.useFunctionsEmulator(localhost, 5001);

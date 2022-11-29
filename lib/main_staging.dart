@@ -16,8 +16,6 @@ Future<void> main() async {
 
   await dotenv.load(fileName: 'env');
 
-  // GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
