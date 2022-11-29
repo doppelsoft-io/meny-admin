@@ -72,9 +72,15 @@ class _MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
                 DSButton(
                   theme: DSButtonThemeData.text(
                     foregroundColor: effectiveTheme.colorScheme.primary,
+                    textTheme: const DSTextThemeData.c1(
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                   onPressed: () {},
-                  icon: const Icon(Icons.remove_red_eye),
+                  icon: const Icon(
+                    Icons.remove_red_eye,
+                    size: 20,
+                  ),
                   text: 'View Online',
                 ),
               ],
