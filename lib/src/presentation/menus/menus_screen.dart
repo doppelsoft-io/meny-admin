@@ -45,20 +45,25 @@ class _MenusScreen extends StatelessWidget {
               backgroundColor: whiteColor,
               centerTitle: false,
               automaticallyImplyLeading: false,
-              flexibleSpace: TabBar(
-                enableFeedback: true,
-                onTap: (index) async {
-                  ActionObject(
-                    eventName: Analytics.menusTabTabTapped,
-                    params: {
-                      'tab': tabs[index].text ?? '',
-                    },
-                    callback: () {},
-                  ).call();
-                },
-                isScrollable: true,
-                indicatorWeight: 4,
-                tabs: tabs,
+              flexibleSpace: Material(
+                color: grey50Color,
+                child: TabBar(
+                  enableFeedback: true,
+                  onTap: (index) async {
+                    ActionObject(
+                      () {},
+                      event: DSEvent(
+                        Analytics.menusTabTabTapped,
+                        properties: {
+                          'tab': tabs[index].text ?? '',
+                        },
+                      ),
+                    );
+                  },
+                  isScrollable: true,
+                  indicatorWeight: 4,
+                  tabs: tabs,
+                ),
               ),
             ),
             body: TabBarView(

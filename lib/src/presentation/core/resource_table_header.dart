@@ -35,9 +35,9 @@ class ResourceTableHeader extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             border: Border(
-              top: const DSBorderSideThemeData(
-                color: grey50Color,
-                width: 2,
+              bottom: const DSBorderSideThemeData(
+                color: grey100Color,
+                width: 1,
               ).toBorderSide,
             ),
           ),

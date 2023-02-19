@@ -7,22 +7,22 @@ final effectiveTheme = DSThemeData(
   primaryTextStyle: GoogleFonts.baloo2(),
   colorScheme: const ColorScheme(
     primary: primaryColor,
-    secondary: whiteColor,
-    surface: whiteColor,
-    background: whiteColor,
-    error: Colors.red,
     onPrimary: whiteColor,
-    onSecondary: whiteColor,
+    secondary: whiteColor,
+    onSecondary: primaryColor,
+    surface: whiteColor,
     onSurface: blackColor,
-    onBackground: grey200Color,
+    background: whiteColor,
+    onBackground: whiteColor,
+    error: Colors.red,
     onError: whiteColor,
     brightness: Brightness.light,
   ),
   checkboxThemeData: DSCheckboxThemeData.fallback().copyWith(
-    fillColor: MaterialStateProperty.all(primaryColor),
+    fillColor: MaterialStateProperty.all(blackColor),
     checkColor: MaterialStateProperty.all(whiteColor),
   ),
-  radioThemeData: DSRadioThemeData.fallback().copyWith(
-    fillColor: primaryColor,
+  tabThemeData: const DSTabThemeData(
+    height: 48,
   ),
 );

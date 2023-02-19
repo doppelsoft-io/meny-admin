@@ -124,9 +124,8 @@ class _EditMenuScreen extends HookWidget {
                                 confirmArgs: const DSConfirmDialogConfirmArgs(
                                   text: 'Delete',
                                 ),
-                                content: Text(
+                                content: const Text(
                                   'This will delete this menu. No categories or items will be affected.',
-                                  style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ),
                             );

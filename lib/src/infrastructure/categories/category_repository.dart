@@ -51,7 +51,7 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
           .get();
       return CategoryModel.fromSnapshot(snap);
     } catch (err) {
-      _loggerService.log('(get): ${err.toString()}');
+      _loggerService.log('(get): $err');
       throw const GetCategoryException(message: 'Failed to retrieve category');
     }
   }
@@ -83,7 +83,7 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
       final snapshot = await document.get();
       return CategoryModel.fromSnapshot(snapshot);
     } catch (err) {
-      _loggerService.log('(create): ${err.toString()}');
+      _loggerService.log('(create): $err');
       throw CreateCategoryException(
         message:
             'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
@@ -104,7 +104,7 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
             SetOptions(merge: true),
           );
     } catch (err) {
-      _loggerService.log('(update): ${err.toString()}');
+      _loggerService.log('(update): $err');
       throw UpdateCategoryException(
         message:
             'We had trouble saving your ${resource.toFriendlyString()}. Please try again later.',
@@ -122,7 +122,7 @@ class CategoryRepository extends IResourcesRepository<CategoryModel> {
           .categoryEntitiesDocument(storeId: storeId, categoryId: resource.id!)
           .delete();
     } catch (err) {
-      _loggerService.log('(delete): ${err.toString()}');
+      _loggerService.log('(delete): $err');
       throw DeleteCategoryException(
         message:
             'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',

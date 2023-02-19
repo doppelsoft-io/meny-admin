@@ -112,23 +112,27 @@ class _ScreenContent extends StatelessWidget {
               ),
               tablet: _DesktopLayout(
                 onSelect: (index) => ActionObject(
-                  eventName: Analytics.tabTapped,
-                  params: {
-                    'tab': pages[index].toString(),
-                  },
-                  callback: () => selectedIndex.value = index,
-                ).call(),
+                  () => selectedIndex.value = index,
+                  event: DSEvent(
+                    Analytics.tabTapped,
+                    properties: {
+                      'tab': pages[index].toString(),
+                    },
+                  ),
+                ),
                 selectedIndex: selectedIndex.value,
                 child: pages[selectedIndex.value],
               ),
               desktop: _DesktopLayout(
                 onSelect: (index) => ActionObject(
-                  eventName: Analytics.tabTapped,
-                  params: {
-                    'tab': pages[index].toString(),
-                  },
-                  callback: () => selectedIndex.value = index,
-                ).call(),
+                  () => selectedIndex.value = index,
+                  event: DSEvent(
+                    Analytics.tabTapped,
+                    properties: {
+                      'tab': pages[index].toString(),
+                    },
+                  ),
+                ),
                 selectedIndex: selectedIndex.value,
                 child: pages[selectedIndex.value],
               ),

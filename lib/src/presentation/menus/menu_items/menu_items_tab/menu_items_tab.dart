@@ -75,12 +75,7 @@ class _MenusScreenItemsTab extends HookWidget {
 
     void onTapItem(BuildContext context, MenuItemModel item) {
       ActionObject(
-        eventName: Analytics.itemsTabItemSelected,
-        params: {
-          'itemId': item.id!,
-          'itemName': item.name,
-        },
-        callback: () {
+        () {
           context.read<ResourceTableItemSelectorCubit<MenuItemModel>>().clear();
           Locator.instance<NavigatorHelper>().goNamed(
             EditMenuItemScreen.routeName,
@@ -89,7 +84,14 @@ class _MenusScreenItemsTab extends HookWidget {
             },
           );
         },
-      ).call();
+        event: DSEvent(
+          Analytics.itemsTabItemSelected,
+          properties: {
+            'itemId': item.id,
+            'itemName': item.name,
+          },
+        ),
+      );
     }
 
     return MultiBlocListener(

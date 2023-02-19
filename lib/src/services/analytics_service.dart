@@ -1,19 +1,19 @@
 import 'dart:developer' as developer;
 
-class AnalyticsService {
+import 'package:doppelsoft_core/doppelsoft_core.dart';
+
+class AnalyticsService implements IAnalyticsService {
   const AnalyticsService();
 
-  void track({
-    required String message,
-    Map<String, String>? params,
-  }) {
+  @override
+  void track(DSEvent event) {
     final buffer = StringBuffer()
       ..write('[AnalyticsService](track): ')
-      ..write(message);
-    if (params != null) {
+      ..write(event.name);
+    if (event.properties != null) {
       buffer
         ..write(' ')
-        ..write(params.toString());
+        ..write(event.properties.toString());
     }
     developer.log(buffer.toString());
   }

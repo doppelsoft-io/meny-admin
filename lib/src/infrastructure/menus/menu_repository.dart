@@ -51,7 +51,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
           .get();
       return MenuModel.fromSnapshot(snap);
     } catch (err) {
-      _loggerService.log('(get): ${err.toString()}');
+      _loggerService.log('(get): $err');
       throw const GetMenuException(message: 'Failed to retrieve menu');
     }
   }
@@ -83,7 +83,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
       final snapshot = await document.get();
       return MenuModel.fromSnapshot(snapshot);
     } catch (err) {
-      _loggerService.log('(create): ${err.toString()}');
+      _loggerService.log('(create): $err');
       throw const CreateMenuException(
         message: 'We had an issue creating your menu.',
       );
@@ -100,7 +100,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
           .menuEntitiesDocument(storeId: storeId, menuId: resource.id!)
           .set(resource.toJson(), SetOptions(merge: true));
     } catch (err) {
-      _loggerService.log('(update): ${err.toString()}');
+      _loggerService.log('(update): $err');
       throw const UpdateMenuException(
         message: 'We had trouble saving your menu.',
       );
@@ -117,7 +117,7 @@ class MenuRepository extends IResourcesRepository<MenuModel> {
           .menuEntitiesDocument(storeId: storeId, menuId: resource.id!)
           .delete();
     } catch (err) {
-      _loggerService.log('(delete): ${err.toString()}');
+      _loggerService.log('(delete): $err');
       throw const DeleteMenuException(
         message: 'There was an issue deleting your menu.',
       );

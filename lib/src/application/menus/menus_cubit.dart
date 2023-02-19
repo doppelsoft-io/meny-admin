@@ -33,6 +33,7 @@ class MenusCubit extends Cubit<MenusState> {
     required String storeId,
     required OrderBy orderBy,
   }) async {
+    await _subscription?.cancel();
     _subscription = _menuRepository
         .getAll(
           storeId: storeId,

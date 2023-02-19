@@ -49,7 +49,7 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
           .get();
       return MenuItemModel.fromSnapshot(snap);
     } catch (err) {
-      _loggerService.log('(get): ${err.toString()}');
+      _loggerService.log('(get): $err');
       throw const GetMenuItemException(message: 'Failed to retrieve item');
     }
   }
@@ -96,7 +96,7 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
       final snapshot = await document.get();
       return MenuItemModel.fromSnapshot(snapshot);
     } catch (err) {
-      _loggerService.log('(create): ${err.toString()}');
+      _loggerService.log('(create): $err');
       throw CreateMenuItemException(
         message:
             'We had an issue creating your ${resource.toFriendlyString()}. Please try again later.',
@@ -117,7 +117,7 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
             SetOptions(merge: true),
           );
     } catch (err) {
-      _loggerService.log('(update): ${err.toString()}');
+      _loggerService.log('(update): $err');
       throw UpdateMenuItemException(
         message:
             'We had trouble saving your ${resource.toFriendlyString()}. Please try again later.',
@@ -135,7 +135,7 @@ class MenuItemRepository extends IResourcesRepository<MenuItemModel> {
           .menuItemEntitiesDocument(storeId: storeId, itemId: resource.id!)
           .delete();
     } catch (err) {
-      _loggerService.log('(delete): ${err.toString()}');
+      _loggerService.log('(delete): $err');
       throw DeleteMenuItemException(
         message:
             'There was an issue deleting your ${resource.toFriendlyString()}. Please try again later.',

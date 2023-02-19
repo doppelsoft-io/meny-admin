@@ -34,7 +34,7 @@ class StoreRepository {
           await _firebaseFirestore.storesDocument(storeId: storeId).get();
       return right(StoreModel.fromSnapshot(snap));
     } catch (err) {
-      _loggerService.log('(get): ${err.toString()}');
+      _loggerService.log('(get): $err');
       return left(const CustomException(message: 'Failed to retrieve store'));
     }
   }
@@ -52,7 +52,7 @@ class StoreRepository {
 
       return right(stores);
     } catch (err) {
-      _loggerService.log('(getStoresForUser): ${err.toString()}');
+      _loggerService.log('(getStoresForUser): $err');
       return left(const CustomException(message: 'Failed to retrieve store'));
     }
   }
@@ -80,7 +80,7 @@ class StoreRepository {
       final snapshot = await document.get();
       return right(StoreModel.fromSnapshot(snapshot));
     } catch (err) {
-      _loggerService.log('(createEmptyStoreForUser): ${err.toString()}');
+      _loggerService.log('(createEmptyStoreForUser): $err');
       return left(const CustomException(message: 'Failed to create store'));
     }
   }
@@ -92,7 +92,7 @@ class StoreRepository {
           .doc(store.id)
           .update(store.toJson());
     } catch (err) {
-      _loggerService.log('(update): ${err.toString()}');
+      _loggerService.log('(update): $err');
       throw const CustomException(message: 'Failed to update store.');
     }
   }

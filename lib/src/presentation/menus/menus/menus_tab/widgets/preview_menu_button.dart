@@ -1,3 +1,4 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
@@ -22,18 +23,20 @@ class PreviewMenuButton extends StatelessWidget {
       text: 'Preview',
       onPressed: () {
         ActionObject(
-          eventName: Analytics.menusTabPreviewTapped,
-          params: {
-            'menuId': menu.id!,
-            'menuName': menu.name,
-          },
-          callback: () => Locator.instance<NavigatorHelper>().goNamed(
+          () => Locator.instance<NavigatorHelper>().goNamed(
             MenuPreviewScreen.routeName,
             params: {
               'id': menu.id!,
             },
           ),
-        ).call();
+          event: DSEvent(
+            Analytics.menusTabPreviewTapped,
+            properties: {
+              'menuId': menu.id,
+              'menuName': menu.name,
+            },
+          ),
+        );
       },
     );
   }

@@ -64,7 +64,7 @@ class AuthRepository {
       }
     } catch (err) {
       await subscription?.cancel();
-      _loggerService.log('(getCurrentUser): ${err.toString()}');
+      _loggerService.log('(getCurrentUser): $err');
       throw const GetCurrentUserException(
         message: 'Failed to fetch current user',
       );
@@ -87,7 +87,7 @@ class AuthRepository {
         message: 'Failed to login anonymously',
       );
     } catch (err) {
-      _loggerService.log('(loginAnonymously): ${err.toString()}');
+      _loggerService.log('(loginAnonymously): $err');
       throw const AnonymousLoginException(
         message: 'Failed to login anonymously',
       );
@@ -111,7 +111,7 @@ class AuthRepository {
       _loggerService.log('(loginWithEmailAndPassword): ${err.message}');
       throw EmailLoginException(message: err.message ?? 'Log in failed');
     } on PlatformException catch (err) {
-      _loggerService.log('(loginWithEmailAndPassword): ${err.toString()}');
+      _loggerService.log('(loginWithEmailAndPassword): $err');
       throw EmailLoginException(message: err.message ?? 'Log in failed');
     }
   }
@@ -137,7 +137,7 @@ class AuthRepository {
       _loggerService.log('(signUpAndLinkAnonymousUser): ${err.message}');
       throw SignUpAndLinkException(message: err.message ?? 'Sign up failed');
     } on PlatformException catch (err) {
-      _loggerService.log('(signUpAndLinkAnonymousUser): ${err.toString()}');
+      _loggerService.log('(signUpAndLinkAnonymousUser): $err');
       throw SignUpAndLinkException(message: err.message ?? 'Sign up failed');
     }
   }
@@ -146,7 +146,7 @@ class AuthRepository {
     try {
       await _firebaseAuth.signOut();
     } catch (err) {
-      _loggerService.log('(logout): ${err.toString()}');
+      _loggerService.log('(logout): $err');
       throw const LogOutException(message: 'Logout failed');
     }
   }

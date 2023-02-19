@@ -54,7 +54,7 @@ class ModifierGroupRepository extends IResourcesRepository<ModifierGroupModel> {
           .get();
       return ModifierGroupModel.fromSnapshot(snap);
     } catch (err) {
-      _loggerService.log('(get): ${err.toString()}');
+      _loggerService.log('(get): $err');
       throw const GetModifierGroupException(message: 'Failed to retrieve menu');
     }
   }
@@ -90,7 +90,7 @@ class ModifierGroupRepository extends IResourcesRepository<ModifierGroupModel> {
       final snapshot = await document.get();
       return ModifierGroupModel.fromSnapshot(snapshot);
     } catch (err) {
-      _loggerService.log('(create): ${err.toString()}');
+      _loggerService.log('(create): $err');
       throw const CreateModifierGroupException(
         message: 'We had an issue creating your modifier group.',
       );
@@ -113,7 +113,7 @@ class ModifierGroupRepository extends IResourcesRepository<ModifierGroupModel> {
             SetOptions(merge: true),
           );
     } catch (err) {
-      _loggerService.log('(update): ${err.toString()}');
+      _loggerService.log('(update): $err');
       throw const UpdateModifierGroupException(
         message: 'We had trouble saving your modifier group.',
       );
@@ -133,7 +133,7 @@ class ModifierGroupRepository extends IResourcesRepository<ModifierGroupModel> {
           .doc(resource.id)
           .delete();
     } catch (err) {
-      _loggerService.log('(delete): ${err.toString()}');
+      _loggerService.log('(delete): $err');
       throw const DeleteModifierGroupException(
         message: 'There was an issue deleting your modifier group.',
       );

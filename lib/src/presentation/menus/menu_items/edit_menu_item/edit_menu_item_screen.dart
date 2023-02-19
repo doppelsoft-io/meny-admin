@@ -333,9 +333,6 @@ class _ItemForm extends HookWidget {
                       children: [
                         IntrinsicWidth(
                           child: DSRadioListTile<bool>(
-                            theme: DSRadioThemeData(
-                              fillColor: effectiveTheme.colorScheme.primary,
-                            ),
                             args: DSRadioArgs(
                               value: true,
                               groupValue: item.type == MenuItemType.item,
@@ -358,9 +355,6 @@ class _ItemForm extends HookWidget {
                         DSHorizontalSpacing.large(),
                         IntrinsicWidth(
                           child: DSRadioListTile(
-                            theme: DSRadioThemeData(
-                              fillColor: effectiveTheme.colorScheme.primary,
-                            ),
                             args: DSRadioArgs<bool>(
                               value: false,
                               groupValue: item.type == MenuItemType.item,
@@ -839,9 +833,8 @@ class _DietaryLabels extends StatelessWidget {
                   },
                   child: Chip(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
-                    backgroundColor: isSelected
-                        ? colorScheme.primary
-                        : colorScheme.onBackground,
+                    backgroundColor:
+                        isSelected ? colorScheme.primary : grey200Color,
                     label: DSText(
                       e.stringify(),
                       theme: const DSTextThemeData.b4(),

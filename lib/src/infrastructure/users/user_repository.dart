@@ -18,7 +18,7 @@ class UserRepository {
           .set(user.toJson());
       return user;
     } catch (err) {
-      throw CustomException(message: 'Creating user failed. ${err.toString()}');
+      throw CustomException(message: 'Creating user failed. $err');
     }
   }
 }

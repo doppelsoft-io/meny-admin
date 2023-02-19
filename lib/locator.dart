@@ -37,7 +37,7 @@ class Locator {
       ..registerSingleton<LoggerService>(const LoggerService())
       ..registerSingleton<UuidService>(UuidService())
       ..registerSingleton<ToastService>(const ToastService())
-      ..registerSingleton<AnalyticsService>(const AnalyticsService())
+      ..registerSingleton<IAnalyticsService>(const AnalyticsService())
       ..registerSingleton<AuthRepository>(
         AuthRepository(
           loggerService: const LoggerService(prepend: 'AuthRepository'),

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'modifier_group_items_cubit.dart';
 
@@ -223,6 +223,7 @@ class _$_Initial implements _Initial {
   @override
   @JsonKey()
   List<MenuItemModel> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_items);
   }
@@ -231,6 +232,8 @@ class _$_Initial implements _Initial {
   @override
   @JsonKey()
   List<ModifierGroupItemModel> get modifierGroupItems {
+    if (_modifierGroupItems is EqualUnmodifiableListView)
+      return _modifierGroupItems;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_modifierGroupItems);
   }
@@ -456,6 +459,7 @@ class _$_Adding implements _Adding {
   final List<MenuItemModel> _items;
   @override
   List<MenuItemModel> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_items);
   }
@@ -463,6 +467,8 @@ class _$_Adding implements _Adding {
   final List<ModifierGroupItemModel> _modifierGroupItems;
   @override
   List<ModifierGroupItemModel> get modifierGroupItems {
+    if (_modifierGroupItems is EqualUnmodifiableListView)
+      return _modifierGroupItems;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_modifierGroupItems);
   }
@@ -691,6 +697,7 @@ class _$_Removing implements _Removing {
   final List<MenuItemModel> _items;
   @override
   List<MenuItemModel> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_items);
   }
@@ -698,6 +705,8 @@ class _$_Removing implements _Removing {
   final List<ModifierGroupItemModel> _modifierGroupItems;
   @override
   List<ModifierGroupItemModel> get modifierGroupItems {
+    if (_modifierGroupItems is EqualUnmodifiableListView)
+      return _modifierGroupItems;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_modifierGroupItems);
   }
@@ -926,6 +935,7 @@ class _$_Updating implements _Updating {
   final List<MenuItemModel> _items;
   @override
   List<MenuItemModel> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_items);
   }
@@ -933,6 +943,8 @@ class _$_Updating implements _Updating {
   final List<ModifierGroupItemModel> _modifierGroupItems;
   @override
   List<ModifierGroupItemModel> get modifierGroupItems {
+    if (_modifierGroupItems is EqualUnmodifiableListView)
+      return _modifierGroupItems;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_modifierGroupItems);
   }
@@ -1160,6 +1172,7 @@ class _$_Success implements _Success {
   final List<MenuItemModel> _items;
   @override
   List<MenuItemModel> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_items);
   }
@@ -1167,6 +1180,8 @@ class _$_Success implements _Success {
   final List<ModifierGroupItemModel> _modifierGroupItems;
   @override
   List<ModifierGroupItemModel> get modifierGroupItems {
+    if (_modifierGroupItems is EqualUnmodifiableListView)
+      return _modifierGroupItems;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_modifierGroupItems);
   }
@@ -1400,6 +1415,7 @@ class _$_Error implements _Error {
   final List<MenuItemModel> _items;
   @override
   List<MenuItemModel> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_items);
   }
@@ -1407,6 +1423,8 @@ class _$_Error implements _Error {
   final List<ModifierGroupItemModel> _modifierGroupItems;
   @override
   List<ModifierGroupItemModel> get modifierGroupItems {
+    if (_modifierGroupItems is EqualUnmodifiableListView)
+      return _modifierGroupItems;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_modifierGroupItems);
   }

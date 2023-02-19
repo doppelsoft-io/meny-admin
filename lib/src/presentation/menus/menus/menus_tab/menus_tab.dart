@@ -66,8 +66,7 @@ class _MenusScreenMenusTab extends HookWidget {
 
     void onTapItem(BuildContext context, MenuModel menu) {
       ActionObject(
-        eventName: Analytics.menusTabItemSelected,
-        callback: () {
+        () {
           Locator.instance<NavigatorHelper>().goNamed(
             EditMenuScreen.routeName,
             params: {
@@ -75,7 +74,8 @@ class _MenusScreenMenusTab extends HookWidget {
             },
           );
         },
-      ).call();
+        event: const DSEvent(Analytics.menusTabItemSelected),
+      );
     }
 
     return MultiBlocListener(

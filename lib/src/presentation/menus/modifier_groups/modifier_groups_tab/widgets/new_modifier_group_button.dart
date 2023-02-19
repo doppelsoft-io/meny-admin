@@ -1,3 +1,4 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
@@ -22,12 +23,14 @@ class _NewModifierGroupButton extends HookWidget {
   Widget build(BuildContext context) {
     return PageActionButton(
       title: 'New',
-      onPressed: ActionObject(
-        eventName: Analytics.modifierGroupsTabNewTapped,
-        callback: () {
+      onPressed: () => ActionObject(
+        () {
           Locator.instance<NavigatorHelper>()
               .goNamed(CreateModifierGroupScreen.routeName);
         },
+        event: const DSEvent(
+          Analytics.modifierGroupsTabNewTapped,
+        ),
       ),
     );
   }

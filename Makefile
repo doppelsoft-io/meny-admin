@@ -14,6 +14,11 @@ codegen-build: ## Generate codegen files once.
 	(cd doppelsoft-ui/; flutter pub get; flutter pub run build_runner build --delete-conflicting-outputs)
 	(cd meny-core/; flutter pub get; flutter pub run build_runner build --delete-conflicting-outputs)
 
+update-freezed:
+	(cd doppelsoft-core/; cleanfreezed)
+	(cd doppelsoft-ui/; cleanfreezed)
+	(cd meny-core/; cleanfreezed)
+
 codegen-parallel:
 	@$(MAKE) codegen-app -j$(shell nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
 

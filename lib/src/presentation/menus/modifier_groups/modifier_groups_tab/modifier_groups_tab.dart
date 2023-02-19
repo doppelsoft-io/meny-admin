@@ -76,18 +76,20 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
 
     void onTapItem(BuildContext context, ModifierGroupModel group) {
       ActionObject(
-        eventName: Analytics.modifierGroupsTabModifierGroupSelected,
-        params: {
-          'groupId': group.id!,
-          'groupName': group.name,
-        },
-        callback: () {
+        () {
           Locator.instance<NavigatorHelper>().goNamed(
             EditModifierGroupScreen.routeName,
             params: {'id': group.id!},
           );
         },
-      ).call();
+        event: DSEvent(
+          Analytics.modifierGroupsTabModifierGroupSelected,
+          properties: {
+            'groupId': group.id,
+            'groupName': group.name,
+          },
+        ),
+      );
     }
 
     return modifierGroupsState.maybeWhen(

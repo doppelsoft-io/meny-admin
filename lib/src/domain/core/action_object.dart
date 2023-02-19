@@ -1,25 +1,20 @@
+import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
-import 'package:meny_admin/src/services/analytics_service.dart';
 
 class ActionObject {
-  ActionObject({
-    AnalyticsService? analyticsService,
-    required String eventName,
-    required VoidCallback callback,
-    Map<String, String>? params,
-  })  : _analyticsService = analyticsService ?? Locator.instance(),
-        _eventName = eventName,
-        _callback = callback,
-        _params = params;
-
-  final AnalyticsService _analyticsService;
-  final String _eventName;
-  final VoidCallback _callback;
-  final Map<String, String>? _params;
-
-  void call() {
+  ActionObject(
+    VoidCallback callback, {
+    required DSEvent event,
+    IAnalyticsService? analyticsService,
+  })  : _callback = callback,
+        _event = event,
+        _analyticsService = analyticsService ?? Locator.instance() {
     _callback();
-    _analyticsService.track(message: _eventName, params: _params);
+    _analyticsService.track(_event);
   }
+
+  final IAnalyticsService _analyticsService;
+  final VoidCallback _callback;
+  final DSEvent _event;
 }
