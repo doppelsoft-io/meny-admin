@@ -4,7 +4,9 @@ import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/navigator.dart';
 
 class DSBackButton extends StatelessWidget {
-  const DSBackButton({Key? key}) : super(key: key);
+  const DSBackButton({Key? key, this.onPressed}) : super(key: key);
+
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,13 @@ class DSBackButton extends StatelessWidget {
         splashRadius: 20,
         color: color,
         tooltip: 'Close',
-        onPressed: () => Locator.instance<NavigatorHelper>().goHome(),
+        onPressed: () {
+          if (onPressed != null) {
+            onPressed!.call();
+          } else {
+            Locator.instance<NavigatorHelper>().goHome();
+          }
+        },
       ),
     );
   }

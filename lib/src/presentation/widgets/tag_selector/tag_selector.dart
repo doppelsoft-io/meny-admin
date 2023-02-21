@@ -137,14 +137,17 @@ class TagSelector<T> extends HookWidget {
                               },
                             );
                           } else {
-                            return const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(18),
-                                child: SizedBox(
-                                  width: 30,
-                                  height: 30,
-                                  child: CircularProgressIndicator(),
-                                ),
+                            return Padding(
+                              padding: const EdgeInsets.all(18),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: const [
+                                  SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                ],
                               ),
                             );
                           }
@@ -155,10 +158,6 @@ class TagSelector<T> extends HookWidget {
                 );
               },
             ),
-          ),
-          const Visibility(
-            visible: false,
-            child: LinearProgressIndicator(),
           ),
           const SizedBox(height: 10),
           Stack(
@@ -192,7 +191,7 @@ class TagSelector<T> extends HookWidget {
                               tagConfiguration.title,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyLarge
                                   ?.copyWith(
                                     color:
                                         Theme.of(context).colorScheme.onPrimary,

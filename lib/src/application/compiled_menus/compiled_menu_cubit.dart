@@ -52,6 +52,7 @@ class CompiledMenuCubit extends Cubit<CompiledMenuState> {
 
   Future<void> load({required String id}) async {
     try {
+      emit(_Loading(response: state.response));
       final storeId = _storeCubit.state.store.id!;
       final menu = await _menuRepository.get(storeId: storeId, id: id);
       final compiledMenu = CompiledMenuModel(

@@ -1,7 +1,7 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:meny_admin/locator.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/src/services/services.dart';
@@ -17,21 +17,7 @@ class CompiledMenuBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<ReorderCompiledCategoryCubit>(
-          create: (context) => ReorderCompiledCategoryCubit(
-            storeCubit: context.read<StoreCubit>(),
-          ),
-        ),
-        BlocProvider<ReorderCompiledMenuItemCubit>(
-          create: (context) => ReorderCompiledMenuItemCubit(
-            storeCubit: context.read<StoreCubit>(),
-          ),
-        ),
-      ],
-      child: _CompiledMenuBuilder(menu: menu),
-    );
+    return _CompiledMenuBuilder(menu: menu);
   }
 }
 
@@ -66,215 +52,129 @@ class _CompiledMenuBuilder extends StatelessWidget {
             final categories =
                 List<CompiledCategoryModel>.from(state.response.categories);
 
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<ReorderCompiledCategoryCubit,
-                    ReorderCompiledCategoryState>(
-                  listener: (context, state) {
-                    state.maybeMap(
-                      success: (_) {
-                        Locator.instance<ToastService>().init(
-                          const DSToast.notification(text: 'Categories saved'),
-                        );
-                      },
-                      orElse: () {},
-                    );
-                  },
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: DSSpacing.lg),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: DSSpacing.md,
+                  ),
+                  child: DSButton(
+                    theme: const DSButtonThemeData.outlined(),
+                    text: 'Organize',
+                    icon: DSIcon(
+                      iconData: FontAwesomeIcons.barsStaggered,
+                      theme: DSIconThemeData.fallback().copyWith(
+                        color: whiteColor,
+                        size: 18,
+                      ),
+                      semanticLabel: 'Organize',
+                    ),
+                    onPressed: () {
+                      showGeneralDialog(
+                        context: context,
+                        pageBuilder: (_, __, ___) => BlocProvider.value(
+                          value: context.read<CompiledMenuCubit>(),
+                          child: MenuPreviewCategoryReorderDialog(
+                            menuId: menu.id,
+                            categories: categories,
+                          ),
+                        ),
+                      ).then((value) {
+                        context.read<CompiledMenuCubit>().load(id: menu.id);
+                      });
+                    },
+                  ),
                 ),
-                BlocListener<ReorderCompiledMenuItemCubit,
-                    ReorderCompiledMenuItemState>(
-                  listener: (context, state) {
-                    state.maybeMap(
-                      success: (_) {
-                        Locator.instance<ToastService>().init(
-                          const DSToast.notification(text: 'Items saved'),
-                        );
-                      },
-                      orElse: () {},
+                const SizedBox(height: DSSpacing.lg),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: DSSpacing.md,
+                  ),
+                  shrinkWrap: true,
+                  itemCount: categories.length,
+                  itemBuilder: (context, categoryIndex) {
+                    final category = categories[categoryIndex];
+                    final items = List<CompiledMenuItemModel>.from(
+                      category.items,
+                    );
+                    return Container(
+                      key: Key(category.id),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MenuPreviewCategoryToolbar(
+                            category: category,
+                            onReorderTapped: () {},
+                          ),
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: DSSpacing.xs,
+                            ),
+                            itemCount: items.length,
+                            itemBuilder: (context, itemIndex) {
+                              final item = items[itemIndex];
+                              return Container(
+                                key: Key(item.id),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: DSSpacing.xs,
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          DSText(
+                                            item.name,
+                                            theme: const DSTextThemeData.b1(),
+                                          ),
+                                          if (item.description != null &&
+                                              item.description!.isNotEmpty) ...[
+                                            const SizedBox(height: 2),
+                                            DSText(
+                                              item.description!,
+                                              theme: const DSTextThemeData.b5(),
+                                            ),
+                                          ],
+                                          const SizedBox(height: 6),
+                                          DSText(
+                                            (item.priceInfo.price / 100)
+                                                .toCurrency(),
+                                            theme: const DSTextThemeData.b5(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: DSSpacing.sm),
+                                    if (item.imageUrl != null &&
+                                        item.imageUrl!.isNotEmpty)
+                                      MenuItemImage(
+                                        imageUrl: item.imageUrl ?? '',
+                                        theme:
+                                            DSNetworkImageThemeData.fallback()
+                                                .copyWith(
+                                          width: 91,
+                                          height: 73,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
               ],
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: DSSpacing.lg,
-                      horizontal: DSSpacing.sm,
-                    ),
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(text: 'Tip: Press and hold the '),
-                          WidgetSpan(
-                            child: Icon(
-                              Icons.menu,
-                            ),
-                          ),
-                          TextSpan(
-                            text:
-                                ' icons to drag and reorder you categories and menu items',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  ReorderableListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: DSSpacing.sm,
-                    ),
-                    shrinkWrap: true,
-                    onReorder: (oldIndex, newIndex) {
-                      if (oldIndex < newIndex) {
-                        newIndex -= 1;
-                      }
-                      final category = categories.removeAt(oldIndex);
-                      categories.insert(newIndex, category);
-                      context.read<ReorderCompiledCategoryCubit>().reorder(
-                            menuId: menu.id,
-                            categories: categories,
-                          );
-
-                      context
-                          .read<CompiledMenuCubit>()
-                          .syncCategories(categories);
-                    },
-                    itemCount: categories.length,
-                    buildDefaultDragHandles: false,
-                    itemBuilder: (context, categoryIndex) {
-                      final category = categories[categoryIndex];
-                      final items = List<CompiledMenuItemModel>.from(
-                        category.items,
-                      );
-                      return Container(
-                        key: Key(category.id),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: <Widget>[
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: ReorderableDragStartListener(
-                                    index: categoryIndex,
-                                    child: const Icon(Icons.menu, size: 28),
-                                  ),
-                                ),
-                                const SizedBox(width: DSSpacing.sm),
-                                DSText(
-                                  category.name,
-                                  theme: const DSTextThemeData.h2(),
-                                ),
-                              ],
-                            ),
-                            ReorderableListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              buildDefaultDragHandles: false,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: DSSpacing.xs,
-                              ),
-                              itemCount: items.length,
-                              itemBuilder: (context, itemIndex) {
-                                final item = items[itemIndex];
-                                return Container(
-                                  key: Key(item.id),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: DSSpacing.sm,
-                                    horizontal: DSSpacing.md,
-                                  ),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      MouseRegion(
-                                        cursor: SystemMouseCursors.click,
-                                        child: ReorderableDragStartListener(
-                                          index: itemIndex,
-                                          child: const Icon(
-                                            Icons.menu,
-                                            size: 24,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: DSSpacing.sm),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            DSText(
-                                              item.name,
-                                              theme: const DSTextThemeData.b1(),
-                                            ),
-                                            if (item.description != null &&
-                                                item.description!
-                                                    .isNotEmpty) ...[
-                                              const SizedBox(height: 2),
-                                              DSText(
-                                                item.description!,
-                                                theme:
-                                                    const DSTextThemeData.b5(),
-                                              ),
-                                            ],
-                                            const SizedBox(height: 6),
-                                            DSText(
-                                              (item.priceInfo.price / 100)
-                                                  .toCurrency(),
-                                              theme: const DSTextThemeData.b5(),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(width: DSSpacing.sm),
-                                      if (item.imageUrl != null &&
-                                          item.imageUrl!.isNotEmpty)
-                                        MenuItemImage(
-                                          imageUrl: item.imageUrl ?? '',
-                                          theme:
-                                              DSNetworkImageThemeData.fallback()
-                                                  .copyWith(
-                                            width: 91,
-                                            height: 73,
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              onReorder: (oldIndex, newIndex) {
-                                if (oldIndex < newIndex) {
-                                  newIndex -= 1;
-                                }
-                                final item = items.removeAt(oldIndex);
-                                items.insert(newIndex, item);
-                                context
-                                    .read<ReorderCompiledMenuItemCubit>()
-                                    .reorder(
-                                      category: category,
-                                      items: items,
-                                    );
-
-                                final updatedCategories = categories
-                                  ..remove(category)
-                                  ..insert(
-                                    categoryIndex,
-                                    category.copyWith(items: items),
-                                  );
-                                context
-                                    .read<CompiledMenuCubit>()
-                                    .syncCategories(updatedCategories);
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
             );
           },
         );
