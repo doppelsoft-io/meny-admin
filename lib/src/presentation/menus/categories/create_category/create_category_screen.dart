@@ -44,7 +44,7 @@ class _CreateCategoryScreen extends HookWidget {
             DSLoadingIndicator.dialog(context);
           },
           error: (_, exception) {
-            Locator.instance<NavigatorHelper>().goHome();
+            Locator.instance<NavigatorHelper>().goToCategories();
             DialogService.showErrorDialog(
               context: context,
               failure: CustomException(message: exception.toString()),

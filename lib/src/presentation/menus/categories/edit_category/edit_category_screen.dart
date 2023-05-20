@@ -112,7 +112,7 @@ class _EditCategoryScreen extends HookWidget {
         listener: (context, editCategoryState) {
           editCategoryState.maybeWhen(
             success: (category) {
-              Locator.instance<NavigatorHelper>().goHome();
+              Locator.instance<NavigatorHelper>().goToCategories();
               Locator.instance<ToastService>().init(
                 DSToast.notification(
                   text: 'Your category ${category.name} has been saved',
@@ -144,7 +144,10 @@ class _EditCategoryScreen extends HookWidget {
                     appBar: AppBar(
                       elevation: 0,
                       backgroundColor: Colors.white,
-                      leading: const DSBackButton(),
+                      leading: DSBackButton(
+                        onPressed: () => Locator.instance<NavigatorHelper>()
+                            .goToCategories(),
+                      ),
                       title: const DSText(
                         'Edit Category',
                         theme: DSTextThemeData.h3(),
@@ -313,7 +316,7 @@ class _DeleteCategoryButton extends StatelessWidget {
       listener: (context, deleteCategoryState) {
         deleteCategoryState.maybeWhen(
           success: () {
-            Locator.instance<NavigatorHelper>().goHome();
+            Locator.instance<NavigatorHelper>().goToCategories();
             if (category.name.isNotEmpty) {
               Locator.instance<ToastService>().init(
                 DSToast.notification(
@@ -323,7 +326,7 @@ class _DeleteCategoryButton extends StatelessWidget {
             }
           },
           error: (exception) {
-            Locator.instance<NavigatorHelper>().goHome();
+            Locator.instance<NavigatorHelper>().goToCategories();
             DialogService.showErrorDialog(
               context: context,
               failure: CustomException(message: exception.toString()),
@@ -344,7 +347,7 @@ class _DeleteCategoryButton extends StatelessWidget {
                     title: 'Delete ${category.name}?',
                     content: Text(
                       'This will remove this category from all menus.\nNote: this will NOT delete any menu items that were in this category',
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     confirmArgs: const DSConfirmDialogConfirmArgs(
                       text: 'Delete',

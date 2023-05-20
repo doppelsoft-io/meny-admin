@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/themes.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
   const MenuPreviewHeaderDelegate({
@@ -49,11 +48,11 @@ class MenuPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
               },
             ),
             const SizedBox(width: DSSpacing.sm),
-            QrImage(
-              data: 'https://google.com',
-              size: 74,
-              padding: EdgeInsets.zero,
-            ),
+            // QrImage(
+            //   data: 'https://google.com',
+            //   size: 74,
+            //   padding: EdgeInsets.zero,
+            // ),
             const SizedBox(width: DSSpacing.xs),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

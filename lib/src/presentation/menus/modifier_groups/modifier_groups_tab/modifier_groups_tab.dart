@@ -20,20 +20,10 @@ class ModifierGroupsTab extends StatelessWidget {
         BlocProvider<ModifierGroupsCubit>(
           create: (context) => ModifierGroupsCubit(
             authCubit: context.read<AuthCubit>(),
-          ),
+          )..load(storeId: context.read<StoreCubit>().state.store.id ?? ''),
         ),
       ],
-      child: BlocListener<StoreCubit, StoreState>(
-        listener: (context, state) {
-          state.maybeWhen(
-            loaded: (store) {
-              context.read<ModifierGroupsCubit>().load(storeId: store.id!);
-            },
-            orElse: () {},
-          );
-        },
-        child: const _MenusScreenModifierGroupsTab(),
-      ),
+      child: const _MenusScreenModifierGroupsTab(),
     );
   }
 }
@@ -44,18 +34,6 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final modifierGroupsState = context.watch<ModifierGroupsCubit>().state;
-
-    useEffect(
-      () {
-        final storeState = context.read<StoreCubit>().state;
-        final storeId = storeState.whenOrNull(loaded: (_) => _.id);
-        if (storeId != null) {
-          context.read<ModifierGroupsCubit>().load(storeId: storeId);
-        }
-        return null;
-      },
-      const [],
-    );
 
     void sort({
       required int columnIndex,
@@ -94,7 +72,7 @@ class _MenusScreenModifierGroupsTab extends HookWidget {
 
     return modifierGroupsState.maybeWhen(
       orElse: () {
-        final isMobile = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
+        final isMobile = ResponsiveBreakpoints.of(context).isMobile;
         final groups = modifierGroupsState.groups;
         final orderBy = modifierGroupsState.orderBy;
         const action = NewModifierGroupButton();

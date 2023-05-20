@@ -69,9 +69,6 @@ class EditMenuItemScreen extends StatelessWidget {
             storeCubit: context.read<StoreCubit>(),
           ),
         ),
-        BlocProvider<FlagsmithCubit>(
-          create: (context) => FlagsmithCubit(),
-        ),
       ],
       child: const _EditMenuItemScreen(),
     );
@@ -140,7 +137,7 @@ class _EditMenuItemScreen extends HookWidget {
         listener: (context, editMenuItemState) {
           editMenuItemState.maybeWhen(
             success: (item) {
-              Locator.instance<NavigatorHelper>().goHome();
+              Locator.instance<NavigatorHelper>().goToMenuItems();
               Locator.instance<ToastService>().init(
                 DSToast.notification(
                   text: 'Your item ${item.name} has been saved',
@@ -149,7 +146,7 @@ class _EditMenuItemScreen extends HookWidget {
             },
             error: (item, exception) {
               if (exception is AnonymousUserException) {
-                Locator.instance<NavigatorHelper>().goHome();
+                Locator.instance<NavigatorHelper>().goToMenuItems();
               } else {
                 DialogService.showErrorDialog(
                   context: context,
@@ -251,7 +248,10 @@ class _ItemForm extends HookWidget {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.white,
-            leading: const DSBackButton(),
+            leading: DSBackButton(
+              onPressed: () =>
+                  Locator.instance<NavigatorHelper>().goToMenuItems(),
+            ),
             title: const DSText(
               'Edit Item',
               theme: DSTextThemeData.h2(),
@@ -439,7 +439,7 @@ class _DeleteMenuItemButton extends StatelessWidget {
       listener: (context, deleteMenuItemState) {
         deleteMenuItemState.maybeWhen(
           success: () {
-            Locator.instance<NavigatorHelper>().goHome();
+            Locator.instance<NavigatorHelper>().goToMenuItems();
             if (item.name.isNotEmpty) {
               Locator.instance<ToastService>().init(
                 DSToast.notification(
@@ -475,7 +475,7 @@ class _DeleteMenuItemButton extends StatelessWidget {
                     title: 'Delete ${item.name}?',
                     content: Text(
                       'This will remove this item from all menus',
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     confirmArgs: const DSConfirmDialogConfirmArgs(
                       text: 'Delete',

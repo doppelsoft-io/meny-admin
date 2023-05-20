@@ -21,7 +21,7 @@ class MenuItemsTab extends StatelessWidget {
         BlocProvider<MenuItemsCubit>(
           create: (context) => MenuItemsCubit(
             authCubit: context.read<AuthCubit>(),
-          ),
+          )..load(storeId: context.read<StoreCubit>().state.store.id ?? ''),
         ),
         BlocProvider<BulkDeleteMenuItemsCubit>(
           create: (context) => BulkDeleteMenuItemsCubit(
@@ -43,18 +43,6 @@ class _MenusScreenItemsTab extends HookWidget {
     final menuItemsState = context.watch<MenuItemsCubit>().state;
     final bulkDeleteMenuItemsState =
         context.watch<BulkDeleteMenuItemsCubit>().state;
-
-    useEffect(
-      () {
-        final storeCubit = context.read<StoreCubit>();
-        final storeId = storeCubit.state.store.id;
-        if (storeId != null) {
-          context.read<MenuItemsCubit>().load(storeId: storeId);
-        }
-        return null;
-      },
-      const [],
-    );
 
     void sort({
       required int columnIndex,
@@ -96,14 +84,6 @@ class _MenusScreenItemsTab extends HookWidget {
 
     return MultiBlocListener(
       listeners: [
-        BlocListener<StoreCubit, StoreState>(
-          listenWhen: (prev, curr) => prev.store != curr.store,
-          listener: (context, state) {
-            if (state.store.id != null) {
-              context.read<MenuItemsCubit>().load(storeId: state.store.id!);
-            }
-          },
-        ),
         BlocListener<BulkDeleteMenuItemsCubit, BulkDeleteMenuItemsState>(
           listener: (context, state) {
             state.maybeWhen(
@@ -135,7 +115,6 @@ class _MenusScreenItemsTab extends HookWidget {
       ],
       child: menuItemsState.maybeWhen(
         orElse: () {
-          final isMobile = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
           final items = menuItemsState.items;
           final orderBy = menuItemsState.orderBy;
           const action = NewMenuItemButton();
@@ -148,153 +127,160 @@ class _MenusScreenItemsTab extends HookWidget {
 
           return Stack(
             children: [
-              if (isMobile) ...[
-                ResourceList<MenuItemModel>(
-                  title: 'Items',
-                  action: action,
-                  resources: items,
-                  emptyMessage: emptyMessage,
-                  itemBuilder: (_, item) {
-                    return DSListTile(
-                      args: DSListTileArgs(
-                        leading: MenuItemImage(imageUrl: item.imageUrl ?? ''),
-                        title: item.name,
-                        subtitle: DSText(
-                          'Updated: ${item.updatedAt?.format()}',
-                          theme: const DSTextThemeData.b5(),
+              ScreenTypeLayout.builder(
+                mobile: (context) {
+                  return ResourceList<MenuItemModel>(
+                    title: 'Items',
+                    action: action,
+                    resources: items,
+                    emptyMessage: emptyMessage,
+                    itemBuilder: (_, item) {
+                      return DSListTile(
+                        args: DSListTileArgs(
+                          leading: MenuItemImage(imageUrl: item.imageUrl ?? ''),
+                          title: item.name,
+                          subtitle: DSText(
+                            'Updated: ${item.updatedAt?.format()}',
+                            theme: const DSTextThemeData.b5(),
+                          ),
+                          trailing:
+                              Text((item.priceInfo.price / 100).toCurrency()),
+                          onTap: () => onTapItem(context, item),
                         ),
-                        trailing:
-                            Text((item.priceInfo.price / 100).toCurrency()),
-                        onTap: () => onTapItem(context, item),
-                      ),
-                    );
-                  },
-                ),
-              ] else ...[
-                ResourceTable<MenuItemModel>(
-                  title: 'Items',
-                  toolbar: resourceItemSelectorState.items.isNotEmpty
-                      ? const MenuItemsToolbar()
-                      : null,
-                  action: action,
-                  resources: items,
-                  sortColumnIndex: orderBy.sortColumnIndex,
-                  sortAscending: !orderBy.descending,
-                  onTapItem: onTapItem,
-                  emptyMessage: emptyMessage,
-                  onSelectAll: (selected) {
-                    if (selected ?? false) {
-                      for (final item in items) {
+                      );
+                    },
+                  );
+                },
+                desktop: (context) {
+                  return ResourceTable<MenuItemModel>(
+                    title: 'Items',
+                    toolbar: resourceItemSelectorState.items.isNotEmpty
+                        ? const MenuItemsToolbar()
+                        : null,
+                    action: action,
+                    resources: items,
+                    sortColumnIndex: orderBy.sortColumnIndex,
+                    sortAscending: !orderBy.descending,
+                    onTapItem: onTapItem,
+                    emptyMessage: emptyMessage,
+                    onSelectAll: (selected) {
+                      if (selected ?? false) {
+                        for (final item in items) {
+                          context
+                              .read<
+                                  ResourceTableItemSelectorCubit<
+                                      MenuItemModel>>()
+                              .add(item);
+                        }
+                      } else {
+                        for (final item in resourceItemSelectorState.items) {
+                          context
+                              .read<
+                                  ResourceTableItemSelectorCubit<
+                                      MenuItemModel>>()
+                              .remove(item);
+                        }
+                      }
+                    },
+                    isSelected: (resource) {
+                      return resourceItemSelectorState.items.contains(resource);
+                    },
+                    onSelectChanged: (selected, resource) {
+                      if (selected ?? false) {
                         context
                             .read<
                                 ResourceTableItemSelectorCubit<MenuItemModel>>()
-                            .add(item);
-                      }
-                    } else {
-                      for (final item in resourceItemSelectorState.items) {
+                            .add(resource);
+                      } else {
                         context
                             .read<
                                 ResourceTableItemSelectorCubit<MenuItemModel>>()
-                            .remove(item);
+                            .remove(resource);
                       }
-                    }
-                  },
-                  isSelected: (resource) {
-                    return resourceItemSelectorState.items.contains(resource);
-                  },
-                  onSelectChanged: (selected, resource) {
-                    if (selected ?? false) {
-                      context
-                          .read<ResourceTableItemSelectorCubit<MenuItemModel>>()
-                          .add(resource);
-                    } else {
-                      context
-                          .read<ResourceTableItemSelectorCubit<MenuItemModel>>()
-                          .remove(resource);
-                    }
-                  },
-                  columns: [
-                    const DataColumn2(
-                      label: DSText(
-                        'PHOTO',
-                        theme: DSTextThemeData.c2(),
+                    },
+                    columns: [
+                      const DataColumn2(
+                        label: DSText(
+                          'PHOTO',
+                          theme: DSTextThemeData.c2(),
+                        ),
+                        fixedWidth: 75,
                       ),
-                      fixedWidth: 75,
-                    ),
-                    DataColumn2(
-                      label: const DSText(
-                        'NAME',
-                        theme: DSTextThemeData.c2(),
-                      ),
-                      size: ColumnSize.L,
-                      onSort: (columnIndex, descending) => sort(
-                        columnIndex: columnIndex,
-                        descending: descending,
-                        name: 'name',
-                      ),
-                    ),
-                    DataColumn2(
-                      label: const DSText(
-                        'PRICE',
-                        theme: DSTextThemeData.c2(),
-                      ),
-                      fixedWidth: 125,
-                      onSort: (columnIndex, descending) => sort(
-                        columnIndex: columnIndex,
-                        descending: descending,
-                        name: 'priceInfo.price',
-                      ),
-                      numeric: true,
-                    ),
-                    DataColumn2(
-                      label: const DSText(
-                        'CREATED',
-                        theme: DSTextThemeData.c2(),
-                      ),
-                      fixedWidth: 200,
-                      size: ColumnSize.S,
-                      onSort: (columnIndex, descending) => sort(
-                        columnIndex: columnIndex,
-                        descending: descending,
-                        name: 'createdAt',
-                      ),
-                    ),
-                  ],
-                  cellsBuilder: (_, item) {
-                    return [
-                      DataCell(MenuItemImage(imageUrl: item.imageUrl ?? '')),
-                      DataCell(
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            DSText(
-                              item.name,
-                              theme: const DSTextThemeData.b4(),
-                            ),
-                            DSText(
-                              'Updated: ${item.updatedAt?.format()}',
-                              theme: const DSTextThemeData.c2(),
-                            ),
-                          ],
+                      DataColumn2(
+                        label: const DSText(
+                          'NAME',
+                          theme: DSTextThemeData.c2(),
+                        ),
+                        size: ColumnSize.L,
+                        onSort: (columnIndex, descending) => sort(
+                          columnIndex: columnIndex,
+                          descending: descending,
+                          name: 'name',
                         ),
                       ),
-                      DataCell(
-                        DSText(
-                          (item.priceInfo.price / 100).toCurrency(),
-                          theme: const DSTextThemeData.b5(),
+                      DataColumn2(
+                        label: const DSText(
+                          'PRICE',
+                          theme: DSTextThemeData.c2(),
+                        ),
+                        fixedWidth: 125,
+                        onSort: (columnIndex, descending) => sort(
+                          columnIndex: columnIndex,
+                          descending: descending,
+                          name: 'priceInfo.price',
+                        ),
+                        numeric: true,
+                      ),
+                      DataColumn2(
+                        label: const DSText(
+                          'CREATED',
+                          theme: DSTextThemeData.c2(),
+                        ),
+                        fixedWidth: 200,
+                        size: ColumnSize.S,
+                        onSort: (columnIndex, descending) => sort(
+                          columnIndex: columnIndex,
+                          descending: descending,
+                          name: 'createdAt',
                         ),
                       ),
-                      DataCell(
-                        DSText(
-                          item.createdAt?.format() ?? '',
-                          theme: const DSTextThemeData.b5(),
+                    ],
+                    cellsBuilder: (_, item) {
+                      return [
+                        DataCell(MenuItemImage(imageUrl: item.imageUrl ?? '')),
+                        DataCell(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              DSText(
+                                item.name,
+                                theme: const DSTextThemeData.b4(),
+                              ),
+                              DSText(
+                                'Updated: ${item.updatedAt?.format()}',
+                                theme: const DSTextThemeData.c2(),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ];
-                  },
-                ),
-              ],
+                        DataCell(
+                          DSText(
+                            (item.priceInfo.price / 100).toCurrency(),
+                            theme: const DSTextThemeData.b5(),
+                          ),
+                        ),
+                        DataCell(
+                          DSText(
+                            item.createdAt?.format() ?? '',
+                            theme: const DSTextThemeData.b5(),
+                          ),
+                        ),
+                      ];
+                    },
+                  );
+                },
+              ),
               Visibility(
                 maintainAnimation: true,
                 maintainInteractivity: true,

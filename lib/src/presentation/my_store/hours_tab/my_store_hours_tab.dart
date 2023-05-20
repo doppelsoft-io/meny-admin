@@ -28,6 +28,24 @@ class _MyStoreHoursTab extends HookWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                ...[
+                  // tPalette.shade50,
+                  tPalette.shade100,
+                  tPalette.shade200,
+                  tPalette.shade300,
+                  tPalette.shade400,
+                  tPalette.shade500,
+                  tPalette.shade600,
+                  tPalette.shade700,
+                  tPalette.shade800,
+                  tPalette.shade900,
+                ].map(
+                  (e) => Container(
+                    height: 24,
+                    width: 64,
+                    color: e,
+                  ),
+                ),
                 Row(
                   children: [
                     const PageTitle(title: 'Store Hours'),

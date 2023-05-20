@@ -45,7 +45,7 @@ class _CreateMenuItemScreen extends HookWidget {
             DSLoadingIndicator.dialog(context);
           },
           error: (_, exception) {
-            Locator.instance<NavigatorHelper>().goHome();
+            Locator.instance<NavigatorHelper>().goToMenuItems();
             DialogService.showErrorDialog(
               context: context,
               failure: CustomException(message: exception.toString()),

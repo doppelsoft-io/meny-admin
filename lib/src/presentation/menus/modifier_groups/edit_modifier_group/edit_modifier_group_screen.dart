@@ -194,7 +194,7 @@ class _EditModifierGroupScreen extends HookWidget {
         listener: (context, editModifierGroupState) {
           editModifierGroupState.maybeWhen(
             success: (group) {
-              Locator.instance<NavigatorHelper>().goHome();
+              Locator.instance<NavigatorHelper>().goToModifierGroups();
               Locator.instance<ToastService>().init(
                 DSToast.notification(
                   text: 'Your modifier group ${group.name} has been saved',
@@ -226,7 +226,10 @@ class _EditModifierGroupScreen extends HookWidget {
                 appBar: AppBar(
                   elevation: 0,
                   backgroundColor: Colors.white,
-                  leading: const DSBackButton(),
+                  leading: DSBackButton(
+                    onPressed: () => Locator.instance<NavigatorHelper>()
+                        .goToModifierGroups(),
+                  ),
                   title: const DSText(
                     'Edit Modifier Group',
                     theme: DSTextThemeData.h3(),
@@ -395,7 +398,7 @@ class _EditModifierGroupScreen extends HookWidget {
                             children: [
                               Text(
                                 'Control how customers can select the items in this modifier group',
-                                style: Theme.of(context).textTheme.caption,
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                               DSVerticalSpacing.small(),
                               DSCheckbox(
@@ -721,7 +724,7 @@ class _ModifierGroupItem extends HookWidget {
           IconButton(
             icon: Icon(
               Icons.delete,
-              color: Theme.of(context).errorColor,
+              color: Theme.of(context).colorScheme.error,
             ),
             // icon: const Icon(Icons.more_vert),
             onPressed: () {
@@ -780,7 +783,7 @@ class _DeleteModifierGroupButton extends StatelessWidget {
         title: 'Delete ${group.name}?',
         content: Text(
           'This will remove this group from all menu items',
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         confirmArgs: const DSConfirmDialogConfirmArgs(
           text: 'Delete',
@@ -802,7 +805,7 @@ class _DeleteModifierGroupButton extends StatelessWidget {
       listener: (context, deleteModifierGroupState) {
         deleteModifierGroupState.maybeWhen(
           success: () {
-            Locator.instance<NavigatorHelper>().goHome();
+            Locator.instance<NavigatorHelper>().goToModifierGroups();
             if (group.name.isNotEmpty) {
               Locator.instance<ToastService>().init(
                 DSToast.notification(

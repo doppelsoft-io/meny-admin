@@ -2,14 +2,11 @@ import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/navigator.dart';
+import 'package:meny_admin/router.dart';
 import 'package:meny_admin/src/application/application.dart';
-import 'package:meny_admin/src/presentation/presentation.dart';
 import 'package:meny_admin/themes.dart';
-
-final navigatorKey = GlobalKey<NavigatorState>();
 
 class App extends StatelessWidget {
   App({
@@ -19,125 +16,9 @@ class App extends StatelessWidget {
 
   final authCubit = Locator.instance<AuthCubit>();
   final storeCubit = Locator.instance<StoreCubit>();
+  final flagsmithCubit = Locator.instance<FlagsmithCubit>();
 
   final AppEnvironment environment;
-
-  late final router = GoRouter(
-    navigatorKey: navigatorKey,
-    debugLogDiagnostics: true,
-    initialLocation: '/',
-    routes: [
-      GoRoute(
-        name: SplashScreen.routeName,
-        path: '/${SplashScreen.routeName}',
-        builder: (_, state) => const SplashScreen(),
-      ),
-      GoRoute(
-        name: LoginScreen.routeName,
-        path: '/${LoginScreen.routeName}',
-        builder: (_, state) => const LoginScreen(),
-      ),
-      GoRoute(
-        name: SignupScreen.routeName,
-        path: '/${SignupScreen.routeName}',
-        builder: (_, state) => const SignupScreen(),
-      ),
-      GoRoute(
-        path: '/',
-        builder: (_, state) => const AppScreen(),
-        routes: [
-          GoRoute(
-            name: CreateMenuScreen.routeName,
-            path: 'create-menu',
-            pageBuilder: (_, state) => const MaterialPage(
-              fullscreenDialog: true,
-              child: CreateMenuScreen(),
-            ),
-          ),
-          GoRoute(
-            name: EditMenuScreen.routeName,
-            path: 'menus/:id',
-            builder: (_, state) => EditMenuScreen(id: state.params['id']!),
-          ),
-          GoRoute(
-            name: MenuPreviewScreen.routeName,
-            path: 'menus/:id/preview',
-            builder: (context, state) {
-              return MenuPreviewScreen(id: state.params['id']!);
-            },
-          ),
-          GoRoute(
-            name: CreateCategoryScreen.routeName,
-            path: 'create-category',
-            pageBuilder: (_, state) => const MaterialPage(
-              fullscreenDialog: true,
-              child: CreateCategoryScreen(),
-            ),
-          ),
-          GoRoute(
-            name: EditCategoryScreen.routeName,
-            path: 'categories/:id',
-            builder: (context, state) {
-              return EditCategoryScreen(id: state.params['id']!);
-            },
-          ),
-          GoRoute(
-            name: CreateMenuItemScreen.routeName,
-            path: 'create-item',
-            pageBuilder: (_, state) => const MaterialPage(
-              fullscreenDialog: true,
-              child: CreateMenuItemScreen(),
-            ),
-          ),
-          GoRoute(
-            name: EditMenuItemScreen.routeName,
-            path: 'items/:id',
-            builder: (context, state) {
-              return EditMenuItemScreen(id: state.params['id']!);
-            },
-          ),
-          GoRoute(
-            name: CreateModifierGroupScreen.routeName,
-            path: 'create-modifier-group',
-            pageBuilder: (_, state) => const MaterialPage(
-              fullscreenDialog: true,
-              child: CreateModifierGroupScreen(),
-            ),
-          ),
-          GoRoute(
-            name: EditModifierGroupScreen.routeName,
-            path: 'modifier-groups/:id',
-            builder: (context, state) {
-              return EditModifierGroupScreen(id: state.params['id']!);
-            },
-          ),
-        ],
-      ),
-    ],
-    redirect: (context, state) {
-      final location = state.subloc;
-      final onLogin = location == '/${LoginScreen.routeName}';
-      final onSignup = location == '/${SignupScreen.routeName}';
-      final onAuth = onLogin || onSignup;
-
-      return authCubit.state.maybeWhen(
-        initial: (_) => null,
-        unauthenticated: (_) {
-          return onAuth ? null : '/login';
-        },
-        authenticated: (_) {
-          return onAuth ? '/' : null;
-        },
-        anonymous: (_) {
-          return null;
-        },
-        orElse: () {
-          return onAuth ? null : '/login';
-        },
-      );
-    },
-    errorBuilder: (_, state) => ErrorScreen(state.error!),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -152,14 +33,17 @@ class App extends StatelessWidget {
           BlocProvider<StoreCubit>(
             create: (context) => storeCubit,
           ),
+          BlocProvider<FlagsmithCubit>(
+            create: (context) => flagsmithCubit,
+          ),
         ],
         child: MaterialApp.router(
           theme: effectiveTheme.toThemeData(),
           routerConfig: router,
           debugShowCheckedModeBanner: false,
           title: 'Meny',
-          builder: (context, widget) => ResponsiveWrapper.builder(
-            BouncingScrollWrapper.builder(
+          builder: (context, widget) => ResponsiveBreakpoints.builder(
+            child: BouncingScrollWrapper.builder(
               context,
               DSTheme(
                 data: effectiveTheme,
@@ -170,17 +54,12 @@ class App extends StatelessWidget {
                 ),
               ),
             ),
-            minWidth: 480,
-            defaultScale: true,
             breakpoints: [
-              const ResponsiveBreakpoint.resize(480, name: MOBILE),
-              const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-              const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-              const ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+              const Breakpoint(start: 0, end: 450, name: MOBILE),
+              const Breakpoint(start: 451, end: 800, name: TABLET),
+              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+              const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
             ],
-            background: Container(
-              color: Colors.white,
-            ),
           ),
         ),
       ),

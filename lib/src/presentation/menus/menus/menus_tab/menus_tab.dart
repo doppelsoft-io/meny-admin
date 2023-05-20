@@ -20,7 +20,7 @@ class MenusTab extends StatelessWidget {
         BlocProvider<MenusCubit>(
           create: (context) => MenusCubit(
             authCubit: context.read<AuthCubit>(),
-          ),
+          )..load(storeId: context.read<StoreCubit>().state.store.id ?? ''),
         ),
       ],
       child: _MenusScreenMenusTab(),
@@ -31,21 +31,7 @@ class MenusTab extends StatelessWidget {
 class _MenusScreenMenusTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final storeState = context.watch<StoreCubit>().state;
     final menusState = context.watch<MenusCubit>().state;
-
-    useEffect(
-      () {
-        storeState.maybeWhen(
-          loaded: (store) {
-            context.read<MenusCubit>().load(storeId: store.id!);
-          },
-          orElse: () {},
-        );
-        return null;
-      },
-      const [],
-    );
 
     void sort({
       required int columnIndex,
@@ -78,136 +64,119 @@ class _MenusScreenMenusTab extends HookWidget {
       );
     }
 
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<StoreCubit, StoreState>(
-          listenWhen: (prev, curr) => prev.store != curr.store,
-          listener: (context, state) {
-            state.maybeWhen(
-              loaded: (store) {
-                context.read<MenusCubit>().load(storeId: state.store.id!);
-              },
-              orElse: () {},
-            );
-          },
-        ),
-      ],
-      child: menusState.maybeWhen(
-        orElse: () {
-          final isMobile = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-          final menus = menusState.menus;
-          final orderBy = menusState.orderBy;
-          const action = NewMenuButton();
-          const emptyMessage =
-              'No menus yet. Click "New" above to get started!';
-          return Stack(
-            children: [
-              if (isMobile) ...[
-                ResourceList<MenuModel>(
-                  title: 'Menus',
-                  action: action,
-                  resources: menus,
-                  emptyMessage: emptyMessage,
-                  itemBuilder: (_, menu) {
-                    return DSListTile(
-                      args: DSListTileArgs(
-                        onTap: () => onTapItem(context, menu),
-                        title: menu.name,
-                        subtitle: Text('Updated: ${menu.updatedAt?.format()}'),
-                        trailing: PreviewMenuButton(menu: menu),
-                      ),
-                    );
-                  },
-                ),
-              ] else ...[
-                ResourceTable<MenuModel>(
-                  sortColumnIndex: orderBy.sortColumnIndex,
-                  sortAscending: !orderBy.descending,
-                  title: 'Menus',
-                  action: action,
-                  resources: menus,
-                  columns: [
-                    DataColumn2(
-                      label: const DSText(
-                        'NAME',
-                        theme: DSTextThemeData.c2(),
-                      ),
-                      size: ColumnSize.L,
-                      onSort: (columnIndex, descending) => sort(
-                        columnIndex: columnIndex,
-                        descending: descending,
-                        name: 'name',
+    return menusState.maybeWhen(
+      orElse: () {
+        final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+        final menus = menusState.menus;
+        final orderBy = menusState.orderBy;
+        const action = NewMenuButton();
+        const emptyMessage = 'No menus yet. Click "New" above to get started!';
+        return Stack(
+          children: [
+            if (isMobile) ...[
+              ResourceList<MenuModel>(
+                title: 'Menus',
+                action: action,
+                resources: menus,
+                emptyMessage: emptyMessage,
+                itemBuilder: (_, menu) {
+                  return DSListTile(
+                    args: DSListTileArgs(
+                      onTap: () => onTapItem(context, menu),
+                      title: menu.name,
+                      subtitle: Text('Updated: ${menu.updatedAt?.format()}'),
+                      trailing: PreviewMenuButton(menu: menu),
+                    ),
+                  );
+                },
+              ),
+            ] else ...[
+              ResourceTable<MenuModel>(
+                sortColumnIndex: orderBy.sortColumnIndex,
+                sortAscending: !orderBy.descending,
+                title: 'Menus',
+                action: action,
+                resources: menus,
+                columns: [
+                  DataColumn2(
+                    label: const DSText(
+                      'NAME',
+                      theme: DSTextThemeData.c2(),
+                    ),
+                    size: ColumnSize.L,
+                    onSort: (columnIndex, descending) => sort(
+                      columnIndex: columnIndex,
+                      descending: descending,
+                      name: 'name',
+                    ),
+                  ),
+                  DataColumn2(
+                    label: const DSText(
+                      'CREATED',
+                      theme: DSTextThemeData.c2(),
+                    ),
+                    fixedWidth: 200,
+                    size: ColumnSize.S,
+                    onSort: (columnIndex, descending) => sort(
+                      columnIndex: columnIndex,
+                      descending: descending,
+                      name: 'createdAt',
+                    ),
+                  ),
+                  const DataColumn2(
+                    label: Text(''),
+                    fixedWidth: 100,
+                    size: ColumnSize.S,
+                  ),
+                ],
+                cellsBuilder: (_, menu) {
+                  return <DataCell>[
+                    DataCell(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          DSText(
+                            menu.name,
+                            theme: const DSTextThemeData.b4(),
+                          ),
+                          DSText(
+                            'Last updated: ${menu.updatedAt?.format()}',
+                            theme: const DSTextThemeData.c2(),
+                          ),
+                        ],
                       ),
                     ),
-                    DataColumn2(
-                      label: const DSText(
-                        'CREATED',
-                        theme: DSTextThemeData.c2(),
-                      ),
-                      fixedWidth: 200,
-                      size: ColumnSize.S,
-                      onSort: (columnIndex, descending) => sort(
-                        columnIndex: columnIndex,
-                        descending: descending,
-                        name: 'createdAt',
+                    DataCell(
+                      DSText(
+                        menu.createdAt?.format() ?? '',
+                        theme: const DSTextThemeData.b5(),
                       ),
                     ),
-                    const DataColumn2(
-                      label: Text(''),
-                      fixedWidth: 100,
-                      size: ColumnSize.S,
-                    ),
-                  ],
-                  cellsBuilder: (_, menu) {
-                    return <DataCell>[
-                      DataCell(
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            DSText(
-                              menu.name,
-                              theme: const DSTextThemeData.b4(),
-                            ),
-                            DSText(
-                              'Last updated: ${menu.updatedAt?.format()}',
-                              theme: const DSTextThemeData.c2(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      DataCell(
-                        DSText(
-                          menu.createdAt?.format() ?? '',
-                          theme: const DSTextThemeData.b5(),
-                        ),
-                      ),
-                      DataCell(PreviewMenuButton(menu: menu)),
-                    ];
-                  },
-                  emptyMessage:
-                      'No menus yet. Click "New" above to get started!',
-                  onTapItem: (_, menu) {
-                    onTapItem(context, menu);
-                  },
-                ),
-              ],
-              Visibility(
-                maintainAnimation: true,
-                maintainInteractivity: true,
-                maintainSemantics: true,
-                maintainSize: true,
-                maintainState: true,
-                visible: menusState.maybeWhen(
-                  loading: (_, __) => true,
-                  orElse: () => false,
-                ),
-                child: const LinearProgressIndicator(),
+                    DataCell(PreviewMenuButton(menu: menu)),
+                  ];
+                },
+                emptyMessage: 'No menus yet. Click "New" above to get started!',
+                onTapItem: (_, menu) {
+                  onTapItem(context, menu);
+                },
               ),
             ],
-          );
-        },
-      ),
+            Visibility(
+              maintainAnimation: true,
+              maintainInteractivity: true,
+              maintainSemantics: true,
+              maintainSize: true,
+              maintainState: true,
+              visible: menusState.maybeWhen(
+                loading: (_, __) => true,
+                orElse: () => false,
+              ),
+              child: const LinearProgressIndicator(),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -3,7 +3,6 @@ part of 'auth_cubit.dart';
 enum AuthStatus {
   initial,
   unauthenticated,
-  anonymous,
   authenticated,
 }
 
@@ -20,8 +19,4 @@ class AuthState with _$AuthState {
   factory AuthState.authenticated({
     required UserModel user,
   }) = _Authenticated;
-
-  factory AuthState.anonymous({
-    required UserModel user,
-  }) = _Anonymous;
 }

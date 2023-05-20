@@ -45,7 +45,7 @@ class AuthCubit extends Cubit<AuthState> {
         user: Identity(identifier: userModel.id!),
       );
       if (firebaseUser.isAnonymous) {
-        emit(_Anonymous(user: userModel));
+        emit(_Authenticated(user: userModel.copyWith(isAnonymous: true)));
       } else {
         emit(_Authenticated(user: userModel));
       }
@@ -61,7 +61,7 @@ class AuthCubit extends Cubit<AuthState> {
       currentUser = await _authRepository.loginAnonymously();
     }
     if (currentUser.isAnonymous) {
-      emit(_Anonymous(user: currentUser));
+      emit(_Authenticated(user: currentUser.copyWith(isAnonymous: true)));
     } else {
       emit(_Authenticated(user: currentUser));
     }
@@ -75,7 +75,7 @@ class AuthCubit extends Cubit<AuthState> {
       _authRepository.logout(),
 
       /// Then login anonymously
-      _authRepository.loginAnonymously(),
+      // _authRepository.loginAnonymously(),
     ]);
   }
 }

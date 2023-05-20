@@ -19,8 +19,8 @@ class AppHeader extends StatelessWidget {
     final onAuthScreens = route.contains(LoginScreen.routeName) ||
         route.contains(SignupScreen.routeName);
 
-    return ScreenTypeLayout(
-      mobile: Material(
+    return ScreenTypeLayout.builder(
+      mobile: (_) => Material(
         color: Colors.white,
         elevation: 1,
         child: Container(

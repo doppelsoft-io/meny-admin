@@ -70,7 +70,7 @@ class _EditMenuScreen extends HookWidget {
                   controller.text = menu.name;
                 },
                 success: (menu) {
-                  Locator.instance<NavigatorHelper>().goHome();
+                  Locator.instance<NavigatorHelper>().goToMenus();
 
                   Locator.instance<ToastService>().init(
                     DSToast.notification(
@@ -95,7 +95,10 @@ class _EditMenuScreen extends HookWidget {
                     appBar: AppBar(
                       elevation: 0,
                       backgroundColor: Colors.white,
-                      leading: const DSBackButton(),
+                      leading: DSBackButton(
+                        onPressed: () =>
+                            Locator.instance<NavigatorHelper>().goToMenus(),
+                      ),
                       title: const DSText(
                         'Edit Menu',
                         theme: DSTextThemeData.h3(),

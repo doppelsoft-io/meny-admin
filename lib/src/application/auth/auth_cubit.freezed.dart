@@ -22,7 +22,6 @@ mixin _$AuthState {
     required TResult Function(UserModel user) initial,
     required TResult Function(UserModel user) unauthenticated,
     required TResult Function(UserModel user) authenticated,
-    required TResult Function(UserModel user) anonymous,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,7 +29,6 @@ mixin _$AuthState {
     TResult? Function(UserModel user)? initial,
     TResult? Function(UserModel user)? unauthenticated,
     TResult? Function(UserModel user)? authenticated,
-    TResult? Function(UserModel user)? anonymous,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,7 +36,6 @@ mixin _$AuthState {
     TResult Function(UserModel user)? initial,
     TResult Function(UserModel user)? unauthenticated,
     TResult Function(UserModel user)? authenticated,
-    TResult Function(UserModel user)? anonymous,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,7 +44,6 @@ mixin _$AuthState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Unauthenticated value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_Anonymous value) anonymous,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,7 +51,6 @@ mixin _$AuthState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Unauthenticated value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_Anonymous value)? anonymous,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,7 +58,6 @@ mixin _$AuthState {
     TResult Function(_Initial value)? initial,
     TResult Function(_Unauthenticated value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Anonymous value)? anonymous,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -185,7 +179,6 @@ class _$_Initial implements _Initial {
     required TResult Function(UserModel user) initial,
     required TResult Function(UserModel user) unauthenticated,
     required TResult Function(UserModel user) authenticated,
-    required TResult Function(UserModel user) anonymous,
   }) {
     return initial(user);
   }
@@ -196,7 +189,6 @@ class _$_Initial implements _Initial {
     TResult? Function(UserModel user)? initial,
     TResult? Function(UserModel user)? unauthenticated,
     TResult? Function(UserModel user)? authenticated,
-    TResult? Function(UserModel user)? anonymous,
   }) {
     return initial?.call(user);
   }
@@ -207,7 +199,6 @@ class _$_Initial implements _Initial {
     TResult Function(UserModel user)? initial,
     TResult Function(UserModel user)? unauthenticated,
     TResult Function(UserModel user)? authenticated,
-    TResult Function(UserModel user)? anonymous,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -222,7 +213,6 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Unauthenticated value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_Anonymous value) anonymous,
   }) {
     return initial(this);
   }
@@ -233,7 +223,6 @@ class _$_Initial implements _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Unauthenticated value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_Anonymous value)? anonymous,
   }) {
     return initial?.call(this);
   }
@@ -244,7 +233,6 @@ class _$_Initial implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_Unauthenticated value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Anonymous value)? anonymous,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -337,7 +325,6 @@ class _$_Unauthenticated implements _Unauthenticated {
     required TResult Function(UserModel user) initial,
     required TResult Function(UserModel user) unauthenticated,
     required TResult Function(UserModel user) authenticated,
-    required TResult Function(UserModel user) anonymous,
   }) {
     return unauthenticated(user);
   }
@@ -348,7 +335,6 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult? Function(UserModel user)? initial,
     TResult? Function(UserModel user)? unauthenticated,
     TResult? Function(UserModel user)? authenticated,
-    TResult? Function(UserModel user)? anonymous,
   }) {
     return unauthenticated?.call(user);
   }
@@ -359,7 +345,6 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult Function(UserModel user)? initial,
     TResult Function(UserModel user)? unauthenticated,
     TResult Function(UserModel user)? authenticated,
-    TResult Function(UserModel user)? anonymous,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -374,7 +359,6 @@ class _$_Unauthenticated implements _Unauthenticated {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Unauthenticated value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_Anonymous value) anonymous,
   }) {
     return unauthenticated(this);
   }
@@ -385,7 +369,6 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Unauthenticated value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_Anonymous value)? anonymous,
   }) {
     return unauthenticated?.call(this);
   }
@@ -396,7 +379,6 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult Function(_Initial value)? initial,
     TResult Function(_Unauthenticated value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Anonymous value)? anonymous,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -490,7 +472,6 @@ class _$_Authenticated implements _Authenticated {
     required TResult Function(UserModel user) initial,
     required TResult Function(UserModel user) unauthenticated,
     required TResult Function(UserModel user) authenticated,
-    required TResult Function(UserModel user) anonymous,
   }) {
     return authenticated(user);
   }
@@ -501,7 +482,6 @@ class _$_Authenticated implements _Authenticated {
     TResult? Function(UserModel user)? initial,
     TResult? Function(UserModel user)? unauthenticated,
     TResult? Function(UserModel user)? authenticated,
-    TResult? Function(UserModel user)? anonymous,
   }) {
     return authenticated?.call(user);
   }
@@ -512,7 +492,6 @@ class _$_Authenticated implements _Authenticated {
     TResult Function(UserModel user)? initial,
     TResult Function(UserModel user)? unauthenticated,
     TResult Function(UserModel user)? authenticated,
-    TResult Function(UserModel user)? anonymous,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -527,7 +506,6 @@ class _$_Authenticated implements _Authenticated {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Unauthenticated value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_Anonymous value) anonymous,
   }) {
     return authenticated(this);
   }
@@ -538,7 +516,6 @@ class _$_Authenticated implements _Authenticated {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Unauthenticated value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_Anonymous value)? anonymous,
   }) {
     return authenticated?.call(this);
   }
@@ -549,7 +526,6 @@ class _$_Authenticated implements _Authenticated {
     TResult Function(_Initial value)? initial,
     TResult Function(_Unauthenticated value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Anonymous value)? anonymous,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -567,156 +543,5 @@ abstract class _Authenticated implements AuthState {
   @override
   @JsonKey(ignore: true)
   _$$_AuthenticatedCopyWith<_$_Authenticated> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_AnonymousCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
-  factory _$$_AnonymousCopyWith(
-          _$_Anonymous value, $Res Function(_$_Anonymous) then) =
-      __$$_AnonymousCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({UserModel user});
-
-  @override
-  $UserModelCopyWith<$Res> get user;
-}
-
-/// @nodoc
-class __$$_AnonymousCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_Anonymous>
-    implements _$$_AnonymousCopyWith<$Res> {
-  __$$_AnonymousCopyWithImpl(
-      _$_Anonymous _value, $Res Function(_$_Anonymous) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? user = null,
-  }) {
-    return _then(_$_Anonymous(
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as UserModel,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_Anonymous implements _Anonymous {
-  _$_Anonymous({required this.user});
-
-  @override
-  final UserModel user;
-
-  @override
-  String toString() {
-    return 'AuthState.anonymous(user: $user)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Anonymous &&
-            (identical(other.user, user) || other.user == user));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, user);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_AnonymousCopyWith<_$_Anonymous> get copyWith =>
-      __$$_AnonymousCopyWithImpl<_$_Anonymous>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(UserModel user) initial,
-    required TResult Function(UserModel user) unauthenticated,
-    required TResult Function(UserModel user) authenticated,
-    required TResult Function(UserModel user) anonymous,
-  }) {
-    return anonymous(user);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserModel user)? initial,
-    TResult? Function(UserModel user)? unauthenticated,
-    TResult? Function(UserModel user)? authenticated,
-    TResult? Function(UserModel user)? anonymous,
-  }) {
-    return anonymous?.call(user);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserModel user)? initial,
-    TResult Function(UserModel user)? unauthenticated,
-    TResult Function(UserModel user)? authenticated,
-    TResult Function(UserModel user)? anonymous,
-    required TResult orElse(),
-  }) {
-    if (anonymous != null) {
-      return anonymous(user);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Unauthenticated value) unauthenticated,
-    required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_Anonymous value) anonymous,
-  }) {
-    return anonymous(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Unauthenticated value)? unauthenticated,
-    TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_Anonymous value)? anonymous,
-  }) {
-    return anonymous?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Unauthenticated value)? unauthenticated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Anonymous value)? anonymous,
-    required TResult orElse(),
-  }) {
-    if (anonymous != null) {
-      return anonymous(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Anonymous implements AuthState {
-  factory _Anonymous({required final UserModel user}) = _$_Anonymous;
-
-  @override
-  UserModel get user;
-  @override
-  @JsonKey(ignore: true)
-  _$$_AnonymousCopyWith<_$_Anonymous> get copyWith =>
       throw _privateConstructorUsedError;
 }

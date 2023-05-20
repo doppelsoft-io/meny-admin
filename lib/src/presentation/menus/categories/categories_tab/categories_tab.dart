@@ -20,7 +20,7 @@ class CategoriesTab extends StatelessWidget {
         BlocProvider<CategoriesCubit>(
           create: (context) => CategoriesCubit(
             authCubit: context.read<AuthCubit>(),
-          ),
+          )..load(storeId: context.read<StoreCubit>().state.store.id ?? ''),
         ),
       ],
       child: _MenusScreenCategoriesTab(),
@@ -32,18 +32,6 @@ class _MenusScreenCategoriesTab extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final categoriesState = context.watch<CategoriesCubit>().state;
-
-    useEffect(
-      () {
-        final storeCubit = context.read<StoreCubit>();
-        final storeId = storeCubit.state.store.id;
-        if (storeId != null) {
-          context.read<CategoriesCubit>().load(storeId: storeId);
-        }
-        return null;
-      },
-      const [],
-    );
 
     void sort({
       required int columnIndex,
@@ -76,125 +64,111 @@ class _MenusScreenCategoriesTab extends HookWidget {
       );
     }
 
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<StoreCubit, StoreState>(
-          listenWhen: (prev, curr) => prev.store != curr.store,
-          listener: (context, state) {
-            if (state.store.id != null) {
-              context.read<CategoriesCubit>().load(storeId: state.store.id!);
-            }
-          },
-        ),
-      ],
-      child: categoriesState.maybeWhen(
-        orElse: () {
-          final isMobile = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-          final categories = categoriesState.categories;
-          final orderBy = categoriesState.orderBy;
-          const action = NewCategoryButton();
-          const emptyMessage =
-              'No categories yet. Click "New" above to get started!';
+    return categoriesState.maybeWhen(
+      orElse: () {
+        final categories = categoriesState.categories;
+        final orderBy = categoriesState.orderBy;
+        const action = NewCategoryButton();
+        const emptyMessage =
+            'No categories yet. Click "New" above to get started!';
 
-          return Stack(
-            children: [
-              if (isMobile) ...[
-                ResourceList<CategoryModel>(
-                  title: 'Categories',
-                  action: action,
-                  resources: categories,
-                  emptyMessage: emptyMessage,
-                  itemBuilder: (_, category) {
-                    return DSListTile(
-                      args: DSListTileArgs(
-                        onTap: () => onTapItem(context, category),
-                        title: category.name,
-                        subtitle:
-                            Text('Updated: ${category.updatedAt?.format()}'),
-                      ),
-                    );
-                  },
-                ),
-              ] else ...[
-                ResourceTable<CategoryModel>(
-                  title: 'Categories',
-                  sortAscending: !orderBy.descending,
-                  sortColumnIndex: orderBy.sortColumnIndex,
-                  action: action,
-                  columns: [
-                    DataColumn2(
-                      label: const DSText(
-                        'NAME',
-                        theme: DSTextThemeData.c2(),
-                      ),
-                      size: ColumnSize.L,
-                      onSort: (columnIndex, descending) => sort(
-                        columnIndex: columnIndex,
-                        descending: descending,
-                        name: 'name',
-                      ),
+        return Stack(
+          children: [
+            ScreenTypeLayout.builder(
+              mobile: (context) => ResourceList<CategoryModel>(
+                title: 'Categories',
+                action: action,
+                resources: categories,
+                emptyMessage: emptyMessage,
+                itemBuilder: (_, category) {
+                  return DSListTile(
+                    args: DSListTileArgs(
+                      onTap: () => onTapItem(context, category),
+                      title: category.name,
+                      subtitle:
+                          Text('Updated: ${category.updatedAt?.format()}'),
                     ),
-                    DataColumn2(
-                      label: const DSText(
-                        'CREATED',
-                        theme: DSTextThemeData.c2(),
-                      ),
-                      fixedWidth: 200,
-                      size: ColumnSize.S,
-                      onSort: (columnIndex, descending) => sort(
-                        columnIndex: columnIndex,
-                        descending: descending,
-                        name: 'createdAt',
-                      ),
-                    ),
-                  ],
-                  resources: categories,
-                  emptyMessage: emptyMessage,
-                  onTapItem: onTapItem,
-                  cellsBuilder: (context, category) {
-                    return <DataCell>[
-                      DataCell(
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            DSText(
-                              category.name,
-                              theme: const DSTextThemeData.b4(),
-                            ),
-                            DSText(
-                              'Last updated: ${category.updatedAt?.format()}',
-                              theme: const DSTextThemeData.c2(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      DataCell(
-                        DSText(
-                          category.createdAt?.format() ?? '',
-                          theme: const DSTextThemeData.b5(),
-                        ),
-                      ),
-                    ];
-                  },
-                ),
-              ],
-              Visibility(
-                maintainAnimation: true,
-                maintainInteractivity: true,
-                maintainSemantics: true,
-                maintainSize: true,
-                maintainState: true,
-                visible: categoriesState.maybeWhen(
-                  loading: (_, __) => true,
-                  orElse: () => false,
-                ),
-                child: const LinearProgressIndicator(),
+                  );
+                },
               ),
-            ],
-          );
-        },
-      ),
+              desktop: (_) => ResourceTable<CategoryModel>(
+                title: 'Categories',
+                sortAscending: !orderBy.descending,
+                sortColumnIndex: orderBy.sortColumnIndex,
+                action: action,
+                columns: [
+                  DataColumn2(
+                    label: const DSText(
+                      'NAME',
+                      theme: DSTextThemeData.c2(),
+                    ),
+                    size: ColumnSize.L,
+                    onSort: (columnIndex, descending) => sort(
+                      columnIndex: columnIndex,
+                      descending: descending,
+                      name: 'name',
+                    ),
+                  ),
+                  DataColumn2(
+                    label: const DSText(
+                      'CREATED',
+                      theme: DSTextThemeData.c2(),
+                    ),
+                    fixedWidth: 200,
+                    size: ColumnSize.S,
+                    onSort: (columnIndex, descending) => sort(
+                      columnIndex: columnIndex,
+                      descending: descending,
+                      name: 'createdAt',
+                    ),
+                  ),
+                ],
+                resources: categories,
+                emptyMessage: emptyMessage,
+                onTapItem: onTapItem,
+                cellsBuilder: (context, category) {
+                  return <DataCell>[
+                    DataCell(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          DSText(
+                            category.name,
+                            theme: const DSTextThemeData.b4(),
+                          ),
+                          DSText(
+                            'Last updated: ${category.updatedAt?.format()}',
+                            theme: const DSTextThemeData.c2(),
+                          ),
+                        ],
+                      ),
+                    ),
+                    DataCell(
+                      DSText(
+                        category.createdAt?.format() ?? '',
+                        theme: const DSTextThemeData.b5(),
+                      ),
+                    ),
+                  ];
+                },
+              ),
+            ),
+            Visibility(
+              maintainAnimation: true,
+              maintainInteractivity: true,
+              maintainSemantics: true,
+              maintainSize: true,
+              maintainState: true,
+              visible: categoriesState.maybeWhen(
+                loading: (_, __) => true,
+                orElse: () => false,
+              ),
+              child: const LinearProgressIndicator(),
+            ),
+          ],
+        );
+      },
     );
   }
 }

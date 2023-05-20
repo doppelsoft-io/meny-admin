@@ -24,9 +24,6 @@ class StoreCubit extends Cubit<StoreState> {
         authenticated: (user) {
           loadStoreForUser(user);
         },
-        anonymous: (user) {
-          loadStoreForUser(user);
-        },
         unauthenticated: (user) {
           emit(_Loading(store: StoreModel.empty()));
         },

@@ -1,7 +1,8 @@
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
 
-const primaryColor = Colors.green;
+const primaryColor = Colors.black;
+// const primaryColor = Color(0xff39aa11);
 final effectiveTheme = DSThemeData(
   primaryTextTheme: GoogleFonts.baloo2TextTheme(),
   primaryTextStyle: GoogleFonts.baloo2(),
@@ -11,7 +12,7 @@ final effectiveTheme = DSThemeData(
     secondary: whiteColor,
     onSecondary: primaryColor,
     surface: whiteColor,
-    onSurface: blackColor,
+    onSurface: whiteColor,
     background: whiteColor,
     onBackground: whiteColor,
     error: Colors.red,

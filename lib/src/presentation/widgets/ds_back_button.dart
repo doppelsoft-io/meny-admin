@@ -23,7 +23,7 @@ class DSBackButton extends StatelessWidget {
           if (onPressed != null) {
             onPressed!.call();
           } else {
-            Locator.instance<NavigatorHelper>().goHome();
+            Locator.instance<NavigatorHelper>().pop();
           }
         },
       ),
