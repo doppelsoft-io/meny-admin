@@ -252,24 +252,4 @@ final router = GoRouter(
       builder: (_, state) => const SignupScreen(),
     ),
   ],
-  // redirect: (context, state) {
-  //   final location = state.subloc;
-  //   final onLogin = location == '/${LoginScreen.routeName}';
-  //   final onSignup = location == '/${SignupScreen.routeName}';
-  //   final onAuth = onLogin || onSignup;
-
-  //   return authCubit.state.maybeWhen(
-  //     initial: (_) => null,
-  //     unauthenticated: (_) {
-  //       return onAuth ? null : '/login';
-  //     },
-  //     authenticated: (_) {
-  //       return onAuth ? '/' : null;
-  //     },
-  //     orElse: () {
-  //       return onAuth ? null : '/login';
-  //     },
-  //   );
-  // },
-  // errorBuilder: (_, state) => ErrorScreen(state.error!),
 );
