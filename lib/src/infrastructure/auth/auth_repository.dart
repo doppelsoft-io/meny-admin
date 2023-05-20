@@ -23,6 +23,11 @@ class EmailLoginException extends CustomException {
   const EmailLoginException({String? message}) : super(message: message);
 }
 
+class SignUpWithEmailAndPasswordException extends CustomException {
+  const SignUpWithEmailAndPasswordException({String? message})
+      : super(message: message);
+}
+
 class SignUpAndLinkException extends CustomException {
   const SignUpAndLinkException({String? message}) : super(message: message);
 }
@@ -49,7 +54,6 @@ class AuthRepository {
       final currentUser = _firebaseAuth.currentUser;
       if (currentUser != null) {
         completer.complete(currentUser);
-        await subscription?.cancel();
         return UserModel.fromFirebaseAuthUser(currentUser);
       } else {
         subscription =
@@ -90,6 +94,32 @@ class AuthRepository {
       _loggerService.log('(loginAnonymously): $err');
       throw const AnonymousLoginException(
         message: 'Failed to login anonymously',
+      );
+    }
+  }
+
+  Future<UserModel> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      if (credential.user != null) {
+        return UserModel.fromFirebaseAuthUser(credential.user!);
+      }
+      return UserModel.empty();
+    } on FirebaseAuthException catch (err) {
+      _loggerService.log('(createUserWithEmailAndPassword): ${err.message}');
+      throw SignUpWithEmailAndPasswordException(
+        message: err.message ?? 'Log in failed',
+      );
+    } on PlatformException catch (err) {
+      _loggerService.log('(createUserWithEmailAndPassword): $err');
+      throw SignUpWithEmailAndPasswordException(
+        message: err.message ?? 'Log in failed',
       );
     }
   }

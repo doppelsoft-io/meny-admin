@@ -11,52 +11,79 @@ part 'signup_cubit.freezed.dart';
 class SignupCubit extends Cubit<SignupState> {
   SignupCubit({
     AuthRepository? authRepository,
+    StoreRepository? storeRepository,
     FirebaseFirestore? firebaseFirestore,
+    UuidService? uuidService,
     required AuthCubit authCubit,
   })  : _authRepository = authRepository ?? Locator.instance(),
+        _storeRepository = storeRepository ?? Locator.instance(),
         _firebaseFirestore = firebaseFirestore ?? Locator.instance(),
+        _uuidService = uuidService ?? Locator.instance(),
         _authCubit = authCubit,
         super(SignupState.initial(store: StoreModel.empty()));
 
   final AuthRepository _authRepository;
+  final StoreRepository _storeRepository;
   final FirebaseFirestore _firebaseFirestore;
+  final UuidService _uuidService;
   final AuthCubit _authCubit;
 
   Future<void> handleSignUp({
-    required StoreModel store,
+    required String storeName,
     required String email,
     required String password,
   }) async {
     try {
       emit(
-        SignupState.signingIn(
-          store: store,
+        _SigningIn(
+          store: state.store,
           email: email,
           password: password,
         ),
       );
 
-      final storeRef = _firebaseFirestore.storesDocument(storeId: store.id!);
-
-      final createdFirebaseUser =
-          await _authRepository.signUpAndLinkAnonymousUser(
+      await _authRepository.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      final user = await _authRepository.loginWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      final user = UserModel.fromFirebaseAuthUser(createdFirebaseUser!);
+      final newUserId = user.id;
+
+      if (newUserId == null) {
+        throw const CustomException(
+          message: 'Failed creating user',
+        );
+      }
+
+      final storeUuid = _uuidService.uuid;
+
+      final newStore = StoreModel.empty().copyWith(
+        id: storeUuid,
+        name: storeName,
+        owner: newUserId,
+        users: [newUserId],
+        roles: {
+          newUserId: StoreRole.owner.asString(),
+        },
+      );
+
+      final storeRef = _firebaseFirestore.storesCollection().doc(storeUuid);
 
       final batch = _firebaseFirestore.batch();
 
-      final usersRef = _firebaseFirestore.usersDocument(userId: user.id ?? '');
+      final usersRef = _firebaseFirestore.usersDocument(
+        userId: user.id ?? '',
+      );
 
       batch
         ..set(usersRef, user.toJson())
-        ..set(storeRef, store.toJson(), SetOptions(merge: true));
+        ..set(storeRef, newStore.toJson(), SetOptions(merge: true));
 
       await batch.commit();
-
-      await _authCubit.userChanged(createdFirebaseUser);
 
       emit(
         SignupState.done(
@@ -66,16 +93,8 @@ class SignupCubit extends Cubit<SignupState> {
           result: right(true),
         ),
       );
-    } on SignUpAndLinkException catch (err) {
-      emit(
-        SignupState.done(
-          store: state.store,
-          email: state.email,
-          password: state.password,
-          result: left(err),
-        ),
-      );
     } on CustomException catch (err) {
+      print('MEE: err $err');
       emit(
         SignupState.done(
           store: state.store,
@@ -85,6 +104,7 @@ class SignupCubit extends Cubit<SignupState> {
         ),
       );
     } catch (err) {
+      print('MEE: err ${err.runtimeType}');
       emit(
         SignupState.done(
           store: state.store,

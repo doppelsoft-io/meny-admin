@@ -73,9 +73,6 @@ class AuthCubit extends Cubit<AuthState> {
     await Future.wait([
       /// Logout
       _authRepository.logout(),
-
-      /// Then login anonymously
-      // _authRepository.loginAnonymously(),
     ]);
   }
 }

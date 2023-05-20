@@ -15,7 +15,6 @@ class App extends StatelessWidget {
   }) : super(key: key);
 
   final authCubit = Locator.instance<AuthCubit>();
-  final storeCubit = Locator.instance<StoreCubit>();
   final flagsmithCubit = Locator.instance<FlagsmithCubit>();
 
   final AppEnvironment environment;
@@ -29,9 +28,6 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider<AuthCubit>(
             create: (context) => authCubit..appStarted(),
-          ),
-          BlocProvider<StoreCubit>(
-            create: (context) => storeCubit,
           ),
           BlocProvider<FlagsmithCubit>(
             create: (context) => flagsmithCubit,

@@ -316,16 +316,20 @@ packages:
   doppelsoft_core:
     dependency: "direct main"
     description:
-      path: "../doppelsoft-core"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "7ec4e5f86bc6644c6284b43ee5e33fe5428bf3b0"
+      url: "git@github.com:doppelsoft-io/doppelsoft-core.git"
+    source: git
     version: "0.0.1"
   doppelsoft_ui:
     dependency: "direct main"
     description:
-      path: "../doppelsoft-ui"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "53d94ae84a49366d906156ce4195967fe1fff2b7"
+      url: "git@github.com:doppelsoft-io/doppelsoft-ui.git"
+    source: git
     version: "0.0.1"
   encrypt:
     dependency: transitive
@@ -753,9 +757,11 @@ packages:
   meny_core:
     dependency: "direct main"
     description:
-      path: "../meny-core"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "2c5acf69098a208812f1a2fda184f0f4aaf8f0b7"
+      url: "git@github.com:doppelsoft-io/meny-core.git"
+    source: git
     version: "0.0.1"
   meta:
     dependency: transitive
@@ -1130,6 +1136,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  tabler_icons:
+    dependency: "direct main"
+    description:
+      name: tabler_icons
+      sha256: "66f228edf680cddf36d1879d622f789ed314fedc6f6e9101d7d1d916ed537a29"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.0+1"
   term_glyph:
     dependency: transitive
     description:

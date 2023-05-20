@@ -67,12 +67,16 @@ class _SignupScreen extends HookWidget {
     return BlocConsumer<SignupCubit, SignupState>(
       listener: (context, state) {
         state.maybeMap(
+          signingIn: (_) => LoadingIndicator.dialog(context),
           done: (state) {
+            Navigator.of(context).pop();
             state.result.fold(
-              (failure) => DialogService.showErrorDialog(
-                context: context,
-                failure: failure,
-              ),
+              (failure) {
+                DialogService.showErrorDialog(
+                  context: context,
+                  failure: failure,
+                );
+              },
               (result) {
                 Locator.instance<NavigatorHelper>().goHome();
 
@@ -106,7 +110,7 @@ class _SignupScreen extends HookWidget {
                 context: context,
                 mobile: DSSpacing.xs,
                 tablet: DSSpacing.sm,
-                desktop: DSSpacing.sm,
+                desktop: DSSpacing.lg,
               ),
             ),
             child: DSBlock(
@@ -114,10 +118,9 @@ class _SignupScreen extends HookWidget {
                 key: signupFormKey.value,
                 child: Column(
                   children: [
-                    Text(
+                    const DSText(
                       'Create an account to save and publish your menus',
-                      style: Theme.of(context).textTheme.headline5,
-                      textAlign: TextAlign.center,
+                      theme: DSTextThemeData.h2(),
                     ),
                     DSVerticalSpacing.largest(),
                     PageSection(
@@ -216,12 +219,9 @@ class _SignupScreen extends HookWidget {
                                     .value.currentState!
                                     .validate();
                                 if (isValid) {
-                                  final store =
-                                      context.read<StoreCubit>().state.store;
                                   context.read<SignupCubit>().handleSignUp(
-                                        store: store.copyWith(
-                                          name: storeNameController.text.trim(),
-                                        ),
+                                        storeName:
+                                            storeNameController.text.trim(),
                                         email: emailController.text.trim(),
                                         password:
                                             passwordController.text.trim(),

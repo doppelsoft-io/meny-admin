@@ -63,7 +63,9 @@ class _LoginScreen extends HookWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         state.maybeWhen(
+          loggingIn: () => LoadingIndicator.dialog(context),
           done: (result) {
+            Navigator.of(context).pop();
             result.fold(
               (failure) => DialogService.showErrorDialog(
                 context: context,
@@ -112,10 +114,9 @@ class _LoginScreen extends HookWidget {
                 key: loginFormKey.value,
                 child: Column(
                   children: [
-                    Text(
+                    const DSText(
                       'Log in to your account',
-                      style: Theme.of(context).textTheme.headline5,
-                      textAlign: TextAlign.center,
+                      theme: DSTextThemeData.h2(),
                     ),
                     DSVerticalSpacing.medium(),
                     DSTextFormField(
@@ -190,17 +191,6 @@ class _LoginScreen extends HookWidget {
                           },
                         ),
                         text: 'Log In',
-                        // child: state.maybeWhen(
-                        //   loggingIn: () => SizedBox(
-                        //     height: 18,
-                        //     width: 18,
-                        //     child: CircularProgressIndicator(
-                        //       strokeWidth: 2,
-                        //       color: Colors.green.shade50,
-                        //     ),
-                        //   ),
-                        //   orElse: () => const Text('Log In'),
-                        // ),
                       ),
                     ),
                     DSVerticalSpacing.medium(),

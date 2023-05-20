@@ -1,4 +1,5 @@
 export 'app/app_screen.dart';
+export 'core/loading_indicator.dart';
 export 'core/loading_table.dart';
 export 'core/no_results_table.dart';
 export 'core/resource_list.dart';

@@ -1,13 +1,11 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/navigator.dart';
 import 'package:meny_admin/src/application/application.dart';
 import 'package:meny_admin/src/presentation/presentation.dart';
-import 'package:meny_admin/src/services/services.dart';
 import 'package:meny_admin/themes.dart';
 
 class AppHeader extends StatelessWidget {
@@ -66,19 +64,7 @@ class AuthActions extends HookWidget {
         route.contains(SignupScreen.routeName);
 
     return authState.maybeWhen(
-      authenticated: (_) {
-        return IconButton(
-          onPressed: () {
-            context.read<AuthCubit>().logout();
-
-            Locator.instance<ToastService>().init(
-              const DSToast.notification(text: 'Logged out!'),
-            );
-          },
-          icon: const FaIcon(FontAwesomeIcons.rightFromBracket),
-        );
-      },
-      orElse: () {
+      unauthenticated: (_) {
         return Visibility(
           visible: !onAuthScreens,
           child: DSButton(
@@ -86,13 +72,11 @@ class AuthActions extends HookWidget {
               Locator.instance<NavigatorHelper>()
                   .goNamed(SignupScreen.routeName);
             },
-            // theme: const DSButtonThemeData(
-            //   textTheme: DSTextThemeData.b1(),
-            // ),
             text: 'Create an account',
           ),
         );
       },
+      orElse: SizedBox.shrink,
     );
   }
 }

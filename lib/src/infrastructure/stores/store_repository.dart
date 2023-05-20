@@ -57,31 +57,36 @@ class StoreRepository {
     }
   }
 
-  Future<Either<CustomException, StoreModel>> createEmptyStoreForUser({
+  Future<StoreModel> createEmptyStoreForUser({
     required String userId,
+    StoreModel? store,
   }) async {
-    return _createEmptyStoreForUser(userId: userId);
+    return _createEmptyStoreForUser(
+      userId: userId,
+      store: store ?? StoreModel.empty(),
+    );
   }
 
-  Future<Either<CustomException, StoreModel>> _createEmptyStoreForUser({
+  Future<StoreModel> _createEmptyStoreForUser({
     required String userId,
+    required StoreModel store,
   }) async {
     try {
-      final store = StoreModel.empty().copyWith(
-        name: 'My Example Store',
+      final newStore = store.copyWith(
         owner: userId,
         users: [userId],
         roles: {
           userId: StoreRole.owner.asString(),
         },
       );
+      print('MEE: newStore $newStore');
       final document =
-          await _firebaseFirestore.storesCollection().add(store.toJson());
+          await _firebaseFirestore.storesCollection().add(newStore.toJson());
       final snapshot = await document.get();
-      return right(StoreModel.fromSnapshot(snapshot));
+      return StoreModel.fromSnapshot(snapshot);
     } catch (err) {
       _loggerService.log('(createEmptyStoreForUser): $err');
-      return left(const CustomException(message: 'Failed to create store'));
+      throw const CustomException(message: 'Failed to create store');
     }
   }
 

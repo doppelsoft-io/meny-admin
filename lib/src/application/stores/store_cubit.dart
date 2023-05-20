@@ -18,18 +18,34 @@ class StoreCubit extends Cubit<StoreState> {
         _storeRepository = storeRepository ?? Locator.instance(),
         super(_Loading(store: StoreModel.empty())) {
     _authSubscription?.cancel();
+    _getUser().then(loadStoreForUser);
+  }
 
-    _authSubscription = _authCubit.stream.listen((state) {
-      state.maybeWhen(
-        authenticated: (user) {
-          loadStoreForUser(user);
-        },
-        unauthenticated: (user) {
-          emit(_Loading(store: StoreModel.empty()));
-        },
-        orElse: () {},
-      );
-    });
+  Future<UserModel> _getUser() {
+    final completer = Completer<UserModel>();
+
+    _authCubit.state.maybeWhen(
+      /// If already loaded, use User
+      authenticated: (user) {
+        _authSubscription?.cancel();
+        completer.complete(user);
+      },
+      orElse: () {
+        /// Otherwise, listen to stream and wait for loaded state
+        _authSubscription?.cancel();
+        _authSubscription = _authCubit.stream.listen((state) {
+          state.maybeWhen(
+            authenticated: (user) {
+              _authSubscription?.cancel();
+              completer.complete(user);
+            },
+            orElse: () => completer.completeError('Failed to retrieve User'),
+          );
+        });
+      },
+    );
+
+    return completer.future;
   }
 
   final AuthCubit _authCubit;
@@ -71,23 +87,19 @@ class StoreCubit extends Cubit<StoreState> {
         );
       }
       if (user.isAnonymous) {
-        final failureOrStore =
-            await _storeRepository.createEmptyStoreForUser(userId: user.id!);
-
-        emit(
-          failureOrStore.fold(
-            (failure) {
-              return StoreState.error(
-                store: state.store,
-                exception: failure,
-              );
-            },
-            (store) {
-              watchStore(store);
-              return StoreState.loaded(store: store);
-            },
-          ),
-        );
+        try {
+          final store =
+              await _storeRepository.createEmptyStoreForUser(userId: user.id!);
+          watchStore(store);
+          emit(StoreState.loaded(store: store));
+        } on CustomException catch (err) {
+          emit(
+            StoreState.error(
+              store: state.store,
+              exception: err,
+            ),
+          );
+        }
       } else {
         final failureOrStore =
             await _storeRepository.getStoresForUser(userId: user.id!);
