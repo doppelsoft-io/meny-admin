@@ -38,12 +38,12 @@ dev_dependencies:
   json_serializable: ^6.6.1
 
 dependency_overrides:
-  doppelsoft_core:
-    path: ../doppelsoft-core
-  doppelsoft_ui:
-    path: ../doppelsoft-ui
-  meny_core:
-    path: ../meny-core
+  # doppelsoft_core:
+  #   path: ../doppelsoft-core
+  # doppelsoft_ui:
+  #   path: ../doppelsoft-ui
+  # meny_core:
+    # path: ../meny-core
 flutter:
   uses-material-design: true
 
