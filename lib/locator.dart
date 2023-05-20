@@ -98,6 +98,9 @@ class Locator {
         ModifierGroupItemRepository(),
       )
       ..registerSingleton<AuthCubit>(AuthCubit())
+      ..registerSingleton<StoreCubit>(
+        StoreCubit(authCubit: instance()),
+      )
       ..registerSingleton<FlagsmithCubit>(
         FlagsmithCubit(authCubit: instance()),
       );

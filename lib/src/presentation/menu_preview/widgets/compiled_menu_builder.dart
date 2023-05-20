@@ -52,39 +52,59 @@ class _CompiledMenuBuilder extends StatelessWidget {
             final categories =
                 List<CompiledCategoryModel>.from(state.response.categories);
 
+            if (categories.isEmpty) {
+              return Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(48),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    SizedBox(height: 100),
+                    DSText(
+                      'Nothing to show here. Add some menu items and categories to get started!',
+                      theme: DSTextThemeData.b2(),
+                    ),
+                  ],
+                ),
+              );
+            }
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: DSSpacing.lg),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: DSSpacing.md,
-                  ),
-                  child: DSButton(
-                    theme: const DSButtonThemeData.outlined(),
-                    text: 'Organize',
-                    icon: DSIcon(
-                      iconData: FontAwesomeIcons.barsStaggered,
-                      theme: DSIconThemeData.fallback().copyWith(
-                        color: whiteColor,
-                        size: 18,
-                      ),
-                      semanticLabel: 'Organize',
+                Visibility(
+                  visible: categories.isNotEmpty,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: DSSpacing.md,
                     ),
-                    onPressed: () {
-                      showGeneralDialog(
-                        context: context,
-                        pageBuilder: (_, __, ___) => BlocProvider.value(
-                          value: context.read<CompiledMenuCubit>(),
-                          child: MenuPreviewCategoryReorderDialog(
-                            menuId: menu.id,
-                            categories: categories,
-                          ),
+                    child: DSButton(
+                      theme: const DSButtonThemeData.outlined(),
+                      text: 'Organize',
+                      icon: DSIcon(
+                        iconData: FontAwesomeIcons.barsStaggered,
+                        theme: DSIconThemeData.fallback().copyWith(
+                          color: whiteColor,
+                          size: 18,
                         ),
-                      ).then((value) {
-                        context.read<CompiledMenuCubit>().load(id: menu.id);
-                      });
-                    },
+                        semanticLabel: 'Organize',
+                      ),
+                      onPressed: () {
+                        showGeneralDialog(
+                          context: context,
+                          pageBuilder: (_, __, ___) => BlocProvider.value(
+                            value: context.read<CompiledMenuCubit>(),
+                            child: MenuPreviewCategoryReorderDialog(
+                              menuId: menu.id,
+                              categories: categories,
+                            ),
+                          ),
+                        ).then((value) {
+                          context.read<CompiledMenuCubit>().load(id: menu.id);
+                        });
+                      },
+                    ),
                   ),
                 ),
                 const SizedBox(height: DSSpacing.lg),

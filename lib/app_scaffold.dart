@@ -1,7 +1,6 @@
 import 'package:doppelsoft_core/doppelsoft_core.dart';
 import 'package:doppelsoft_ui/doppelsoft_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meny_admin/locator.dart';
 import 'package:meny_admin/src/application/application.dart';
@@ -21,35 +20,25 @@ class AppScaffold extends HookWidget {
 
     return authState.maybeWhen(
       authenticated: (user) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider<StoreCubit>(
-              create: (context) => StoreCubit(
-                authCubit: context.read(),
+        return Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(
+              getValueForScreenType<double>(
+                context: context,
+                mobile: kToolbarHeight,
+                desktop: 76,
               ),
             ),
-          ],
-          child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(
-                getValueForScreenType<double>(
-                  context: context,
-                  mobile: kToolbarHeight,
-                  desktop: 76,
-                ),
-              ),
-              child: const AppHeader(),
-            ),
-            body: Builder(
-              builder: (context) {
-                final storeState = context.watch<StoreCubit>().state;
-                return storeState.maybeWhen(
-                  loaded: (store) => ScaffoldBody(child: child),
-                  orElse: () =>
-                      const Center(child: CircularProgressIndicator()),
-                );
-              },
-            ),
+            child: const AppHeader(),
+          ),
+          body: Builder(
+            builder: (context) {
+              final storeState = context.watch<StoreCubit>().state;
+              return storeState.maybeWhen(
+                loaded: (store) => ScaffoldBody(child: child),
+                orElse: () => const Center(child: CircularProgressIndicator()),
+              );
+            },
           ),
         );
       },

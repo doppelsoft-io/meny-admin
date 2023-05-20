@@ -16,6 +16,7 @@ class App extends StatelessWidget {
 
   final authCubit = Locator.instance<AuthCubit>();
   final flagsmithCubit = Locator.instance<FlagsmithCubit>();
+  final storeCubit = Locator.instance<StoreCubit>();
 
   final AppEnvironment environment;
 
@@ -31,6 +32,9 @@ class App extends StatelessWidget {
           ),
           BlocProvider<FlagsmithCubit>(
             create: (context) => flagsmithCubit,
+          ),
+          BlocProvider<StoreCubit>(
+            create: (context) => storeCubit,
           ),
         ],
         child: MaterialApp.router(

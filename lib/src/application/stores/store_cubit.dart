@@ -14,12 +14,21 @@ class StoreCubit extends Cubit<StoreState> {
   StoreCubit({
     required AuthCubit authCubit,
     StoreRepository? storeRepository,
+    FirebaseAuth? firebaseAuth,
   })  : _authCubit = authCubit,
+        _firebaseAuth = firebaseAuth ?? Locator.instance(),
         _storeRepository = storeRepository ?? Locator.instance(),
         super(_Loading(store: StoreModel.empty())) {
     _authSubscription?.cancel();
-    _getUser().then(loadStoreForUser);
+    _authSubscription = _firebaseAuth.authStateChanges().listen((user) {
+      if (user != null) {
+        _getUser().then(loadStoreForUser);
+        _authSubscription?.cancel();
+      }
+    });
   }
+
+  final FirebaseAuth _firebaseAuth;
 
   Future<UserModel> _getUser() {
     final completer = Completer<UserModel>();
@@ -30,6 +39,7 @@ class StoreCubit extends Cubit<StoreState> {
         _authSubscription?.cancel();
         completer.complete(user);
       },
+      initial: (_) {},
       orElse: () {
         /// Otherwise, listen to stream and wait for loaded state
         _authSubscription?.cancel();
@@ -39,6 +49,7 @@ class StoreCubit extends Cubit<StoreState> {
               _authSubscription?.cancel();
               completer.complete(user);
             },
+            initial: (_) {},
             orElse: () => completer.completeError('Failed to retrieve User'),
           );
         });
