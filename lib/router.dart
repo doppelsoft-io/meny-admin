@@ -84,16 +84,6 @@ final router = GoRouter(
                       builder: (_, state) =>
                           EditMenuScreen(id: state.params['id']!),
                     ),
-                    GoRoute(
-                      name: MenuPreviewScreen.routeName,
-                      path: ':id/preview',
-                      pageBuilder: (context, state) {
-                        return MaterialPage(
-                          fullscreenDialog: true,
-                          child: MenuPreviewScreen(id: state.params['id']!),
-                        );
-                      },
-                    ),
                   ],
                 ),
                 GoRoute(
@@ -235,6 +225,16 @@ final router = GoRouter(
           ],
         ),
       ],
+    ),
+    GoRoute(
+      name: MenuPreviewScreen.routeName,
+      path: '/menus/:id/preview',
+      pageBuilder: (context, state) {
+        return MaterialPage(
+          fullscreenDialog: true,
+          child: MenuPreviewScreen(id: state.params['id']!),
+        );
+      },
     ),
     GoRoute(
       name: SplashScreen.routeName,
